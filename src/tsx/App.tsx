@@ -1,11 +1,8 @@
 import React from 'react';
-import Cube from "./cube/Cube";
+import RubiksCube from './cube/RubiksCube';
 
 const App: React.FunctionComponent = () => {
-
-    return (
-        <Cube/>
-    );
+    return <RubiksCube />;
 };
 
 export default App;
