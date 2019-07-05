@@ -33,10 +33,15 @@ const RubiksCube: React.FunctionComponent = () => {
 
                 const cube: ICube = {
                     colors: {},
-                    transform: {
+                    translation: {
                         x: x * cubeSize - cubeSize,
                         y: y * cubeSize - cubeSize,
                         z: -z * cubeSize + cubeSize
+                    },
+                    rotation: {
+                        x: 0,
+                        y: 0,
+                        z: 0
                     }
                 };
 
@@ -67,7 +72,13 @@ const RubiksCube: React.FunctionComponent = () => {
         <div style={cubeSceneStyle}>
             <div style={cubeStyle}>
                 {cubes.map((cube, index) => (
-                    <Cube key={index} size={cubeSize} transform={cube.transform} colors={cube.colors} />
+                    <Cube
+                        key={index}
+                        size={cubeSize}
+                        rotation={cube.rotation}
+                        translation={cube.translation}
+                        colors={cube.colors}
+                    />
                 ))}
             </div>
         </div>

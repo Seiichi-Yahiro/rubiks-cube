@@ -1,6 +1,7 @@
 export interface ICube {
     colors: Partial<Faces<string>>;
-    transform: Dimensions;
+    translation: Dimensions;
+    rotation: Dimensions;
 }
 
 export interface Dimensions {
