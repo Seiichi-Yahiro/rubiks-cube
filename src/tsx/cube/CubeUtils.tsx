@@ -45,10 +45,10 @@ export const rotations: Faces<string> = {
 };*/
 
 export const defaultColors: Faces<string> = {
-    front: '#000',
-    back: '#000',
-    right: '#000',
-    left: '#000',
-    top: '#000',
-    bottom: '#000'
+    front: '#383838',
+    back: '#383838',
+    right: '#383838',
+    left: '#383838',
+    top: '#383838',
+    bottom: '#383838'
 };

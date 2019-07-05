@@ -41,21 +41,21 @@ const RubiksCube: React.FunctionComponent = () => {
                 };
 
                 if (z === 0) {
-                    cube.colors.front = 'blue';
+                    cube.colors.front = '#3d81f6';
                 } else if (z === 2) {
-                    cube.colors.back = 'green';
+                    cube.colors.back = '#009d54';
                 }
 
                 if (y === 0) {
-                    cube.colors.top = 'yellow';
+                    cube.colors.top = '#fdcc09';
                 } else if (y === 2) {
-                    cube.colors.bottom = 'white';
+                    cube.colors.bottom = '#ffffff';
                 }
 
                 if (x === 0) {
-                    cube.colors.left = 'orange';
+                    cube.colors.left = '#ff6c00';
                 } else if (x === 2) {
-                    cube.colors.right = 'red';
+                    cube.colors.right = '#dc422f';
                 }
 
                 cubes.push(cube);

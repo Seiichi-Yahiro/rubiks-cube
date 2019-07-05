@@ -25,13 +25,8 @@ const Cube: React.FunctionComponent<CubeProps> = ({ size, transform, colors: col
         position: 'absolute',
         width: size,
         height: size,
-        backgroundColor: 'black'
-    };
-
-    const cubeStickerStyle: React.CSSProperties = {
-        width: '100%',
-        height: '100%',
-        borderRadius: 15
+        borderRadius: 5,
+        border: '2px solid #333'
     };
 
     return (
@@ -46,16 +41,10 @@ const Cube: React.FunctionComponent<CubeProps> = ({ size, transform, colors: col
                     key={face.rotation}
                     style={{
                         ...cubeFaceStyle,
+                        backgroundColor: face.color,
                         transform: `${face.rotation} translateZ(${size / 2}px)`
                     }}
-                >
-                    <div
-                        style={{
-                            ...cubeStickerStyle,
-                            backgroundColor: face.color
-                        }}
-                    />
-                </div>
+                />
             ))}
         </div>
     );
