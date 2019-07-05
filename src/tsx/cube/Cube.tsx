@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { keys } from 'lodash';
-import { defaultColors, rotations, Faces, Face, Dimensions } from './CubeUtils';
+import { defaultColors, Faces, Face, Dimensions } from './CubeUtils';
 
 interface CubeProps {
     size: number;
@@ -15,13 +15,28 @@ const Cube: React.FunctionComponent<CubeProps> = ({ size, transform, colors: col
             ...colorProps
         };
 
+        const rotations: Faces<string> = {
+            front: `translateZ(${size / 2}px)`,
+            back: `translateZ(-${size / 2}px)`,
+            right: `rotateY(90deg) translateZ(${size / 2}px)`,
+            left: `rotateY(90deg) translateZ(-${size / 2}px)`,
+            top: `rotateX(90deg) translateZ(${size / 2}px)`,
+            bottom: `rotateX(90deg) translateZ(-${size / 2}px)`
+        };
+
         return keys(rotations).map(face => ({
             rotation: rotations[face],
             color: colors[face]
         }));
     }, [colorProps]);
 
-    const cubeFaceStyle: React.CSSProperties = {
+    const cubeStyle: React.CSSProperties = {
+        transformStyle: 'preserve-3d',
+        transform: `translate3d(${transform.x}px, ${transform.y}px, ${transform.z}px)`,
+        width: size
+    };
+
+    const faceStyle: React.CSSProperties = {
         position: 'absolute',
         width: size,
         height: size,
@@ -30,19 +45,14 @@ const Cube: React.FunctionComponent<CubeProps> = ({ size, transform, colors: col
     };
 
     return (
-        <div
-            style={{
-                transformStyle: 'preserve-3d',
-                transform: `translate3d(${transform.x}px, ${transform.y}px, ${transform.z}px)`
-            }}
-        >
+        <div style={cubeStyle}>
             {faces.map(face => (
                 <div
                     key={face.rotation}
                     style={{
-                        ...cubeFaceStyle,
+                        ...faceStyle,
                         backgroundColor: face.color,
-                        transform: `${face.rotation} translateZ(${size / 2}px)`
+                        transform: `${face.rotation}`
                     }}
                 />
             ))}

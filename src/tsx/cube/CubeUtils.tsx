@@ -23,15 +23,6 @@ export interface Face {
     color: string;
 }
 
-export const rotations: Faces<string> = {
-    front: 'rotateY(0deg)',
-    back: 'rotateY(180deg)',
-    right: 'rotateY(90deg)',
-    left: 'rotateY(270deg)',
-    top: 'rotateX(90deg)',
-    bottom: 'rotateX(270deg)'
-};
-
 /*export const tiles = {
     middle: 'translate(0px)',
     middleLeft: `translate(-${tileSize}, 0px)`,
