@@ -34,9 +34,9 @@ const RubiksCube: React.FunctionComponent = () => {
                 const cube: ICube = {
                     colors: {},
                     transform: {
-                        x: x * cubeSize,
-                        y: y * cubeSize,
-                        z: -z * cubeSize
+                        x: x * cubeSize - cubeSize,
+                        y: y * cubeSize - cubeSize,
+                        z: -z * cubeSize + cubeSize
                     }
                 };
 

@@ -33,7 +33,9 @@ const Cube: React.FunctionComponent<CubeProps> = ({ size, transform, colors: col
     const cubeStyle: React.CSSProperties = {
         transformStyle: 'preserve-3d',
         transform: `translate3d(${transform.x}px, ${transform.y}px, ${transform.z}px)`,
-        width: size
+        width: size,
+        height: size,
+        position: 'absolute'
     };
 
     const faceStyle: React.CSSProperties = {
