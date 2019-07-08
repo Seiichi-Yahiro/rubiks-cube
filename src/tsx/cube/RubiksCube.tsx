@@ -22,21 +22,22 @@ const RubiksCube: React.FunctionComponent = () => {
     };
 
     const cubes: ICube[] = [];
-    const cubeSize = size / 3;
+    const cubeSize = 3;
+    const blockSize = size / 3;
 
-    for (let z of range(3)) {
-        for (let y of range(3)) {
-            for (let x of range(3)) {
-                if (z === 1 && z === y && y === x) {
+    for (let z of range(cubeSize)) {
+        for (let y of range(cubeSize)) {
+            for (let x of range(cubeSize)) {
+                if (z !== 0 && z !== cubeSize - 1 && y !== 0 && y !== cubeSize - 1 && x !== 0 && x !== cubeSize - 1) {
                     continue;
                 }
 
                 const cube: ICube = {
                     colors: {},
                     translation: {
-                        x: x * cubeSize - cubeSize,
-                        y: y * cubeSize - cubeSize,
-                        z: -z * cubeSize + cubeSize
+                        x: x * blockSize - blockSize,
+                        y: y * blockSize - blockSize,
+                        z: -z * blockSize + blockSize
                     },
                     rotation: {
                         x: 0,
@@ -47,19 +48,19 @@ const RubiksCube: React.FunctionComponent = () => {
 
                 if (z === 0) {
                     cube.colors.front = '#3d81f6';
-                } else if (z === 2) {
+                } else if (z === cubeSize - 1) {
                     cube.colors.back = '#009d54';
                 }
 
                 if (y === 0) {
                     cube.colors.top = '#fdcc09';
-                } else if (y === 2) {
+                } else if (y === cubeSize - 1) {
                     cube.colors.bottom = '#ffffff';
                 }
 
                 if (x === 0) {
                     cube.colors.left = '#ff6c00';
-                } else if (x === 2) {
+                } else if (x === cubeSize - 1) {
                     cube.colors.right = '#dc422f';
                 }
 
@@ -74,7 +75,7 @@ const RubiksCube: React.FunctionComponent = () => {
                 {cubes.map((cube, index) => (
                     <Cube
                         key={index}
-                        size={cubeSize}
+                        size={blockSize}
                         rotation={cube.rotation}
                         translation={cube.translation}
                         colors={cube.colors}
