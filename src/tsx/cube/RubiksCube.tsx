@@ -5,6 +5,9 @@ import Cube from './Cube';
 
 const RubiksCube: React.FunctionComponent = () => {
     const size = 300;
+    const cubes: ICube[] = [];
+    const cubeSize = 3;
+    const blockSize = size / 3;
 
     const cubeSceneStyle: React.CSSProperties = {
         width: size,
@@ -18,12 +21,8 @@ const RubiksCube: React.FunctionComponent = () => {
         height: size,
         position: 'relative',
         transformStyle: 'preserve-3d',
-        transform: `translateZ(-${size / 2}px) rotateX(-45deg) rotateY(-45deg)`
+        transform: `rotateX(-45deg) rotateY(-45deg)`
     };
-
-    const cubes: ICube[] = [];
-    const cubeSize = 3;
-    const blockSize = size / 3;
 
     for (let z of range(cubeSize)) {
         for (let y of range(cubeSize)) {
@@ -69,18 +68,26 @@ const RubiksCube: React.FunctionComponent = () => {
         }
     }
 
+    // Offset the translation origin to the center for small cubes
+    const cubesWrapperStyle: React.CSSProperties = {
+        transform: `translate3d(${blockSize}px, ${blockSize}px, 0px)`,
+        transformStyle: 'preserve-3d'
+    };
+
     return (
         <div style={cubeSceneStyle}>
             <div style={cubeStyle}>
-                {cubes.map((cube, index) => (
-                    <Cube
-                        key={index}
-                        size={blockSize}
-                        rotation={cube.rotation}
-                        translation={cube.translation}
-                        colors={cube.colors}
-                    />
-                ))}
+                <div style={cubesWrapperStyle}>
+                    {cubes.map((cube, index) => (
+                        <Cube
+                            key={index}
+                            size={blockSize}
+                            rotation={cube.rotation}
+                            translation={cube.translation}
+                            colors={cube.colors}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );
