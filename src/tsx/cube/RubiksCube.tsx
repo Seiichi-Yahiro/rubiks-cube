@@ -6,8 +6,8 @@ import Cube from './Cube';
 const RubiksCube: React.FunctionComponent = () => {
     const size = 300;
     const cubes: ICube[] = [];
-    const cubeSize = 3;
-    const blockSize = size / 3;
+    const numberOfCubes = 3;
+    const sizeOfCube = size / numberOfCubes;
 
     const cubeSceneStyle: React.CSSProperties = {
         width: size,
@@ -24,19 +24,19 @@ const RubiksCube: React.FunctionComponent = () => {
         transform: `rotateX(-45deg) rotateY(-45deg)`
     };
 
-    for (let z of range(cubeSize)) {
-        for (let y of range(cubeSize)) {
-            for (let x of range(cubeSize)) {
-                if (z !== 0 && z !== cubeSize - 1 && y !== 0 && y !== cubeSize - 1 && x !== 0 && x !== cubeSize - 1) {
+    for (let z of range(numberOfCubes)) {
+        for (let y of range(numberOfCubes)) {
+            for (let x of range(numberOfCubes)) {
+                if (![x, y, z].some(dimension => dimension === 0 || dimension === numberOfCubes - 1)) {
                     continue;
                 }
 
                 const cube: ICube = {
                     colors: {},
                     translation: {
-                        x: x * blockSize - blockSize,
-                        y: y * blockSize - blockSize,
-                        z: -z * blockSize + blockSize
+                        x: x * sizeOfCube - sizeOfCube,
+                        y: y * sizeOfCube - sizeOfCube,
+                        z: -z * sizeOfCube + sizeOfCube
                     },
                     rotation: {
                         x: 0,
@@ -47,19 +47,19 @@ const RubiksCube: React.FunctionComponent = () => {
 
                 if (z === 0) {
                     cube.colors.front = '#3d81f6';
-                } else if (z === cubeSize - 1) {
+                } else if (z === numberOfCubes - 1) {
                     cube.colors.back = '#009d54';
                 }
 
                 if (y === 0) {
                     cube.colors.top = '#fdcc09';
-                } else if (y === cubeSize - 1) {
+                } else if (y === numberOfCubes - 1) {
                     cube.colors.bottom = '#ffffff';
                 }
 
                 if (x === 0) {
                     cube.colors.left = '#ff6c00';
-                } else if (x === cubeSize - 1) {
+                } else if (x === numberOfCubes - 1) {
                     cube.colors.right = '#dc422f';
                 }
 
@@ -70,7 +70,7 @@ const RubiksCube: React.FunctionComponent = () => {
 
     // Offset the translation origin to the center for small cubes
     const cubesWrapperStyle: React.CSSProperties = {
-        transform: `translate3d(${blockSize}px, ${blockSize}px, 0px)`,
+        transform: `translate3d(${sizeOfCube}px, ${sizeOfCube}px, 0px)`,
         transformStyle: 'preserve-3d'
     };
 
@@ -81,7 +81,7 @@ const RubiksCube: React.FunctionComponent = () => {
                     {cubes.map((cube, index) => (
                         <Cube
                             key={index}
-                            size={blockSize}
+                            size={sizeOfCube}
                             rotation={cube.rotation}
                             translation={cube.translation}
                             colors={cube.colors}
