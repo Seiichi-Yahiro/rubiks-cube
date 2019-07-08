@@ -17,7 +17,7 @@ module.exports = {
         chunkFilename: 'js/[name].chunk.js'
     },
     resolve: {
-        extensions: ['.js', '.ts', '.tsx'],
+        extensions: ['.js', '.ts', '.tsx']
     },
     module: {
         rules: [
@@ -34,9 +34,6 @@ module.exports = {
                             sourceMap: true,
                             publicPath: '../'
                         }
-                    },
-                    {
-                        loader: "css-modules-typescript-loader"
                     },
                     {
                         loader: 'css-loader',
