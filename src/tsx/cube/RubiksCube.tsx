@@ -1,13 +1,44 @@
-import React from 'react';
-import { ICube } from './CubeUtils';
-import { range } from 'lodash';
+import React, { useEffect, useState } from 'react';
+import { Direction, generateCubes, ICube, Layer, rotate } from './CubeUtils';
 import Cube from './Cube';
 
 const RubiksCube: React.FunctionComponent = () => {
     const size = 300;
-    const cubes: ICube[] = [];
     const numberOfCubes = 3;
     const sizeOfCube = size / numberOfCubes;
+
+    const [cubes, updateCubes] = useState<ICube[]>(generateCubes(numberOfCubes, sizeOfCube));
+
+    const sexyMove = () => {
+        setTimeout(() => {
+            updateCubes(prevState => rotate(prevState, Layer.RIGHT, Direction.CLOCKWISE));
+
+            setTimeout(() => {
+                updateCubes(prevState => rotate(prevState, Layer.UP, Direction.CLOCKWISE));
+
+                setTimeout(() => {
+                    updateCubes(prevState => rotate(prevState, Layer.RIGHT, Direction.ANTI_CLOCKWISE));
+
+                    setTimeout(() => {
+                        updateCubes(prevState => rotate(prevState, Layer.UP, Direction.ANTI_CLOCKWISE));
+
+                        sexyMove();
+                    }, 1100);
+                }, 1100);
+            }, 1100);
+        }, 1100);
+    };
+
+    const random = () => {
+        setTimeout(() => {
+            updateCubes(prevState => rotate(prevState));
+            random();
+        }, 1100);
+    };
+
+    useEffect(() => {
+        random();
+    }, []);
 
     const cubeSceneStyle: React.CSSProperties = {
         width: size,
@@ -23,50 +54,6 @@ const RubiksCube: React.FunctionComponent = () => {
         transformStyle: 'preserve-3d',
         transform: `rotateX(-45deg) rotateY(-45deg)`
     };
-
-    for (let z of range(numberOfCubes)) {
-        for (let y of range(numberOfCubes)) {
-            for (let x of range(numberOfCubes)) {
-                if (![x, y, z].some(dimension => dimension === 0 || dimension === numberOfCubes - 1)) {
-                    continue;
-                }
-
-                const cube: ICube = {
-                    colors: {},
-                    translation: {
-                        x: x * sizeOfCube - sizeOfCube,
-                        y: y * sizeOfCube - sizeOfCube,
-                        z: -z * sizeOfCube + sizeOfCube
-                    },
-                    rotation: {
-                        x: 0,
-                        y: 0,
-                        z: 0
-                    }
-                };
-
-                if (z === 0) {
-                    cube.colors.front = '#3d81f6';
-                } else if (z === numberOfCubes - 1) {
-                    cube.colors.back = '#009d54';
-                }
-
-                if (y === 0) {
-                    cube.colors.top = '#fdcc09';
-                } else if (y === numberOfCubes - 1) {
-                    cube.colors.bottom = '#ffffff';
-                }
-
-                if (x === 0) {
-                    cube.colors.left = '#ff6c00';
-                } else if (x === numberOfCubes - 1) {
-                    cube.colors.right = '#dc422f';
-                }
-
-                cubes.push(cube);
-            }
-        }
-    }
 
     // Offset the translation origin to the center for small cubes
     const cubesWrapperStyle: React.CSSProperties = {
