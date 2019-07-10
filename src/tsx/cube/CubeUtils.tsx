@@ -64,12 +64,14 @@ export const generateCubes = (numberOfCubes: number, sizeOfCube: number) => {
                     continue;
                 }
 
+                const offset = sizeOfCube * (numberOfCubes / 2 - 0.5);
+
                 const cube: ICube = {
                     colors: {},
                     translation: {
-                        x: x * sizeOfCube - sizeOfCube,
-                        y: y * sizeOfCube - sizeOfCube,
-                        z: -z * sizeOfCube + sizeOfCube
+                        x: x * sizeOfCube - offset,
+                        y: y * sizeOfCube - offset,
+                        z: -z * sizeOfCube + offset
                     },
                     rotation: () => new Quaternion(),
                     layers: []
