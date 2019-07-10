@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Direction, generateCubes, ICube, Layer, rotate } from './CubeUtils';
+import { generateCubes, ICube, rotate } from './CubeUtils';
 import Cube from './Cube';
+import { isFunction } from 'lodash';
+import { Move, MoveSet, random } from './Moves';
 
 const RubiksCube: React.FunctionComponent = () => {
     const size = 300;
@@ -9,35 +11,28 @@ const RubiksCube: React.FunctionComponent = () => {
 
     const [cubes, updateCubes] = useState<ICube[]>(generateCubes(numberOfCubes, sizeOfCube));
 
-    const sexyMove = () => {
-        setTimeout(() => {
-            updateCubes(prevState => rotate(prevState, Layer.RIGHT, Direction.CLOCKWISE));
-
-            setTimeout(() => {
-                updateCubes(prevState => rotate(prevState, Layer.UP, Direction.CLOCKWISE));
-
+    const applyMoveSet = async (moveSet: MoveSet | (() => MoveSet), wait: number = 1000, loop: boolean = false) => {
+        const applyMove = (move: Move) =>
+            new Promise(resolve => {
                 setTimeout(() => {
-                    updateCubes(prevState => rotate(prevState, Layer.RIGHT, Direction.ANTI_CLOCKWISE));
+                    updateCubes(prevState => rotate(prevState, move.layer, move.direction));
+                    resolve();
+                }, wait);
+            });
 
-                    setTimeout(() => {
-                        updateCubes(prevState => rotate(prevState, Layer.UP, Direction.ANTI_CLOCKWISE));
+        const set = isFunction(moveSet) ? moveSet() : moveSet;
 
-                        sexyMove();
-                    }, 1100);
-                }, 1100);
-            }, 1100);
-        }, 1100);
-    };
+        for (const move of set) {
+            await applyMove(move);
+        }
 
-    const random = () => {
-        setTimeout(() => {
-            updateCubes(prevState => rotate(prevState));
-            random();
-        }, 1100);
+        if (loop) {
+            applyMoveSet(moveSet, wait, loop);
+        }
     };
 
     useEffect(() => {
-        random();
+        applyMoveSet(random, 500, true);
     }, []);
 
     const cubeSceneStyle: React.CSSProperties = {
