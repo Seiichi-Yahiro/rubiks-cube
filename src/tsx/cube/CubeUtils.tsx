@@ -23,6 +23,7 @@ export interface ICube {
     translation: Dimensions;
     rotation: Slerp;
     layers: Layer[];
+    id: Dimensions;
 }
 
 export interface Dimensions {
@@ -54,6 +55,16 @@ export const defaultColors: Layers<string> = {
     [Layer.LEFT]: '#383838'
 };
 
+export const calculateCubeSize = ({ x, y, z }: Dimensions, numberOfCubes: number, sizeOfCube: number): Dimensions => {
+    const offset = sizeOfCube * (numberOfCubes / 2 - 0.5);
+
+    return {
+        x: x * sizeOfCube - offset,
+        y: y * sizeOfCube - offset,
+        z: -z * sizeOfCube + offset
+    };
+};
+
 export const generateCubes = (numberOfCubes: number, sizeOfCube: number) => {
     const cubes: ICube[] = [];
 
@@ -64,15 +75,14 @@ export const generateCubes = (numberOfCubes: number, sizeOfCube: number) => {
                     continue;
                 }
 
-                const offset = sizeOfCube * (numberOfCubes / 2 - 0.5);
-
                 const cube: ICube = {
-                    colors: {},
-                    translation: {
-                        x: x * sizeOfCube - offset,
-                        y: y * sizeOfCube - offset,
-                        z: -z * sizeOfCube + offset
+                    id: {
+                        x,
+                        y,
+                        z
                     },
+                    colors: {},
+                    translation: calculateCubeSize({ x, y, z }, numberOfCubes, sizeOfCube),
                     rotation: () => new Quaternion(),
                     layers: []
                 };

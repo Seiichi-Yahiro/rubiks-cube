@@ -1,15 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { generateCubes, ICube, rotate } from './CubeUtils';
+import React, { useContext, useEffect, useState } from 'react';
+import { calculateCubeSize, generateCubes, ICube, rotate } from './CubeUtils';
 import Cube from './Cube';
 import { isFunction } from 'lodash';
 import { Move, MoveSet, random } from './Moves';
+import { settingsContext } from '../context/SettingsContext';
 
 const RubiksCube: React.FunctionComponent = () => {
-    const size = 300;
-    const numberOfCubes = 3;
+    const { numberOfCubes, size } = useContext(settingsContext);
     const sizeOfCube = size / numberOfCubes;
 
     const [cubes, updateCubes] = useState<ICube[]>(generateCubes(numberOfCubes, sizeOfCube));
+
+    useEffect(() => {
+        updateCubes(generateCubes(numberOfCubes, sizeOfCube));
+    }, [numberOfCubes]);
+
+    useEffect(() => {
+        updateCubes(prevState =>
+            prevState.map(cube => ({ ...cube, translation: calculateCubeSize(cube.id, numberOfCubes, sizeOfCube) }))
+        );
+    }, [size]);
 
     const applyMoveSet = async (moveSet: MoveSet | (() => MoveSet), wait: number = 1000, loop: boolean = false) => {
         const applyMove = (move: Move) =>
@@ -32,7 +42,7 @@ const RubiksCube: React.FunctionComponent = () => {
     };
 
     useEffect(() => {
-        applyMoveSet(random, 500, true);
+        applyMoveSet(random, 800, true);
     }, []);
 
     const cubeSceneStyle: React.CSSProperties = {
@@ -57,7 +67,7 @@ const RubiksCube: React.FunctionComponent = () => {
     };
 
     return (
-        <div style={cubeSceneStyle}>
+        <div className="app__cube" style={cubeSceneStyle}>
             <div style={cubeStyle}>
                 <div style={cubesWrapperStyle}>
                     {cubes.map((cube, index) => (
