@@ -9,20 +9,28 @@
         "react-dom": "16.8.6"
     },
     "devDependencies": {
+        "@types/enzyme": "3.10.2",
+        "@types/enzyme-adapter-react-16": "1.0.5",
+        "@types/jest": "24.0.15",
         "@types/lodash": "4.14.123",
         "@types/react": "16.8.15",
         "@types/react-dom": "16.8.4",
         "acorn": "6.1.1",
         "awesome-typescript-loader": "5.2.1",
         "css-loader": "2.1.1",
+        "enzyme": "3.10.0",
+        "enzyme-adapter-react-16": "1.14.0",
         "html-webpack-plugin": "3.2.0",
         "husky": "2.2.0",
+        "identity-obj-proxy": "3.0.0",
+        "jest": "24.8.0",
         "mini-css-extract-plugin": "0.6.0",
         "node-sass": "4.12.0",
         "prettier": "1.17.0",
         "pretty-quick": "1.10.0",
         "rimraf": "2.6.3",
         "sass-loader": "7.1.0",
+        "ts-jest": "24.0.2",
         "tslint": "5.16.0",
         "tslint-react": "4.0.0",
         "tslint-react-hooks": "2.1.0",
@@ -34,7 +42,8 @@
     "scripts": {
         "start": "rimraf build && webpack-dev-server --config webpack.config.js",
         "build:dev": "rimraf build && webpack --config webpack.config.js",
-        "pretty-quick": "pretty-quick"
+        "pretty-quick": "pretty-quick",
+        "test": "jest --coverage"
     },
     "husky": {
         "hooks": {

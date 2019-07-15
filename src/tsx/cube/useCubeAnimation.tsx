@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Slerp } from './CubeUtils';
+import { Slerp } from './CubeTypes';
 
 const useCubeAnimation = (stepSize: number, dependency: Slerp) => {
     const [percent, setPercent] = useState(1);

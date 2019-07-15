@@ -1,13 +1,10 @@
-import { Direction, Layer, randomDirection, randomLayer } from './CubeUtils';
+import { isNumber, sample, values } from 'lodash';
+import { Direction, Layer, MoveSet } from './CubeTypes';
 
-export interface Move {
-    layer: Layer;
-    direction: Direction;
-}
+export const randomLayer = (): Layer => sample(values(Layer)) as Layer;
+export const randomDirection = (): Direction => (sample(values(Direction).filter(isNumber)) as unknown) as Direction;
 
-export type MoveSet = Array<Move>;
-
-export const random = (): MoveSet => [
+export const randomMove = (): MoveSet => [
     {
         layer: randomLayer(),
         direction: randomDirection()
