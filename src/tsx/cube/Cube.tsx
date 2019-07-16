@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { keys } from 'lodash';
-import { defaultColors } from './CubeUtils';
+import { defaultColors, transitionedCubeClass } from './CubeUtils';
 import { Face, Layer, Layers } from './CubeTypes';
 import D3 from './D3';
 import Arrows from './Arrows';
@@ -70,7 +70,7 @@ const Cube: React.FunctionComponent<CubeProps> = ({
     };
 
     return (
-        <div style={cubeStyle}>
+        <div className={transitionedCubeClass} style={cubeStyle}>
             {keys(faces).map(face => {
                 const { rotation: faceRotation, color, arrowAxes } = faces[face] as Face;
 
