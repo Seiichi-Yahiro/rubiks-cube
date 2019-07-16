@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import Range from './Range';
 import { settingsContext } from '../context/SettingsContext';
+import { Typography } from '@material-ui/core';
+import Slider from '@material-ui/core/Slider';
 
 const Interface: React.FunctionComponent = () => {
     const { numberOfCubes, size, rotationAnimationSpeed, setSettings } = useContext(settingsContext);
@@ -8,29 +9,37 @@ const Interface: React.FunctionComponent = () => {
     return (
         <div className="app__interface">
             <div>
-                <Range
-                    text="Number of cubes:"
+                <Typography id="number-of-cubes-slider">Number of cubes</Typography>
+                <Slider
+                    aria-labelledby="number-of-cubes-slider"
+                    valueLabelDisplay="auto"
+                    marks={true}
                     step={1}
                     min={2}
                     max={5}
-                    value={numberOfCubes}
-                    onChange={event => setSettings({ numberOfCubes: Number(event.target.value) })}
+                    defaultValue={numberOfCubes}
+                    onChangeCommitted={(event, value) => setSettings({ numberOfCubes: value as number })}
                 />
-                <Range
-                    text="Size:"
+                <Typography id="size-slider">Size</Typography>
+                <Slider
+                    aria-labelledby="size-slider"
+                    valueLabelDisplay="auto"
+                    marks={true}
                     step={50}
                     min={100}
                     max={600}
-                    value={size}
-                    onChange={event => setSettings({ size: Number(event.target.value) })}
+                    defaultValue={size}
+                    onChangeCommitted={(event, value) => setSettings({ size: value as number })}
                 />
-                <Range
-                    text="Animation speed:"
+                <Typography id="animation-speed-slider">Animation speed</Typography>
+                <Slider
+                    aria-labelledby="animation-speed-slider"
+                    valueLabelDisplay="auto"
                     min={250}
                     max={2000}
                     step={50}
-                    value={rotationAnimationSpeed}
-                    onChange={event => setSettings({ rotationAnimationSpeed: Number(event.target.value) })}
+                    defaultValue={rotationAnimationSpeed}
+                    onChangeCommitted={(event, value) => setSettings({ rotationAnimationSpeed: value as number })}
                 />
             </div>
         </div>
