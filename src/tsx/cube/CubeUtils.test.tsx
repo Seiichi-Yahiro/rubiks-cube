@@ -2,7 +2,7 @@ import D3 from './D3';
 import { animateRotation, calculateCubePosition, createLayers, generateCubes, rotate } from './CubeUtils';
 import Maybe from '../utils/Maybe';
 import { keys, mapValues } from 'lodash';
-import { Layers } from './CubeTypes';
+import { Direction, Layer, Layers } from './CubeTypes';
 
 describe('CubeUtils', () => {
     it('should calculate the cube position for a 3x3x3', () => {
@@ -314,6 +314,93 @@ describe('CubeUtils', () => {
         ];
 
         expect(result.map(cube => cube.axes.toVector())).toEqual(cube2x2x2);
+    });
+
+    it('should create L move', () => {
+        const numberOfCubes = 3;
+        const result = D3.fromMove({ layer: Layer.LEFT, direction: Direction.CLOCKWISE }, numberOfCubes).toVector();
+        expect(result).toEqual([1, 0, 0]);
+    });
+
+    it("should create L' move", () => {
+        const numberOfCubes = 3;
+        const result = D3.fromMove(
+            { layer: Layer.LEFT, direction: Direction.ANTI_CLOCKWISE },
+            numberOfCubes
+        ).toVector();
+        expect(result).toEqual([-1, 0, 0]);
+    });
+
+    it('should create R move', () => {
+        const numberOfCubes = 3;
+        const result = D3.fromMove({ layer: Layer.RIGHT, direction: Direction.CLOCKWISE }, numberOfCubes).toVector();
+        expect(result).toEqual([-numberOfCubes, 0, 0]);
+    });
+
+    it("should create R' move", () => {
+        const numberOfCubes = 3;
+        const result = D3.fromMove(
+            { layer: Layer.RIGHT, direction: Direction.ANTI_CLOCKWISE },
+            numberOfCubes
+        ).toVector();
+        expect(result).toEqual([numberOfCubes, 0, 0]);
+    });
+
+    it('should create U move', () => {
+        const numberOfCubes = 3;
+        const result = D3.fromMove({ layer: Layer.UP, direction: Direction.CLOCKWISE }, numberOfCubes).toVector();
+        expect(result).toEqual([0, 1, 0]);
+    });
+
+    it("should create U' move", () => {
+        const numberOfCubes = 3;
+        const result = D3.fromMove({ layer: Layer.UP, direction: Direction.ANTI_CLOCKWISE }, numberOfCubes).toVector();
+        expect(result).toEqual([0, -1, 0]);
+    });
+
+    it('should create D move', () => {
+        const numberOfCubes = 3;
+        const result = D3.fromMove({ layer: Layer.DOWN, direction: Direction.CLOCKWISE }, numberOfCubes).toVector();
+        expect(result).toEqual([0, -numberOfCubes, 0]);
+    });
+
+    it("should create D' move", () => {
+        const numberOfCubes = 3;
+        const result = D3.fromMove(
+            { layer: Layer.DOWN, direction: Direction.ANTI_CLOCKWISE },
+            numberOfCubes
+        ).toVector();
+        expect(result).toEqual([0, numberOfCubes, 0]);
+    });
+
+    it('should create F move', () => {
+        const numberOfCubes = 3;
+        const result = D3.fromMove({ layer: Layer.FRONT, direction: Direction.CLOCKWISE }, numberOfCubes).toVector();
+        expect(result).toEqual([0, 0, -1]);
+    });
+
+    it("should create F' move", () => {
+        const numberOfCubes = 3;
+        const result = D3.fromMove(
+            { layer: Layer.FRONT, direction: Direction.ANTI_CLOCKWISE },
+            numberOfCubes
+        ).toVector();
+        expect(result).toEqual([0, 0, 1]);
+    });
+
+    it('should create B move', () => {
+        const numberOfCubes = 3;
+        const result = D3.fromMove({ layer: Layer.BACK, direction: Direction.CLOCKWISE }, numberOfCubes).toVector();
+        expect(result).toEqual([0, 0, numberOfCubes]);
+    });
+
+    it("should create B' move", () => {
+        const numberOfCubes = 3;
+        const result = D3.fromMove(
+            { layer: Layer.BACK, direction: Direction.ANTI_CLOCKWISE },
+            numberOfCubes
+        ).toVector();
+        expect(result).toEqual([0, 0, -numberOfCubes]);
     });
 
     const compareFaceArrows = (expected: Layers<Maybe<[D3, D3]>>, result: Layers<Maybe<[D3, D3]>>, axes: D3) => {
