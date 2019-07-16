@@ -10,7 +10,7 @@ interface ArrowsProps {
 
 const Arrows: React.FunctionComponent<ArrowsProps> = ({ up, down, right, left }) => {
     return (
-        <svg viewBox="0 0 100 100">
+        <svg viewBox="0 0 100 100" className="arrows-svg">
             <g style={{ transform: 'translate(50%, 50%)' }}>
                 <Arrow direction={ArrowDirection.UP} onClick={up} />
                 <Arrow direction={ArrowDirection.DOWN} onClick={down} />

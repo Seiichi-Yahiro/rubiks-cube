@@ -24,3 +24,9 @@
         opacity: 1;
     }
 }
+
+.rubiks-cube--is-transitioning {
+    .arrows-svg {
+        display: none;
+    }
+}

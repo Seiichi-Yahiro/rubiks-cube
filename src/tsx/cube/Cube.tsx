@@ -1,12 +1,13 @@
 import React, { useContext, useMemo } from 'react';
 import { keys } from 'lodash';
-import { defaultColors, transitionedCubeClass } from './CubeUtils';
+import { defaultColors, cubeIsTransitioning } from './CubeUtils';
 import { Face, Layer, Layers } from './CubeTypes';
 import D3 from './D3';
 import Maybe from '../utils/Maybe';
 import Quaternion from 'quaternion';
 import { settingsContext } from '../context/SettingsContext';
 import Faces from './Faces';
+import createClassName from '../utils/createClassName';
 
 interface CubeProps {
     size: number;
@@ -64,7 +65,7 @@ const Cube: React.FunctionComponent<CubeProps> = ({
     };
 
     return (
-        <div className={transitionedCubeClass} style={cubeStyle}>
+        <div className={createClassName({ [cubeIsTransitioning]: rotationAnimation.isSome() })} style={cubeStyle}>
             {keys(faceRotations).map(key => (
                 <Faces
                     key={faceRotations[key]}

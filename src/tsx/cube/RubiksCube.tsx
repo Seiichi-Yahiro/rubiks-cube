@@ -1,14 +1,16 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { animateRotation, calculateCubePosition, generateCubes, rotate, transitionedCubeClass } from './CubeUtils';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { animateRotation, calculateCubePosition, generateCubes, rotate, cubeIsTransitioning } from './CubeUtils';
 import Cube from './Cube';
 import { isFunction } from 'lodash';
 import { settingsContext } from '../context/SettingsContext';
 import { ICube, Move, MoveSet } from './CubeTypes';
 import D3 from './D3';
+import createClassName from '../utils/createClassName';
 
 const RubiksCube: React.FunctionComponent = () => {
     const { numberOfCubes, size } = useContext(settingsContext);
     const sizeOfCube = size / numberOfCubes;
+    const isTransitioning = useRef(false);
 
     const [cubes, updateCubes] = useState<ICube[]>([]);
     const rotateCubes = useCallback(
@@ -16,14 +18,16 @@ const RubiksCube: React.FunctionComponent = () => {
             const onTransitionEnd = (event: TransitionEvent) => {
                 if (
                     event.propertyName === 'transform' &&
-                    (event.target as HTMLElement).className.includes(transitionedCubeClass)
+                    (event.target as HTMLElement).className.includes(cubeIsTransitioning)
                 ) {
+                    isTransitioning.current = false;
                     updateCubes(prevState => rotate(prevState, numberOfCubes, rotationAxis));
                     window.removeEventListener('transitionend', onTransitionEnd);
                 }
             };
             window.addEventListener('transitionend', onTransitionEnd);
 
+            isTransitioning.current = true;
             updateCubes(prevState => animateRotation(prevState, rotationAxis));
         },
         [numberOfCubes]
@@ -86,7 +90,10 @@ const RubiksCube: React.FunctionComponent = () => {
 
     return (
         <div className="app__cube" style={cubeSceneStyle}>
-            <div style={cubeStyle}>
+            <div
+                className={createClassName({ 'rubiks-cube--is-transitioning': isTransitioning.current })}
+                style={cubeStyle}
+            >
                 <div style={cubesWrapperStyle}>
                     {cubes.map((cube, index) => (
                         <Cube

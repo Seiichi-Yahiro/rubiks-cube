@@ -4,7 +4,7 @@ import { ICube, Layer, Layers } from './CubeTypes';
 import D3 from './D3';
 import Maybe from '../utils/Maybe';
 
-export const transitionedCubeClass = 'transitioned-cube';
+export const cubeIsTransitioning = 'cube--is-transitioning';
 
 export function createLayers<T>(initialValue: T): Layers<T> {
     const initialLayers = {
