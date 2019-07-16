@@ -59,7 +59,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setX(1));
+        const result = rotate(cubes, new D3().setX(1));
 
         // prettier-ignore
         const cube3x3x3 = [
@@ -84,7 +84,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setX(-1));
+        const result = rotate(cubes, new D3().setX(-1));
 
         // prettier-ignore
         const cube3x3x3 = [
@@ -109,7 +109,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setX(-2));
+        const result = rotate(cubes, new D3().setX(-2));
 
         // prettier-ignore
         const cube3x3x3 = [
@@ -134,7 +134,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setY(1));
+        const result = rotate(cubes, new D3().setY(1));
 
         // prettier-ignore
         const cube3x3x3 = [
@@ -159,7 +159,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setY(-1));
+        const result = rotate(cubes, new D3().setY(-1));
 
         // prettier-ignore
         const cube3x3x3 = [
@@ -184,7 +184,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setY(3));
+        const result = rotate(cubes, new D3().setY(3));
 
         // prettier-ignore
         const cube3x3x3 = [
@@ -209,7 +209,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setZ(1));
+        const result = rotate(cubes, new D3().setZ(1));
 
         // prettier-ignore
         const cube3x3x3 = [
@@ -234,7 +234,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setZ(-1));
+        const result = rotate(cubes, new D3().setZ(-1));
 
         // prettier-ignore
         const cube3x3x3 = [
@@ -259,7 +259,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setZ(-3));
+        const result = rotate(cubes, new D3().setZ(-3));
 
         // prettier-ignore
         const cube3x3x3 = [
@@ -302,7 +302,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setX(1));
+        const result = rotate(cubes, new D3().setX(1));
 
         // prettier-ignore
         const cube2x2x2 = [
@@ -333,7 +333,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setX(1));
+        const result = rotate(cubes, new D3().setX(1));
 
         const expected = createLayers(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setX(-1), new D3().setZ(1)]);
@@ -348,7 +348,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setX(-1));
+        const result = rotate(cubes, new D3().setX(-1));
 
         const expected = createLayers(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setX(-1), new D3().setZ(-1)]);
@@ -363,7 +363,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setY(1));
+        const result = rotate(cubes, new D3().setY(1));
 
         const expected = createLayers(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setZ(-1), new D3().setY(-1)]);
@@ -378,7 +378,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setY(-1));
+        const result = rotate(cubes, new D3().setY(-1));
 
         const expected = createLayers(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setZ(1), new D3().setY(-1)]);
@@ -393,7 +393,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setZ(1));
+        const result = rotate(cubes, new D3().setZ(1));
 
         const expected = createLayers(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setY(1), new D3().setX(-1)]);
@@ -408,7 +408,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        const result = rotate(cubes, numberOfCubes, new D3().setZ(-1));
+        const result = rotate(cubes, new D3().setZ(-1));
 
         const expected = createLayers(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setY(-1), new D3().setX(1)]);
@@ -444,7 +444,7 @@ describe('CubeUtils', () => {
 
         const rotation = new D3().setX(1);
         let result = animateRotation(cubes, rotation);
-        result = rotate(result, numberOfCubes, rotation);
+        result = rotate(result, rotation);
 
         expect(result.every(cube => cube.rotationAnimation.isNone()));
     });
@@ -454,7 +454,7 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
         const cubes = generateCubes(numberOfCubes, sizeOfCube);
 
-        let result = rotate(cubes, numberOfCubes, new D3().setX(1));
+        let result = rotate(cubes, new D3().setX(1));
         result = animateRotation(result, new D3().setZ(1));
 
         expect(result[0].rotationAnimation.get().toVector()).toEqual([0, 1, 0]);

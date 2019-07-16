@@ -1,5 +1,12 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { animateRotation, calculateCubePosition, generateCubes, rotate, cubeIsTransitioning } from './CubeUtils';
+import {
+    animateRotation,
+    calculateCubePosition,
+    generateCubes,
+    rotate,
+    cubeIsTransitioning,
+    repeatForAllAxes
+} from './CubeUtils';
 import Cube from './Cube';
 import { isFunction } from 'lodash';
 import { settingsContext } from '../context/SettingsContext';
@@ -14,21 +21,27 @@ const RubiksCube: React.FunctionComponent = () => {
 
     const [cubes, updateCubes] = useState<ICube[]>([]);
     const rotateCubes = useCallback(
-        (rotationAxis: D3) => {
+        (rotationAxis: D3, allAxes: boolean = false) => {
             const onTransitionEnd = (event: TransitionEvent) => {
                 if (
                     event.propertyName === 'transform' &&
                     (event.target as HTMLElement).className.includes(cubeIsTransitioning)
                 ) {
                     isTransitioning.current = false;
-                    updateCubes(prevState => rotate(prevState, numberOfCubes, rotationAxis));
+                    updateCubes(prevState =>
+                        allAxes ? repeatForAllAxes(prevState, rotationAxis, rotate) : rotate(prevState, rotationAxis)
+                    );
                     window.removeEventListener('transitionend', onTransitionEnd);
                 }
             };
             window.addEventListener('transitionend', onTransitionEnd);
 
             isTransitioning.current = true;
-            updateCubes(prevState => animateRotation(prevState, rotationAxis));
+            updateCubes(prevState =>
+                allAxes
+                    ? repeatForAllAxes(prevState, rotationAxis, animateRotation)
+                    : animateRotation(prevState, rotationAxis)
+            );
         },
         [numberOfCubes]
     );

@@ -1,4 +1,4 @@
-import { range, mapValues } from 'lodash';
+import { range, mapValues, flow } from 'lodash';
 import Quaternion from 'quaternion';
 import { ICube, Layer, Layers } from './CubeTypes';
 import D3 from './D3';
@@ -87,8 +87,8 @@ export const generateCubes = (numberOfCubes: number, sizeOfCube: number) => {
 };
 
 const degree90 = Math.PI / 2;
-export const rotate = (cubes: ICube[], numberOfCubes: number, rotationAxis: D3): ICube[] => {
-    const translation = numberOfCubes / 2 + 0.5;
+export const rotate = (cubes: ICube[], rotationAxis: D3): ICube[] => {
+    const translation = calculateNumberOfCubes(cubes.length) / 2 + 0.5;
 
     // TODO find out why this is necessary to rotate the axes correctly on z rotations
     const axesRotation = rotationAxis.z !== 0 ? rotationAxis.invert() : rotationAxis;
@@ -147,3 +147,18 @@ export const animateRotation = (cubes: ICube[], rotationAxis: D3): ICube[] =>
             rotationAnimation: Maybe.some(new D3(...rotationAnimation))
         };
     });
+
+const calculateNumberOfCubes = (cubes: number): number => (12 + Math.sqrt(144 - 24 * (8 - cubes))) / 12;
+
+export const repeatForAllAxes = (cubes: ICube[], rotationAxis: D3, f: (c: ICube[], a: D3) => ICube[]) => {
+    const functions = [];
+    const unitAxis = rotationAxis.unit();
+
+    const numberOfCubes = calculateNumberOfCubes(cubes.length);
+
+    for (const n of range(numberOfCubes)) {
+        functions.push((state: ICube[]) => f(state, unitAxis.map(it => it * (n + 1))));
+    }
+
+    return flow(...functions)(cubes);
+};
