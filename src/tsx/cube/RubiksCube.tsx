@@ -10,7 +10,7 @@ const RubiksCube: React.FunctionComponent = () => {
     const { numberOfCubes, size } = useContext(settingsContext);
     const sizeOfCube = size / numberOfCubes;
 
-    const [cubes, updateCubes] = useState<ICube[]>(generateCubes(numberOfCubes, sizeOfCube));
+    const [cubes, updateCubes] = useState<ICube[]>([]);
     const rotateCubes = useCallback(
         (rotationAxis: D3) => {
             updateCubes(prevState => animateRotation(prevState, rotationAxis));
