@@ -150,7 +150,7 @@ export const animateRotation = (cubes: ICube[], rotationAxis: D3): ICube[] =>
 
 const calculateNumberOfCubes = (cubes: number): number => (12 + Math.sqrt(144 - 24 * (8 - cubes))) / 12;
 
-export const repeatForAllAxes = (cubes: ICube[], rotationAxis: D3, f: (c: ICube[], a: D3) => ICube[]) => {
+export const repeatForAllAxes = (cubes: ICube[], rotationAxis: D3, f: (c: ICube[], a: D3) => ICube[]): ICube[] => {
     const functions = [];
     const unitAxis = rotationAxis.unit();
 

@@ -1,5 +1,12 @@
 import D3 from './D3';
-import { animateRotation, calculateCubePosition, createLayers, generateCubes, rotate } from './CubeUtils';
+import {
+    animateRotation,
+    calculateCubePosition,
+    createLayers,
+    generateCubes,
+    repeatForAllAxes,
+    rotate
+} from './CubeUtils';
 import Maybe from '../utils/Maybe';
 import { keys, mapValues } from 'lodash';
 import { Direction, Layer, Layers } from './CubeTypes';
@@ -311,6 +318,25 @@ describe('CubeUtils', () => {
 
             [1,1,1], [2,1,2],
             [1,1,2], [2,2,2]
+        ];
+
+        expect(result.map(cube => cube.axes.toVector())).toEqual(cube2x2x2);
+    });
+
+    it('should rotate the whole cube', () => {
+        const numberOfCubes = 2;
+        const sizeOfCube = 100;
+        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+
+        const result = repeatForAllAxes(cubes, new D3().setX(2), rotate);
+
+        // prettier-ignore
+        const cube2x2x2 = [
+            [1,2,1], [2,2,1],
+            [1,2,2], [2,2,2],
+
+            [1,1,1], [2,1,1],
+            [1,1,2], [2,1,2]
         ];
 
         expect(result.map(cube => cube.axes.toVector())).toEqual(cube2x2x2);
