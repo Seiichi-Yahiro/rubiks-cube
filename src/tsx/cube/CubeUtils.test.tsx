@@ -1,5 +1,5 @@
 import D3 from './D3';
-import { calculateCubePosition, createLayers, generateCubes, rotate } from './CubeUtils';
+import { animateRotation, calculateCubePosition, createLayers, generateCubes, rotate } from './CubeUtils';
 import Maybe from '../utils/Maybe';
 import { keys, mapValues } from 'lodash';
 import { Layers } from './CubeTypes';
@@ -416,5 +416,47 @@ describe('CubeUtils', () => {
         expected.LEFT = Maybe.some([new D3().setZ(-1), new D3().setX(1)]);
 
         compareFaceArrows(expected, result[0].faceArrows, result[0].axes);
+    });
+
+    it('should set animationRotation on the correct cubes', () => {
+        const numberOfCubes = 2;
+        const sizeOfCube = 100;
+        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+
+        const rotation = new D3().setX(1);
+        const result = animateRotation(cubes, rotation);
+
+        expect(
+            result.every(cube => {
+                if (cube.axes.hasMatchingAxis(rotation)) {
+                    return cube.rotationAnimation.isSome();
+                } else {
+                    return cube.rotationAnimation.equals(Maybe.none());
+                }
+            })
+        );
+    });
+
+    it('should remove animationRotation on rotate', () => {
+        const numberOfCubes = 2;
+        const sizeOfCube = 100;
+        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+
+        const rotation = new D3().setX(1);
+        let result = animateRotation(cubes, rotation);
+        result = rotate(result, numberOfCubes, rotation);
+
+        expect(result.every(cube => cube.rotationAnimation.isNone()));
+    });
+
+    it('should correctly calculate animationRotation', () => {
+        const numberOfCubes = 2;
+        const sizeOfCube = 100;
+        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+
+        let result = rotate(cubes, numberOfCubes, new D3().setX(1));
+        result = animateRotation(result, new D3().setZ(1));
+
+        expect(result[0].rotationAnimation.get().toVector()).toEqual([0, 1, 0]);
     });
 });
