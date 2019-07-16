@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { keys } from 'lodash';
 import { defaultColors, transitionedCubeClass } from './CubeUtils';
 import { Face, Layer, Layers } from './CubeTypes';
@@ -6,6 +6,7 @@ import D3 from './D3';
 import Arrows from './Arrows';
 import Maybe from '../utils/Maybe';
 import Quaternion from 'quaternion';
+import { settingsContext } from '../context/SettingsContext';
 
 interface CubeProps {
     size: number;
@@ -26,6 +27,8 @@ const Cube: React.FunctionComponent<CubeProps> = ({
     rotate,
     colors: colorProps = defaultColors
 }) => {
+    const { rotationAnimationSpeed } = useContext(settingsContext);
+
     const faces: Layers<Face> = useMemo(() => {
         const colors: Layers<string> = {
             ...defaultColors,
@@ -66,7 +69,7 @@ const Cube: React.FunctionComponent<CubeProps> = ({
         width: size,
         height: size,
         position: 'absolute',
-        transition: rotationAnimation.isSome() ? 'transform 1s' : 'unset'
+        transition: rotationAnimation.isSome() ? `transform ${rotationAnimationSpeed}ms` : 'unset'
     };
 
     return (

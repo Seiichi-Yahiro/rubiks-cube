@@ -3,7 +3,7 @@ import Range from './Range';
 import { settingsContext } from '../context/SettingsContext';
 
 const Interface: React.FunctionComponent = () => {
-    const { numberOfCubes, size, setSettings } = useContext(settingsContext);
+    const { numberOfCubes, size, rotationAnimationSpeed, setSettings } = useContext(settingsContext);
 
     return (
         <div className="app__interface">
@@ -23,6 +23,14 @@ const Interface: React.FunctionComponent = () => {
                     max={600}
                     value={size}
                     onChange={event => setSettings({ size: Number(event.target.value) })}
+                />
+                <Range
+                    text="Animation speed:"
+                    min={250}
+                    max={2000}
+                    step={50}
+                    value={rotationAnimationSpeed}
+                    onChange={event => setSettings({ rotationAnimationSpeed: Number(event.target.value) })}
                 />
             </div>
         </div>

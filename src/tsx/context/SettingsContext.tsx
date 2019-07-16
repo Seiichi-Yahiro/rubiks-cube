@@ -5,11 +5,13 @@ import useComplexState from '../hooks/useComplexState';
 interface Settings {
     numberOfCubes: number;
     size: number;
+    rotationAnimationSpeed: number;
 }
 
 const initialSettings: Settings = {
     numberOfCubes: 3,
-    size: 300
+    size: 300,
+    rotationAnimationSpeed: 1000
 };
 
 export const settingsContext = createContext({
