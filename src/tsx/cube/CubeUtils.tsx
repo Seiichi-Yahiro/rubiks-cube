@@ -46,9 +46,10 @@ export const generateCubes = (numberOfCubes: number, sizeOfCube: number) => {
                     id: axes.clone(),
                     colors: {},
                     translation: calculateCubePosition(axes, numberOfCubes, sizeOfCube),
-                    rotation: () => new Quaternion(),
+                    rotation: new Quaternion(),
                     axes,
-                    faceArrows: createLayers(Maybe.none<[D3, D3]>())
+                    faceArrows: createLayers(Maybe.none<[D3, D3]>()),
+                    rotationAnimation: Maybe.none()
                 };
 
                 if (z === 1) {
@@ -101,9 +102,6 @@ export const rotate = (cubes: ICube[], numberOfCubes: number, rotationAxis: D3):
             .add(translation)
             .map(Math.round);
 
-        const currentRotation = cube.rotation(1);
-        const slerp = currentRotation.slerp(currentRotation.mul(rotationAxis.toQuaternion(degree90)));
-
         const newFaceArrows = mapValues(cube.faceArrows, maybeArrowRotations =>
             maybeArrowRotations.let(
                 arrowRotations =>
@@ -120,8 +118,30 @@ export const rotate = (cubes: ICube[], numberOfCubes: number, rotationAxis: D3):
         return {
             ...cube,
             axes: newAxes,
-            rotation: slerp,
-            faceArrows: newFaceArrows
+            rotation: cube.rotation.mul(rotationAxis.toQuaternion(degree90)),
+            faceArrows: newFaceArrows,
+            rotationAnimation: Maybe.none()
         };
     });
 };
+
+export const animateRotation = (cubes: ICube[], rotationAxis: D3): ICube[] =>
+    cubes.map(cube => {
+        if (!cube.axes.hasMatchingAxis(rotationAxis)) {
+            return cube;
+        }
+
+        const rotationAnimation = cube.rotation
+            .rotateVector(
+                rotationAxis
+                    .unit()
+                    .invert()
+                    .toVector()
+            )
+            .map(Math.round);
+
+        return {
+            ...cube,
+            rotationAnimation: Maybe.some(new D3(...rotationAnimation))
+        };
+    });

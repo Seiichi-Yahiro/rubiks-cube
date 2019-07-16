@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { calculateCubePosition, generateCubes, rotate } from './CubeUtils';
+import { animateRotation, calculateCubePosition, generateCubes, rotate } from './CubeUtils';
 import Cube from './Cube';
 import { isFunction } from 'lodash';
 import { settingsContext } from '../context/SettingsContext';
@@ -11,9 +11,16 @@ const RubiksCube: React.FunctionComponent = () => {
     const sizeOfCube = size / numberOfCubes;
 
     const [cubes, updateCubes] = useState<ICube[]>(generateCubes(numberOfCubes, sizeOfCube));
-    const rotateCubes = useCallback((axis: D3) => updateCubes(prevState => rotate(prevState, numberOfCubes, axis)), [
-        numberOfCubes
-    ]);
+    const rotateCubes = useCallback(
+        (rotationAxis: D3) => {
+            updateCubes(prevState => animateRotation(prevState, rotationAxis));
+
+            setTimeout(() => {
+                updateCubes(prevState => rotate(prevState, numberOfCubes, rotationAxis));
+            }, 1000);
+        },
+        [numberOfCubes]
+    );
 
     useEffect(() => {
         updateCubes(generateCubes(numberOfCubes, sizeOfCube));
@@ -79,6 +86,7 @@ const RubiksCube: React.FunctionComponent = () => {
                             key={index}
                             size={sizeOfCube}
                             rotation={cube.rotation}
+                            rotationAnimation={cube.rotationAnimation}
                             translation={cube.translation}
                             colors={cube.colors}
                             faceArrows={cube.faceArrows}

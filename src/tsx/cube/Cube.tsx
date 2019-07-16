@@ -1,16 +1,17 @@
 import React, { useMemo } from 'react';
 import { keys } from 'lodash';
 import { defaultColors } from './CubeUtils';
-import useCubeAnimation from './useCubeAnimation';
-import { Face, Layer, Layers, Slerp } from './CubeTypes';
+import { Face, Layer, Layers } from './CubeTypes';
 import D3 from './D3';
 import Arrows from './Arrows';
 import Maybe from '../utils/Maybe';
+import Quaternion from 'quaternion';
 
 interface CubeProps {
     size: number;
     translation: D3;
-    rotation: Slerp;
+    rotation: Quaternion;
+    rotationAnimation: Maybe<D3>;
     faceArrows: Layers<Maybe<[D3, D3]>>;
     rotate: (axis: D3) => void;
     colors?: Partial<Layers<string>>;
@@ -20,6 +21,7 @@ const Cube: React.FunctionComponent<CubeProps> = ({
     size,
     translation,
     rotation,
+    rotationAnimation,
     faceArrows,
     rotate,
     colors: colorProps = defaultColors
@@ -55,16 +57,16 @@ const Cube: React.FunctionComponent<CubeProps> = ({
             .reduce((a, b) => ({ ...a, ...b })) as Layers<Face>;
     }, [colorProps, size, faceArrows]);
 
-    const percent = useCubeAnimation(0.05, rotation);
+    const rotationMatrix3d = rotation.toMatrix4().map(Math.round);
+    const rotate3d = rotationAnimation.let(it => it.toVector().join(',')).getOrElse('0,0,0');
 
     const cubeStyle: React.CSSProperties = {
         transformStyle: 'preserve-3d',
-        transform: `matrix3d(${rotation(percent).toMatrix4()}) translate3d(${translation.x}px, ${translation.y}px, ${
-            translation.z
-        }px)`,
+        transform: `matrix3d(${rotationMatrix3d}) rotate3d(${rotate3d}, 90deg) translate3d(${translation.x}px, ${translation.y}px, ${translation.z}px)`,
         width: size,
         height: size,
-        position: 'absolute'
+        position: 'absolute',
+        transition: rotationAnimation.isSome() ? 'transform 1s' : 'unset'
     };
 
     return (

@@ -7,8 +7,6 @@ export enum Direction {
     ANTI_CLOCKWISE = -1
 }
 
-export type Slerp = (pct: number) => Quaternion;
-
 export enum Layer {
     FRONT = 'FRONT',
     BACK = 'BACK',
@@ -22,7 +20,8 @@ export interface ICube {
     id: D3;
     colors: Partial<Layers<string>>;
     translation: D3;
-    rotation: Slerp;
+    rotation: Quaternion;
+    rotationAnimation: Maybe<D3>;
     axes: D3;
     faceArrows: Layers<Maybe<[D3, D3]>>; // Up and Right Axes
 }
