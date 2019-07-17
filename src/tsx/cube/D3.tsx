@@ -1,4 +1,4 @@
-import { Layer, Move } from './CubeTypes';
+import { Layer, IMove } from './CubeTypes';
 import Quaternion from 'quaternion';
 import { zip } from 'lodash';
 
@@ -7,7 +7,7 @@ class D3 {
     private _y: number = 0;
     private _z: number = 0;
 
-    static fromMove({ layer, direction }: Move, numberOfCubes: number): D3 {
+    static fromMove({ layer, direction }: IMove, numberOfCubes: number): D3 {
         switch (
             layer // tslint:disable-line
         ) {

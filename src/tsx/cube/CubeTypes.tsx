@@ -41,9 +41,9 @@ export interface Face {
     arrowAxes: Maybe<[D3, D3]>;
 }
 
-export interface Move {
+export interface IMove {
     layer: Layer;
     direction: Direction;
 }
 
-export type MoveSet = Array<Move>;
+export type IMoveSet = Array<IMove>;

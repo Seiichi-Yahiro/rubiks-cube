@@ -1,7 +1,7 @@
 import D3 from './D3';
 import Maybe from '../utils/Maybe';
 import React from 'react';
-import Arrows from './Arrows';
+import FaceArrows from './FaceArrows';
 
 interface FacesProps {
     size: number;
@@ -30,7 +30,7 @@ const Faces: React.FunctionComponent<FacesProps> = ({ size, color, rotation, rot
         >
             {arrowAxes.letOrElse(
                 ([up, right]) => (
-                    <Arrows
+                    <FaceArrows
                         up={() => rotate(up)}
                         down={() => rotate(up.invert())}
                         right={() => rotate(right)}

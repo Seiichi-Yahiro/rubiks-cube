@@ -2,17 +2,18 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import {
     animateRotation,
     calculateCubePosition,
-    generateCubes,
-    rotate,
     cubeIsTransitioning,
-    repeatForAllAxes
+    generateCubes,
+    repeatForAllAxes,
+    rotate
 } from './CubeUtils';
 import Cube from './Cube';
 import { isFunction } from 'lodash';
 import { settingsContext } from '../context/SettingsContext';
-import { ICube, Move, MoveSet } from './CubeTypes';
+import { ICube, IMove, IMoveSet } from './CubeTypes';
 import D3 from './D3';
 import createClassName from '../utils/createClassName';
+import CubeArrows from './CubeArrows';
 
 const RubiksCube: React.FunctionComponent = () => {
     const { numberOfCubes, size } = useContext(settingsContext);
@@ -56,8 +57,8 @@ const RubiksCube: React.FunctionComponent = () => {
         );
     }, [size]);
 
-    const applyMoveSet = async (moveSet: MoveSet | (() => MoveSet), wait: number = 1000, loop: boolean = false) => {
-        const applyMove = (move: Move) =>
+    const applyMoveSet = async (moveSet: IMoveSet | (() => IMoveSet), wait: number = 1000, loop: boolean = false) => {
+        const applyMove = (move: IMove) =>
             new Promise(resolve => {
                 setTimeout(() => {
                     rotateCubes(D3.fromMove(move, numberOfCubes));
@@ -108,18 +109,26 @@ const RubiksCube: React.FunctionComponent = () => {
                 style={cubeStyle}
             >
                 <div style={cubesWrapperStyle}>
-                    {cubes.map((cube, index) => (
-                        <Cube
-                            key={index}
-                            size={sizeOfCube}
-                            rotation={cube.rotation}
-                            rotationAnimation={cube.rotationAnimation}
-                            translation={cube.translation}
-                            colors={cube.colors}
-                            faceArrows={cube.faceArrows}
-                            rotate={rotateCubes}
-                        />
-                    ))}
+                    <div>
+                        {cubes.map((cube, index) => (
+                            <Cube
+                                key={index}
+                                size={sizeOfCube}
+                                rotation={cube.rotation}
+                                rotationAnimation={cube.rotationAnimation}
+                                translation={cube.translation}
+                                colors={cube.colors}
+                                faceArrows={cube.faceArrows}
+                                rotate={rotateCubes}
+                            />
+                        ))}
+                    </div>
+                    <CubeArrows
+                        size={size}
+                        sizeOfCube={sizeOfCube}
+                        numberOfCubes={numberOfCubes}
+                        rotate={rotateCubes}
+                    />
                 </div>
             </div>
         </div>
