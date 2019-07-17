@@ -31,9 +31,9 @@ const Interface: React.FunctionComponent = () => {
                     defaultValue={size}
                     onChangeCommitted={(event, value) => setSettings({ size: value as number })}
                 />
-                <Typography id="animation-speed-slider">Animation speed</Typography>
+                <Typography id="animation-duration-slider">Animation duration</Typography>
                 <Slider
-                    aria-labelledby="animation-speed-slider"
+                    aria-labelledby="animation-duration-slider"
                     valueLabelDisplay="auto"
                     min={250}
                     max={2000}
