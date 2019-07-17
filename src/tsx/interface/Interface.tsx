@@ -1,47 +1,38 @@
-import React, { useContext } from 'react';
-import { settingsContext } from '../context/SettingsContext';
-import { Typography } from '@material-ui/core';
-import Slider from '@material-ui/core/Slider';
+import React, { useCallback, useState } from 'react';
+import List from '@material-ui/core/List';
+import Settings from './Settings';
+import './Interface.scss';
+import Algorithms from './Algorithms';
+import Category from './Category';
+
+enum Menu {
+    ALGORITHMS = 'ALGORITHMS',
+    SETTINGS = 'SETTINGS',
+    NONE = 'NONE'
+}
 
 const Interface: React.FunctionComponent = () => {
-    const { numberOfCubes, size, rotationAnimationSpeed, setSettings } = useContext(settingsContext);
+    const [openedMenu, setOpenedMenu] = useState(Menu.SETTINGS);
+    const setMenu = (menu: Menu) => setOpenedMenu(prevMenu => (prevMenu === menu ? Menu.NONE : menu));
 
     return (
         <div className="app__interface">
-            <div>
-                <Typography id="number-of-cubes-slider">Number of cubes</Typography>
-                <Slider
-                    aria-labelledby="number-of-cubes-slider"
-                    valueLabelDisplay="auto"
-                    marks={true}
-                    step={1}
-                    min={2}
-                    max={5}
-                    defaultValue={numberOfCubes}
-                    onChangeCommitted={(event, value) => setSettings({ numberOfCubes: value as number })}
-                />
-                <Typography id="size-slider">Size</Typography>
-                <Slider
-                    aria-labelledby="size-slider"
-                    valueLabelDisplay="auto"
-                    marks={true}
-                    step={50}
-                    min={100}
-                    max={600}
-                    defaultValue={size}
-                    onChangeCommitted={(event, value) => setSettings({ size: value as number })}
-                />
-                <Typography id="animation-duration-slider">Animation duration</Typography>
-                <Slider
-                    aria-labelledby="animation-duration-slider"
-                    valueLabelDisplay="auto"
-                    min={250}
-                    max={2000}
-                    step={50}
-                    defaultValue={rotationAnimationSpeed}
-                    onChangeCommitted={(event, value) => setSettings({ rotationAnimationSpeed: value as number })}
-                />
-            </div>
+            <List>
+                <Category
+                    isOpen={openedMenu === Menu.ALGORITHMS}
+                    setMenu={useCallback(() => setMenu(Menu.ALGORITHMS), [])}
+                    title="Algorithms"
+                >
+                    <Algorithms />
+                </Category>
+                <Category
+                    isOpen={openedMenu === Menu.SETTINGS}
+                    setMenu={useCallback(() => setMenu(Menu.SETTINGS), [])}
+                    title="Settings"
+                >
+                    <Settings />
+                </Category>
+            </List>
         </div>
     );
 };

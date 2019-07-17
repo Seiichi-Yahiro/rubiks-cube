@@ -1,0 +1,8 @@
+.interface-list {
+    &__item {
+        &--settings {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
