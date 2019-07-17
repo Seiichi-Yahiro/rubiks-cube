@@ -35,9 +35,11 @@ export const calculateCubePosition = (d3: D3, numberOfCubes: number, sizeOfCube:
 export const generateCubes = (numberOfCubes: number, sizeOfCube: number) => {
     const cubes: ICube[] = [];
 
-    for (let z of range(1, numberOfCubes + 1)) {
-        for (let y of range(1, numberOfCubes + 1)) {
-            for (let x of range(1, numberOfCubes + 1)) {
+    const indexes = range(1, numberOfCubes + 1);
+
+    for (const z of indexes) {
+        for (const y of indexes) {
+            for (const x of indexes) {
                 if (![x, y, z].some(dimension => dimension === 1 || dimension === numberOfCubes)) {
                     continue;
                 }
@@ -151,14 +153,13 @@ export const animateRotation = (cubes: ICube[], rotationAxis: D3): ICube[] =>
 const calculateNumberOfCubes = (cubes: number): number => (12 + Math.sqrt(144 - 24 * (8 - cubes))) / 12;
 
 export const repeatForAllAxes = (cubes: ICube[], rotationAxis: D3, f: (c: ICube[], a: D3) => ICube[]): ICube[] => {
-    const functions = [];
     const unitAxis = rotationAxis.unit();
-
     const numberOfCubes = calculateNumberOfCubes(cubes.length);
 
-    for (const n of range(numberOfCubes)) {
-        functions.push((state: ICube[]) => f(state, unitAxis.map(it => it * (n + 1))));
-    }
+    const functions = range(numberOfCubes).map(n => {
+        const axis = unitAxis.map(it => it * (n + 1));
+        return (state: ICube[]) => f(state, axis);
+    });
 
     return flow(...functions)(cubes);
 };
