@@ -9,11 +9,12 @@ interface CategoryProps {
     isOpen: boolean;
     setMenu: () => void;
     title: string;
+    style?: React.CSSProperties;
 }
 
-const Category: React.FunctionComponent<CategoryProps> = ({ title, isOpen, setMenu, children }) => (
+const Category: React.FunctionComponent<CategoryProps> = ({ title, isOpen, setMenu, children, style }) => (
     <>
-        <ListItem button={true} onClick={setMenu}>
+        <ListItem button={true} onClick={setMenu} selected={isOpen} className="interface-list__item" style={style}>
             <ListItemText primary={title} />
             {isOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItem>

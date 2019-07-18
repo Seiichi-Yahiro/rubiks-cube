@@ -46,4 +46,9 @@ export interface IMove {
     direction: Direction;
 }
 
+export interface INamedMove extends IMove {
+    name: string;
+}
+
 export type IMoveSet = Array<IMove>;
+export type INamedMoveSet = Array<INamedMove>;

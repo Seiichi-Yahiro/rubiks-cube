@@ -1,5 +1,7 @@
 .interface-list {
     &__item {
+        padding-left: 5px;
+
         &--settings {
             display: flex;
             flex-direction: column;

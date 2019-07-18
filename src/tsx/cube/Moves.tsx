@@ -1,76 +1,81 @@
 import { isNumber, sample, values } from 'lodash';
-import { Direction, IMove, Layer, IMoveSet } from './CubeTypes';
+import { Direction, Layer, IMoveSet, INamedMove } from './CubeTypes';
 
 const randomLayer = (): Layer => sample(values(Layer)) as Layer;
 const randomDirection = (): Direction => (sample(values(Direction).filter(isNumber)) as unknown) as Direction;
 
 export namespace Move {
-    export const F: IMove = {
+    export const F: INamedMove = {
         layer: Layer.FRONT,
-        direction: Direction.CLOCKWISE
+        direction: Direction.CLOCKWISE,
+        name: 'F'
     };
 
-    export const FP: IMove = {
+    export const FP: INamedMove = {
         layer: Layer.FRONT,
-        direction: Direction.ANTI_CLOCKWISE
+        direction: Direction.ANTI_CLOCKWISE,
+        name: "F'"
     };
 
-    export const B: IMove = {
+    export const B: INamedMove = {
         layer: Layer.BACK,
-        direction: Direction.CLOCKWISE
+        direction: Direction.CLOCKWISE,
+        name: 'B'
     };
 
-    export const BP: IMove = {
+    export const BP: INamedMove = {
         layer: Layer.BACK,
-        direction: Direction.ANTI_CLOCKWISE
+        direction: Direction.ANTI_CLOCKWISE,
+        name: "B'"
     };
 
-    export const U: IMove = {
+    export const U: INamedMove = {
         layer: Layer.UP,
-        direction: Direction.CLOCKWISE
+        direction: Direction.CLOCKWISE,
+        name: 'U'
     };
 
-    export const UP: IMove = {
+    export const UP: INamedMove = {
         layer: Layer.UP,
-        direction: Direction.ANTI_CLOCKWISE
+        direction: Direction.ANTI_CLOCKWISE,
+        name: "U'"
     };
 
-    export const D: IMove = {
+    export const D: INamedMove = {
         layer: Layer.DOWN,
-        direction: Direction.CLOCKWISE
+        direction: Direction.CLOCKWISE,
+        name: 'D'
     };
 
-    export const DP: IMove = {
+    export const DP: INamedMove = {
         layer: Layer.DOWN,
-        direction: Direction.ANTI_CLOCKWISE
+        direction: Direction.ANTI_CLOCKWISE,
+        name: "D'"
     };
 
-    export const L: IMove = {
+    export const L: INamedMove = {
         layer: Layer.LEFT,
-        direction: Direction.CLOCKWISE
+        direction: Direction.CLOCKWISE,
+        name: 'L'
     };
 
-    export const LP: IMove = {
+    export const LP: INamedMove = {
         layer: Layer.LEFT,
-        direction: Direction.ANTI_CLOCKWISE
+        direction: Direction.ANTI_CLOCKWISE,
+        name: "L'"
     };
 
-    export const R: IMove = {
+    export const R: INamedMove = {
         layer: Layer.RIGHT,
-        direction: Direction.CLOCKWISE
+        direction: Direction.CLOCKWISE,
+        name: 'R'
     };
 
-    export const RP: IMove = {
+    export const RP: INamedMove = {
         layer: Layer.RIGHT,
-        direction: Direction.ANTI_CLOCKWISE
+        direction: Direction.ANTI_CLOCKWISE,
+        name: "R'"
     };
-}
-
-export namespace MoveSet {
-    // @ts-ignore
-    const { F, FP, B, BP, U, UP, D, DP, L, LP, R, RP } = Move;
-
-    export const sexy: IMoveSet = [R, U, RP, UP];
 }
 
 export const randomMove = (): IMoveSet => [
