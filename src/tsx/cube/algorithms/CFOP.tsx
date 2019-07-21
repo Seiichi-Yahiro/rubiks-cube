@@ -1,8 +1,4 @@
-import { Move } from '../Moves';
 import { IAlgorithm } from './AlgorithmTypes';
-
-// @ts-ignore
-const { F, FP, B, BP, U, UP, D, DP, L, LP, R, RP } = Move;
 
 const Look2CFOP: IAlgorithm = {
     name: '2 Look CFOP',
@@ -15,16 +11,18 @@ const Look2CFOP: IAlgorithm = {
                     children: [
                         {
                             name: 'Dot',
-                            children: []
+                            children: [],
+                            notation: "F (R U R' U') F' f (R U R' U') f'"
                         },
                         {
                             name: 'L',
-                            children: []
+                            children: [],
+                            notation: "f (R U R' U') f'"
                         },
                         {
                             name: 'Line',
                             children: [],
-                            moves: []
+                            notation: "F (R U R' U') F'"
                         }
                     ]
                 },
@@ -34,12 +32,12 @@ const Look2CFOP: IAlgorithm = {
                         {
                             name: 'H',
                             children: [],
-                            moves: []
+                            notation: "F (R U R' U')3 F'"
                         },
                         {
                             name: 'Pi',
                             children: [],
-                            moves: []
+                            notation: "R U2 (R2 U' R2 U' R2) U2 R"
                         }
                     ]
                 },
@@ -48,11 +46,13 @@ const Look2CFOP: IAlgorithm = {
                     children: [
                         {
                             name: 'Sune',
-                            children: []
+                            children: [],
+                            notation: "R U R' U R U2 R'"
                         },
                         {
                             name: 'Anti-Sune',
-                            children: []
+                            children: [],
+                            notation: "L' U' L U' L' U2 L"
                         }
                     ]
                 },
@@ -61,15 +61,18 @@ const Look2CFOP: IAlgorithm = {
                     children: [
                         {
                             name: 'L',
-                            children: []
+                            children: [],
+                            notation: "x (R' U R D') (R' U' R D) x'"
                         },
                         {
                             name: 'T',
-                            children: []
+                            children: [],
+                            notation: "x (L U R' U') (L' U R U') x'"
                         },
                         {
                             name: 'U',
-                            children: []
+                            children: [],
+                            notation: "R2 D R' U2 R D' R' U2 R'"
                         }
                     ]
                 }
@@ -83,11 +86,13 @@ const Look2CFOP: IAlgorithm = {
                     children: [
                         {
                             name: 'Diagonal',
-                            children: []
+                            children: [],
+                            notation: "(F R U' R' U' R U R' F') (R U R' U' R' F R F')"
                         },
                         {
                             name: 'Adjacent',
-                            children: []
+                            children: [],
+                            notation: "(R U R' U' R' F) R2 (U' R' U' R U R' F')"
                         }
                     ]
                 },
@@ -99,11 +104,13 @@ const Look2CFOP: IAlgorithm = {
                             children: [
                                 {
                                     name: 'Right to Left',
-                                    children: []
+                                    children: [],
+                                    notation: "R U' R U R U R U' R' U' R2"
                                 },
                                 {
                                     name: 'Left to Right',
-                                    children: []
+                                    children: [],
+                                    notation: "R2 U R U R' U' R' U' R' U R'"
                                 }
                             ]
                         },
@@ -112,11 +119,13 @@ const Look2CFOP: IAlgorithm = {
                             children: [
                                 {
                                     name: 'Cross',
-                                    children: []
+                                    children: [],
+                                    notation: "M2 U' M2 U2 M2 U' M2"
                                 },
                                 {
                                     name: 'Diagonal',
-                                    children: []
+                                    children: [],
+                                    notation: "M' U' M2 U' M2 U' M' U2 M2"
                                 }
                             ]
                         }
@@ -128,40 +137,3 @@ const Look2CFOP: IAlgorithm = {
 };
 
 export default Look2CFOP;
-
-/*
-Edges:
-Dot: F (R U R' U') F' f (R U R' U') f'
-L shape: f (R U R' U') f'
-Line: F (R U R' U') F'
-
-No corners solved:
-H: F (R U R' U')3 F'
-Pi: R U2 (R2 U' R2 U' R2) U2 R
-
-1 corner solved:
-Sune: R U R' U R U2 R'
-Antisune: L' U' L U' L' U2 L
-
-2 corners solved:
-L: x (R' U R D') (R' U' R D) [x means face the bottom]
-T: x (L U R' U') (L' U R U') [x means face the bottom]
-U: R2 D R' U2 R D' R' U2 R'
-
-
-
-
-Diagonal Corner Swap:
-(F R U' R' U' R U R' F') (R U R' U' R' F R F')
-Adjacent Corner Swap:
-(R U R' U' R' F) R2 (U' R' U' R U R' F')
-
-3-Edges:
-1. R U' R U R U R U' R' U' R2
-2. R2 U R U R' U' R' U' R' U R'
-
-4-Edges:
-1. M2 U' M2 U2 M2 U' M2
-2. M' U' M2 U' M2 U' M' U2 M2 (M' goes upwards)
-
-*/

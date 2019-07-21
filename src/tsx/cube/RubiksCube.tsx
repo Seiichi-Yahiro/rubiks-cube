@@ -7,10 +7,9 @@ import { ICube } from './CubeTypes';
 import { D3Group } from './D3';
 import createClassName from '../utils/createClassName';
 import CubeArrows from './CubeArrows';
-import { interpretNotation } from './algorithms/Interpreter';
 
 const RubiksCube: React.FunctionComponent = () => {
-    const { numberOfCubes, size } = useContext(settingsContext);
+    const { numberOfCubes, size, moveGenerator } = useContext(settingsContext);
     const sizeOfCube = size / numberOfCubes;
     const isTransitioning = useRef(false);
 
@@ -69,8 +68,10 @@ const RubiksCube: React.FunctionComponent = () => {
     };
 
     useEffect(() => {
-        applyMoveSet([...interpretNotation('', numberOfCubes)], 1200, false);
-    }, []);
+        moveGenerator.ifIsSome(generator => {
+            applyMoveSet([...generator], 1200, false);
+        });
+    }, [moveGenerator]);
 
     const cubeSceneStyle: React.CSSProperties = {
         width: size,
