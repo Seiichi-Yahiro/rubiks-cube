@@ -1,19 +1,13 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import {
-    animateRotation,
-    calculateCubePosition,
-    cubeIsTransitioning,
-    generateCubes,
-    repeatForAllAxes,
-    rotate
-} from './CubeUtils';
+import { animateRotation, calculateCubePosition, cubeIsTransitioning, generateCubes, rotate } from './CubeUtils';
 import Cube from './Cube';
 import { isFunction } from 'lodash';
 import { settingsContext } from '../context/SettingsContext';
-import { ICube, IMove, IMoveSet } from './CubeTypes';
-import D3 from './D3';
+import { ICube } from './CubeTypes';
+import { D3Group } from './D3';
 import createClassName from '../utils/createClassName';
 import CubeArrows from './CubeArrows';
+import { interpretNotation } from './algorithms/Interpreter';
 
 const RubiksCube: React.FunctionComponent = () => {
     const { numberOfCubes, size } = useContext(settingsContext);
@@ -22,27 +16,21 @@ const RubiksCube: React.FunctionComponent = () => {
 
     const [cubes, updateCubes] = useState<ICube[]>([]);
     const rotateCubes = useCallback(
-        (rotationAxis: D3, allAxes: boolean = false) => {
+        (rotationAxes: D3Group) => {
             const onTransitionEnd = (event: TransitionEvent) => {
                 if (
                     event.propertyName === 'transform' &&
                     (event.target as HTMLElement).className.includes(cubeIsTransitioning)
                 ) {
                     isTransitioning.current = false;
-                    updateCubes(prevState =>
-                        allAxes ? repeatForAllAxes(prevState, rotationAxis, rotate) : rotate(prevState, rotationAxis)
-                    );
+                    updateCubes(prevState => rotate(prevState, numberOfCubes, rotationAxes));
                     window.removeEventListener('transitionend', onTransitionEnd);
                 }
             };
             window.addEventListener('transitionend', onTransitionEnd);
 
             isTransitioning.current = true;
-            updateCubes(prevState =>
-                allAxes
-                    ? repeatForAllAxes(prevState, rotationAxis, animateRotation)
-                    : animateRotation(prevState, rotationAxis)
-            );
+            updateCubes(prevState => animateRotation(prevState, rotationAxes));
         },
         [numberOfCubes]
     );
@@ -53,15 +41,18 @@ const RubiksCube: React.FunctionComponent = () => {
 
     useEffect(() => {
         updateCubes(prevState =>
-            prevState.map(cube => ({ ...cube, translation: calculateCubePosition(cube.id, numberOfCubes, sizeOfCube) }))
+            prevState.map(cube => ({
+                ...cube,
+                translation: calculateCubePosition(cube.id, numberOfCubes, sizeOfCube)
+            }))
         );
     }, [size]);
 
-    const applyMoveSet = async (moveSet: IMoveSet | (() => IMoveSet), wait: number = 1000, loop: boolean = false) => {
-        const applyMove = (move: IMove) =>
+    const applyMoveSet = async (moveSet: D3Group[] | (() => D3Group[]), wait: number = 1000, loop: boolean = false) => {
+        const applyMove = (move: D3Group) =>
             new Promise(resolve => {
                 setTimeout(() => {
-                    rotateCubes(D3.fromMove(move, numberOfCubes));
+                    rotateCubes(move);
                     resolve();
                 }, wait);
             });
@@ -78,7 +69,7 @@ const RubiksCube: React.FunctionComponent = () => {
     };
 
     useEffect(() => {
-        // applyMoveSet(random, 1000, false);
+        applyMoveSet([...interpretNotation('', numberOfCubes)], 1200, false);
     }, []);
 
     const cubeSceneStyle: React.CSSProperties = {
@@ -105,7 +96,9 @@ const RubiksCube: React.FunctionComponent = () => {
     return (
         <div className="app__cube" style={cubeSceneStyle}>
             <div
-                className={createClassName({ 'rubiks-cube--is-transitioning': isTransitioning.current })}
+                className={createClassName({
+                    'rubiks-cube--is-transitioning': isTransitioning.current
+                })}
                 style={cubeStyle}
             >
                 <div style={cubesWrapperStyle}>

@@ -1,7 +1,7 @@
-import { range, mapValues, flow } from 'lodash';
+import { flow, mapValues, range } from 'lodash';
 import Quaternion from 'quaternion';
 import { ICube, Layer, Layers } from './CubeTypes';
-import D3 from './D3';
+import D3, { D3Group } from './D3';
 import Maybe from '../utils/Maybe';
 
 export const cubeIsTransitioning = 'cube--is-transitioning';
@@ -89,77 +89,78 @@ export const generateCubes = (numberOfCubes: number, sizeOfCube: number) => {
 };
 
 const degree90 = Math.PI / 2;
-export const rotate = (cubes: ICube[], rotationAxis: D3): ICube[] => {
-    const translation = calculateNumberOfCubes(cubes.length) / 2 + 0.5;
+export const rotate = (cubes: ICube[], numberOfCubes: number, rotationAxes: D3Group): ICube[] => {
+    const translation = numberOfCubes / 2 + 0.5;
 
-    // TODO find out why this is necessary to rotate the axes correctly on z rotations
-    const axesRotation = rotationAxis.z !== 0 ? rotationAxis.invert() : rotationAxis;
+    const multiAxisRotation: (cube: ICube) => ICube = flow(
+        ...rotationAxes.map(rotationAxis => {
+            // TODO find out why this is necessary to rotate the axes correctly on z rotations
+            const axesRotation = rotationAxis.z !== 0 ? rotationAxis.invert() : rotationAxis;
+            return rotateAxis(rotationAxis, axesRotation, translation);
+        })
+    );
 
-    return cubes.map(cube => {
-        if (!cube.axes.hasMatchingAxis(rotationAxis)) {
-            return cube;
-        }
-
-        const newAxes = cube.axes
-            .sub(translation)
-            .rotate(axesRotation, degree90)
-            .add(translation)
-            .map(Math.round);
-
-        const newFaceArrows = mapValues(cube.faceArrows, maybeArrowRotations =>
-            maybeArrowRotations.let(
-                arrowRotations =>
-                    arrowRotations.map(arrowRotation =>
-                        arrowRotation
-                            .unit()
-                            .rotate(rotationAxis.invert(), degree90)
-                            .map(Math.round)
-                            .mul(newAxes)
-                    ) as [D3, D3]
-            )
-        );
-
-        return {
-            ...cube,
-            axes: newAxes,
-            rotation: cube.rotation.mul(rotationAxis.toQuaternion(degree90)),
-            faceArrows: newFaceArrows,
-            rotationAnimation: Maybe.none()
-        };
-    });
+    return cubes.map(multiAxisRotation);
 };
 
-export const animateRotation = (cubes: ICube[], rotationAxis: D3): ICube[] =>
-    cubes.map(cube => {
-        if (!cube.axes.hasMatchingAxis(rotationAxis)) {
-            return cube;
-        }
+const rotateAxis = (rotationAxis: D3, axesRotation: D3, translation: number) => (cube: ICube): ICube => {
+    if (!cube.axes.hasMatchingAxis(rotationAxis)) {
+        return cube;
+    }
 
-        const rotationAnimation = cube.rotation
-            .rotateVector(
-                rotationAxis
-                    .unit()
-                    .invert()
-                    .toVector()
-            )
-            .map(Math.round);
+    const newAxes = cube.axes
+        .sub(translation)
+        .rotate(axesRotation, degree90)
+        .add(translation)
+        .map(Math.round);
 
-        return {
-            ...cube,
-            rotationAnimation: Maybe.some(new D3(...rotationAnimation))
-        };
-    });
+    const newFaceArrows = mapValues(cube.faceArrows, maybeArrowRotations =>
+        maybeArrowRotations.let(
+            arrowRotations =>
+                arrowRotations.map(arrowRotation =>
+                    arrowRotation
+                        .unit()
+                        .rotate(rotationAxis.invert(), degree90)
+                        .map(Math.round)
+                        .mul(newAxes)
+                ) as [D3, D3]
+        )
+    );
 
-const calculateNumberOfCubes = (cubes: number): number => (12 + Math.sqrt(144 - 24 * (8 - cubes))) / 12;
-
-export const repeatForAllAxes = (cubes: ICube[], rotationAxis: D3, f: (c: ICube[], a: D3) => ICube[]): ICube[] => {
-    const unitAxis = rotationAxis.unit();
-    const numberOfCubes = calculateNumberOfCubes(cubes.length);
-
-    const functions = range(numberOfCubes).map(n => {
-        const axis = unitAxis.map(it => it * (n + 1));
-        return (state: ICube[]) => f(state, axis);
-    });
-
-    return flow(...functions)(cubes);
+    return {
+        ...cube,
+        axes: newAxes,
+        rotation: cube.rotation.mul(rotationAxis.toQuaternion(degree90)),
+        faceArrows: newFaceArrows,
+        rotationAnimation: Maybe.none()
+    };
 };
+
+export const animateRotation = (cubes: ICube[], rotationAxes: D3Group): ICube[] => {
+    const multiAxisRotation: (cube: ICube) => ICube = flow(
+        ...rotationAxes.map(rotationAxis => animateRotationAxis(rotationAxis))
+    );
+    return cubes.map(multiAxisRotation);
+};
+
+const animateRotationAxis = (rotationAxis: D3) => (cube: ICube): ICube => {
+    if (!cube.axes.hasMatchingAxis(rotationAxis)) {
+        return cube;
+    }
+
+    const rotationAnimation = cube.rotation
+        .rotateVector(
+            rotationAxis
+                .unit()
+                .invert()
+                .toVector()
+        )
+        .map(Math.round);
+
+    return {
+        ...cube,
+        rotationAnimation: Maybe.some(new D3(...rotationAnimation))
+    };
+};
+
+// const calculateNumberOfCubes = (cubes: number): number => (12 + Math.sqrt(144 - 24 * (8 - cubes))) / 12;

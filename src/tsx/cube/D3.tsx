@@ -1,4 +1,3 @@
-import { Layer, IMove } from './CubeTypes';
 import Quaternion from 'quaternion';
 import { zip } from 'lodash';
 
@@ -6,25 +5,6 @@ class D3 {
     private _x: number = 0;
     private _y: number = 0;
     private _z: number = 0;
-
-    static fromMove({ layer, direction }: IMove, numberOfCubes: number): D3 {
-        switch (
-            layer // tslint:disable-line
-        ) {
-            case Layer.FRONT:
-                return new D3().setZ(-1 * direction);
-            case Layer.BACK:
-                return new D3().setZ(numberOfCubes * direction);
-            case Layer.UP:
-                return new D3().setY(1 * direction);
-            case Layer.DOWN:
-                return new D3().setY(-numberOfCubes * direction);
-            case Layer.LEFT:
-                return new D3().setX(1 * direction);
-            case Layer.RIGHT:
-                return new D3().setX(-numberOfCubes * direction);
-        }
-    }
 
     get x() {
         return this._x;
@@ -68,11 +48,11 @@ class D3 {
     }
 
     add(plus: number): D3 {
-        return new D3(...this.toVector().map(it => it + plus));
+        return this.map(it => it + plus);
     }
 
     sub(minus: number): D3 {
-        return new D3(...this.toVector().map(it => it - minus));
+        return this.map(it => it - minus);
     }
 
     mul(other: D3): D3 {
@@ -105,5 +85,7 @@ class D3 {
         return new D3(...this.toVector());
     }
 }
+
+export type D3Group = D3[];
 
 export default D3;

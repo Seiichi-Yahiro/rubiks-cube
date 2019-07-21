@@ -1,9 +1,9 @@
 import React from 'react';
-import D3 from './D3';
-import { Move } from './Moves';
+import { D3Group } from './D3';
 import Arrow from './Arrow';
 import './Arrows.scss';
 import { Direction } from './CubeTypes';
+import { interpretNotation } from './algorithms/Interpreter';
 
 enum Side {
     FRONT = 'rotateY(0deg)',
@@ -14,7 +14,7 @@ interface CubeArrowsProps {
     size: number;
     sizeOfCube: number;
     numberOfCubes: number;
-    rotate: (axis: D3, allAxes: boolean) => void;
+    rotate: (axes: D3Group) => void;
 }
 
 const CubeArrows: React.FunctionComponent<CubeArrowsProps> = ({ size, sizeOfCube, numberOfCubes, rotate }) => {
@@ -35,30 +35,20 @@ const CubeArrows: React.FunctionComponent<CubeArrowsProps> = ({ size, sizeOfCube
         </svg>
     );
 
+    const rotateWithNotation = (notation: string) => rotate([...interpretNotation(notation, numberOfCubes)][0]);
+
     return (
         <div className="cube-arrows-svg__wrapper">
-            <div
-                onClick={() => rotate(D3.fromMove(Move.FP, numberOfCubes), true)}
-                style={style(Side.FRONT, Direction.ANTI_CLOCKWISE)}
-            >
+            <div onClick={() => rotateWithNotation("Z'")} style={style(Side.FRONT, Direction.ANTI_CLOCKWISE)}>
                 {arrow}
             </div>
-            <div
-                onClick={() => rotate(D3.fromMove(Move.F, numberOfCubes), true)}
-                style={style(Side.FRONT, Direction.CLOCKWISE)}
-            >
+            <div onClick={() => rotateWithNotation('Z')} style={style(Side.FRONT, Direction.CLOCKWISE)}>
                 {arrow}
             </div>
-            <div
-                onClick={() => rotate(D3.fromMove(Move.RP, numberOfCubes), true)}
-                style={style(Side.RIGHT, Direction.ANTI_CLOCKWISE)}
-            >
+            <div onClick={() => rotateWithNotation("X'")} style={style(Side.RIGHT, Direction.ANTI_CLOCKWISE)}>
                 {arrow}
             </div>
-            <div
-                onClick={() => rotate(D3.fromMove(Move.R, numberOfCubes), true)}
-                style={style(Side.RIGHT, Direction.CLOCKWISE)}
-            >
+            <div onClick={() => rotateWithNotation('X')} style={style(Side.RIGHT, Direction.CLOCKWISE)}>
                 {arrow}
             </div>
         </div>

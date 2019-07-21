@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from 'react';
 import { keys } from 'lodash';
 import { defaultColors, cubeIsTransitioning } from './CubeUtils';
 import { Face, Layer, Layers } from './CubeTypes';
-import D3 from './D3';
+import D3, { D3Group } from './D3';
 import Maybe from '../utils/Maybe';
 import Quaternion from 'quaternion';
 import { settingsContext } from '../context/SettingsContext';
@@ -15,7 +15,7 @@ interface CubeProps {
     rotation: Quaternion;
     rotationAnimation: Maybe<D3>;
     faceArrows: Layers<Maybe<[D3, D3]>>;
-    rotate: (axis: D3) => void;
+    rotate: (axis: D3Group) => void;
     colors: Partial<Layers<string>>;
 }
 
@@ -65,7 +65,12 @@ const Cube: React.FunctionComponent<CubeProps> = ({
     };
 
     return (
-        <div className={createClassName({ [cubeIsTransitioning]: rotationAnimation.isSome() })} style={cubeStyle}>
+        <div
+            className={createClassName({
+                [cubeIsTransitioning]: rotationAnimation.isSome()
+            })}
+            style={cubeStyle}
+        >
             {keys(faceRotations).map(key => (
                 <Faces
                     key={faceRotations[key]}

@@ -29,6 +29,21 @@ class Maybe<T> {
     }
 
     /**
+     * Get the first maybe that is some otherwise return none
+     * @param maybeList
+     */
+    static or<T>(...maybeList: Array<(() => Maybe<T>) | Maybe<T>>): Maybe<T> {
+        for (const maybeF of maybeList) {
+            const maybe = isFunction(maybeF) ? maybeF() : maybeF;
+            if (maybe.isSome()) {
+                return maybe;
+            }
+        }
+
+        return Maybe.none();
+    }
+
+    /**
      * Check if maybe is a some
      */
     isSome = (): boolean => !this.isNone();
@@ -87,7 +102,7 @@ class Maybe<T> {
      * @param onSome - a function receiving the value returning a new value
      * @param defaultValue - default value (or function that creates a default value) to be used if value is none
      */
-    letOrElse<U>(onSome: (value: T) => U, defaultValue: (() => U) | U) {
+    letOrElse<U>(onSome: (value: T) => U, defaultValue: (() => U) | U): U {
         if (this.isNone()) {
             return isFunction(defaultValue) ? defaultValue() : defaultValue;
         }
@@ -98,27 +113,25 @@ class Maybe<T> {
     /**
      * If value of the maybe is some call the provided function
      * @param onSome - function receiving the value
-     * @param onNone - optional function called if value is none
      */
-    ifIsSome = (onSome: (value: T) => void, onNone?: () => void): void => {
+    ifIsSome = (onSome: (value: T) => void): this => {
         if (this.isSome()) {
             onSome(this.value!);
-        } else if (onNone) {
-            onNone();
         }
+
+        return this;
     };
 
     /**
      * If value of the maybe is none call the provided function
      * @param onNone - function called if value is none
-     * @param onSome - optional function that is called if value is some receiving the value
      */
-    ifIsNone = (onNone: () => void, onSome?: (value: T) => void): void => {
+    ifIsNone = (onNone: () => void): this => {
         if (this.isNone()) {
             onNone();
-        } else if (onSome) {
-            onSome(this.value!);
         }
+
+        return this;
     };
 
     /**

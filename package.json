@@ -19,6 +19,7 @@
         "@types/react-dom": "16.8.4",
         "acorn": "6.2.0",
         "awesome-typescript-loader": "5.2.1",
+        "core-js": "^3.1.4",
         "css-loader": "3.0.0",
         "enzyme": "3.10.0",
         "enzyme-adapter-react-16": "1.14.0",
@@ -45,7 +46,7 @@
         "start": "webpack-dev-server --config webpack.config.js",
         "build:dev": "rimraf build && webpack --config webpack.config.js",
         "pretty-quick": "pretty-quick",
-        "test": "jest --coverage"
+        "test": "rimraf build/coverage && jest --coverage"
     },
     "husky": {
         "hooks": {

@@ -17,7 +17,8 @@
         "suppressImplicitAnyIndexErrors": true,
         "noUnusedLocals": true,
         "esModuleInterop": true,
-        "incremental": true
+        "incremental": true,
+        "downlevelIteration": true
     },
     "exclude": ["node_modules", "build", "webpack.config.js"],
     "include": ["src"]
