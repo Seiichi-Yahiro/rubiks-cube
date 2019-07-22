@@ -88,9 +88,7 @@ class TokenInterpreter extends Interpreter<Token> {
             } else if (type === TokenType.NUMBER) {
                 d3Groups = this.handleSlice(Number(value));
             } else if (type === TokenType.OPENING_PARENTHESIS) {
-                for (const d3Group of this.handleLoop()) {
-                    yield d3Group;
-                }
+                yield* this.handleLoop();
                 continue;
             }
 
@@ -149,10 +147,7 @@ class TokenInterpreter extends Interpreter<Token> {
                     .getOrElse(1);
 
                 for (const _ of range(loops)) {
-                    const iterator = new TokenInterpreter(enclosedTokens, this.numberOfCubes).iterator();
-                    for (const d3Group of iterator) {
-                        yield d3Group;
-                    }
+                    yield* new TokenInterpreter(enclosedTokens, this.numberOfCubes).iterator();
                 }
 
                 break;
