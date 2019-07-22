@@ -2,14 +2,15 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import { animateRotation, calculateCubePosition, cubeIsTransitioning, generateCubes, rotate } from './CubeUtils';
 import Cube from './Cube';
 import { isFunction } from 'lodash';
-import { settingsContext } from '../context/SettingsContext';
+import { AlgoritmStatus, settingsContext } from '../context/SettingsContext';
 import { ICube } from './CubeTypes';
 import { D3Group } from './D3';
 import createClassName from '../utils/createClassName';
 import CubeArrows from './CubeArrows';
+import { interpretNotation } from './algorithms/Interpreter';
 
 const RubiksCube: React.FunctionComponent = () => {
-    const { numberOfCubes, size, moveGenerator } = useContext(settingsContext);
+    const { numberOfCubes, size, algorithm, setSettings } = useContext(settingsContext);
     const sizeOfCube = size / numberOfCubes;
     const isTransitioning = useRef(false);
 
@@ -62,16 +63,24 @@ const RubiksCube: React.FunctionComponent = () => {
             await applyMove(move);
         }
 
-        if (loop) {
+        setSettings(prevState => ({
+            algorithm: {
+                ...prevState.algorithm,
+                status: AlgoritmStatus.STOPPED
+            }
+        }));
+
+        /*if (loop) {
             applyMoveSet(moveSet, wait, loop);
-        }
+        }*/
     };
 
     useEffect(() => {
-        moveGenerator.ifIsSome(generator => {
+        if (algorithm.status === AlgoritmStatus.START) {
+            const generator = interpretNotation(algorithm.notation, numberOfCubes);
             applyMoveSet([...generator], 1200, false);
-        });
-    }, [moveGenerator]);
+        }
+    }, [algorithm.status]);
 
     const cubeSceneStyle: React.CSSProperties = {
         width: size,

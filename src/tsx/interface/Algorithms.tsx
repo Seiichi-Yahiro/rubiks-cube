@@ -5,9 +5,7 @@ import Look2CFOP from '../cube/algorithms/CFOP';
 import Category from './Category';
 import { IAlgorithm } from '../cube/algorithms/AlgorithmTypes';
 import Misc from '../cube/algorithms/Misc';
-import { settingsContext } from '../context/SettingsContext';
-import { interpretNotation } from '../cube/algorithms/Interpreter';
-import Maybe from '../utils/Maybe';
+import { AlgoritmStatus, settingsContext } from '../context/SettingsContext';
 
 const categories = [Look2CFOP, Misc];
 
@@ -41,8 +39,8 @@ interface RecursiveChildProps extends IAlgorithm {
 }
 
 const RecursiveChild: React.FunctionComponent<RecursiveChildProps> = React.memo(
-    ({ name, children, notation, onClick, isOpen, depth }) => {
-        const { setSettings, numberOfCubes } = useContext(settingsContext);
+    ({ name, children, notation = '', onClick, isOpen, depth }) => {
+        const { setSettings } = useContext(settingsContext);
         const [openedMenu, setOpenedMenu] = useState('');
         const onChildClick = useCallback(
             (menu: string) => setOpenedMenu(prevMenu => (prevMenu === menu ? '' : menu)),
@@ -73,15 +71,14 @@ const RecursiveChild: React.FunctionComponent<RecursiveChildProps> = React.memo(
                 </Category>
             );
         } else {
-            const generator = interpretNotation(notation || '', numberOfCubes);
-            const maybeGenerator = Maybe.some(generator);
+            const onAlgorithmClick = () => setSettings({ algorithm: { notation, status: AlgoritmStatus.STOPPED } });
 
             return (
                 <ListItem
                     className="interface-list__item interface-list__item--moves"
                     style={style}
                     button={true}
-                    onClick={() => setSettings({ moveGenerator: maybeGenerator })}
+                    onClick={onAlgorithmClick}
                 >
                     <ListItemText primary={name} secondary={notation} />
                 </ListItem>

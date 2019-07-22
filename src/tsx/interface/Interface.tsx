@@ -4,6 +4,8 @@ import Settings from './Settings';
 import './Interface.scss';
 import Algorithms from './Algorithms';
 import Category from './Category';
+import AlgorithmPlayer from './AlgorithmPlayer';
+import { ListItem } from '@material-ui/core';
 
 enum Menu {
     ALGORITHMS = 'ALGORITHMS',
@@ -18,6 +20,9 @@ const Interface: React.FunctionComponent = () => {
     return (
         <div className="app__interface">
             <List>
+                <ListItem className="interface-list__item">
+                    <AlgorithmPlayer />
+                </ListItem>
                 <Category
                     isOpen={openedMenu === Menu.ALGORITHMS}
                     setMenu={useCallback(() => setMenu(Menu.ALGORITHMS), [])}
