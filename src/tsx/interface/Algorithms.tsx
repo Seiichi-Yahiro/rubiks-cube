@@ -5,7 +5,7 @@ import Look2CFOP from '../cube/algorithms/CFOP';
 import Category from './Category';
 import { IAlgorithm } from '../cube/algorithms/AlgorithmTypes';
 import Misc from '../cube/algorithms/Misc';
-import { AlgoritmStatus, settingsContext } from '../context/SettingsContext';
+import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
 
 const categories = [Look2CFOP, Misc];
 
@@ -40,7 +40,7 @@ interface RecursiveChildProps extends IAlgorithm {
 
 const RecursiveChild: React.FunctionComponent<RecursiveChildProps> = React.memo(
     ({ name, children, notation = '', onClick, isOpen, depth }) => {
-        const { setSettings } = useContext(settingsContext);
+        const { setAlgorithmPlayerState } = useContext(algorithmPlayerContext);
         const [openedMenu, setOpenedMenu] = useState('');
         const onChildClick = useCallback(
             (menu: string) => setOpenedMenu(prevMenu => (prevMenu === menu ? '' : menu)),
@@ -71,7 +71,7 @@ const RecursiveChild: React.FunctionComponent<RecursiveChildProps> = React.memo(
                 </Category>
             );
         } else {
-            const onAlgorithmClick = () => setSettings({ algorithm: { notation, status: AlgoritmStatus.STOPPED } });
+            const onAlgorithmClick = () => setAlgorithmPlayerState({ notation, status: AlgorithmStatus.STOPPED });
 
             return (
                 <ListItem

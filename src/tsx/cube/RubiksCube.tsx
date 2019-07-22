@@ -1,51 +1,86 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { animateRotation, calculateCubePosition, cubeIsTransitioning, generateCubes, rotate } from './CubeUtils';
 import Cube from './Cube';
 import { isFunction } from 'lodash';
-import { AlgoritmStatus, settingsContext } from '../context/SettingsContext';
+import { settingsContext } from '../context/SettingsContext';
 import { ICube } from './CubeTypes';
 import { D3Group } from './D3';
 import createClassName from '../utils/createClassName';
 import CubeArrows from './CubeArrows';
 import { interpretNotation } from './algorithms/Interpreter';
+import useOnUpdate from '../hooks/useOnUpdate';
+import useComplexState from '../hooks/useComplexState';
+import Maybe from '../utils/Maybe';
+import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
+
+interface RubiksCubeState {
+    cubes: ICube[];
+    isTransitioning: boolean;
+    rotationAnimation: Maybe<D3Group>;
+}
 
 const RubiksCube: React.FunctionComponent = () => {
-    const { numberOfCubes, size, algorithm, setSettings } = useContext(settingsContext);
-    const sizeOfCube = size / numberOfCubes;
-    const isTransitioning = useRef(false);
+    const { numberOfCubes, size } = useContext(settingsContext);
+    const { notation: playerNotation, status: playerStatus, setAlgorithmPlayerState } = useContext(
+        algorithmPlayerContext
+    );
 
-    const [cubes, updateCubes] = useState<ICube[]>([]);
+    const sizeOfCube = size / numberOfCubes;
+
+    const [state, setState] = useComplexState<RubiksCubeState>(() => ({
+        cubes: generateCubes(numberOfCubes, sizeOfCube),
+        isTransitioning: false,
+        rotationAnimation: Maybe.none()
+    }));
+
     const rotateCubes = useCallback(
         (rotationAxes: D3Group) => {
+            setState(({ cubes }) => ({
+                cubes: animateRotation(cubes, rotationAxes),
+                isTransitioning: true,
+                rotationAnimation: Maybe.some(rotationAxes)
+            }));
+        },
+        [numberOfCubes]
+    );
+
+    useOnUpdate(() => {
+        if (state.isTransitioning) {
             const onTransitionEnd = (event: TransitionEvent) => {
                 if (
                     event.propertyName === 'transform' &&
                     (event.target as HTMLElement).className.includes(cubeIsTransitioning)
                 ) {
-                    isTransitioning.current = false;
-                    updateCubes(prevState => rotate(prevState, numberOfCubes, rotationAxes));
                     window.removeEventListener('transitionend', onTransitionEnd);
+                    setState(({ cubes, rotationAnimation }) => ({
+                        cubes: rotate(cubes, numberOfCubes, rotationAnimation.get()),
+                        isTransitioning: false,
+                        rotationAnimation: Maybe.none()
+                    }));
                 }
             };
+
             window.addEventListener('transitionend', onTransitionEnd);
 
-            isTransitioning.current = true;
-            updateCubes(prevState => animateRotation(prevState, rotationAxes));
-        },
-        [numberOfCubes]
-    );
+            return () => {
+                window.removeEventListener('transitionend', onTransitionEnd);
+            };
+        }
 
-    useEffect(() => {
-        updateCubes(generateCubes(numberOfCubes, sizeOfCube));
+        return;
+    }, [state.isTransitioning]);
+
+    useOnUpdate(() => {
+        setState({ cubes: generateCubes(numberOfCubes, sizeOfCube) });
     }, [numberOfCubes]);
 
-    useEffect(() => {
-        updateCubes(prevState =>
-            prevState.map(cube => ({
+    useOnUpdate(() => {
+        setState(({ cubes }) => ({
+            cubes: cubes.map(cube => ({
                 ...cube,
                 translation: calculateCubePosition(cube.id, numberOfCubes, sizeOfCube)
             }))
-        );
+        }));
     }, [size]);
 
     const applyMoveSet = async (moveSet: D3Group[] | (() => D3Group[]), wait: number = 1000, loop: boolean = false) => {
@@ -63,12 +98,9 @@ const RubiksCube: React.FunctionComponent = () => {
             await applyMove(move);
         }
 
-        setSettings(prevState => ({
-            algorithm: {
-                ...prevState.algorithm,
-                status: AlgoritmStatus.STOPPED
-            }
-        }));
+        setAlgorithmPlayerState({
+            status: AlgorithmStatus.STOPPED
+        });
 
         /*if (loop) {
             applyMoveSet(moveSet, wait, loop);
@@ -76,11 +108,11 @@ const RubiksCube: React.FunctionComponent = () => {
     };
 
     useEffect(() => {
-        if (algorithm.status === AlgoritmStatus.START) {
-            const generator = interpretNotation(algorithm.notation, numberOfCubes);
+        if (playerStatus === AlgorithmStatus.START) {
+            const generator = interpretNotation(playerNotation, numberOfCubes);
             applyMoveSet([...generator], 1200, false);
         }
-    }, [algorithm.status]);
+    }, [playerStatus]);
 
     const cubeSceneStyle: React.CSSProperties = {
         width: size,
@@ -107,13 +139,13 @@ const RubiksCube: React.FunctionComponent = () => {
         <div className="app__cube" style={cubeSceneStyle}>
             <div
                 className={createClassName({
-                    'rubiks-cube--is-transitioning': isTransitioning.current
+                    'rubiks-cube--is-transitioning': state.isTransitioning
                 })}
                 style={cubeStyle}
             >
                 <div style={cubesWrapperStyle}>
                     <div>
-                        {cubes.map((cube, index) => (
+                        {state.cubes.map((cube, index) => (
                             <Cube
                                 key={index}
                                 size={sizeOfCube}

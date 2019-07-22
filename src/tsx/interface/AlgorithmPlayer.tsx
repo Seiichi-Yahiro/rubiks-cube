@@ -3,29 +3,27 @@ import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import './AlgorithmPlayer.scss';
-import { AlgoritmStatus, settingsContext } from '../context/SettingsContext';
+import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
 
 const AlgorithmPlayer: React.FunctionComponent = () => {
-    const { setSettings, algorithm } = useContext(settingsContext);
-    const [notation, setNotation] = useState(algorithm.notation);
+    const { notation: playerNotation, status, setAlgorithmPlayerState } = useContext(algorithmPlayerContext);
+    const [notation, setNotation] = useState(playerNotation);
     const updateNotation = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => setNotation(event.target.value),
         []
     );
     const onPlay = () => {
-        if (notation.length !== 0 && algorithm.status === AlgoritmStatus.STOPPED) {
-            setSettings({
-                algorithm: {
-                    notation,
-                    status: AlgoritmStatus.START
-                }
+        if (notation.length !== 0 && status === AlgorithmStatus.STOPPED) {
+            setAlgorithmPlayerState({
+                notation: notation,
+                status: AlgorithmStatus.START
             });
         }
     };
 
     useEffect(() => {
-        setNotation(algorithm.notation);
-    }, [algorithm.notation]);
+        setNotation(playerNotation);
+    }, [playerNotation]);
 
     return (
         <div className="algorithm-player">
