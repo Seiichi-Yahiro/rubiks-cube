@@ -14,7 +14,8 @@ enum TokenType {
     PRIME = 'p',
     NUMBER = 'd',
     OPENING_PARENTHESIS = '(',
-    CLOSING_PARENTHESIS = ')'
+    CLOSING_PARENTHESIS = ')',
+    SEPARATOR = ','
 }
 
 interface Token {
@@ -22,35 +23,39 @@ interface Token {
     value: string;
 }
 
-const tokenizerRegex = new RegExp(/[LRUDFBMESXYZW'()]|\d+/gi);
+const tokenizerRegex = new RegExp(/[LRUDFBMESXYZW'()]|\d+|[^LRUDFBMESXYZW'()\d]+/gi);
 const letterRegex = new RegExp(/[LRUDFBMESXYZ]/i);
 
 const tokenizeNotation = (notation: string): Token[] =>
     Maybe.of(notation.match(tokenizerRegex))
         .getOrElse([])
         .map(match => {
-            const token: Token = {
-                value: match,
-                type: TokenType.NUMBER
-            };
+            let tokenType;
 
             if (letterRegex.test(match)) {
                 if (match === match.toUpperCase()) {
-                    token.type = TokenType.UPPER_CASE_LETTER;
+                    tokenType = TokenType.UPPER_CASE_LETTER;
                 } else {
-                    token.type = TokenType.LOWER_CASE_LETTER;
+                    tokenType = TokenType.LOWER_CASE_LETTER;
                 }
             } else if (match === "'") {
-                token.type = TokenType.PRIME;
+                tokenType = TokenType.PRIME;
             } else if (match === '(') {
-                token.type = TokenType.OPENING_PARENTHESIS;
+                tokenType = TokenType.OPENING_PARENTHESIS;
             } else if (match === ')') {
-                token.type = TokenType.CLOSING_PARENTHESIS;
+                tokenType = TokenType.CLOSING_PARENTHESIS;
             } else if (match === 'w' || match === 'W') {
-                token.type = TokenType.WIDE;
+                tokenType = TokenType.WIDE;
+            } else if (Number(match)) {
+                tokenType = TokenType.NUMBER;
+            } else {
+                tokenType = TokenType.SEPARATOR;
             }
 
-            return token;
+            return {
+                value: match,
+                type: tokenType
+            };
         });
 
 abstract class Interpreter<T> {

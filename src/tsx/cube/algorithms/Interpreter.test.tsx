@@ -701,4 +701,10 @@ describe('Interpreter', () => {
         const result = [...interpretNotation('FR)2', numberOfCubes)].map(d3group => d3group.map(d3 => d3.toVector()));
         expect(result).toEqual([[[0, 0, -1]], [[-3, 0, 0]]]);
     });
+
+    it('should handle separators correctly', () => {
+        const numberOfCubes = 3;
+        const result = [...interpretNotation('F 2F', numberOfCubes)].map(d3group => d3group.map(d3 => d3.toVector()));
+        expect(result).toEqual([[[0, 0, -1]], [[0, 0, -2]]]);
+    });
 });
