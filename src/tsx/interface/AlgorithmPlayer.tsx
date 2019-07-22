@@ -13,7 +13,7 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
         []
     );
     const onPlay = () => {
-        if (notation.length !== 0 && status === AlgorithmStatus.STOPPED) {
+        if (notation.length !== 0) {
             setAlgorithmPlayerState({
                 notation: notation,
                 status: AlgorithmStatus.START
@@ -29,7 +29,7 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
         <div className="algorithm-player">
             <TextField label="Algorithm" fullWidth={true} value={notation} onChange={updateNotation} />
             <div>
-                <IconButton onClick={onPlay}>
+                <IconButton onClick={onPlay} disabled={status !== AlgorithmStatus.STOPPED}>
                     <PlayArrow />
                 </IconButton>
             </div>

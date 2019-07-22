@@ -4,9 +4,12 @@ import { Typography } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
 
 const Settings: React.FunctionComponent = () => {
     const { numberOfCubes, size, rotationAnimationSpeed, setSettings } = useContext(settingsContext);
+    const { status: playerStatus } = useContext(algorithmPlayerContext);
+    const isDisabled = playerStatus !== AlgorithmStatus.STOPPED;
 
     return (
         <List>
@@ -21,6 +24,7 @@ const Settings: React.FunctionComponent = () => {
                     max={5}
                     defaultValue={numberOfCubes}
                     onChangeCommitted={(event, value) => setSettings({ numberOfCubes: value as number })}
+                    disabled={isDisabled}
                 />
             </ListItem>
             <ListItem className="interface-list__item--settings">
@@ -34,6 +38,7 @@ const Settings: React.FunctionComponent = () => {
                     max={600}
                     defaultValue={size}
                     onChangeCommitted={(event, value) => setSettings({ size: value as number })}
+                    disabled={isDisabled}
                 />
             </ListItem>
             <ListItem className="interface-list__item--settings">
@@ -46,6 +51,7 @@ const Settings: React.FunctionComponent = () => {
                     step={50}
                     defaultValue={rotationAnimationSpeed}
                     onChangeCommitted={(event, value) => setSettings({ rotationAnimationSpeed: value as number })}
+                    disabled={isDisabled}
                 />
             </ListItem>
         </List>

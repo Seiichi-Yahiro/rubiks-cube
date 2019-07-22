@@ -1,7 +1,6 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { animateRotation, calculateCubePosition, cubeIsTransitioning, generateCubes, rotate } from './CubeUtils';
 import Cube from './Cube';
-import { isFunction } from 'lodash';
 import { settingsContext } from '../context/SettingsContext';
 import { ICube } from './CubeTypes';
 import { D3Group } from './D3';
@@ -17,6 +16,7 @@ interface RubiksCubeState {
     cubes: ICube[];
     isTransitioning: boolean;
     rotationAnimation: Maybe<D3Group>;
+    moveGenerator: Maybe<IterableIterator<D3Group>>;
 }
 
 const RubiksCube: React.FunctionComponent = () => {
@@ -30,19 +30,63 @@ const RubiksCube: React.FunctionComponent = () => {
     const [state, setState] = useComplexState<RubiksCubeState>(() => ({
         cubes: generateCubes(numberOfCubes, sizeOfCube),
         isTransitioning: false,
-        rotationAnimation: Maybe.none()
+        rotationAnimation: Maybe.none(),
+        moveGenerator: Maybe.none()
     }));
 
     const rotateCubes = useCallback(
         (rotationAxes: D3Group) => {
-            setState(({ cubes }) => ({
-                cubes: animateRotation(cubes, rotationAxes),
-                isTransitioning: true,
-                rotationAnimation: Maybe.some(rotationAxes)
+            setAlgorithmPlayerState({ status: AlgorithmStatus.START });
+            setState(() => ({
+                moveGenerator: Maybe.some(
+                    (function*() {
+                        yield rotationAxes;
+                    })()
+                )
             }));
         },
         [numberOfCubes]
     );
+
+    useOnUpdate(() => {
+        setState({ cubes: generateCubes(numberOfCubes, sizeOfCube) });
+    }, [numberOfCubes]);
+
+    useOnUpdate(() => {
+        setState(({ cubes }) => ({
+            cubes: cubes.map(cube => ({
+                ...cube,
+                translation: calculateCubePosition(cube.id, numberOfCubes, sizeOfCube)
+            }))
+        }));
+    }, [size]);
+
+    useOnUpdate(() => {
+        if (playerStatus === AlgorithmStatus.START && state.moveGenerator.isNone()) {
+            const generator = interpretNotation(playerNotation, numberOfCubes);
+            setState({
+                moveGenerator: Maybe.some(generator)
+            });
+        }
+    }, [playerStatus]);
+
+    useOnUpdate(() => {
+        if (state.rotationAnimation.isNone() && state.moveGenerator.isSome()) {
+            state.moveGenerator
+                .let(it => it.next().value)
+                .ifIsSome(rotationAxes => {
+                    setState(({ cubes }) => ({
+                        cubes: animateRotation(cubes, rotationAxes),
+                        isTransitioning: true,
+                        rotationAnimation: Maybe.some(rotationAxes)
+                    }));
+                })
+                .ifIsNone(() => {
+                    setState({ moveGenerator: Maybe.none() });
+                    setAlgorithmPlayerState({ status: AlgorithmStatus.STOPPED });
+                });
+        }
+    }, [state.moveGenerator, state.rotationAnimation]);
 
     useOnUpdate(() => {
         if (state.isTransitioning) {
@@ -70,50 +114,6 @@ const RubiksCube: React.FunctionComponent = () => {
         return;
     }, [state.isTransitioning]);
 
-    useOnUpdate(() => {
-        setState({ cubes: generateCubes(numberOfCubes, sizeOfCube) });
-    }, [numberOfCubes]);
-
-    useOnUpdate(() => {
-        setState(({ cubes }) => ({
-            cubes: cubes.map(cube => ({
-                ...cube,
-                translation: calculateCubePosition(cube.id, numberOfCubes, sizeOfCube)
-            }))
-        }));
-    }, [size]);
-
-    const applyMoveSet = async (moveSet: D3Group[] | (() => D3Group[]), wait: number = 1000, loop: boolean = false) => {
-        const applyMove = (move: D3Group) =>
-            new Promise(resolve => {
-                setTimeout(() => {
-                    rotateCubes(move);
-                    resolve();
-                }, wait);
-            });
-
-        const set = isFunction(moveSet) ? moveSet() : moveSet;
-
-        for (const move of set) {
-            await applyMove(move);
-        }
-
-        setAlgorithmPlayerState({
-            status: AlgorithmStatus.STOPPED
-        });
-
-        /*if (loop) {
-            applyMoveSet(moveSet, wait, loop);
-        }*/
-    };
-
-    useEffect(() => {
-        if (playerStatus === AlgorithmStatus.START) {
-            const generator = interpretNotation(playerNotation, numberOfCubes);
-            applyMoveSet([...generator], 1200, false);
-        }
-    }, [playerStatus]);
-
     const cubeSceneStyle: React.CSSProperties = {
         width: size,
         height: size,
@@ -139,7 +139,7 @@ const RubiksCube: React.FunctionComponent = () => {
         <div className="app__cube" style={cubeSceneStyle}>
             <div
                 className={createClassName({
-                    'rubiks-cube--is-transitioning': state.isTransitioning
+                    'rubiks-cube--is-transitioning': state.isTransitioning || playerStatus !== AlgorithmStatus.STOPPED
                 })}
                 style={cubeStyle}
             >
