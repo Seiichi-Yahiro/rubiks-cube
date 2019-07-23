@@ -6,7 +6,6 @@ import { ICube } from './CubeTypes';
 import { D3Group } from './D3';
 import createClassName from '../utils/createClassName';
 import CubeArrows from './CubeArrows';
-import { interpretNotation } from './algorithms/Interpreter';
 import useOnUpdate from '../hooks/useOnUpdate';
 import useComplexState from '../hooks/useComplexState';
 import Maybe from '../utils/Maybe';
@@ -15,14 +14,11 @@ import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPla
 interface RubiksCubeState {
     cubes: ICube[];
     rotationAnimation: Maybe<D3Group>;
-    moveGenerator: Maybe<IterableIterator<D3Group>>;
 }
 
 const RubiksCube: React.FunctionComponent = () => {
     const { numberOfCubes, size } = useContext(settingsContext);
-    const { notation: playerNotation, status: playerStatus, setAlgorithmPlayerState } = useContext(
-        algorithmPlayerContext
-    );
+    const { moveGenerator, status: playerStatus, setAlgorithmPlayerState } = useContext(algorithmPlayerContext);
 
     const sizeOfCube = size / numberOfCubes;
 
@@ -32,19 +28,16 @@ const RubiksCube: React.FunctionComponent = () => {
         moveGenerator: Maybe.none()
     }));
 
-    const rotateCubes = useCallback(
-        (rotationAxes: D3Group) => {
-            setAlgorithmPlayerState({ status: AlgorithmStatus.START });
-            setState({
-                moveGenerator: Maybe.some(
-                    (function*() {
-                        yield rotationAxes;
-                    })()
-                )
-            });
-        },
-        [numberOfCubes]
-    );
+    const rotateCubesOnClick = useCallback((rotationAxes: D3Group) => {
+        const generator = function*() {
+            yield rotationAxes;
+        };
+
+        setAlgorithmPlayerState({
+            status: AlgorithmStatus.PLAYING,
+            moveGenerator: Maybe.some(generator())
+        });
+    }, []);
 
     useOnUpdate(() => {
         setState({ cubes: generateCubes(numberOfCubes, sizeOfCube) });
@@ -60,17 +53,8 @@ const RubiksCube: React.FunctionComponent = () => {
     }, [size]);
 
     useOnUpdate(() => {
-        if (playerStatus === AlgorithmStatus.START && state.moveGenerator.isNone()) {
-            const generator = interpretNotation(playerNotation, numberOfCubes);
-            setState({
-                moveGenerator: Maybe.some(generator)
-            });
-        }
-    }, [playerStatus]);
-
-    useOnUpdate(() => {
-        if (state.rotationAnimation.isNone() && state.moveGenerator.isSome()) {
-            state.moveGenerator
+        if (moveGenerator.isSome() && state.rotationAnimation.isNone()) {
+            moveGenerator
                 .let(it => it.next().value)
                 .ifIsSome(rotationAxes => {
                     setState(({ cubes }) => ({
@@ -79,11 +63,13 @@ const RubiksCube: React.FunctionComponent = () => {
                     }));
                 })
                 .ifIsNone(() => {
-                    setState({ moveGenerator: Maybe.none() });
-                    setAlgorithmPlayerState({ status: AlgorithmStatus.STOPPED });
+                    setAlgorithmPlayerState({
+                        status: AlgorithmStatus.STOPPED,
+                        moveGenerator: Maybe.none()
+                    });
                 });
         }
-    }, [state.moveGenerator, state.rotationAnimation]);
+    }, [moveGenerator, state.rotationAnimation]);
 
     useOnUpdate(() => {
         if (state.rotationAnimation.isSome()) {
@@ -150,7 +136,7 @@ const RubiksCube: React.FunctionComponent = () => {
                                 translation={cube.translation}
                                 colors={cube.colors}
                                 faceArrows={cube.faceArrows}
-                                rotate={rotateCubes}
+                                rotate={rotateCubesOnClick}
                             />
                         ))}
                     </div>
@@ -158,7 +144,7 @@ const RubiksCube: React.FunctionComponent = () => {
                         size={size}
                         sizeOfCube={sizeOfCube}
                         numberOfCubes={numberOfCubes}
-                        rotate={rotateCubes}
+                        rotate={rotateCubesOnClick}
                     />
                 </div>
             </div>

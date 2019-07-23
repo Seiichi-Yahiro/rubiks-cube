@@ -1,20 +1,23 @@
 import React, { createContext } from 'react';
 import useComplexState from '../hooks/useComplexState';
+import { D3Group } from '../cube/D3';
+import Maybe from '../utils/Maybe';
 
 export enum AlgorithmStatus {
     STOPPED = 'STOPPED',
-    START = 'START',
     PLAYING = 'PLAYING'
 }
 
 interface AlgorithmPlayerState {
     notation: string;
     status: AlgorithmStatus;
+    moveGenerator: Maybe<IterableIterator<D3Group>>;
 }
 
 const initialState: AlgorithmPlayerState = {
     notation: '',
-    status: AlgorithmStatus.STOPPED
+    status: AlgorithmStatus.STOPPED,
+    moveGenerator: Maybe.none()
 };
 
 export const algorithmPlayerContext = createContext({

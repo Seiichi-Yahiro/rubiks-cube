@@ -1,11 +1,16 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import './AlgorithmPlayer.scss';
 import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
+import Maybe from '../utils/Maybe';
+import { interpretNotation } from '../cube/algorithms/Interpreter';
+import { settingsContext } from '../context/SettingsContext';
+import useOnUpdate from '../hooks/useOnUpdate';
 
 const AlgorithmPlayer: React.FunctionComponent = () => {
+    const { numberOfCubes } = useContext(settingsContext);
     const { notation: playerNotation, status, setAlgorithmPlayerState } = useContext(algorithmPlayerContext);
     const [notation, setNotation] = useState(playerNotation);
     const updateNotation = useCallback(
@@ -15,13 +20,13 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
     const onPlay = () => {
         if (notation.length !== 0) {
             setAlgorithmPlayerState({
-                notation: notation,
-                status: AlgorithmStatus.START
+                status: AlgorithmStatus.PLAYING,
+                moveGenerator: Maybe.some(interpretNotation(notation, numberOfCubes))
             });
         }
     };
 
-    useEffect(() => {
+    useOnUpdate(() => {
         setNotation(playerNotation);
     }, [playerNotation]);
 
