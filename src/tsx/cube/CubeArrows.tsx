@@ -18,8 +18,8 @@ interface CubeArrowsProps {
 }
 
 const CubeArrows: React.FunctionComponent<CubeArrowsProps> = ({ size, sizeOfCube, numberOfCubes, rotate }) => {
+    const halfSize = size / 2;
     const style = (side: Side, direction: Direction): React.CSSProperties => {
-        const halfSize = size / 2;
         return {
             width: sizeOfCube,
             transform: `${side} translate3d(0, ${halfSize}px, ${halfSize}px) rotateX(-90deg) translateY(-${sizeOfCube /
@@ -28,6 +28,14 @@ const CubeArrows: React.FunctionComponent<CubeArrowsProps> = ({ size, sizeOfCube
             position: 'absolute'
         };
     };
+
+    const yStyle = (side: Side, direction: Direction): React.CSSProperties => ({
+        width: sizeOfCube,
+        transform: `${side} rotateZ(${90 * direction}deg) translate3d(0, -${sizeOfCube *
+            (numberOfCubes / 2 + 0.5)}px, ${halfSize}px)`,
+        cursor: 'pointer',
+        position: 'absolute'
+    });
 
     const arrow = (
         <svg className="cube-arrows-svg" viewBox="-50 -50 100 100">
@@ -49,6 +57,12 @@ const CubeArrows: React.FunctionComponent<CubeArrowsProps> = ({ size, sizeOfCube
                 {arrow}
             </div>
             <div onClick={() => rotateWithNotation('X')} style={style(Side.RIGHT, Direction.CLOCKWISE)}>
+                {arrow}
+            </div>
+            <div onClick={() => rotateWithNotation("Y'")} style={yStyle(Side.RIGHT, Direction.CLOCKWISE)}>
+                {arrow}
+            </div>
+            <div onClick={() => rotateWithNotation('Y')} style={yStyle(Side.FRONT, Direction.ANTI_CLOCKWISE)}>
                 {arrow}
             </div>
         </div>
