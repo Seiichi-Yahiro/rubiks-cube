@@ -14,7 +14,6 @@ import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPla
 
 interface RubiksCubeState {
     cubes: ICube[];
-    isTransitioning: boolean;
     rotationAnimation: Maybe<D3Group>;
     moveGenerator: Maybe<IterableIterator<D3Group>>;
 }
@@ -29,7 +28,6 @@ const RubiksCube: React.FunctionComponent = () => {
 
     const [state, setState] = useComplexState<RubiksCubeState>(() => ({
         cubes: generateCubes(numberOfCubes, sizeOfCube),
-        isTransitioning: false,
         rotationAnimation: Maybe.none(),
         moveGenerator: Maybe.none()
     }));
@@ -37,13 +35,13 @@ const RubiksCube: React.FunctionComponent = () => {
     const rotateCubes = useCallback(
         (rotationAxes: D3Group) => {
             setAlgorithmPlayerState({ status: AlgorithmStatus.START });
-            setState(() => ({
+            setState({
                 moveGenerator: Maybe.some(
                     (function*() {
                         yield rotationAxes;
                     })()
                 )
-            }));
+            });
         },
         [numberOfCubes]
     );
@@ -77,7 +75,6 @@ const RubiksCube: React.FunctionComponent = () => {
                 .ifIsSome(rotationAxes => {
                     setState(({ cubes }) => ({
                         cubes: animateRotation(cubes, rotationAxes),
-                        isTransitioning: true,
                         rotationAnimation: Maybe.some(rotationAxes)
                     }));
                 })
@@ -89,7 +86,7 @@ const RubiksCube: React.FunctionComponent = () => {
     }, [state.moveGenerator, state.rotationAnimation]);
 
     useOnUpdate(() => {
-        if (state.isTransitioning) {
+        if (state.rotationAnimation.isSome()) {
             const onTransitionEnd = (event: TransitionEvent) => {
                 if (
                     event.propertyName === 'transform' &&
@@ -98,7 +95,6 @@ const RubiksCube: React.FunctionComponent = () => {
                     window.removeEventListener('transitionend', onTransitionEnd);
                     setState(({ cubes, rotationAnimation }) => ({
                         cubes: rotate(cubes, numberOfCubes, rotationAnimation.get()),
-                        isTransitioning: false,
                         rotationAnimation: Maybe.none()
                     }));
                 }
@@ -112,7 +108,7 @@ const RubiksCube: React.FunctionComponent = () => {
         }
 
         return;
-    }, [state.isTransitioning]);
+    }, [state.rotationAnimation]);
 
     const cubeSceneStyle: React.CSSProperties = {
         width: size,
@@ -139,7 +135,7 @@ const RubiksCube: React.FunctionComponent = () => {
         <div className="app__cube" style={cubeSceneStyle}>
             <div
                 className={createClassName({
-                    'rubiks-cube--is-transitioning': state.isTransitioning || playerStatus !== AlgorithmStatus.STOPPED
+                    'rubiks-cube--is-transitioning': playerStatus !== AlgorithmStatus.STOPPED
                 })}
                 style={cubeStyle}
             >
