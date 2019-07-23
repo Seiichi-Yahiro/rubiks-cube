@@ -40,7 +40,7 @@ interface RecursiveChildProps extends IAlgorithm {
 
 const RecursiveChild: React.FunctionComponent<RecursiveChildProps> = React.memo(
     ({ name, children, notation = '', onClick, isOpen, depth }) => {
-        const { setAlgorithmPlayerState } = useContext(algorithmPlayerContext);
+        const { setAlgorithmPlayerState, status: playerStatus } = useContext(algorithmPlayerContext);
         const [openedMenu, setOpenedMenu] = useState('');
         const onChildClick = useCallback(
             (menu: string) => setOpenedMenu(prevMenu => (prevMenu === menu ? '' : menu)),
@@ -71,7 +71,11 @@ const RecursiveChild: React.FunctionComponent<RecursiveChildProps> = React.memo(
                 </Category>
             );
         } else {
-            const onAlgorithmClick = () => setAlgorithmPlayerState({ notation, status: AlgorithmStatus.STOPPED });
+            const onAlgorithmClick = () => {
+                if (playerStatus === AlgorithmStatus.STOPPED) {
+                    setAlgorithmPlayerState({ notation });
+                }
+            };
 
             return (
                 <ListItem
