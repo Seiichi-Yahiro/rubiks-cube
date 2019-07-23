@@ -46,7 +46,7 @@ const Settings: React.FunctionComponent = () => {
                 <Slider
                     aria-labelledby="animation-duration-slider"
                     valueLabelDisplay="auto"
-                    min={250}
+                    min={100}
                     max={2000}
                     step={50}
                     defaultValue={rotationAnimationSpeed}

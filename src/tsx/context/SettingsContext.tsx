@@ -12,7 +12,7 @@ interface Settings {
 const initialSettings: Settings = {
     numberOfCubes: 3,
     size: 300,
-    rotationAnimationSpeed: 1000,
+    rotationAnimationSpeed: 750,
     reset: false
 };
 
