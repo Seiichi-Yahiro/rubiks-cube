@@ -10,6 +10,7 @@ import useOnUpdate from '../hooks/useOnUpdate';
 import useComplexState from '../hooks/useComplexState';
 import Maybe from '../utils/Maybe';
 import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
+import { flow, partialRight } from 'lodash';
 
 interface RubiksCubeState {
     cubes: ICube[];
@@ -68,6 +69,20 @@ const RubiksCube: React.FunctionComponent = () => {
                         moveGenerator: Maybe.none()
                     });
                 });
+        } else if (playerStatus === AlgorithmStatus.JUMP_TO_END) {
+            setState(({ cubes }) => {
+                const moves = [...moveGenerator.get()].map(d3Group => partialRight(rotate, numberOfCubes, d3Group));
+
+                const applyMoves: (cubes: ICube[]) => ICube[] = flow(...moves);
+
+                return {
+                    cubes: applyMoves(cubes)
+                };
+            });
+            setAlgorithmPlayerState({
+                status: AlgorithmStatus.STOPPED,
+                moveGenerator: Maybe.none()
+            });
         }
     }, [playerStatus, state.rotationAnimation]);
 

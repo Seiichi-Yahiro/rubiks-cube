@@ -6,10 +6,11 @@ import Maybe from '../utils/Maybe';
 export enum AlgorithmStatus {
     STOPPED = 'STOPPED',
     PLAYING = 'PLAYING',
-    PAUSED = 'PAUSED'
+    PAUSED = 'PAUSED',
+    JUMP_TO_END = 'JUMP_TO_END'
 }
 
-interface AlgorithmPlayerState {
+export interface AlgorithmPlayerState {
     notation: string;
     status: AlgorithmStatus;
     moveGenerator: Maybe<IterableIterator<D3Group>>;
