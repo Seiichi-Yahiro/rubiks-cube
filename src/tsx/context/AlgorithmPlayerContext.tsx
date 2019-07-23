@@ -5,7 +5,8 @@ import Maybe from '../utils/Maybe';
 
 export enum AlgorithmStatus {
     STOPPED = 'STOPPED',
-    PLAYING = 'PLAYING'
+    PLAYING = 'PLAYING',
+    PAUSED = 'PAUSED'
 }
 
 interface AlgorithmPlayerState {

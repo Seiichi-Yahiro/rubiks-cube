@@ -53,7 +53,7 @@ const RubiksCube: React.FunctionComponent = () => {
     }, [size]);
 
     useOnUpdate(() => {
-        if (moveGenerator.isSome() && state.rotationAnimation.isNone()) {
+        if (playerStatus === AlgorithmStatus.PLAYING && state.rotationAnimation.isNone()) {
             moveGenerator
                 .let(it => it.next().value)
                 .ifIsSome(rotationAxes => {
@@ -69,7 +69,7 @@ const RubiksCube: React.FunctionComponent = () => {
                     });
                 });
         }
-    }, [moveGenerator, state.rotationAnimation]);
+    }, [playerStatus, state.rotationAnimation]);
 
     useOnUpdate(() => {
         if (state.rotationAnimation.isSome()) {
