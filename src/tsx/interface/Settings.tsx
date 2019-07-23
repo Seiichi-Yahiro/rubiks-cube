@@ -51,7 +51,6 @@ const Settings: React.FunctionComponent = () => {
                     step={50}
                     defaultValue={rotationAnimationSpeed}
                     onChangeCommitted={(event, value) => setSettings({ rotationAnimationSpeed: value as number })}
-                    disabled={isDisabled}
                 />
             </ListItem>
             <ListItem>
