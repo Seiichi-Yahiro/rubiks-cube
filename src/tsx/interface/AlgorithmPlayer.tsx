@@ -37,4 +37,4 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
     );
 };
 
-export default AlgorithmPlayer;
+export default React.memo(AlgorithmPlayer);
