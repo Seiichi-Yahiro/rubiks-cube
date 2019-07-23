@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import Pause from '@material-ui/icons/Pause';
+import Stop from '@material-ui/icons/Stop';
 import './AlgorithmPlayer.scss';
 import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
 import Maybe from '../utils/Maybe';
@@ -60,6 +61,13 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
         }
     };
 
+    const onStop = () => {
+        setAlgorithmPlayerState({
+            status: AlgorithmStatus.STOPPED,
+            moveGenerator: Maybe.none()
+        });
+    };
+
     useOnUpdate(() => {
         setNotation(playerNotation);
     }, [playerNotation]);
@@ -73,7 +81,12 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
                 onChange={updateNotation}
                 disabled={status !== AlgorithmStatus.STOPPED}
             />
-            <div>{playOrPause()}</div>
+            <div>
+                {playOrPause()}
+                <IconButton onClick={onStop} disabled={status === AlgorithmStatus.STOPPED}>
+                    <Stop />
+                </IconButton>
+            </div>
         </div>
     );
 };
