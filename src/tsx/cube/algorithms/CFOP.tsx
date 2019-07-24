@@ -27,52 +27,57 @@ const Look2CFOP: IAlgorithm = {
                     ]
                 },
                 {
-                    name: 'No Corners solved',
+                    name: 'Corners',
                     children: [
                         {
-                            name: 'H',
-                            children: [],
-                            notation: "F (R U R' U')3 F'"
+                            name: 'No Corners solved',
+                            children: [
+                                {
+                                    name: 'H',
+                                    children: [],
+                                    notation: "F (R U R' U')3 F'"
+                                },
+                                {
+                                    name: 'Pi',
+                                    children: [],
+                                    notation: "R U2 (R2 U' R2 U' R2) U2 R"
+                                }
+                            ]
                         },
                         {
-                            name: 'Pi',
-                            children: [],
-                            notation: "R U2 (R2 U' R2 U' R2) U2 R"
-                        }
-                    ]
-                },
-                {
-                    name: '1 Corner solved',
-                    children: [
-                        {
-                            name: 'Sune',
-                            children: [],
-                            notation: "R U R' U R U2 R'"
+                            name: '1 Corner solved',
+                            children: [
+                                {
+                                    name: 'Sune',
+                                    children: [],
+                                    notation: "R U R' U R U2 R'"
+                                },
+                                {
+                                    name: 'Anti-Sune',
+                                    children: [],
+                                    notation: "L' U' L U' L' U2 L"
+                                }
+                            ]
                         },
                         {
-                            name: 'Anti-Sune',
-                            children: [],
-                            notation: "L' U' L U' L' U2 L"
-                        }
-                    ]
-                },
-                {
-                    name: '2 Corners solved',
-                    children: [
-                        {
-                            name: 'L',
-                            children: [],
-                            notation: "x (R' U R D') (R' U' R D) x'"
-                        },
-                        {
-                            name: 'T',
-                            children: [],
-                            notation: "x (L U R' U') (L' U R U') x'"
-                        },
-                        {
-                            name: 'U',
-                            children: [],
-                            notation: "R2 D R' U2 R D' R' U2 R'"
+                            name: '2 Corners solved',
+                            children: [
+                                {
+                                    name: 'L',
+                                    children: [],
+                                    notation: "x (R' U R D') (R' U' R D) x'"
+                                },
+                                {
+                                    name: 'T',
+                                    children: [],
+                                    notation: "x (L U R' U') (L' U R U') x'"
+                                },
+                                {
+                                    name: 'U',
+                                    children: [],
+                                    notation: "R2 D R' U2 R D' R' U2 R'"
+                                }
+                            ]
                         }
                     ]
                 },
