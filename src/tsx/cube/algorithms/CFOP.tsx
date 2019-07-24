@@ -75,6 +75,16 @@ const Look2CFOP: IAlgorithm = {
                             notation: "R2 D R' U2 R D' R' U2 R'"
                         }
                     ]
+                },
+                {
+                    name: 'Parity',
+                    children: [
+                        {
+                            name: 'Edge flipped',
+                            children: [],
+                            notation: "(2R2 B2 U2) (2L U2) (2R' U2) (2R U2) (F2 2R F2) (2L' B2 2R2)"
+                        }
+                    ]
                 }
             ]
         },
@@ -128,6 +138,16 @@ const Look2CFOP: IAlgorithm = {
                                     notation: "M' U' M2 U' M2 U' M' U2 M2"
                                 }
                             ]
+                        }
+                    ]
+                },
+                {
+                    name: 'Parity',
+                    children: [
+                        {
+                            name: 'Corners / Edges swapped',
+                            children: [],
+                            notation: '2R2 U2 2R2 u2 2R2 2U2'
                         }
                     ]
                 }
