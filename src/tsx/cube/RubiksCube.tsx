@@ -72,7 +72,6 @@ const RubiksCube: React.FunctionComponent = () => {
         } else if (playerStatus === AlgorithmStatus.JUMP_TO_END) {
             setState(({ cubes }) => {
                 const moves = [...moveGenerator.get()].map(d3Group => partialRight(rotate, numberOfCubes, d3Group));
-
                 const applyMoves: (cubes: ICube[]) => ICube[] = flow(...moves);
 
                 return {
@@ -87,28 +86,28 @@ const RubiksCube: React.FunctionComponent = () => {
     }, [playerStatus, state.rotationAnimation]);
 
     useOnUpdate(() => {
-        if (state.rotationAnimation.isSome()) {
-            const onTransitionEnd = (event: TransitionEvent) => {
-                if (
-                    event.propertyName === 'transform' &&
-                    (event.target as HTMLElement).className.includes(cubeIsTransitioning)
-                ) {
-                    window.removeEventListener('transitionend', onTransitionEnd);
-                    setState(({ cubes, rotationAnimation }) => ({
-                        cubes: rotate(cubes, numberOfCubes, rotationAnimation.get()),
-                        rotationAnimation: Maybe.none()
-                    }));
-                }
-            };
-
-            window.addEventListener('transitionend', onTransitionEnd);
-
-            return () => {
-                window.removeEventListener('transitionend', onTransitionEnd);
-            };
+        if (state.rotationAnimation.isNone()) {
+            return;
         }
 
-        return;
+        const onTransitionEnd = (event: TransitionEvent) => {
+            if (
+                event.propertyName === 'transform' &&
+                (event.target as HTMLElement).className.includes(cubeIsTransitioning)
+            ) {
+                window.removeEventListener('transitionend', onTransitionEnd);
+                setState(({ cubes, rotationAnimation }) => ({
+                    cubes: rotate(cubes, numberOfCubes, rotationAnimation.get()),
+                    rotationAnimation: Maybe.none()
+                }));
+            }
+        };
+
+        window.addEventListener('transitionend', onTransitionEnd);
+
+        return () => {
+            window.removeEventListener('transitionend', onTransitionEnd);
+        };
     }, [state.rotationAnimation]);
 
     const cubeSceneStyle: React.CSSProperties = {
