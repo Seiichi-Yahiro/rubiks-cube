@@ -1,10 +1,43 @@
 import Maybe from '../../utils/Maybe';
 import D3, { D3Group } from '../D3';
-import { range } from 'lodash';
+import { range, sample } from 'lodash';
 
 export const interpretNotation = (notation: string, numberOfCubes: number): IterableIterator<D3Group> => {
     const tokens = tokenizeNotation(notation);
     return new TokenInterpreter(tokens, numberOfCubes).iterator();
+};
+
+export const createRandomNotation = (numberOfCubes: number): string => {
+    const letters = 'LRUDFB'.split('');
+    const slices = range(2, numberOfCubes);
+    const loops = 25;
+
+    let moves = '';
+    let prevLetter = '';
+    let prevIsPrime = false;
+
+    const randomLetter = (withSlice: boolean) => {
+        let letter = '';
+        let isPrime = false;
+
+        do {
+            const slice = withSlice ? sample(slices)! : '';
+            letter = slice + sample(letters)!;
+            isPrime = sample([true, false])!;
+        } while (prevLetter === letter && prevIsPrime !== isPrime);
+
+        prevLetter = letter;
+        prevIsPrime = isPrime;
+        moves += letter + (isPrime ? "' " : ' ');
+    };
+
+    if (numberOfCubes <= 3) {
+        range(loops).forEach(() => randomLetter(false));
+    } else {
+        range(loops).forEach(() => randomLetter(sample([true, false])!));
+    }
+
+    return moves;
 };
 
 enum TokenType {

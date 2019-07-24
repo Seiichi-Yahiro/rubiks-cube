@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import './AlgorithmPlayer.scss';
 import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
 import Maybe from '../utils/Maybe';
-import { interpretNotation } from '../cube/algorithms/Interpreter';
+import { createRandomNotation, interpretNotation } from '../cube/algorithms/Interpreter';
 import { settingsContext } from '../context/SettingsContext';
 import useOnUpdate from '../hooks/useOnUpdate';
 import { Pause, PlayArrow, Shuffle, SkipNext, Stop, Refresh } from '@material-ui/icons';
@@ -73,9 +73,7 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
             moveGenerator: continueMoveGenerator(moveGenerator)
         }));
 
-    const onShuffle = () => {
-        // TODO
-    };
+    const onShuffle = () => setNotation(createRandomNotation(numberOfCubes));
 
     const onRefresh = () => setAlgorithmPlayerState(({ reset }) => ({ reset: !reset }));
 

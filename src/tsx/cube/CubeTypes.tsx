@@ -40,10 +40,3 @@ export interface Face {
     color: string;
     arrowAxes: Maybe<[D3, D3]>;
 }
-
-export interface IMove {
-    layer: Layer;
-    direction: Direction;
-}
-
-export type IMoveSet = Array<IMove>;
