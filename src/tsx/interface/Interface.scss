@@ -1,7 +1,7 @@
 .interface-list {
-    &__item {
-        padding-left: 5px;
+    width: 100%;
 
+    &__item {
         &--settings {
             display: flex;
             flex-direction: column;
@@ -10,5 +10,18 @@
         &--moves {
             cursor: pointer;
         }
+    }
+}
+
+.interface-category {
+    width: 100%;
+
+    &__summary {
+        height: 48px;
+        min-height: unset !important;
+    }
+
+    &__details {
+        padding: 5px !important;
     }
 }

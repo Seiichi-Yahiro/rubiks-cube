@@ -12,7 +12,7 @@ const Settings: React.FunctionComponent = () => {
     const isDisabled = playerStatus !== AlgorithmStatus.STOPPED;
 
     return (
-        <List>
+        <List disablePadding={true} dense={true} className="interface-list">
             <ListItem className="interface-list__item--settings">
                 <Typography id="number-of-cubes-slider">Number of cubes</Typography>
                 <Slider

@@ -14,7 +14,7 @@ const Algorithms: React.FunctionComponent = () => {
     const onChildClick = useCallback((menu: string) => setOpenedMenu(prevMenu => (prevMenu === menu ? '' : menu)), []);
 
     return (
-        <List disablePadding={true} dense={true}>
+        <List disablePadding={true} dense={true} className="interface-list">
             {categories.map(category => (
                 <RecursiveChild
                     key={category.name}
@@ -48,14 +48,10 @@ const RecursiveChild: React.FunctionComponent<RecursiveChildProps> = React.memo(
         );
         const onSelfClick = useCallback(() => onClick(name), [name, onClick]);
 
-        const style = {
-            paddingLeft: `${depth * 10 + 16}px`
-        };
-
         if (children.length > 0) {
             return (
-                <Category isOpen={isOpen} setMenu={onSelfClick} title={name} style={style}>
-                    <List disablePadding={true} dense={true}>
+                <Category isOpen={isOpen} setMenu={onSelfClick} title={name}>
+                    <List disablePadding={true} dense={true} className="interface-list">
                         {children.map(algorithm => (
                             <RecursiveChild
                                 key={algorithm.name}
@@ -78,12 +74,7 @@ const RecursiveChild: React.FunctionComponent<RecursiveChildProps> = React.memo(
             };
 
             return (
-                <ListItem
-                    className="interface-list__item interface-list__item--moves"
-                    style={style}
-                    button={true}
-                    onClick={onAlgorithmClick}
-                >
+                <ListItem className="interface-list__item--moves" button={true} onClick={onAlgorithmClick}>
                     <ListItemText primary={name} secondary={notation} />
                 </ListItem>
             );
