@@ -1,25 +1,25 @@
 import { flow, mapValues, range } from 'lodash';
 import Quaternion from 'quaternion';
-import { ICube, Layer, Layers } from './CubeTypes';
+import { ICube, IFaces } from './CubeTypes';
 import D3, { D3Group } from './D3';
 import Maybe from '../utils/Maybe';
 
 export const cubeIsTransitioning = 'cube--is-transitioning';
 
-export function createLayers<T>(initialValue: T): Layers<T> {
+export function createLayers<T>(initialValue: T): IFaces<T> {
     const initialLayers = {
-        [Layer.FRONT]: undefined,
-        [Layer.BACK]: undefined,
-        [Layer.UP]: undefined,
-        [Layer.DOWN]: undefined,
-        [Layer.RIGHT]: undefined,
-        [Layer.LEFT]: undefined
-    } as Layers<undefined>;
+        FRONT: undefined,
+        BACK: undefined,
+        UP: undefined,
+        DOWN: undefined,
+        RIGHT: undefined,
+        LEFT: undefined
+    } as IFaces<undefined>;
 
     return mapValues(initialLayers, () => initialValue);
 }
 
-export const defaultColors: Layers<string> = createLayers('#383838');
+export const defaultColors: IFaces<string> = createLayers('#383838');
 
 export const calculateCubePosition = (d3: D3, numberOfCubes: number, sizeOfCube: number): D3 => {
     const offset = sizeOfCube * (numberOfCubes / 2 - 0.5);

@@ -51,7 +51,7 @@ enum TokenType {
     SEPARATOR = ','
 }
 
-interface Token {
+interface IToken {
     type: TokenType;
     value: string;
 }
@@ -59,7 +59,7 @@ interface Token {
 const tokenizerRegex = new RegExp(/[LRUDFBMESXYZW'()]|\d+|[^LRUDFBMESXYZW'()\d]+/gi);
 const letterRegex = new RegExp(/[LRUDFBMESXYZ]/i);
 
-const tokenizeNotation = (notation: string): Token[] =>
+const tokenizeNotation = (notation: string): IToken[] =>
     Maybe.of(notation.match(tokenizerRegex))
         .getOrElse([])
         .map(match => {
@@ -101,10 +101,10 @@ abstract class Interpreter<T> {
     protected peek = (): Maybe<T> => (this.isAtEnd() ? Maybe.none() : Maybe.some(this.list[this.index]));
 }
 
-class TokenInterpreter extends Interpreter<Token> {
+class TokenInterpreter extends Interpreter<IToken> {
     private static isEven = (num: number) => num % 2 === 0;
 
-    constructor(readonly tokens: Token[], private readonly numberOfCubes: number) {
+    constructor(readonly tokens: IToken[], private readonly numberOfCubes: number) {
         super(tokens);
     }
 
@@ -264,6 +264,6 @@ class TokenInterpreter extends Interpreter<Token> {
         return letterMappings[letter.toUpperCase()]();
     };
 
-    private matchType = (...tokenTypes: TokenType[]): Maybe<Token> =>
+    private matchType = (...tokenTypes: TokenType[]): Maybe<IToken> =>
         this.peek().let(token => (tokenTypes.some(tokenType => tokenType === token.type) ? this.next() : Maybe.none()));
 }

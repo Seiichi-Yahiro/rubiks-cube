@@ -3,7 +3,7 @@ import Maybe from '../utils/Maybe';
 import React from 'react';
 import FaceArrows from './FaceArrows';
 
-interface FacesProps {
+interface IFacesProps {
     size: number;
     color: string;
     rotation: string;
@@ -11,7 +11,7 @@ interface FacesProps {
     arrowAxes: Maybe<[D3, D3]>;
 }
 
-const Faces: React.FunctionComponent<FacesProps> = ({ size, color, rotation, rotate, arrowAxes }) => {
+const Faces: React.FunctionComponent<IFacesProps> = ({ size, color, rotation, rotate, arrowAxes }) => {
     const faceStyle: React.CSSProperties = {
         position: 'absolute',
         width: size,

@@ -32,13 +32,13 @@ const Algorithms: React.FunctionComponent = () => {
 
 export default Algorithms;
 
-interface RecursiveChildProps extends IAlgorithm {
+interface IRecursiveChildProps extends IAlgorithm {
     onClick: (menu: string) => void;
     isOpen: boolean;
     depth: number;
 }
 
-const RecursiveChild: React.FunctionComponent<RecursiveChildProps> = React.memo(
+const RecursiveChild: React.FunctionComponent<IRecursiveChildProps> = React.memo(
     ({ name, children, notation = '', onClick, isOpen, depth }) => {
         const { setAlgorithmPlayerState, status: playerStatus } = useContext(algorithmPlayerContext);
         const [openedMenu, setOpenedMenu] = useState('');

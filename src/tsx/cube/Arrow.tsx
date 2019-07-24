@@ -1,11 +1,11 @@
 import React from 'react';
 import createClassName from '../utils/createClassName';
 
-interface ArrowProps {
+interface IArrowProps {
     className?: string;
 }
 
-const Arrow: React.FC<ArrowProps> = ({ className = '' }) => (
+const Arrow: React.FC<IArrowProps> = ({ className = '' }) => (
     <g className={createClassName('arrow', className)}>
         <line x1={0} y1={40} x2={0} y2={-40} />
         <line x1={0} y1={-40} x2={-40} y2={0} />

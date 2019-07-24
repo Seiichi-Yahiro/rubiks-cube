@@ -10,14 +10,14 @@ enum Side {
     RIGHT = 'rotateY(90deg)'
 }
 
-interface CubeArrowsProps {
+interface ICubeArrowsProps {
     size: number;
     sizeOfCube: number;
     numberOfCubes: number;
     rotate: (axes: D3Group) => void;
 }
 
-const CubeArrows: React.FunctionComponent<CubeArrowsProps> = ({ size, sizeOfCube, numberOfCubes, rotate }) => {
+const CubeArrows: React.FunctionComponent<ICubeArrowsProps> = ({ size, sizeOfCube, numberOfCubes, rotate }) => {
     const halfSize = size / 2;
     const style = (side: Side, direction: Direction): React.CSSProperties => {
         return {

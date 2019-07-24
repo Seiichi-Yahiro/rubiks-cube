@@ -12,7 +12,7 @@ import Maybe from '../utils/Maybe';
 import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
 import { flow, partialRight } from 'lodash';
 
-interface RubiksCubeState {
+interface IRubiksCubeState {
     cubes: ICube[];
     rotationAnimation: Maybe<D3Group>;
 }
@@ -23,7 +23,7 @@ const RubiksCube: React.FunctionComponent = () => {
 
     const sizeOfCube = size / numberOfCubes;
 
-    const [state, setState] = useComplexState<RubiksCubeState>(() => ({
+    const [state, setState] = useComplexState<IRubiksCubeState>(() => ({
         cubes: generateCubes(numberOfCubes, sizeOfCube),
         rotationAnimation: Maybe.none(),
         moveGenerator: Maybe.none()

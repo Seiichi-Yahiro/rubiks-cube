@@ -10,14 +10,14 @@ export enum AlgorithmStatus {
     JUMP_TO_END = 'JUMP_TO_END'
 }
 
-export interface AlgorithmPlayerState {
+export interface IAlgorithmPlayerState {
     notation: string;
     status: AlgorithmStatus;
     moveGenerator: Maybe<IterableIterator<D3Group>>;
     reset: boolean;
 }
 
-const initialState: AlgorithmPlayerState = {
+const initialState: IAlgorithmPlayerState = {
     notation: '',
     status: AlgorithmStatus.STOPPED,
     moveGenerator: Maybe.none(),
@@ -27,7 +27,9 @@ const initialState: AlgorithmPlayerState = {
 export const algorithmPlayerContext = createContext({
     ...initialState,
     setAlgorithmPlayerState: (
-        newState: Partial<AlgorithmPlayerState> | ((prevState: AlgorithmPlayerState) => Partial<AlgorithmPlayerState>)
+        newState:
+            | Partial<IAlgorithmPlayerState>
+            | ((prevState: IAlgorithmPlayerState) => Partial<IAlgorithmPlayerState>)
     ) => {
         /**/
     }

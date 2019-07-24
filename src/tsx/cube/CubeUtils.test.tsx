@@ -2,7 +2,7 @@ import D3 from './D3';
 import { animateRotation, calculateCubePosition, createLayers, generateCubes, rotate } from './CubeUtils';
 import Maybe from '../utils/Maybe';
 import { keys, mapValues } from 'lodash';
-import { Layers } from './CubeTypes';
+import { IFaces } from './CubeTypes';
 
 describe('CubeUtils', () => {
     it('should calculate the cube position for a 3x3x3', () => {
@@ -335,12 +335,12 @@ describe('CubeUtils', () => {
         expect(result.map(cube => cube.axes.toVector())).toEqual(cube2x2x2);
     });
 
-    const compareFaceArrows = (expected: Layers<Maybe<[D3, D3]>>, result: Layers<Maybe<[D3, D3]>>, axes: D3) => {
-        const convert = (v: Layers<Maybe<[D3, D3]>>, layer: string) =>
+    const compareFaceArrows = (expected: IFaces<Maybe<[D3, D3]>>, result: IFaces<Maybe<[D3, D3]>>, axes: D3) => {
+        const convert = (v: IFaces<Maybe<[D3, D3]>>, layer: string) =>
             (v[layer] as Maybe<[D3, D3]>).let(it => it.map(d3 => d3.toVector())).getOrElse([]);
 
-        const multiplyExpectedArrows = (): Layers<Maybe<[D3, D3]>> =>
-            mapValues(expected, v => v.let(d3s => d3s.map(d3 => d3.mul(axes)))) as Layers<Maybe<[D3, D3]>>;
+        const multiplyExpectedArrows = (): IFaces<Maybe<[D3, D3]>> =>
+            mapValues(expected, v => v.let(d3s => d3s.map(d3 => d3.mul(axes)))) as IFaces<Maybe<[D3, D3]>>;
 
         keys(expected).forEach(layer => {
             expect(convert(result, layer)).toEqual(convert(multiplyExpectedArrows(), layer));

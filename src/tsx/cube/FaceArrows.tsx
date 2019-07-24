@@ -2,14 +2,14 @@ import React from 'react';
 import './Arrows.scss';
 import Arrow from './Arrow';
 
-interface ArrowsProps {
+interface IArrowsProps {
     up: () => void;
     down: () => void;
     right: () => void;
     left: () => void;
 }
 
-const FaceArrows: React.FunctionComponent<ArrowsProps> = ({ up, down, right, left }) => (
+const FaceArrows: React.FunctionComponent<IArrowsProps> = ({ up, down, right, left }) => (
     <svg viewBox="0 0 100 100" className="face-arrows-svg">
         <g style={{ transform: 'translate(50%, 50%)' }}>
             <FaceArrow direction={FaceArrowDirection.UP} onClick={up} />
@@ -27,12 +27,12 @@ export enum FaceArrowDirection {
     DOWN = '0deg'
 }
 
-interface ArrowProps {
+interface IArrowProps {
     direction: FaceArrowDirection;
     onClick: () => void;
 }
 
-const FaceArrow: React.FC<ArrowProps> = ({ direction, onClick }) => (
+const FaceArrow: React.FC<IArrowProps> = ({ direction, onClick }) => (
     <g className="face-arrow-wrapper" style={{ transform: `rotate(${direction})` }} onClick={onClick}>
         <rect width="100%" height="100%" className="face-arrow-wrapper__box" />
         <Arrow className="face-arrow" />

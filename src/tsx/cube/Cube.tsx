@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import { keys } from 'lodash';
 import { defaultColors, cubeIsTransitioning } from './CubeUtils';
-import { Face, Layer, Layers } from './CubeTypes';
+import { IFace, IFaces } from './CubeTypes';
 import D3, { D3Group } from './D3';
 import Maybe from '../utils/Maybe';
 import Quaternion from 'quaternion';
@@ -9,17 +9,17 @@ import { settingsContext } from '../context/SettingsContext';
 import Faces from './Faces';
 import createClassName from '../utils/createClassName';
 
-interface CubeProps {
+interface ICubeProps {
     size: number;
     translation: D3;
     rotation: Quaternion;
     rotationAnimation: Maybe<D3>;
-    faceArrows: Layers<Maybe<[D3, D3]>>;
+    faceArrows: IFaces<Maybe<[D3, D3]>>;
     rotate: (axis: D3Group) => void;
-    colors: Partial<Layers<string>>;
+    colors: Partial<IFaces<string>>;
 }
 
-const Cube: React.FunctionComponent<CubeProps> = ({
+const Cube: React.FunctionComponent<ICubeProps> = ({
     size,
     translation,
     rotation,
@@ -34,21 +34,21 @@ const Cube: React.FunctionComponent<CubeProps> = ({
         const halfCubeSize = size / 2;
 
         return {
-            [Layer.FRONT]: `translateZ(${halfCubeSize}px)`,
-            [Layer.BACK]: `rotateY(180deg) translateZ(${halfCubeSize}px)`,
-            [Layer.RIGHT]: `rotateY(90deg) translateZ(${halfCubeSize}px)`,
-            [Layer.LEFT]: `rotateY(-90deg) translateZ(${halfCubeSize}px)`,
-            [Layer.UP]: `rotateX(90deg) translateZ(${halfCubeSize}px)`,
-            [Layer.DOWN]: `rotateX(-90deg) translateZ(${halfCubeSize}px)`
-        } as Layers<string>;
+            FRONT: `translateZ(${halfCubeSize}px)`,
+            BACK: `rotateY(180deg) translateZ(${halfCubeSize}px)`,
+            RIGHT: `rotateY(90deg) translateZ(${halfCubeSize}px)`,
+            LEFT: `rotateY(-90deg) translateZ(${halfCubeSize}px)`,
+            UP: `rotateX(90deg) translateZ(${halfCubeSize}px)`,
+            DOWN: `rotateX(-90deg) translateZ(${halfCubeSize}px)`
+        } as IFaces<string>;
     }, [size]);
 
-    const faceColors: Layers<Face> = useMemo(
+    const faceColors: IFaces<IFace> = useMemo(
         () =>
             (({
                 ...defaultColors,
                 ...colors
-            } as unknown) as Layers<Face>),
+            } as unknown) as IFaces<IFace>),
         [colors]
     );
 

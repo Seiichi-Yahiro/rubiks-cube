@@ -2,13 +2,13 @@ import React from 'react';
 import { createContext } from 'react';
 import useComplexState from '../hooks/useComplexState';
 
-interface Settings {
+interface ISettings {
     numberOfCubes: number;
     size: number;
     rotationAnimationSpeed: number;
 }
 
-const initialSettings: Settings = {
+const initialSettings: ISettings = {
     numberOfCubes: 3,
     size: 300,
     rotationAnimationSpeed: 750
@@ -16,7 +16,7 @@ const initialSettings: Settings = {
 
 export const settingsContext = createContext({
     ...initialSettings,
-    setSettings: (newState: Partial<Settings> | ((prevState: Settings) => Partial<Settings>)) => {
+    setSettings: (newState: Partial<ISettings> | ((prevState: ISettings) => Partial<ISettings>)) => {
         /**/
     }
 });

@@ -6,13 +6,13 @@ import { ExpansionPanel } from '@material-ui/core';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 
-interface CategoryProps {
+interface ICategoryProps {
     isOpen: boolean;
     setMenu: () => void;
     title: string;
 }
 
-const Category: React.FunctionComponent<CategoryProps> = ({ title, isOpen, setMenu, children }) => (
+const Category: React.FunctionComponent<ICategoryProps> = ({ title, isOpen, setMenu, children }) => (
     <ListItem className="interface-list__item">
         <ExpansionPanel expanded={isOpen} className="interface-category">
             <ExpansionPanelSummary
