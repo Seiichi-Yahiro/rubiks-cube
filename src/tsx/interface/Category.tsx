@@ -4,6 +4,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { ExpansionPanel } from '@material-ui/core';
 import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
 
 interface CategoryProps {
     isOpen: boolean;
@@ -19,7 +20,7 @@ const Category: React.FunctionComponent<CategoryProps> = ({ title, isOpen, setMe
                 expandIcon={<ExpandMoreIcon />}
                 className="interface-category__summary"
             >
-                {title}
+                <Typography>{title}</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className="interface-category__details">{children}</ExpansionPanelDetails>
         </ExpansionPanel>
