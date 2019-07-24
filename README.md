@@ -6,4 +6,4 @@
 
 go to localhost:3000
 
-or `npm build` and open the `index.html` from the build folder
+or `npm run build:dev` and open the `index.html` from the build folder
