@@ -1,9 +1,7 @@
 # rubiks-cube
 
-`npm install`
+run `npm install`
 
-`npm start`
-
-go to localhost:3000
+then `npm start` and go to localhost:3000
 
 or `npm run build:dev` and open the `index.html` from the build folder
