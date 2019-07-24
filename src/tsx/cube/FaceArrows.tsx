@@ -34,7 +34,7 @@ interface ArrowProps {
 
 const FaceArrow: React.FC<ArrowProps> = ({ direction, onClick }) => (
     <g className="face-arrow-wrapper" style={{ transform: `rotate(${direction})` }} onClick={onClick}>
-        <rect className="face-arrow-wrapper__box" />
+        <rect width="100%" height="100%" className="face-arrow-wrapper__box" />
         <Arrow className="face-arrow" />
     </g>
 );

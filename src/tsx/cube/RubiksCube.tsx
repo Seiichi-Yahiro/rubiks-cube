@@ -140,7 +140,7 @@ const RubiksCube: React.FunctionComponent = () => {
                 style={cubeStyle}
             >
                 <div style={cubesWrapperStyle}>
-                    <div>
+                    <div style={{ display: 'contents' }}>
                         {state.cubes.map((cube, index) => (
                             <Cube
                                 key={index}
