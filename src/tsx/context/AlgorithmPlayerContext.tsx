@@ -14,12 +14,14 @@ export interface AlgorithmPlayerState {
     notation: string;
     status: AlgorithmStatus;
     moveGenerator: Maybe<IterableIterator<D3Group>>;
+    reset: boolean;
 }
 
 const initialState: AlgorithmPlayerState = {
     notation: '',
     status: AlgorithmStatus.STOPPED,
-    moveGenerator: Maybe.none()
+    moveGenerator: Maybe.none(),
+    reset: false
 };
 
 export const algorithmPlayerContext = createContext({

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { settingsContext } from '../context/SettingsContext';
-import { Button, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -52,15 +52,6 @@ const Settings: React.FunctionComponent = () => {
                     defaultValue={rotationAnimationSpeed}
                     onChangeCommitted={(event, value) => setSettings({ rotationAnimationSpeed: value as number })}
                 />
-            </ListItem>
-            <ListItem>
-                <Button
-                    variant="outlined"
-                    onClick={() => setSettings(({ reset }) => ({ reset: !reset }))}
-                    disabled={isDisabled}
-                >
-                    Reset Cube
-                </Button>
             </ListItem>
         </List>
     );

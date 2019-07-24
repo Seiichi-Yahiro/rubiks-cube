@@ -6,14 +6,12 @@ interface Settings {
     numberOfCubes: number;
     size: number;
     rotationAnimationSpeed: number;
-    reset: boolean;
 }
 
 const initialSettings: Settings = {
     numberOfCubes: 3,
     size: 300,
-    rotationAnimationSpeed: 750,
-    reset: false
+    rotationAnimationSpeed: 750
 };
 
 export const settingsContext = createContext({

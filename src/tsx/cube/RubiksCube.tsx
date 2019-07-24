@@ -18,8 +18,8 @@ interface RubiksCubeState {
 }
 
 const RubiksCube: React.FunctionComponent = () => {
-    const { numberOfCubes, size, reset } = useContext(settingsContext);
-    const { moveGenerator, status: playerStatus, setAlgorithmPlayerState } = useContext(algorithmPlayerContext);
+    const { numberOfCubes, size } = useContext(settingsContext);
+    const { moveGenerator, status: playerStatus, reset, setAlgorithmPlayerState } = useContext(algorithmPlayerContext);
 
     const sizeOfCube = size / numberOfCubes;
 
