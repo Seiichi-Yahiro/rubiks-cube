@@ -6,6 +6,7 @@ import Category from './Category';
 import { IAlgorithm } from '../cube/algorithms/AlgorithmTypes';
 import Misc from '../cube/algorithms/Misc';
 import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
+import StartConfiguration from './StartConfiguration';
 
 const categories = [Look2CFOP, Misc];
 
@@ -23,6 +24,7 @@ const Algorithms: React.FunctionComponent = () => {
                     name={category.name}
                     children={category.children}
                     notation={category.notation}
+                    startConfiguration={category.startConfiguration}
                     depth={1}
                 />
             ))}
@@ -39,7 +41,7 @@ interface IRecursiveChildProps extends IAlgorithm {
 }
 
 const RecursiveChild: React.FunctionComponent<IRecursiveChildProps> = React.memo(
-    ({ name, children, notation = '', onClick, isOpen, depth }) => {
+    ({ name, children, notation = '', startConfiguration, onClick, isOpen, depth }) => {
         const { setAlgorithmPlayerState, status: playerStatus } = useContext(algorithmPlayerContext);
         const [openedMenu, setOpenedMenu] = useState('');
         const onChildClick = useCallback(
@@ -60,6 +62,7 @@ const RecursiveChild: React.FunctionComponent<IRecursiveChildProps> = React.memo
                                 name={algorithm.name}
                                 children={algorithm.children}
                                 notation={algorithm.notation}
+                                startConfiguration={algorithm.startConfiguration}
                                 depth={depth + 1}
                             />
                         ))}
@@ -75,6 +78,7 @@ const RecursiveChild: React.FunctionComponent<IRecursiveChildProps> = React.memo
 
             return (
                 <ListItem className="interface-list__item--moves" button={true} onClick={onAlgorithmClick}>
+                    {startConfiguration && <StartConfiguration configuration={startConfiguration} />}
                     <ListItemText primary={name} secondary={notation} />
                 </ListItem>
             );

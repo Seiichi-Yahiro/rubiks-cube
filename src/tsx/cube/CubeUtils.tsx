@@ -6,7 +6,18 @@ import Maybe from '../utils/Maybe';
 
 export const cubeIsTransitioning = 'cube--is-transitioning';
 
-export function createLayers<T>(initialValue: T): IFaces<T> {
+export enum CubeColors {
+    BLUE = '#3d81f6',
+    GREEN = '#009d54',
+    RED = '#dc422f',
+    ORANGE = '#ff6c00',
+    WHITE = '#ffffff',
+    YELLOW = '#fdcc09',
+    DEFAULT = '#383838',
+    TRANSPARENT = 'transparent'
+}
+
+export function createFaces<T>(initialValue: T): IFaces<T> {
     const initialLayers = {
         FRONT: undefined,
         BACK: undefined,
@@ -19,7 +30,7 @@ export function createLayers<T>(initialValue: T): IFaces<T> {
     return mapValues(initialLayers, () => initialValue);
 }
 
-export const defaultColors: IFaces<string> = createLayers('#383838');
+export const defaultColors: IFaces<string> = createFaces(CubeColors.DEFAULT);
 
 export const calculateCubePosition = (d3: D3, numberOfCubes: number, sizeOfCube: number): D3 => {
     const offset = sizeOfCube * (numberOfCubes / 2 - 0.5);
@@ -52,31 +63,31 @@ export const generateCubes = (numberOfCubes: number, sizeOfCube: number) => {
                     translation: calculateCubePosition(axes, numberOfCubes, sizeOfCube),
                     rotation: new Quaternion(),
                     axes,
-                    faceArrows: createLayers(Maybe.none<[D3, D3]>()),
+                    faceArrows: createFaces(Maybe.none<[D3, D3]>()),
                     rotationAnimation: Maybe.none()
                 };
 
                 if (z === 1) {
-                    cube.colors.FRONT = '#3d81f6';
+                    cube.colors.FRONT = CubeColors.BLUE;
                     cube.faceArrows.FRONT = Maybe.some([new D3().setX(-x), new D3().setY(-y)]);
                 } else if (z === numberOfCubes) {
-                    cube.colors.BACK = '#009d54';
+                    cube.colors.BACK = CubeColors.GREEN;
                     cube.faceArrows.BACK = Maybe.some([new D3().setX(x), new D3().setY(-y)]);
                 }
 
                 if (y === 1) {
-                    cube.colors.UP = '#fdcc09';
+                    cube.colors.UP = CubeColors.YELLOW;
                     cube.faceArrows.UP = Maybe.some([new D3().setX(-x), new D3().setZ(-z)]);
                 } else if (y === numberOfCubes) {
-                    cube.colors.DOWN = '#ffffff';
+                    cube.colors.DOWN = CubeColors.WHITE;
                     cube.faceArrows.DOWN = Maybe.some([new D3().setX(-x), new D3().setZ(z)]);
                 }
 
                 if (x === 1) {
-                    cube.colors.LEFT = '#ff6c00';
+                    cube.colors.LEFT = CubeColors.ORANGE;
                     cube.faceArrows.LEFT = Maybe.some([new D3().setZ(-z), new D3().setY(-y)]);
                 } else if (x === numberOfCubes) {
-                    cube.colors.RIGHT = '#dc422f';
+                    cube.colors.RIGHT = CubeColors.RED;
                     cube.faceArrows.RIGHT = Maybe.some([new D3().setZ(z), new D3().setY(-y)]);
                 }
 

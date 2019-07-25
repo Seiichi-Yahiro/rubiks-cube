@@ -6,7 +6,7 @@ const Misc: IAlgorithm = {
         {
             name: 'Sexy',
             children: [],
-            notation: "R, U, R', U'"
+            notation: "R U R' U'"
         }
     ]
 };

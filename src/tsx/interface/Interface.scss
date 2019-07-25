@@ -25,3 +25,14 @@
         padding: 5px !important;
     }
 }
+
+.start-configuration {
+    display: grid;
+    grid-gap: 1px;
+    margin-right: 5px;
+
+    &__face {
+        width: 10px;
+        height: 10px;
+    }
+}

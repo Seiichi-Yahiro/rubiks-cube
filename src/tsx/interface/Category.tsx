@@ -14,7 +14,7 @@ interface ICategoryProps {
 
 const Category: React.FunctionComponent<ICategoryProps> = ({ title, isOpen, setMenu, children }) => (
     <ListItem className="interface-list__item">
-        <ExpansionPanel expanded={isOpen} className="interface-category">
+        <ExpansionPanel expanded={isOpen} TransitionProps={{ unmountOnExit: true }} className="interface-category">
             <ExpansionPanelSummary
                 onClick={setMenu}
                 expandIcon={<ExpandMoreIcon />}

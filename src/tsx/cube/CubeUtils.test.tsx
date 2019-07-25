@@ -1,5 +1,5 @@
 import D3 from './D3';
-import { animateRotation, calculateCubePosition, createLayers, generateCubes, rotate } from './CubeUtils';
+import { animateRotation, calculateCubePosition, createFaces, generateCubes, rotate } from './CubeUtils';
 import Maybe from '../utils/Maybe';
 import { keys, mapValues } from 'lodash';
 import { IFaces } from './CubeTypes';
@@ -354,7 +354,7 @@ describe('CubeUtils', () => {
 
         const result = rotate(cubes, numberOfCubes, [new D3().setX(1)]);
 
-        const expected = createLayers(Maybe.none<[D3, D3]>());
+        const expected = createFaces(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setX(-1), new D3().setZ(1)]);
         expected.UP = Maybe.some([new D3().setX(-1), new D3().setY(-1)]);
         expected.LEFT = Maybe.some([new D3().setY(-1), new D3().setZ(1)]);
@@ -369,7 +369,7 @@ describe('CubeUtils', () => {
 
         const result = rotate(cubes, numberOfCubes, [new D3().setX(-1)]);
 
-        const expected = createLayers(Maybe.none<[D3, D3]>());
+        const expected = createFaces(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setX(-1), new D3().setZ(-1)]);
         expected.UP = Maybe.some([new D3().setX(-1), new D3().setY(1)]);
         expected.LEFT = Maybe.some([new D3().setY(1), new D3().setZ(-1)]);
@@ -384,7 +384,7 @@ describe('CubeUtils', () => {
 
         const result = rotate(cubes, numberOfCubes, [new D3().setY(1)]);
 
-        const expected = createLayers(Maybe.none<[D3, D3]>());
+        const expected = createFaces(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setZ(-1), new D3().setY(-1)]);
         expected.UP = Maybe.some([new D3().setZ(-1), new D3().setX(1)]);
         expected.LEFT = Maybe.some([new D3().setX(1), new D3().setY(-1)]);
@@ -399,7 +399,7 @@ describe('CubeUtils', () => {
 
         const result = rotate(cubes, numberOfCubes, [new D3().setY(-1)]);
 
-        const expected = createLayers(Maybe.none<[D3, D3]>());
+        const expected = createFaces(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setZ(1), new D3().setY(-1)]);
         expected.UP = Maybe.some([new D3().setZ(1), new D3().setX(-1)]);
         expected.LEFT = Maybe.some([new D3().setX(-1), new D3().setY(-1)]);
@@ -414,7 +414,7 @@ describe('CubeUtils', () => {
 
         const result = rotate(cubes, numberOfCubes, [new D3().setZ(1)]);
 
-        const expected = createLayers(Maybe.none<[D3, D3]>());
+        const expected = createFaces(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setY(1), new D3().setX(-1)]);
         expected.UP = Maybe.some([new D3().setY(1), new D3().setZ(-1)]);
         expected.LEFT = Maybe.some([new D3().setZ(-1), new D3().setX(-1)]);
@@ -429,7 +429,7 @@ describe('CubeUtils', () => {
 
         const result = rotate(cubes, numberOfCubes, [new D3().setZ(-1)]);
 
-        const expected = createLayers(Maybe.none<[D3, D3]>());
+        const expected = createFaces(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setY(-1), new D3().setX(1)]);
         expected.UP = Maybe.some([new D3().setY(-1), new D3().setZ(-1)]);
         expected.LEFT = Maybe.some([new D3().setZ(-1), new D3().setX(1)]);
