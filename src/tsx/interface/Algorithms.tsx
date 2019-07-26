@@ -11,7 +11,7 @@ import { take, last } from 'lodash';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import { useGlobalState } from '../states/State';
-import { selectNotationAction } from '../states/AlgorithmPlayerActions';
+import { updatePlayerNotationAction } from '../states/AlgorithmPlayerActions';
 
 const flattenAlgorithms = (algorithm: IAlgorithm): IAlgorithm[] =>
     [algorithm]
@@ -84,7 +84,7 @@ const Algorithms: React.FunctionComponent = () => {
                             key={child.name + index}
                             className="interface-list__item--moves"
                             button={true}
-                            onClick={() => dispatch(selectNotationAction(child.notation!))}
+                            onClick={() => dispatch(updatePlayerNotationAction(child.notation!))}
                             disabled={playerStatus !== AlgorithmStatus.STOPPED}
                         >
                             {child.startConfiguration && (

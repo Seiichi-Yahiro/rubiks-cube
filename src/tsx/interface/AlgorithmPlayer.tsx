@@ -1,11 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import './AlgorithmPlayer.scss';
 import { AlgorithmStatus } from '../states/AlgorithmPlayerState';
 import Maybe from '../utils/Maybe';
 import { createRandomNotation, interpretNotation } from '../cube/algorithms/Interpreter';
-import useOnUpdate from '../hooks/useOnUpdate';
 import { Pause, PlayArrow, Shuffle, SkipNext, Stop, Refresh } from '@material-ui/icons';
 import { useGlobalState } from '../states/State';
 import {
@@ -13,23 +12,23 @@ import {
     pauseAlgorithmAction,
     playAlgorithmAction,
     resetCubeAction,
+    updatePlayerNotationAction,
     stopAlgorithmAction
 } from '../states/AlgorithmPlayerActions';
 
 const AlgorithmPlayer: React.FunctionComponent = () => {
     const [state, dispatch] = useGlobalState();
-    const { numberOfCubes, selectedAlgorithm, playerStatus } = state;
+    const { numberOfCubes, playerNotation, playerStatus } = state;
 
-    const [notation, setNotation] = useState(selectedAlgorithm);
     const updateNotation = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => setNotation(event.target.value),
+        (event: React.ChangeEvent<HTMLInputElement>) => dispatch(updatePlayerNotationAction(event.target.value)),
         []
     );
 
-    const isNotationEmpty = notation.length === 0;
+    const isNotationEmpty = playerNotation.length === 0;
     const isStopped = playerStatus === AlgorithmStatus.STOPPED;
 
-    const generateMoveGenerator = () => Maybe.some(interpretNotation(notation, numberOfCubes));
+    const generateMoveGenerator = () => Maybe.some(interpretNotation(playerNotation, numberOfCubes));
 
     const playOrPause = () => {
         switch (playerStatus) {
@@ -61,19 +60,15 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
 
     const onStop = () => dispatch(stopAlgorithmAction());
     const onJumpToEnd = () => dispatch(jumpToEndOfAlgorithmAction(generateMoveGenerator));
-    const onShuffle = () => setNotation(createRandomNotation(numberOfCubes));
+    const onShuffle = () => dispatch(updatePlayerNotationAction(createRandomNotation(numberOfCubes)));
     const onRefresh = () => dispatch(resetCubeAction());
-
-    useOnUpdate(() => {
-        setNotation(selectedAlgorithm);
-    }, [selectedAlgorithm]);
 
     return (
         <div className="algorithm-player">
             <TextField
                 label="Algorithm"
                 fullWidth={true}
-                value={notation}
+                value={playerNotation}
                 onChange={updateNotation}
                 disabled={!isStopped}
             />

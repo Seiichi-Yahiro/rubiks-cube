@@ -9,7 +9,7 @@ export enum AlgorithmPlayerActions {
     PAUSE_ALGORITHM,
     JUMP_TO_END_OF_ALGORITHM,
     RESET_CUBE,
-    SELECT_NOTATION
+    UPDATE_NOTATION
 }
 
 type Action = ActionCreator<AlgorithmPlayerActions, IAlgorithmPlayerState>;
@@ -56,9 +56,9 @@ export const resetCubeAction = (): Action => prevState => ({
     }
 });
 
-export const selectNotationAction = (selectedAlgorithm: string): Action => () => ({
-    type: AlgorithmPlayerActions.SELECT_NOTATION,
+export const updatePlayerNotationAction = (playerNotation: string): Action => () => ({
+    type: AlgorithmPlayerActions.UPDATE_NOTATION,
     payload: {
-        selectedAlgorithm
+        playerNotation
     }
 });

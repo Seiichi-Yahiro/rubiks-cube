@@ -9,14 +9,14 @@ export enum AlgorithmStatus {
 }
 
 export interface IAlgorithmPlayerState {
-    selectedAlgorithm: string;
+    playerNotation: string;
     playerStatus: AlgorithmStatus;
     moveGenerator: Maybe<IterableIterator<D3Group>>;
     reset: boolean;
 }
 
 export const initialAlgorithmPlayerState: IAlgorithmPlayerState = {
-    selectedAlgorithm: '',
+    playerNotation: '',
     playerStatus: AlgorithmStatus.STOPPED,
     moveGenerator: Maybe.none(),
     reset: false
