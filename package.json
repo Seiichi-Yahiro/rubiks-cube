@@ -8,7 +8,8 @@
         "lodash": "4.17.15",
         "quaternion": "1.1.0",
         "react": "16.8.6",
-        "react-dom": "16.8.6"
+        "react-dom": "16.8.6",
+        "react-tracked": "0.7.0"
     },
     "devDependencies": {
         "@types/enzyme": "3.10.3",

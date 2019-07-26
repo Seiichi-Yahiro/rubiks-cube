@@ -1,15 +1,17 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { List, ListItemText } from '@material-ui/core';
 import ListItem from '@material-ui/core/ListItem';
 import Look2CFOP from '../cube/algorithms/CFOP';
 import { IAlgorithm } from '../cube/algorithms/AlgorithmTypes';
 import Misc from '../cube/algorithms/Misc';
-import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
+import { AlgorithmStatus } from '../states/AlgorithmPlayerState';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import StartConfiguration from './StartConfiguration';
 import { take, last } from 'lodash';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
+import { useGlobalState } from '../states/State';
+import { selectNotationAction } from '../states/AlgorithmPlayerActions';
 
 const flattenAlgorithms = (algorithm: IAlgorithm): IAlgorithm[] =>
     [algorithm]
@@ -58,7 +60,9 @@ const filterCategories = (searchValue: string) =>
         .filter(group => group);
 
 const Algorithms: React.FunctionComponent = () => {
-    const { setAlgorithmPlayerState, status: playerStatus } = useContext(algorithmPlayerContext);
+    const [globalState, dispatch] = useGlobalState();
+    const { playerStatus } = globalState;
+
     const [filteredCategories, setFilteredCategories] = useState(categories);
     const filter = (event: React.ChangeEvent<HTMLInputElement>) =>
         setFilteredCategories(filterCategories(event.target.value.toLocaleLowerCase()));
@@ -80,7 +84,7 @@ const Algorithms: React.FunctionComponent = () => {
                             key={child.name + index}
                             className="interface-list__item--moves"
                             button={true}
-                            onClick={() => setAlgorithmPlayerState({ notation: child.notation })}
+                            onClick={() => dispatch(selectNotationAction(child.notation!))}
                             disabled={playerStatus !== AlgorithmStatus.STOPPED}
                         >
                             {child.startConfiguration && (

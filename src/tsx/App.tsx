@@ -2,20 +2,15 @@ import React from 'react';
 import RubiksCube from './cube/RubiksCube';
 import Interface from './interface/Interface';
 import './App.scss';
-import SettingsContext from './context/SettingsContext';
-import AlgorithmPlayerContext from './context/AlgorithmPlayerContext';
+import { GlobalStateProvider } from './states/State';
 
-const App: React.FunctionComponent = () => {
-    return (
-        <div className="app">
-            <SettingsContext>
-                <AlgorithmPlayerContext>
-                    <Interface />
-                    <RubiksCube />
-                </AlgorithmPlayerContext>
-            </SettingsContext>
-        </div>
-    );
-};
+const App: React.FunctionComponent = () => (
+    <div className="app">
+        <GlobalStateProvider>
+            <Interface />
+            <RubiksCube />
+        </GlobalStateProvider>
+    </div>
+);
 
 export default App;

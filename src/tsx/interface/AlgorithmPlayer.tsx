@@ -1,39 +1,41 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import './AlgorithmPlayer.scss';
-import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
+import { AlgorithmStatus } from '../states/AlgorithmPlayerState';
 import Maybe from '../utils/Maybe';
 import { createRandomNotation, interpretNotation } from '../cube/algorithms/Interpreter';
-import { settingsContext } from '../context/SettingsContext';
 import useOnUpdate from '../hooks/useOnUpdate';
 import { Pause, PlayArrow, Shuffle, SkipNext, Stop, Refresh } from '@material-ui/icons';
-import { D3Group } from '../cube/D3';
+import { useGlobalState } from '../states/State';
+import {
+    jumpToEndOfAlgorithmAction,
+    pauseAlgorithmAction,
+    playAlgorithmAction,
+    resetCubeAction,
+    stopAlgorithmAction
+} from '../states/AlgorithmPlayerActions';
 
 const AlgorithmPlayer: React.FunctionComponent = () => {
-    const { numberOfCubes } = useContext(settingsContext);
-    const { notation: playerNotation, status, setAlgorithmPlayerState } = useContext(algorithmPlayerContext);
-    const [notation, setNotation] = useState(playerNotation);
+    const [state, dispatch] = useGlobalState();
+    const { numberOfCubes, selectedAlgorithm, playerStatus } = state;
+
+    const [notation, setNotation] = useState(selectedAlgorithm);
     const updateNotation = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => setNotation(event.target.value),
         []
     );
 
     const isNotationEmpty = notation.length === 0;
-    const isStopped = status === AlgorithmStatus.STOPPED;
+    const isStopped = playerStatus === AlgorithmStatus.STOPPED;
 
-    const continueMoveGenerator = (moveGenerator: Maybe<IterableIterator<D3Group>>) =>
-        moveGenerator.isSome() ? moveGenerator : Maybe.some(interpretNotation(notation, numberOfCubes));
+    const generateMoveGenerator = () => Maybe.some(interpretNotation(notation, numberOfCubes));
 
     const playOrPause = () => {
-        switch (status) {
+        switch (playerStatus) {
             case AlgorithmStatus.STOPPED:
             case AlgorithmStatus.PAUSED: {
-                const onPlay = () =>
-                    setAlgorithmPlayerState(({ moveGenerator }) => ({
-                        status: AlgorithmStatus.PLAYING,
-                        moveGenerator: continueMoveGenerator(moveGenerator)
-                    }));
+                const onPlay = () => dispatch(playAlgorithmAction(generateMoveGenerator));
 
                 return (
                     <IconButton onClick={onPlay} disabled={isNotationEmpty}>
@@ -43,11 +45,7 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
             }
 
             case AlgorithmStatus.PLAYING: {
-                const onPause = () => {
-                    setAlgorithmPlayerState({
-                        status: AlgorithmStatus.PAUSED
-                    });
-                };
+                const onPause = () => dispatch(pauseAlgorithmAction());
 
                 return (
                     <IconButton onClick={onPause}>
@@ -61,25 +59,14 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
         }
     };
 
-    const onStop = () =>
-        setAlgorithmPlayerState({
-            status: AlgorithmStatus.STOPPED,
-            moveGenerator: Maybe.none()
-        });
-
-    const onJumpToEnd = () =>
-        setAlgorithmPlayerState(({ moveGenerator }) => ({
-            status: AlgorithmStatus.JUMP_TO_END,
-            moveGenerator: continueMoveGenerator(moveGenerator)
-        }));
-
+    const onStop = () => dispatch(stopAlgorithmAction());
+    const onJumpToEnd = () => dispatch(jumpToEndOfAlgorithmAction(generateMoveGenerator));
     const onShuffle = () => setNotation(createRandomNotation(numberOfCubes));
-
-    const onRefresh = () => setAlgorithmPlayerState(({ reset }) => ({ reset: !reset }));
+    const onRefresh = () => dispatch(resetCubeAction());
 
     useOnUpdate(() => {
-        setNotation(playerNotation);
-    }, [playerNotation]);
+        setNotation(selectedAlgorithm);
+    }, [selectedAlgorithm]);
 
     return (
         <div className="algorithm-player">
@@ -96,7 +83,10 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
                     <IconButton onClick={onStop} disabled={isStopped}>
                         <Stop />
                     </IconButton>
-                    <IconButton onClick={onJumpToEnd} disabled={status === AlgorithmStatus.PLAYING || isNotationEmpty}>
+                    <IconButton
+                        onClick={onJumpToEnd}
+                        disabled={playerStatus === AlgorithmStatus.PLAYING || isNotationEmpty}
+                    >
                         <SkipNext />
                     </IconButton>
                 </div>

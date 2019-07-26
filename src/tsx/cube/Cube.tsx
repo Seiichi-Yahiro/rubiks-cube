@@ -1,13 +1,13 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { keys } from 'lodash';
 import { defaultColors, cubeIsTransitioning } from './CubeUtils';
 import { IFace, IFaces } from './CubeTypes';
 import D3, { D3Group } from './D3';
 import Maybe from '../utils/Maybe';
 import Quaternion from 'quaternion';
-import { settingsContext } from '../context/SettingsContext';
 import Faces from './Faces';
 import createClassName from '../utils/createClassName';
+import { useGlobalState } from '../states/State';
 
 interface ICubeProps {
     size: number;
@@ -28,7 +28,7 @@ const Cube: React.FunctionComponent<ICubeProps> = ({
     rotate,
     colors
 }) => {
-    const { rotationAnimationSpeed } = useContext(settingsContext);
+    const [{ rotationAnimationSpeed }] = useGlobalState();
 
     const faceRotations = useMemo(() => {
         const halfCubeSize = size / 2;

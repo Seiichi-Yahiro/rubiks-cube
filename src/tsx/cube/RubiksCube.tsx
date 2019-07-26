@@ -1,7 +1,6 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import { animateRotation, calculateCubePosition, cubeIsTransitioning, generateCubes, rotate } from './CubeUtils';
 import Cube from './Cube';
-import { settingsContext } from '../context/SettingsContext';
 import { ICube } from './CubeTypes';
 import { D3Group } from './D3';
 import createClassName from '../utils/createClassName';
@@ -9,8 +8,10 @@ import CubeArrows from './CubeArrows';
 import useOnUpdate from '../hooks/useOnUpdate';
 import useComplexState from '../hooks/useComplexState';
 import Maybe from '../utils/Maybe';
-import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
+import { AlgorithmStatus } from '../states/AlgorithmPlayerState';
 import { flow, partialRight } from 'lodash';
+import { useGlobalState } from '../states/State';
+import { playAlgorithmAction, stopAlgorithmAction } from '../states/AlgorithmPlayerActions';
 
 interface IRubiksCubeState {
     cubes: ICube[];
@@ -18,10 +19,10 @@ interface IRubiksCubeState {
 }
 
 const RubiksCube: React.FunctionComponent = () => {
-    const { numberOfCubes, size } = useContext(settingsContext);
-    const { moveGenerator, status: playerStatus, reset, setAlgorithmPlayerState } = useContext(algorithmPlayerContext);
+    const [globalState, dispatch] = useGlobalState();
+    const { numberOfCubes, cubeSize, moveGenerator, playerStatus, reset } = globalState;
 
-    const sizeOfCube = size / numberOfCubes;
+    const sizeOfCube = cubeSize / numberOfCubes;
 
     const [state, setState] = useComplexState<IRubiksCubeState>(() => ({
         cubes: generateCubes(numberOfCubes, sizeOfCube),
@@ -33,11 +34,8 @@ const RubiksCube: React.FunctionComponent = () => {
         const generator = function*() {
             yield rotationAxes;
         };
-
-        setAlgorithmPlayerState({
-            status: AlgorithmStatus.PLAYING,
-            moveGenerator: Maybe.some(generator())
-        });
+        const generateMoveGenerator = () => Maybe.some(generator());
+        dispatch(playAlgorithmAction(generateMoveGenerator));
     }, []);
 
     useOnUpdate(() => {
@@ -51,7 +49,7 @@ const RubiksCube: React.FunctionComponent = () => {
                 translation: calculateCubePosition(cube.id, numberOfCubes, sizeOfCube)
             }))
         }));
-    }, [size]);
+    }, [cubeSize]);
 
     const onTransitionEnd = (event: TransitionEvent) => {
         const isTransform = event.propertyName === 'transform';
@@ -83,12 +81,7 @@ const RubiksCube: React.FunctionComponent = () => {
             moveGenerator
                 .let(it => it.next().value)
                 .ifIsSome(animate)
-                .ifIsNone(() => {
-                    setAlgorithmPlayerState({
-                        status: AlgorithmStatus.STOPPED,
-                        moveGenerator: Maybe.none()
-                    });
-                });
+                .ifIsNone(() => dispatch(stopAlgorithmAction()));
         } else if (playerStatus === AlgorithmStatus.JUMP_TO_END) {
             setState(({ cubes }) => {
                 const moves = [...moveGenerator.get()].map(d3Group => partialRight(rotate, numberOfCubes, d3Group));
@@ -98,23 +91,20 @@ const RubiksCube: React.FunctionComponent = () => {
                     cubes: applyMoves(cubes)
                 };
             });
-            setAlgorithmPlayerState({
-                status: AlgorithmStatus.STOPPED,
-                moveGenerator: Maybe.none()
-            });
+            dispatch(stopAlgorithmAction());
         }
     }, [playerStatus, state.rotationAnimation]);
 
     const cubeSceneStyle: React.CSSProperties = {
-        width: size,
-        height: size,
+        width: cubeSize,
+        height: cubeSize,
         margin: 80,
         perspective: 1000
     };
 
     const cubeStyle: React.CSSProperties = {
-        width: size,
-        height: size,
+        width: cubeSize,
+        height: cubeSize,
         position: 'relative',
         transformStyle: 'preserve-3d',
         transform: `rotateX(-45deg) rotateY(-45deg)`
@@ -150,7 +140,7 @@ const RubiksCube: React.FunctionComponent = () => {
                         ))}
                     </div>
                     <CubeArrows
-                        size={size}
+                        size={cubeSize}
                         sizeOfCube={sizeOfCube}
                         numberOfCubes={numberOfCubes}
                         rotate={rotateCubesOnClick}

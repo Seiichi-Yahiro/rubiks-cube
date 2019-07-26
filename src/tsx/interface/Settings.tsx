@@ -1,14 +1,19 @@
-import React, { useContext } from 'react';
-import { settingsContext } from '../context/SettingsContext';
+import React from 'react';
 import { Typography } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { algorithmPlayerContext, AlgorithmStatus } from '../context/AlgorithmPlayerContext';
+import { AlgorithmStatus } from '../states/AlgorithmPlayerState';
+import { useGlobalState } from '../states/State';
+import {
+    updateNumberOfCubesAction,
+    updateCubeSizeAction,
+    updateRotationAnimationSpeedAction
+} from '../states/SettingsActions';
 
 const Settings: React.FunctionComponent = () => {
-    const { numberOfCubes, size, rotationAnimationSpeed, setSettings } = useContext(settingsContext);
-    const { status: playerStatus } = useContext(algorithmPlayerContext);
+    const [state, dispatch] = useGlobalState();
+    const { numberOfCubes, cubeSize, rotationAnimationSpeed, playerStatus } = state;
     const isDisabled = playerStatus !== AlgorithmStatus.STOPPED;
 
     return (
@@ -23,7 +28,7 @@ const Settings: React.FunctionComponent = () => {
                     min={2}
                     max={5}
                     defaultValue={numberOfCubes}
-                    onChangeCommitted={(event, value) => setSettings({ numberOfCubes: value as number })}
+                    onChangeCommitted={(event, value) => dispatch(updateNumberOfCubesAction(value as number))}
                     disabled={isDisabled}
                 />
             </ListItem>
@@ -36,8 +41,8 @@ const Settings: React.FunctionComponent = () => {
                     step={50}
                     min={100}
                     max={600}
-                    defaultValue={size}
-                    onChangeCommitted={(event, value) => setSettings({ size: value as number })}
+                    defaultValue={cubeSize}
+                    onChangeCommitted={(event, value) => dispatch(updateCubeSizeAction(value as number))}
                     disabled={isDisabled}
                 />
             </ListItem>
@@ -50,7 +55,7 @@ const Settings: React.FunctionComponent = () => {
                     max={2000}
                     step={50}
                     defaultValue={rotationAnimationSpeed}
-                    onChangeCommitted={(event, value) => setSettings({ rotationAnimationSpeed: value as number })}
+                    onChangeCommitted={(event, value) => dispatch(updateRotationAnimationSpeedAction(value as number))}
                 />
             </ListItem>
         </List>
