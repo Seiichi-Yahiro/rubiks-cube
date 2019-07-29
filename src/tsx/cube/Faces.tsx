@@ -1,5 +1,4 @@
 import D3, { D3Group } from './D3';
-import Maybe from '../utils/Maybe';
 import React from 'react';
 import FaceArrows from './FaceArrows';
 
@@ -8,7 +7,7 @@ interface IFacesProps {
     color: string;
     rotation: string;
     rotate: (axis: D3Group) => void;
-    arrowAxes: Maybe<[D3, D3]>;
+    arrowAxes: D3[];
 }
 
 const Faces: React.FunctionComponent<IFacesProps> = ({ size, color, rotation, rotate, arrowAxes }) => {
@@ -20,6 +19,8 @@ const Faces: React.FunctionComponent<IFacesProps> = ({ size, color, rotation, ro
         border: '2px solid #333'
     };
 
+    const [up, right] = arrowAxes;
+
     return (
         <div
             style={{
@@ -28,16 +29,13 @@ const Faces: React.FunctionComponent<IFacesProps> = ({ size, color, rotation, ro
                 transform: rotation
             }}
         >
-            {arrowAxes.letOrElse(
-                ([up, right]) => (
-                    <FaceArrows
-                        up={() => rotate([up])}
-                        down={() => rotate([up.invert()])}
-                        right={() => rotate([right])}
-                        left={() => rotate([right.invert()])}
-                    />
-                ),
-                undefined!
+            {up && right && (
+                <FaceArrows
+                    up={() => rotate([up])}
+                    down={() => rotate([up.invert()])}
+                    right={() => rotate([right])}
+                    left={() => rotate([right.invert()])}
+                />
             )}
         </div>
     );

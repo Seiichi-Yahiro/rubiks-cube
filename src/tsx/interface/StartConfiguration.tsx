@@ -1,5 +1,5 @@
 import React from 'react';
-import { CubeColors } from '../cube/CubeUtils';
+import { CubeColors } from '../cube/CubeTypes';
 
 interface IStartConfigurationProps {
     configuration: CubeColors[][];

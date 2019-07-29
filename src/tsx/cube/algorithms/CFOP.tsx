@@ -1,5 +1,5 @@
 import { IAlgorithm } from './AlgorithmTypes';
-import { CubeColors } from '../CubeUtils';
+import { CubeColors } from '../CubeTypes';
 
 const { YELLOW, ORANGE, RED, GREEN, BLUE, DEFAULT, TRANSPARENT } = CubeColors;
 

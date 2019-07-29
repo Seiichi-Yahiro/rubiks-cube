@@ -126,15 +126,14 @@ const RubiksCube: React.FunctionComponent = () => {
             >
                 <div style={cubesWrapperStyle}>
                     <div style={{ display: 'contents' }}>
-                        {state.cubes.map((cube, index) => (
+                        {state.cubes.map(cube => (
                             <Cube
-                                key={index}
+                                key={cube.id.toString()}
                                 size={sizeOfCube}
+                                faces={cube.faces}
                                 rotation={cube.rotation}
                                 rotationAnimation={cube.rotationAnimation}
                                 translation={cube.translation}
-                                colors={cube.colors}
-                                faceArrows={cube.faceArrows}
                                 rotate={rotateCubesOnClick}
                             />
                         ))}

@@ -1,7 +1,6 @@
-import React, { useMemo } from 'react';
-import { keys } from 'lodash';
-import { defaultColors, cubeIsTransitioning } from './CubeUtils';
-import { IFace, IFaces } from './CubeTypes';
+import React from 'react';
+import { cubeIsTransitioning } from './CubeUtils';
+import { IFace } from './CubeTypes';
 import D3, { D3Group } from './D3';
 import Maybe from '../utils/Maybe';
 import Quaternion from 'quaternion';
@@ -11,46 +10,22 @@ import { useGlobalState } from '../states/State';
 
 interface ICubeProps {
     size: number;
+    faces: IFace[];
     translation: D3;
     rotation: Quaternion;
     rotationAnimation: Maybe<D3>;
-    faceArrows: IFaces<Maybe<[D3, D3]>>;
     rotate: (axis: D3Group) => void;
-    colors: Partial<IFaces<string>>;
 }
 
 const Cube: React.FunctionComponent<ICubeProps> = ({
     size,
+    faces,
     translation,
     rotation,
     rotationAnimation,
-    faceArrows,
-    rotate,
-    colors
+    rotate
 }) => {
     const [{ rotationAnimationSpeed }] = useGlobalState();
-
-    const faceRotations = useMemo(() => {
-        const halfCubeSize = size / 2;
-
-        return {
-            FRONT: `translateZ(${halfCubeSize}px)`,
-            BACK: `rotateY(180deg) translateZ(${halfCubeSize}px)`,
-            RIGHT: `rotateY(90deg) translateZ(${halfCubeSize}px)`,
-            LEFT: `rotateY(-90deg) translateZ(${halfCubeSize}px)`,
-            UP: `rotateX(90deg) translateZ(${halfCubeSize}px)`,
-            DOWN: `rotateX(-90deg) translateZ(${halfCubeSize}px)`
-        } as IFaces<string>;
-    }, [size]);
-
-    const faceColors: IFaces<IFace> = useMemo(
-        () =>
-            (({
-                ...defaultColors,
-                ...colors
-            } as unknown) as IFaces<IFace>),
-        [colors]
-    );
 
     const rotationMatrix3d = rotation.toMatrix4().map(Math.round);
     const rotate3d = rotationAnimation.let(it => it.toVector().join(',')).getOrElse('0,0,0');
@@ -71,14 +46,14 @@ const Cube: React.FunctionComponent<ICubeProps> = ({
             })}
             style={cubeStyle}
         >
-            {keys(faceRotations).map(key => (
+            {faces.map(face => (
                 <Faces
-                    key={faceRotations[key]}
+                    key={face.rotation}
                     size={size}
-                    color={faceColors[key]}
-                    rotation={faceRotations[key]}
+                    color={face.color}
+                    rotation={face.rotation}
                     rotate={rotate}
-                    arrowAxes={faceArrows[key]}
+                    arrowAxes={face.arrowAxes}
                 />
             ))}
         </div>

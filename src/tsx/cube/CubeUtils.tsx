@@ -1,36 +1,10 @@
-import { flow, mapValues, range } from 'lodash';
+import { flow, range } from 'lodash';
 import Quaternion from 'quaternion';
-import { ICube, IFaces } from './CubeTypes';
+import { CubeColors, ICube, Side } from './CubeTypes';
 import D3, { D3Group } from './D3';
 import Maybe from '../utils/Maybe';
 
 export const cubeIsTransitioning = 'cube--is-transitioning';
-
-export enum CubeColors {
-    BLUE = '#3d81f6',
-    GREEN = '#009d54',
-    RED = '#dc422f',
-    ORANGE = '#ff6c00',
-    WHITE = '#ffffff',
-    YELLOW = '#fdcc09',
-    DEFAULT = '#383838',
-    TRANSPARENT = 'transparent'
-}
-
-export function createFaces<T>(initialValue: T): IFaces<T> {
-    const initialLayers = {
-        FRONT: undefined,
-        BACK: undefined,
-        UP: undefined,
-        DOWN: undefined,
-        RIGHT: undefined,
-        LEFT: undefined
-    } as IFaces<undefined>;
-
-    return mapValues(initialLayers, () => initialValue);
-}
-
-export const defaultColors: IFaces<string> = createFaces(CubeColors.DEFAULT);
 
 export const calculateCubePosition = (d3: D3, numberOfCubes: number, sizeOfCube: number): D3 => {
     const offset = sizeOfCube * (numberOfCubes / 2 - 0.5);
@@ -43,9 +17,23 @@ export const calculateCubePosition = (d3: D3, numberOfCubes: number, sizeOfCube:
         .setZ(-z * sizeOfCube + offset);
 };
 
+const getFaceRotations = (sizeOfCube: number) => {
+    const halfCubeSize = sizeOfCube / 2;
+
+    return new Map([
+        [Side.FRONT, `translateZ(${halfCubeSize}px)`],
+        [Side.BACK, `rotateY(180deg) translateZ(${halfCubeSize}px)`],
+        [Side.UP, `rotateX(90deg) translateZ(${halfCubeSize}px)`],
+        [Side.DOWN, `rotateX(-90deg) translateZ(${halfCubeSize}px)`],
+        [Side.LEFT, `rotateY(-90deg) translateZ(${halfCubeSize}px)`],
+        [Side.RIGHT, `rotateY(90deg) translateZ(${halfCubeSize}px)`]
+    ]);
+};
+
 export const generateCubes = (numberOfCubes: number, sizeOfCube: number) => {
     const cubes: ICube[] = [];
 
+    const halfNumberOfCubes = Math.floor(numberOfCubes / 2);
     const indexes = range(1, numberOfCubes + 1);
 
     for (const z of indexes) {
@@ -55,40 +43,86 @@ export const generateCubes = (numberOfCubes: number, sizeOfCube: number) => {
                     continue;
                 }
 
+                const faceRotations = getFaceRotations(sizeOfCube);
+
                 const axes = new D3(x, y, z);
 
                 const cube: ICube = {
                     id: axes.clone(),
-                    colors: {},
+                    faces: [],
                     translation: calculateCubePosition(axes, numberOfCubes, sizeOfCube),
                     rotation: new Quaternion(),
                     axes,
-                    faceArrows: createFaces(Maybe.none<[D3, D3]>()),
                     rotationAnimation: Maybe.none()
                 };
 
                 if (z === 1) {
-                    cube.colors.FRONT = CubeColors.BLUE;
-                    cube.faceArrows.FRONT = Maybe.some([new D3().setX(-x), new D3().setY(-y)]);
+                    cube.faces.push({
+                        side: new D3().setZ(-halfNumberOfCubes),
+                        rotation: faceRotations.get(Side.FRONT)!,
+                        color: CubeColors.BLUE,
+                        arrowAxes: [new D3().setX(-x), new D3().setY(-y)]
+                    });
+
+                    faceRotations.delete(Side.FRONT);
                 } else if (z === numberOfCubes) {
-                    cube.colors.BACK = CubeColors.GREEN;
-                    cube.faceArrows.BACK = Maybe.some([new D3().setX(x), new D3().setY(-y)]);
+                    cube.faces.push({
+                        side: new D3().setZ(halfNumberOfCubes),
+                        rotation: faceRotations.get(Side.BACK)!,
+                        color: CubeColors.GREEN,
+                        arrowAxes: [new D3().setX(x), new D3().setY(-y)]
+                    });
+
+                    faceRotations.delete(Side.BACK);
                 }
 
                 if (y === 1) {
-                    cube.colors.UP = CubeColors.YELLOW;
-                    cube.faceArrows.UP = Maybe.some([new D3().setX(-x), new D3().setZ(-z)]);
+                    cube.faces.push({
+                        side: new D3().setY(-halfNumberOfCubes),
+                        rotation: faceRotations.get(Side.UP)!,
+                        color: CubeColors.YELLOW,
+                        arrowAxes: [new D3().setX(-x), new D3().setZ(-z)]
+                    });
+
+                    faceRotations.delete(Side.UP);
                 } else if (y === numberOfCubes) {
-                    cube.colors.DOWN = CubeColors.WHITE;
-                    cube.faceArrows.DOWN = Maybe.some([new D3().setX(-x), new D3().setZ(z)]);
+                    cube.faces.push({
+                        side: new D3().setY(halfNumberOfCubes),
+                        rotation: faceRotations.get(Side.DOWN)!,
+                        color: CubeColors.WHITE,
+                        arrowAxes: [new D3().setX(-x), new D3().setZ(z)]
+                    });
+
+                    faceRotations.delete(Side.DOWN);
                 }
 
                 if (x === 1) {
-                    cube.colors.LEFT = CubeColors.ORANGE;
-                    cube.faceArrows.LEFT = Maybe.some([new D3().setZ(-z), new D3().setY(-y)]);
+                    cube.faces.push({
+                        side: new D3().setX(-halfNumberOfCubes),
+                        rotation: faceRotations.get(Side.LEFT)!,
+                        color: CubeColors.ORANGE,
+                        arrowAxes: [new D3().setZ(-z), new D3().setY(-y)]
+                    });
+
+                    faceRotations.delete(Side.LEFT);
                 } else if (x === numberOfCubes) {
-                    cube.colors.RIGHT = CubeColors.RED;
-                    cube.faceArrows.RIGHT = Maybe.some([new D3().setZ(z), new D3().setY(-y)]);
+                    cube.faces.push({
+                        side: new D3().setX(halfNumberOfCubes),
+                        rotation: faceRotations.get(Side.RIGHT)!,
+                        color: CubeColors.RED,
+                        arrowAxes: [new D3().setZ(z), new D3().setY(-y)]
+                    });
+
+                    faceRotations.delete(Side.RIGHT);
+                }
+
+                for (const rotation of faceRotations.values()) {
+                    cube.faces.push({
+                        side: new D3(),
+                        rotation,
+                        color: CubeColors.DEFAULT,
+                        arrowAxes: []
+                    });
                 }
 
                 cubes.push(cube);
@@ -125,24 +159,23 @@ const rotateAxis = (rotationAxis: D3, axesRotation: D3, translation: number) => 
         .add(translation)
         .map(Math.round);
 
-    const newFaceArrows = mapValues(cube.faceArrows, maybeArrowRotations =>
-        maybeArrowRotations.let(
-            arrowRotations =>
-                arrowRotations.map(arrowRotation =>
-                    arrowRotation
-                        .unit()
-                        .rotate(rotationAxis.invert(), degree90)
-                        .map(Math.round)
-                        .mul(newAxes)
-                ) as [D3, D3]
+    const newFaces = cube.faces.map(face => ({
+        ...face,
+        side: face.side.rotate(rotationAxis, degree90),
+        arrowAxes: face.arrowAxes.map(arrowAxis =>
+            arrowAxis
+                .unit()
+                .rotate(rotationAxis.invert(), degree90)
+                .map(Math.round)
+                .mul(newAxes)
         )
-    );
+    }));
 
     return {
         ...cube,
         axes: newAxes,
+        faces: newFaces,
         rotation: cube.rotation.mul(rotationAxis.toQuaternion(degree90)),
-        faceArrows: newFaceArrows,
         rotationAnimation: Maybe.none()
     };
 };

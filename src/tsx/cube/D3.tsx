@@ -43,6 +43,10 @@ class D3 {
         return [this._x, this._y, this._z];
     }
 
+    toString(): string {
+        return this.toVector().join('-');
+    }
+
     toQuaternion(angle: number): Quaternion {
         return Quaternion.fromAxisAngle(this.unit().toVector(), angle);
     }

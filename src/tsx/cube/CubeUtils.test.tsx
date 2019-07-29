@@ -1,8 +1,8 @@
 import D3 from './D3';
-import { animateRotation, calculateCubePosition, createFaces, generateCubes, rotate } from './CubeUtils';
+import { animateRotation, calculateCubePosition, generateCubes, rotate } from './CubeUtils';
 import Maybe from '../utils/Maybe';
-import { keys, mapValues } from 'lodash';
-import { IFaces } from './CubeTypes';
+// import { keys, mapValues } from 'lodash';
+// import { IFaces } from './CubeTypes';
 
 describe('CubeUtils', () => {
     it('should calculate the cube position for a 3x3x3', () => {
@@ -335,7 +335,7 @@ describe('CubeUtils', () => {
         expect(result.map(cube => cube.axes.toVector())).toEqual(cube2x2x2);
     });
 
-    const compareFaceArrows = (expected: IFaces<Maybe<[D3, D3]>>, result: IFaces<Maybe<[D3, D3]>>, axes: D3) => {
+    /*const compareFaceArrows = (expected: IFaces<Maybe<[D3, D3]>>, result: IFaces<Maybe<[D3, D3]>>, axes: D3) => {
         const convert = (v: IFaces<Maybe<[D3, D3]>>, layer: string) =>
             (v[layer] as Maybe<[D3, D3]>).let(it => it.map(d3 => d3.toVector())).getOrElse([]);
 
@@ -435,7 +435,7 @@ describe('CubeUtils', () => {
         expected.LEFT = Maybe.some([new D3().setZ(-1), new D3().setX(1)]);
 
         compareFaceArrows(expected, result[0].faceArrows, result[0].axes);
-    });
+    });*/
 
     it('should set animationRotation on the correct cubes', () => {
         const numberOfCubes = 2;

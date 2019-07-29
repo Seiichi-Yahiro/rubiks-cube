@@ -1,4 +1,4 @@
-import { CubeColors } from '../CubeUtils';
+import { CubeColors } from '../CubeTypes';
 
 export interface IAlgorithm {
     name: string;
