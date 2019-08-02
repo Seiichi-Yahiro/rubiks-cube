@@ -44,7 +44,8 @@ class D3 {
     }
 
     toString(): string {
-        return this.toVector().join('_');
+        const values = this.toVector().join(',');
+        return `(${values})`;
     }
 
     toQuaternion(angle: number): Quaternion {

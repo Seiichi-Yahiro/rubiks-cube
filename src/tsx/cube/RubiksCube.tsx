@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { animateRotation, calculateCubePosition, cubeIsTransitioning, generateCubes, rotate } from './CubeUtils';
 import Cube from './Cube';
-import { ICube } from './CubeTypes';
+import { ICube, ViewType } from './CubeTypes';
 import { D3Group } from './D3';
 import createClassName from '../utils/createClassName';
 import CubeArrows from './CubeArrows';
@@ -20,7 +20,7 @@ interface IRubiksCubeState {
 
 const RubiksCube: React.FunctionComponent = () => {
     const [globalState, dispatch] = useGlobalState();
-    const { numberOfCubes, cubeSize, moveGenerator, playerStatus, reset } = globalState;
+    const { numberOfCubes, cubeSize, moveGenerator, playerStatus, reset, view } = globalState;
 
     const sizeOfCube = cubeSize / numberOfCubes;
 
@@ -107,12 +107,15 @@ const RubiksCube: React.FunctionComponent = () => {
         height: cubeSize,
         position: 'relative',
         transformStyle: 'preserve-3d',
-        transform: `rotateX(-45deg) rotateY(-45deg)`
+        transform: createClassName({ 'rotateX(-45deg) rotateY(-45deg)': view === ViewType.D3 })
     };
 
     // Offset the translation origin to the center for small cubes
     const cubesWrapperStyle: React.CSSProperties = {
-        transform: `translate3d(${sizeOfCube}px, ${sizeOfCube}px, 0px)`,
+        transform: createClassName({
+            [`translateY(${sizeOfCube / 2}px) rotateZ(-90deg)`]: view === ViewType.D2,
+            [`translate3d(${sizeOfCube}px, ${sizeOfCube}px, 0px)`]: view === ViewType.D3
+        }),
         transformStyle: 'preserve-3d'
     };
 
@@ -130,6 +133,7 @@ const RubiksCube: React.FunctionComponent = () => {
                             <Cube
                                 key={cube.id.toString()}
                                 size={sizeOfCube}
+                                axes={cube.axes}
                                 faces={cube.faces}
                                 rotation={cube.rotation}
                                 rotationAnimation={cube.rotationAnimation}
@@ -138,12 +142,14 @@ const RubiksCube: React.FunctionComponent = () => {
                             />
                         ))}
                     </div>
-                    <CubeArrows
-                        size={cubeSize}
-                        sizeOfCube={sizeOfCube}
-                        numberOfCubes={numberOfCubes}
-                        rotate={rotateCubesOnClick}
-                    />
+                    {view === ViewType.D3 && (
+                        <CubeArrows
+                            size={cubeSize}
+                            sizeOfCube={sizeOfCube}
+                            numberOfCubes={numberOfCubes}
+                            rotate={rotateCubesOnClick}
+                        />
+                    )}
                 </div>
             </div>
         </div>

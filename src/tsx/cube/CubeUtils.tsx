@@ -161,7 +161,7 @@ const rotateAxis = (rotationAxis: D3, axesRotation: D3, translation: number) => 
 
     const newFaces = cube.faces.map(face => ({
         ...face,
-        side: face.side.rotate(rotationAxis, degree90).map(Math.round),
+        side: face.side.rotate(axesRotation, degree90).map(Math.round),
         arrowAxes: face.arrowAxes.map(arrowAxis =>
             arrowAxis
                 .unit()

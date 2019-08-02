@@ -2,6 +2,11 @@ import Quaternion from 'quaternion';
 import D3 from './D3';
 import Maybe from '../utils/Maybe';
 
+export enum ViewType {
+    D3 = '3D',
+    D2 = '2D'
+}
+
 export enum Direction {
     CLOCKWISE = 1,
     ANTI_CLOCKWISE = -1
