@@ -1,10 +1,8 @@
 import React, { useCallback } from 'react';
-import { animateRotation, calculateCubePosition, cubeIsTransitioning, generateCubes, rotate } from './CubeUtils';
-import Cube from './Cube';
+import { animateRotation, cubeIsTransitioning, generateCubes, rotate } from './CubeUtils';
 import { ICube, ViewType } from './CubeTypes';
 import { D3Group } from './D3';
 import createClassName from '../utils/createClassName';
-import CubeArrows from './CubeArrows';
 import useOnUpdate from '../hooks/useOnUpdate';
 import useComplexState from '../hooks/useComplexState';
 import Maybe from '../utils/Maybe';
@@ -12,6 +10,8 @@ import { AlgorithmStatus } from '../states/AlgorithmPlayerState';
 import { flow, partialRight } from 'lodash';
 import { useGlobalState } from '../states/State';
 import { playAlgorithmAction, stopAlgorithmAction } from '../states/AlgorithmPlayerActions';
+import D3View from './D3View';
+import D2View from './D2View';
 
 interface IRubiksCubeState {
     cubes: ICube[];
@@ -25,7 +25,7 @@ const RubiksCube: React.FunctionComponent = () => {
     const sizeOfCube = cubeSize / numberOfCubes;
 
     const [state, setState] = useComplexState<IRubiksCubeState>(() => ({
-        cubes: generateCubes(numberOfCubes, sizeOfCube),
+        cubes: generateCubes(numberOfCubes),
         rotationAnimation: Maybe.none(),
         moveGenerator: Maybe.none()
     }));
@@ -39,17 +39,8 @@ const RubiksCube: React.FunctionComponent = () => {
     }, []);
 
     useOnUpdate(() => {
-        setState({ cubes: generateCubes(numberOfCubes, sizeOfCube) });
+        setState({ cubes: generateCubes(numberOfCubes) });
     }, [numberOfCubes, reset]);
-
-    useOnUpdate(() => {
-        setState(({ cubes }) => ({
-            cubes: cubes.map(cube => ({
-                ...cube,
-                translation: calculateCubePosition(cube.id, numberOfCubes, sizeOfCube)
-            }))
-        }));
-    }, [cubeSize]);
 
     const onTransitionEnd = (event: TransitionEvent) => {
         const isTransform = event.propertyName === 'transform';
@@ -102,56 +93,30 @@ const RubiksCube: React.FunctionComponent = () => {
         perspective: 1000
     };
 
-    const cubeStyle: React.CSSProperties = {
-        width: cubeSize,
-        height: cubeSize,
-        position: 'relative',
-        transformStyle: 'preserve-3d',
-        transform: createClassName({ 'rotateX(-45deg) rotateY(-45deg)': view === ViewType.D3 })
-    };
-
-    // Offset the translation origin to the center for small cubes
-    const cubesWrapperStyle: React.CSSProperties = {
-        transform: createClassName({
-            [`translateY(${sizeOfCube / 2}px) rotateZ(-90deg)`]: view === ViewType.D2,
-            [`translate3d(${sizeOfCube}px, ${sizeOfCube}px, 0px)`]: view === ViewType.D3
-        }),
-        transformStyle: 'preserve-3d'
-    };
-
     return (
-        <div className="app__cube" style={cubeSceneStyle}>
-            <div
-                className={createClassName({
-                    'rubiks-cube--is-transitioning': playerStatus !== AlgorithmStatus.STOPPED
-                })}
-                style={cubeStyle}
-            >
-                <div style={cubesWrapperStyle}>
-                    <div style={{ display: 'contents' }}>
-                        {state.cubes.map(cube => (
-                            <Cube
-                                key={cube.id.toString()}
-                                size={sizeOfCube}
-                                axes={cube.axes}
-                                faces={cube.faces}
-                                rotation={cube.rotation}
-                                rotationAnimation={cube.rotationAnimation}
-                                translation={cube.translation}
-                                rotate={rotateCubesOnClick}
-                            />
-                        ))}
-                    </div>
-                    {view === ViewType.D3 && (
-                        <CubeArrows
-                            size={cubeSize}
-                            sizeOfCube={sizeOfCube}
-                            numberOfCubes={numberOfCubes}
-                            rotate={rotateCubesOnClick}
-                        />
-                    )}
-                </div>
-            </div>
+        <div
+            className={createClassName('app__cube', {
+                'rubiks-cube--is-transitioning': playerStatus !== AlgorithmStatus.STOPPED
+            })}
+            style={cubeSceneStyle}
+        >
+            {view === ViewType.D3 ? (
+                <D3View
+                    cubes={state.cubes}
+                    rotateOnClick={rotateCubesOnClick}
+                    cubeSize={cubeSize}
+                    sizeOfCube={sizeOfCube}
+                    numberOfCubes={numberOfCubes}
+                />
+            ) : (
+                <D2View
+                    cubes={state.cubes}
+                    rotateOnClick={rotateCubesOnClick}
+                    cubeSize={cubeSize}
+                    sizeOfCube={sizeOfCube}
+                    numberOfCubes={numberOfCubes}
+                />
+            )}
         </div>
     );
 };

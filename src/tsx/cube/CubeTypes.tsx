@@ -14,7 +14,6 @@ export enum Direction {
 
 export interface ICube {
     id: D3;
-    translation: D3;
     rotation: Quaternion;
     rotationAnimation: Maybe<D3>;
     axes: D3;
@@ -22,8 +21,8 @@ export interface ICube {
 }
 
 export interface IFace {
-    side: D3;
-    rotation: string;
+    sideCoordinates: D3;
+    side: Side;
     color: CubeColors;
     arrowAxes: D3[];
 }

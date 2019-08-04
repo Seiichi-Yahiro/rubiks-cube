@@ -29,6 +29,7 @@ const Settings: React.FunctionComponent = () => {
                             defaultChecked={view === ViewType.D2}
                             onChange={(event, value) => dispatch(updateViewType(value ? ViewType.D2 : ViewType.D3))}
                             color="primary"
+                            disabled={isDisabled}
                         />
                     }
                     label="2D View"

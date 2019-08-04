@@ -1,5 +1,5 @@
 import D3 from './D3';
-import { animateRotation, calculateCubePosition, generateCubes, rotate } from './CubeUtils';
+import { animateRotation, calculate3DCubePosition, generateCubes, rotate } from './CubeUtils';
 import Maybe from '../utils/Maybe';
 // import { keys, mapValues } from 'lodash';
 // import { IFaces } from './CubeTypes';
@@ -10,11 +10,11 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
 
         const cornerCube = new D3(1, 1, 1);
-        const cornerCubeResult = calculateCubePosition(cornerCube, numberOfCubes, sizeOfCube);
+        const cornerCubeResult = calculate3DCubePosition(cornerCube, numberOfCubes, sizeOfCube);
         expect(cornerCubeResult.toVector()).toEqual([-100, -100, 100]);
 
         const edgeCube = new D3(3, 2, 3);
-        const edgeCubeResult = calculateCubePosition(edgeCube, numberOfCubes, sizeOfCube);
+        const edgeCubeResult = calculate3DCubePosition(edgeCube, numberOfCubes, sizeOfCube);
         expect(edgeCubeResult.toVector()).toEqual([100, 0, -100]);
     });
 
@@ -23,18 +23,17 @@ describe('CubeUtils', () => {
         const sizeOfCube = 100;
 
         const cornerCube = new D3(1, 1, 1);
-        const cornerCubeResult = calculateCubePosition(cornerCube, numberOfCubes, sizeOfCube);
+        const cornerCubeResult = calculate3DCubePosition(cornerCube, numberOfCubes, sizeOfCube);
         expect(cornerCubeResult.toVector()).toEqual([-150, -150, 150]);
 
         const middleCube = new D3(3, 2, 3);
-        const middleCubeResult = calculateCubePosition(middleCube, numberOfCubes, sizeOfCube);
+        const middleCubeResult = calculate3DCubePosition(middleCube, numberOfCubes, sizeOfCube);
         expect(middleCubeResult.toVector()).toEqual([50, -50, -50]);
     });
 
     it('should generate the axes for a 3x3x3', () => {
         const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         // prettier-ignore
         const cube3x3x3 = [
@@ -56,8 +55,7 @@ describe('CubeUtils', () => {
 
     it('should rotate the x1 (L) axis of a 3x3x3', () => {
         const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         const result = rotate(cubes, numberOfCubes, [new D3().setX(1)]);
 
@@ -81,8 +79,7 @@ describe('CubeUtils', () => {
 
     it("should rotate the x-1 (L') axis of a 3x3x3", () => {
         const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         const result = rotate(cubes, numberOfCubes, [new D3().setX(-1)]);
 
@@ -106,8 +103,7 @@ describe('CubeUtils', () => {
 
     it("should rotate the x-2 (M') axis of a 3x3x3", () => {
         const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         const result = rotate(cubes, numberOfCubes, [new D3().setX(-2)]);
 
@@ -131,8 +127,7 @@ describe('CubeUtils', () => {
 
     it('should rotate the y1 (U) axis of a 3x3x3', () => {
         const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         const result = rotate(cubes, numberOfCubes, [new D3().setY(1)]);
 
@@ -156,8 +151,7 @@ describe('CubeUtils', () => {
 
     it("should rotate the y-1 (U') axis of a 3x3x3", () => {
         const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         const result = rotate(cubes, numberOfCubes, [new D3().setY(-1)]);
 
@@ -181,8 +175,7 @@ describe('CubeUtils', () => {
 
     it('should rotate the y3 (D) axis of a 3x3x3', () => {
         const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         const result = rotate(cubes, numberOfCubes, [new D3().setY(3)]);
 
@@ -206,8 +199,7 @@ describe('CubeUtils', () => {
 
     it("should rotate the z1 (F') axis of a 3x3x3", () => {
         const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         const result = rotate(cubes, numberOfCubes, [new D3().setZ(1)]);
 
@@ -231,8 +223,7 @@ describe('CubeUtils', () => {
 
     it('should rotate the z-1 (F) axis of a 3x3x3', () => {
         const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         const result = rotate(cubes, numberOfCubes, [new D3().setZ(-1)]);
 
@@ -256,8 +247,7 @@ describe('CubeUtils', () => {
 
     it("should rotate the z-3 (B') axis of a 3x3x3", () => {
         const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         const result = rotate(cubes, numberOfCubes, [new D3().setZ(-3)]);
 
@@ -281,8 +271,7 @@ describe('CubeUtils', () => {
 
     it('should generate the axes for a 2x2x2', () => {
         const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         // prettier-ignore
         const cube2x2x2 = [
@@ -299,8 +288,7 @@ describe('CubeUtils', () => {
 
     it('should rotate the x1 (L) axis of a 2x2x2', () => {
         const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         const result = rotate(cubes, numberOfCubes, [new D3().setX(1)]);
 
@@ -318,8 +306,7 @@ describe('CubeUtils', () => {
 
     it('should rotate multiple axes together', () => {
         const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         const result = rotate(cubes, numberOfCubes, [new D3().setX(1), new D3().setX(2)]);
 
@@ -439,8 +426,7 @@ describe('CubeUtils', () => {
 
     it('should set animationRotation on the correct cubes', () => {
         const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         const rotation = new D3().setX(1);
         const result = animateRotation(cubes, [rotation]);
@@ -458,8 +444,7 @@ describe('CubeUtils', () => {
 
     it('should remove animationRotation on rotate', () => {
         const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         const rotation = new D3().setX(1);
         let result = animateRotation(cubes, [rotation]);
@@ -470,8 +455,7 @@ describe('CubeUtils', () => {
 
     it('should correctly calculate animationRotation', () => {
         const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubes = generateCubes(numberOfCubes);
 
         let result = rotate(cubes, numberOfCubes, [new D3().setX(1)]);
         result = animateRotation(result, [new D3().setZ(1)]);

@@ -1,41 +1,45 @@
-import React from 'react';
-import { cubeIsTransitioning } from './CubeUtils';
-import { CubeColors, IFace, ViewType } from './CubeTypes';
+import React, { useMemo } from 'react';
+import { calculate3DCubePosition, cubeIsTransitioning } from './CubeUtils';
+import { IFace, Side } from './CubeTypes';
 import D3, { D3Group } from './D3';
 import Maybe from '../utils/Maybe';
 import Quaternion from 'quaternion';
-import Faces from './Faces';
+import Face from './Face';
 import createClassName from '../utils/createClassName';
 import { useGlobalState } from '../states/State';
 
 interface ICubeProps {
+    id: D3;
     size: number;
-    axes: D3;
     faces: IFace[];
-    translation: D3;
+    getFaceTransform: (side: Side) => string;
     rotation: Quaternion;
     rotationAnimation: Maybe<D3>;
     rotate: (axis: D3Group) => void;
 }
 
 const Cube: React.FunctionComponent<ICubeProps> = ({
+    id,
     size,
-    axes,
     faces,
-    translation,
+    getFaceTransform,
     rotation,
     rotationAnimation,
     rotate
 }) => {
-    const [{ rotationAnimationSpeed, view }] = useGlobalState();
+    const [{ rotationAnimationSpeed, numberOfCubes, cubeSize }] = useGlobalState();
 
     const rotationMatrix3d = rotation.toMatrix4().map(Math.round);
     const rotate3d = rotationAnimation.let(it => it.toVector().join(',')).getOrElse('0,0,0');
-
-    const transform = createClassName({
-        [`matrix3d(${rotationMatrix3d}) rotate3d(${rotate3d}, 90deg) translate3d(${translation.x}px, ${translation.y}px, ${translation.z}px)`]:
-            view === ViewType.D3
-    });
+    const translate3d = useMemo(
+        () =>
+            calculate3DCubePosition(id, numberOfCubes, cubeSize / numberOfCubes)
+                .toVector()
+                .map(it => it + 'px')
+                .join(','),
+        [numberOfCubes, cubeSize]
+    );
+    const transform = `matrix3d(${rotationMatrix3d}) rotate3d(${rotate3d}, 90deg) translate3d(${translate3d})`;
 
     const cubeStyle: React.CSSProperties = {
         transformStyle: 'preserve-3d',
@@ -53,20 +57,16 @@ const Cube: React.FunctionComponent<ICubeProps> = ({
             })}
             style={cubeStyle}
         >
-            {faces
-                .filter(face => view === ViewType.D3 || face.color !== CubeColors.DEFAULT)
-                .map(face => (
-                    <Faces
-                        key={face.rotation}
-                        size={size}
-                        axes={axes}
-                        side={face.side}
-                        color={face.color}
-                        rotation={face.rotation}
-                        rotate={rotate}
-                        arrowAxes={face.arrowAxes}
-                    />
-                ))}
+            {faces.map(face => (
+                <Face
+                    key={face.side}
+                    size={size}
+                    color={face.color}
+                    rotate={rotate}
+                    arrowAxes={face.arrowAxes}
+                    transform={getFaceTransform(face.side)}
+                />
+            ))}
         </div>
     );
 };
