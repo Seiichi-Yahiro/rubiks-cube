@@ -62,7 +62,7 @@ const RubiksCube: React.FunctionComponent = () => {
         window.removeEventListener('transitionend', onTransitionEnd);
 
         setState(({ cubes, rotationAnimation }) => ({
-            cubes: rotate(cubes, numberOfCubes, rotationAnimation.get()),
+            cubes: rotate(cubes, numberOfCubes, rotationAnimation.unwrap()),
             rotationAnimation: Maybe.none()
         }));
     };
@@ -79,12 +79,12 @@ const RubiksCube: React.FunctionComponent = () => {
     useOnUpdate(() => {
         if (playerStatus === AlgorithmStatus.PLAYING && state.rotationAnimation.isNone()) {
             moveGenerator
-                .let(it => it.next().value)
+                .map(it => it.next().value)
                 .ifIsSome(animate)
                 .ifIsNone(() => dispatch(stopAlgorithmAction()));
         } else if (playerStatus === AlgorithmStatus.JUMP_TO_END) {
             setState(({ cubes }) => {
-                const moves = [...moveGenerator.get()].map(d3Group => partialRight(rotate, numberOfCubes, d3Group));
+                const moves = [...moveGenerator.unwrap()].map(d3Group => partialRight(rotate, numberOfCubes, d3Group));
                 const applyMoves: (cubes: ICube[]) => ICube[] = flow(...moves);
 
                 return {

@@ -126,7 +126,7 @@ const rotateAxis = (rotationAxis: D3, axesRotation: D3, translation: number) => 
         .map(Math.round);
 
     const newFaceArrows = mapValues(cube.faceArrows, maybeArrowRotations =>
-        maybeArrowRotations.let(
+        maybeArrowRotations.map(
             arrowRotations =>
                 arrowRotations.map(arrowRotation =>
                     arrowRotation

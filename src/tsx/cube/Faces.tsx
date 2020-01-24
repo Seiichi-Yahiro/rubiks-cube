@@ -28,7 +28,7 @@ const Faces: React.FunctionComponent<IFacesProps> = ({ size, color, rotation, ro
                 transform: rotation
             }}
         >
-            {arrowAxes.letOrElse(
+            {arrowAxes.mapOr(
                 ([up, right]) => (
                     <FaceArrows
                         up={() => rotate([up])}

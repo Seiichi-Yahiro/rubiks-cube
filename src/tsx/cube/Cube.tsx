@@ -53,7 +53,7 @@ const Cube: React.FunctionComponent<ICubeProps> = ({
     );
 
     const rotationMatrix3d = rotation.toMatrix4().map(Math.round);
-    const rotate3d = rotationAnimation.let(it => it.toVector().join(',')).getOrElse('0,0,0');
+    const rotate3d = rotationAnimation.map(it => it.toVector().join(',')).unwrapOr('0,0,0');
 
     const cubeStyle: React.CSSProperties = {
         transformStyle: 'preserve-3d',

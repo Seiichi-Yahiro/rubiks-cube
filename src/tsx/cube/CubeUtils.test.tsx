@@ -337,10 +337,10 @@ describe('CubeUtils', () => {
 
     const compareFaceArrows = (expected: IFaces<Maybe<[D3, D3]>>, result: IFaces<Maybe<[D3, D3]>>, axes: D3) => {
         const convert = (v: IFaces<Maybe<[D3, D3]>>, layer: string) =>
-            (v[layer] as Maybe<[D3, D3]>).let(it => it.map(d3 => d3.toVector())).getOrElse([]);
+            (v[layer] as Maybe<[D3, D3]>).map(it => it.map(d3 => d3.toVector())).unwrapOr([]);
 
         const multiplyExpectedArrows = (): IFaces<Maybe<[D3, D3]>> =>
-            mapValues(expected, v => v.let(d3s => d3s.map(d3 => d3.mul(axes)))) as IFaces<Maybe<[D3, D3]>>;
+            mapValues(expected, v => v.map(d3s => d3s.map(d3 => d3.mul(axes)))) as IFaces<Maybe<[D3, D3]>>;
 
         keys(expected).forEach(layer => {
             expect(convert(result, layer)).toEqual(convert(multiplyExpectedArrows(), layer));
@@ -476,6 +476,6 @@ describe('CubeUtils', () => {
         let result = rotate(cubes, numberOfCubes, [new D3().setX(1)]);
         result = animateRotation(result, [new D3().setZ(1)]);
 
-        expect(result[0].rotationAnimation.get().toVector()).toEqual([0, 1, 0]);
+        expect(result[0].rotationAnimation.unwrap().toVector()).toEqual([0, 1, 0]);
     });
 });

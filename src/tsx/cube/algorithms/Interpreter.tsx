@@ -61,7 +61,7 @@ const letterRegex = new RegExp(/[LRUDFBMESXYZ]/i);
 
 const tokenizeNotation = (notation: string): IToken[] =>
     Maybe.of(notation.match(tokenizerRegex))
-        .getOrElse([])
+        .unwrapOr([])
         .map(match => {
             let tokenType;
 
@@ -110,7 +110,7 @@ class TokenInterpreter extends Interpreter<IToken> {
 
     *iterator(): IterableIterator<D3Group> {
         while (!this.isAtEnd()) {
-            const { type, value } = this.next().get();
+            const { type, value } = this.next().unwrap();
 
             let d3Groups: D3Group[] = [];
 
@@ -149,7 +149,7 @@ class TokenInterpreter extends Interpreter<IToken> {
         return !isNumberValid
             ? []
             : this.matchType(TokenType.LOWER_CASE_LETTER, TokenType.UPPER_CASE_LETTER)
-                  .let(letter => {
+                  .map(letter => {
                       if (/[XYZMES]/i.test(letter.value)) {
                           return [];
                       }
@@ -158,7 +158,7 @@ class TokenInterpreter extends Interpreter<IToken> {
                       const d3Group = this.mapSlicesLetterToD3Group(letter.value, slice, isWide);
                       return this.handlePrimeOrDouble(d3Group);
                   })
-                  .getOrElse([]);
+                  .unwrapOr([]);
     };
 
     private *handleLoop(): IterableIterator<D3Group> {
@@ -176,8 +176,8 @@ class TokenInterpreter extends Interpreter<IToken> {
                 this.index = this.index + index + 1;
 
                 const loops = this.matchType(TokenType.NUMBER)
-                    .let(({ value }) => Number(value))
-                    .getOrElse(1);
+                    .map(({ value }) => Number(value))
+                    .unwrapOr(1);
 
                 for (const _ of range(loops)) {
                     yield* new TokenInterpreter(enclosedTokens, this.numberOfCubes).iterator();
@@ -189,10 +189,10 @@ class TokenInterpreter extends Interpreter<IToken> {
     }
 
     private handlePrimeOrDouble = (d3Group: D3Group): D3Group[] => {
-        const onPrime = () => this.matchType(TokenType.PRIME).let(() => [d3Group.map(d3 => d3.invert())]);
+        const onPrime = () => this.matchType(TokenType.PRIME).map(() => [d3Group.map(d3 => d3.invert())]);
         const onNumber = () =>
-            this.matchType(TokenType.NUMBER).let(maybe2 => (maybe2.value === '2' ? [d3Group, d3Group] : [d3Group]));
-        return Maybe.or(onPrime, onNumber).getOrElse([d3Group]);
+            this.matchType(TokenType.NUMBER).map(maybe2 => (maybe2.value === '2' ? [d3Group, d3Group] : [d3Group]));
+        return onPrime().or(onNumber).unwrapOr([d3Group]);
     };
 
     private mapCapitalLetterToD3Group = (letter: string): D3Group => {
@@ -265,5 +265,5 @@ class TokenInterpreter extends Interpreter<IToken> {
     };
 
     private matchType = (...tokenTypes: TokenType[]): Maybe<IToken> =>
-        this.peek().let(token => (tokenTypes.some(tokenType => tokenType === token.type) ? this.next() : Maybe.none()));
+        this.peek().map(token => (tokenTypes.some(tokenType => tokenType === token.type) ? this.next() : Maybe.none()));
 }
