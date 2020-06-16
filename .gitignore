@@ -22,3 +22,7 @@ src/generated/*
 wasm/target
 **/*.rs.bk
 wasm/Cargo.lock
+
+lib
+*.bs.js
+.merlin

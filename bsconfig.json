@@ -1,0 +1,28 @@
+{
+    "name": "Rubiks-Cube",
+    "reason": { "react-jsx": 3 },
+    "bsc-flags": ["-bs-super-errors", "-bs-g"],
+    "sources": [
+        {
+            "dir": "src",
+            "subdirs": true
+        }
+    ],
+    "package-specs": [
+        {
+            "module": "es6",
+            "in-source": true
+        }
+    ],
+    "suffix": ".bs.js",
+    "namespace": true,
+    "bs-dependencies": [
+        "reason-react",
+        "reductive",
+        "@jsiebern/bs-material-ui",
+        "@mscharley/bs-material-ui-icons",
+        "reductive-dev-tools"
+    ],
+    "ppx-flags": [],
+    "refmt": 3
+}

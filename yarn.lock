@@ -477,6 +477,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@jsiebern/bs-material-ui@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@jsiebern/bs-material-ui/-/bs-material-ui-1.3.0.tgz#e23398540c1754245356a2ef7bcc8a62beb566db"
+  integrity sha512-YfzGVqZXA8Zm4uG3bi0hor0LGTUfBiVhOcAR9mNR/4ijKAUVaG6+BNQQ+5tgFX5W1I2vh+QR/qbMqBaLR5Yw2g==
+
 "@material-ui/core@4.10.2":
   version "4.10.2"
   resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.10.2.tgz#0ef78572132fcef1a25f6969bce0d34652d42e31"
@@ -547,6 +552,11 @@
     "@babel/runtime" "^7.4.4"
     prop-types "^15.7.2"
     react-is "^16.8.0"
+
+"@mscharley/bs-material-ui-icons@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@mscharley/bs-material-ui-icons/-/bs-material-ui-icons-1.0.2.tgz#9854cc49d1b921b9962c88580cb4de94629b73b5"
+  integrity sha512-NTHDu9chTkSzsvuSfnVDTIGqs6gCG8qINW54cmLRQ6lxyBt3MYyUSpu7nVY1PDKNUZQtwPQs5isP6HBHEthXXg==
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.0"
@@ -1632,6 +1642,11 @@ bs-logger@0.x:
   integrity sha512-pd8DCoxmbgc7hyPKOvxtqNcjYoOsABPQdcCUjGp3d42VR2CX1ORhk2A87oqqu5R1kk+76nsxZupkmyd+MVtCog==
   dependencies:
     fast-json-stable-stringify "2.x"
+
+bs-platform@7.3.2:
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-7.3.2.tgz#301f5c9b4e8cf5713cb60ca22e145e56e793affe"
+  integrity sha512-seJL5g4anK9la4erv+B2o2sMHQCxDF6OCRl9en3hbaUos/S3JsusQ0sPp4ORsbx5eXfHLYBwPljwKXlgpXtsgQ==
 
 bser@2.1.1:
   version "2.1.1"
@@ -6810,6 +6825,11 @@ readdirp@~3.4.0:
   dependencies:
     picomatch "^2.2.1"
 
+reason-react@0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/reason-react/-/reason-react-0.9.1.tgz#30a887158200b659aa03e2d75ff4cc54dc462bb0"
+  integrity sha512-nlH0O2TDy9KzOLOW+vlEQk4ExHOeciyzFdoLcsmmiit6hx6H5+CVDrwJ+8aiaLT/kqK5xFOjy4PS7PftWz4plA==
+
 redent@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/redent/-/redent-1.0.0.tgz#cf916ab1fd5f1f16dfb20822dd6ec7f730c2afde"
@@ -6817,6 +6837,31 @@ redent@^1.0.0:
   dependencies:
     indent-string "^2.1.0"
     strip-indent "^1.0.1"
+
+reductive-dev-tools@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/reductive-dev-tools/-/reductive-dev-tools-2.0.0.tgz#0e359d0b4b4f954ac68119f1e8b096b344051a94"
+  integrity sha512-8U/RJ1TbCBV9gUYP+TVv009ARHguiYinEGU7jumlkYA9j/1P5o/kTPe4dFf9tuw7P5TIttZBWSI4FBLj3ExUuQ==
+
+reductive@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/reductive/-/reductive-2.1.0.tgz#2f3a25f7e1784960b7e519c11c1b826a4dae4f86"
+  integrity sha512-HJYrYGDju1Rz+APBJRDUP5HTAiPNHDcQYJSxFfiFaabuzhHsLJmMZVALNL9nz5lOGr4ALLi6/rnv0IUfHzicLQ==
+  dependencies:
+    use-subscription "^1.0.0"
+
+redux-devtools-extension@2.13.8:
+  version "2.13.8"
+  resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.8.tgz#37b982688626e5e4993ff87220c9bbb7cd2d96e1"
+  integrity sha512-8qlpooP2QqPtZHQZRhx3x3OP5skEV1py/zUdMY28WNAocbafxdG2tRD1MWE7sp8obGMNYuLWanhhQ7EQvT1FBg==
+
+redux@4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.5.tgz#4db5de5816e17891de8a80c424232d06f051d93f"
+  integrity sha512-VSz1uMAH24DM6MF72vcojpYPtrTUu3ByVWfPL1nPfVRb5mZVTve5GnNCUV53QM/BZ66xfWrm0CTWoM+Xlz8V1w==
+  dependencies:
+    loose-envify "^1.4.0"
+    symbol-observable "^1.2.0"
 
 reflect.ownkeys@^0.2.0:
   version "0.2.0"
@@ -7819,6 +7864,11 @@ supports-hyperlinks@^2.0.0:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
 
+symbol-observable@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
+  integrity sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
+
 symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
@@ -8218,6 +8268,13 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
+
+use-subscription@^1.0.0:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/use-subscription/-/use-subscription-1.4.1.tgz#edcbcc220f1adb2dd4fa0b2f61b6cc308e620069"
+  integrity sha512-7+IIwDG/4JICrWHL/Q/ZPK5yozEnvRm6vHImu0LKwQlmWGKeiF7mbAenLlK/cTNXrTtXHU/SFASQHzB6+oSJMQ==
+  dependencies:
+    object-assign "^4.1.1"
 
 use@^3.1.0:
   version "3.1.1"
