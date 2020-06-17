@@ -76,12 +76,18 @@ module Axis = {
   let toList = ((x, y, z): t) => [x, y, z];
 
   let toTranslation =
-      ((x, y, z): t, ~numberOfCubicles: int, ~cubicleSize: float) => {
-    let offset = (numberOfCubicles + 1)->float_of_int *. cubicleSize /. 2.0;
+      (
+        (x, y, z): t,
+        ~numberOfCubicles: int,
+        ~cubicleSize: float,
+        ~cubicleGap: float,
+      ) => {
+    let offset =
+      (numberOfCubicles + 1)->float_of_int *. cubicleSize *. cubicleGap /. 2.0;
     Math.Matrix4.fromTranslation(
-      x->float_of_int *. cubicleSize -. offset,
-      y->float_of_int *. cubicleSize -. offset,
-      z->float_of_int *. (-. cubicleSize) +. offset,
+      x->float_of_int *. cubicleSize *. cubicleGap -. offset,
+      y->float_of_int *. cubicleSize *. cubicleGap -. offset,
+      z->float_of_int *. (-. cubicleSize *. cubicleGap) +. offset,
     );
   };
 };
@@ -134,14 +140,25 @@ module Cubicle = {
     axis->Axis.toList->Belt.List.some(v => v === 1 || v === numberOfCubicles);
 
   let fromAxis =
-      (axis: Axis.t, ~numberOfCubicles: int, ~cubicleSize: float): t => {
+      (
+        axis: Axis.t,
+        ~numberOfCubicles: int,
+        ~cubicleSize: float,
+        ~cubicleGap: float,
+      )
+      : t => {
     {
       id: uuidv4(),
       faces:
         Side.values->Belt.List.map(
           Face.fromSide(~axis, ~numberOfCubicles, ~cubicleSize),
         ),
-      transform: axis->Axis.toTranslation(~numberOfCubicles, ~cubicleSize),
+      transform:
+        axis->Axis.toTranslation(
+          ~numberOfCubicles,
+          ~cubicleSize,
+          ~cubicleGap,
+        ),
       axis,
     };
   };
@@ -150,7 +167,7 @@ module Cubicle = {
 let calculateCubicleSize = (~numberOfCubicles: int, ~cubeSize: float) =>
   cubeSize /. numberOfCubicles->float_of_int;
 
-let init = (~numberOfCubicles: int, ~cubeSize: float) => {
+let init = (~numberOfCubicles: int, ~cubeSize: float, ~cubicleGap: float) => {
   Belt.(
     List.makeBy(numberOfCubicles, z =>
       List.makeBy(numberOfCubicles, y =>
@@ -164,6 +181,7 @@ let init = (~numberOfCubicles: int, ~cubeSize: float) => {
         Cubicle.fromAxis(
           ~numberOfCubicles,
           ~cubicleSize=calculateCubicleSize(~numberOfCubicles, ~cubeSize),
+          ~cubicleGap,
         ),
       )
   );
