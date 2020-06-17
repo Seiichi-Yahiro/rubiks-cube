@@ -1,7 +1,7 @@
 module State = {
   type t = {
     numberOfCubicles: int,
-    size: int,
+    size: float,
     scale: float,
     rotationAnimationSpeed: int,
     cubicles: list(RubiksCubeUtils.Cubicle.t),
@@ -9,10 +9,10 @@ module State = {
 
   let initial: t = {
     numberOfCubicles: 3,
-    size: 300,
+    size: 300.0,
     scale: 1.0,
     rotationAnimationSpeed: 750,
-    cubicles: RubiksCubeUtils.init(~numberOfCubicles=3, ~size=300.0 /. 3.0),
+    cubicles: RubiksCubeUtils.init(~numberOfCubicles=3, ~cubeSize=300.0),
   };
 };
 
@@ -28,11 +28,7 @@ let reducer = (state: State.t, action: Action.t) =>
   | UpdatenumberOfCubicles(numberOfCubicles) => {
       ...state,
       numberOfCubicles,
-      cubicles:
-        RubiksCubeUtils.init(
-          ~numberOfCubicles,
-          ~size=state.size->float_of_int /. numberOfCubicles->float_of_int,
-        ),
+      cubicles: RubiksCubeUtils.init(~numberOfCubicles, ~cubeSize=state.size),
     }
   | UpdateScale(scale) => {...state, scale}
   | UpdateRotationAnimationSpeed(rotationAnimationSpeed) => {

@@ -41,22 +41,27 @@ module Side = {
       | Right => Red
     );
 
-  let toTransform = (side: t, ~size: float) => {
-    let halfSize = size /. 2.0;
+  let toTransform = (side: t, ~cubicleSize: float) => {
+    let halfCubicleSize = cubicleSize /. 2.0;
     Math.Matrix4.(
       Math.Matrix4.Operator.(
         switch (side) {
-        | Front => fromTranslation(0.0, 0.0, halfSize)
+        | Front => fromTranslation(0.0, 0.0, halfCubicleSize)
         | Back =>
-          fromTranslation(0.0, 0.0, -. halfSize) << fromAngleY(Deg(180.0))
+          fromTranslation(0.0, 0.0, -. halfCubicleSize)
+          << fromAngleY(Deg(180.0))
         | Up =>
-          fromTranslation(0.0, -. halfSize, 0.0) << fromAngleX(Deg(90.0))
+          fromTranslation(0.0, -. halfCubicleSize, 0.0)
+          << fromAngleX(Deg(90.0))
         | Down =>
-          fromTranslation(0.0, halfSize, 0.0) << fromAngleX(Deg(-90.0))
+          fromTranslation(0.0, halfCubicleSize, 0.0)
+          << fromAngleX(Deg(-90.0))
         | Left =>
-          fromTranslation(-. halfSize, 0.0, 0.0) << fromAngleY(Deg(-90.0))
+          fromTranslation(-. halfCubicleSize, 0.0, 0.0)
+          << fromAngleY(Deg(-90.0))
         | Right =>
-          fromTranslation(halfSize, 0.0, 0.0) << fromAngleY(Deg(90.0))
+          fromTranslation(halfCubicleSize, 0.0, 0.0)
+          << fromAngleY(Deg(90.0))
         }
       )
     );
@@ -68,12 +73,13 @@ module Axis = {
 
   let toList = ((x, y, z): t) => [x, y, z];
 
-  let toTransform = ((x, y, z): t, ~numberOfCubicles: int, ~size: float) => {
-    let offset = (numberOfCubicles + 1)->float_of_int *. size /. 2.0;
+  let toTranslation =
+      ((x, y, z): t, ~numberOfCubicles: int, ~cubicleSize: float) => {
+    let offset = (numberOfCubicles + 1)->float_of_int *. cubicleSize /. 2.0;
     Math.Matrix4.fromTranslation(
-      x->float_of_int *. size -. offset,
-      y->float_of_int *. size -. offset,
-      z->float_of_int *. (-. size) +. offset,
+      x->float_of_int *. cubicleSize -. offset,
+      y->float_of_int *. cubicleSize -. offset,
+      z->float_of_int *. (-. cubicleSize) +. offset,
     );
   };
 };
@@ -96,12 +102,18 @@ module Face = {
     };
 
   let fromSide =
-      (side: Side.t, ~axis: Axis.t, ~numberOfCubicles: int, ~size: float): t => {
+      (
+        side: Side.t,
+        ~axis: Axis.t,
+        ~numberOfCubicles: int,
+        ~cubicleSize: float,
+      )
+      : t => {
     {
       color:
         isOuter(~side, ~axis, ~numberOfCubicles)
           ? side->Side.toColor : Color.Gray,
-      transform: side->Side.toTransform(~size),
+      transform: side->Side.toTransform(~cubicleSize),
     };
   };
 };
@@ -116,19 +128,23 @@ module Cubicle = {
   let isOuter = (axis: Axis.t, ~numberOfCubicles: int) =>
     axis->Axis.toList->Belt.List.some(v => v === 1 || v === numberOfCubicles);
 
-  let fromAxis = (axis: Axis.t, ~numberOfCubicles: int, ~size: float): t => {
+  let fromAxis =
+      (axis: Axis.t, ~numberOfCubicles: int, ~cubicleSize: float): t => {
     {
       faces:
         Side.values->Belt.List.map(
-          Face.fromSide(~axis, ~numberOfCubicles, ~size),
+          Face.fromSide(~axis, ~numberOfCubicles, ~cubicleSize),
         ),
-      transform: axis->Axis.toTransform(~numberOfCubicles, ~size),
+      transform: axis->Axis.toTranslation(~numberOfCubicles, ~cubicleSize),
       axis,
     };
   };
 };
 
-let init = (~numberOfCubicles: int, ~size: float) => {
+let calculateCubicleSize = (~numberOfCubicles: int, ~cubeSize: float) =>
+  cubeSize /. numberOfCubicles->float_of_int;
+
+let init = (~numberOfCubicles: int, ~cubeSize: float) => {
   Belt.(
     List.makeBy(numberOfCubicles, z =>
       List.makeBy(numberOfCubicles, y =>
@@ -138,6 +154,11 @@ let init = (~numberOfCubicles: int, ~size: float) => {
     ->List.flatten
     ->List.flatten
     ->List.keep(Cubicle.isOuter(~numberOfCubicles))
-    ->List.map(Cubicle.fromAxis(~numberOfCubicles, ~size))
+    ->List.map(
+        Cubicle.fromAxis(
+          ~numberOfCubicles,
+          ~cubicleSize=calculateCubicleSize(~numberOfCubicles, ~cubeSize),
+        ),
+      )
   );
 };

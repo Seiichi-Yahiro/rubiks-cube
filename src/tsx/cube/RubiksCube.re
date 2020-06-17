@@ -1,16 +1,15 @@
 module Face = {
   [@react.component]
-  let make = (~transform, ~color, ~size) => {
+  let make = (~transform, ~color) => {
     let style = {
       let transform = transform->Math.Matrix4.toCssMatrix;
       let color = color->RubiksCubeUtils.Color.toHex;
-      let size = {j|$(size)px|j};
       ReactDOMRe.Style.make(
         ~position="absolute",
         ~transform,
         ~backgroundColor=color,
-        ~width=size,
-        ~height=size,
+        ~width="inherit",
+        ~height="inherit",
         (),
       );
     };
@@ -23,17 +22,17 @@ module Face = {
 
 module Cubicle = {
   [@react.component]
-  let make = (~faces, ~transform, ~axis, ~size) => {
+  let make = (~faces, ~transform, ~axis, ~cubicleSize) => {
     let style = {
       let transform = transform->Math.Matrix4.toCssMatrix;
-      let size = {j|$(size)px|j};
+      let cubicleSize = {j|$(cubicleSize)px|j};
 
       ReactDOMRe.Style.make(
         ~position="absolute",
         ~transform,
         ~transformStyle="preserve-3d",
-        ~width=size,
-        ~height=size,
+        ~width=cubicleSize,
+        ~height=cubicleSize,
         (),
       );
     };
@@ -41,7 +40,7 @@ module Cubicle = {
     <div style>
       {faces
        ->Belt.List.mapWithIndex((i, RubiksCubeUtils.Face.{transform, color}) =>
-           <Face key={i->Js.Int.toString} transform color size />
+           <Face key={i->Js.Int.toString} transform color />
          )
        ->Belt.List.toArray
        ->React.array}
@@ -55,10 +54,10 @@ module Cubicle = {
 let make = () => {
   let cubicles = Store.useSelector(Selectors.cubicles);
   let scale = Store.useSelector(Selectors.scale);
-  let cubeSize = Store.useSelector(Selectors.cubeSize)->float_of_int;
+  let cubeSize = Store.useSelector(Selectors.cubeSize);
   let numberOfCubicles = Store.useSelector(Selectors.numberOfCubicles);
-  let cubicleSize = cubeSize /. numberOfCubicles->float_of_int;
-  let cubeSize' = {j|$(cubeSize)px|j};
+  let cubicleSize =
+    RubiksCubeUtils.calculateCubicleSize(~numberOfCubicles, ~cubeSize);
 
   let style = {
     open Math;
@@ -67,30 +66,46 @@ let make = () => {
       Matrix4.fromAngleX(Deg(-45.0))
       << Matrix4.fromAngleY(Deg(-45.0))
       << Matrix4.fromScale(scale);
-    let transform = transform->Matrix4.toCssMatrix;
+
+    let cubeSize = {j|$(cubeSize)px|j};
 
     ReactDOMRe.Style.make(
-      ~perspective="1000",
-      ~transform,
+      ~width=cubeSize,
+      ~height=cubeSize,
+      ~transform=transform->Matrix4.toCssMatrix,
       ~transformStyle="preserve-3d",
       ~position="relative",
       (),
     );
   };
 
+  // positions are calculated based on center of squares but html has the origin in the upper left corner
+  let positionCorrectionStyle = {
+    open Math;
+    let offset = cubicleSize *. (numberOfCubicles->float_of_int /. 2.0 -. 0.5);
+    let transform =
+      Matrix4.fromTranslation(offset, offset, 0.0)->Matrix4.toCssMatrix;
+
+    ReactDOMRe.Style.make(~transformStyle="preserve-3d", ~transform, ());
+  };
+
   // TODO remove index key
-  <div className="app__cube" style>
-    {cubicles
-     ->Belt.List.mapWithIndex((i, {faces, transform, axis}) =>
-         <Cubicle
-           key={i->Js.Int.toString}
-           faces
-           transform
-           axis
-           size=cubicleSize
-         />
-       )
-     ->Belt.List.toArray
-     ->React.array}
+  <div className="app__cube">
+    <div style>
+      <div style=positionCorrectionStyle>
+        {cubicles
+         ->Belt.List.mapWithIndex((i, {faces, transform, axis}) =>
+             <Cubicle
+               key={i->Js.Int.toString}
+               faces
+               transform
+               axis
+               cubicleSize
+             />
+           )
+         ->Belt.List.toArray
+         ->React.array}
+      </div>
+    </div>
   </div>;
 };
