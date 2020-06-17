@@ -21,7 +21,8 @@
         "reductive",
         "@jsiebern/bs-material-ui",
         "@mscharley/bs-material-ui-icons",
-        "reductive-dev-tools"
+        "reductive-dev-tools",
+        "bs-guid"
     ],
     "ppx-flags": [],
     "refmt": 3

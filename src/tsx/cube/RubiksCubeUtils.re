@@ -1,3 +1,5 @@
+open Uuid.V4;
+
 module Color = {
   type t =
     | Blue
@@ -86,6 +88,7 @@ module Axis = {
 
 module Face = {
   type t = {
+    id: string,
     transform: Math.Matrix4.t,
     color: Color.t,
   };
@@ -110,6 +113,7 @@ module Face = {
       )
       : t => {
     {
+      id: uuidv4(),
       color:
         isOuter(~side, ~axis, ~numberOfCubicles)
           ? side->Side.toColor : Color.Gray,
@@ -120,6 +124,7 @@ module Face = {
 
 module Cubicle = {
   type t = {
+    id: string,
     faces: list(Face.t),
     transform: Math.Matrix4.t,
     axis: Axis.t,
@@ -131,6 +136,7 @@ module Cubicle = {
   let fromAxis =
       (axis: Axis.t, ~numberOfCubicles: int, ~cubicleSize: float): t => {
     {
+      id: uuidv4(),
       faces:
         Side.values->Belt.List.map(
           Face.fromSide(~axis, ~numberOfCubicles, ~cubicleSize),

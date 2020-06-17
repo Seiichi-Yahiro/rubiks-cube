@@ -39,8 +39,8 @@ module Cubicle = {
 
     <div style>
       {faces
-       ->Belt.List.mapWithIndex((i, RubiksCubeUtils.Face.{transform, color}) =>
-           <Face key={i->Js.Int.toString} transform color />
+       ->Belt.List.map((RubiksCubeUtils.Face.{id, transform, color}) =>
+           <Face key=id transform color />
          )
        ->Belt.List.toArray
        ->React.array}
@@ -89,19 +89,12 @@ let make = () => {
     ReactDOMRe.Style.make(~transformStyle="preserve-3d", ~transform, ());
   };
 
-  // TODO remove index key
   <div className="app__cube">
     <div style>
       <div style=positionCorrectionStyle>
         {cubicles
-         ->Belt.List.mapWithIndex((i, {faces, transform, axis}) =>
-             <Cubicle
-               key={i->Js.Int.toString}
-               faces
-               transform
-               axis
-               cubicleSize
-             />
+         ->Belt.List.map(({id, faces, transform, axis}) =>
+             <Cubicle key=id faces transform axis cubicleSize />
            )
          ->Belt.List.toArray
          ->React.array}

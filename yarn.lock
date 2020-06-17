@@ -1636,6 +1636,13 @@ browserify-zlib@^0.2.0:
   dependencies:
     pako "~1.0.5"
 
+bs-guid@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/bs-guid/-/bs-guid-1.0.1.tgz#d605a2fa054f7216b3265d20fbaf2af9fbee3d7d"
+  integrity sha512-vCMybqa8o4Gba86rItT2Uppvb3w9tFp+G9E5VfXCP/HVaeyit8dadvpLF6duZpH8TEnHvyD8nTovMU8ZypA2lQ==
+  dependencies:
+    uuid "^3.3.2"
+
 bs-logger@0.x:
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/bs-logger/-/bs-logger-0.2.6.tgz#eb7d365307a72cf974cc6cda76b68354ad336bd8"
