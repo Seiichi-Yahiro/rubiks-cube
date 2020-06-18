@@ -22,9 +22,9 @@ let useDrag =
 
   React.useEffect2(
     () => {
-      let mouseDown = startArea->Web.Element.observe("mousedown");
-      let mouseUp = Window->Web.Element.observe("mouseup");
-      let mouseMove = moveArea->Web.Element.observe("mousemove");
+      let mouseDown = startArea->Web.Element.observe(MouseDown);
+      let mouseUp = Window->Web.Element.observe(MouseUp);
+      let mouseMove = moveArea->Web.Element.observe(MouseMove);
 
       switch (mouseDown, mouseUp, mouseMove) {
       | (Some(mouseDown), Some(mouseUp), Some(mouseMove)) =>
