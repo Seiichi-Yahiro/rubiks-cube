@@ -19,9 +19,13 @@
     "bs-dependencies": [
         "reason-react",
         "reductive",
+        "reductive-dev-tools",
+        "reductive-observable",
+        "@ambientlight/bs-rx",
+        "reason-promise",
+        "bs-fetch",
         "@jsiebern/bs-material-ui",
         "@mscharley/bs-material-ui-icons",
-        "reductive-dev-tools",
         "bs-guid"
     ],
     "ppx-flags": [],

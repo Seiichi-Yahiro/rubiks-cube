@@ -39,7 +39,7 @@ let make = () => {
           max={`Int(5)}
           defaultValue={React.useMemo0(() => `Int(numberOfCubicles))}
           onChangeCommitted={(_, value) =>
-            value->UpdatenumberOfCubicles->CubeAction->dispatch
+            value->UpdateNumberOfCubicles->CubeAction->dispatch
           }
           disabled={playerStatus !== Stopped}
         />

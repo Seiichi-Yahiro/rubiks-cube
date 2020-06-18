@@ -14,25 +14,20 @@ module State = {
     gap: 1.05,
     scale: 1.0,
     rotationAnimationSpeed: 750,
-    cubicles:
-      RubiksCubeUtils.init(
-        ~numberOfCubicles=3,
-        ~cubeSize=300.0,
-        ~cubicleGap=1.05,
-      ),
+    cubicles: [],
   };
 };
 
 module Action = {
   type t =
-    | UpdatenumberOfCubicles(int)
+    | UpdateNumberOfCubicles(int)
     | UpdateScale(float)
     | UpdateRotationAnimationSpeed(int);
 };
 
 let reducer = (state: State.t, action: Action.t) =>
   switch (action) {
-  | UpdatenumberOfCubicles(numberOfCubicles) => {
+  | UpdateNumberOfCubicles(numberOfCubicles) => {
       ...state,
       numberOfCubicles,
       cubicles:

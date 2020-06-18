@@ -19,7 +19,7 @@ let make = () => {
   let onJumpToEnd = _ => JumpToEnd->AlgorithmPlayerAction->dispatch;
   let onShuffle = _ => (); // TODO
   let onRefresh = _ =>
-    numberOfCubicles->UpdatenumberOfCubicles->CubeAction->dispatch; // TODO separate action?
+    numberOfCubicles->UpdateNumberOfCubicles->CubeAction->dispatch; // TODO separate action?
 
   MaterialUi.(
     <div className="algorithm-player">
