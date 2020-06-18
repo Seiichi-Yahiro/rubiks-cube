@@ -61,3 +61,9 @@
         height: 10px;
     }
 }
+
+.rotation-sphere {
+    &__pad {
+        cursor: crosshair;
+    }
+}

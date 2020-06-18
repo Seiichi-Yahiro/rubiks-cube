@@ -46,7 +46,7 @@ module Side = {
   let toTransform = (side: t, ~cubicleSize: float) => {
     let halfCubicleSize = cubicleSize /. 2.0;
     Math.Matrix4.(
-      Math.Matrix4.Operator.(
+      Math.Matrix4.Operators.(
         switch (side) {
         | Front => fromTranslation(0.0, 0.0, halfCubicleSize)
         | Back =>

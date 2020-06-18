@@ -19,10 +19,12 @@ body,
 
     &__interface {
         position: absolute;
-        left: 0;
-        top: 0;
-        width: 450px;
-        margin: 15px;
+        left: 15px;
+        top: 15px;
+        display: grid;
+        grid-template-columns: 450px min-content;
+        grid-template-rows: 100px auto;
+        grid-gap: 10px;
     }
 
     &__cube {

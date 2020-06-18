@@ -53,6 +53,7 @@ module Cubicle = {
 [@react.component]
 let make = () => {
   let cubicles = Store.useSelector(Selectors.cubicles);
+  let rotation = Store.useSelector(Selectors.rotation);
   let scale = Store.useSelector(Selectors.scale);
   let cubeSize = Store.useSelector(Selectors.cubeSize);
   let numberOfCubicles = Store.useSelector(Selectors.numberOfCubicles);
@@ -61,11 +62,8 @@ let make = () => {
 
   let style = {
     open Math;
-    open Math.Matrix4.Operator;
-    let transform =
-      Matrix4.fromAngleX(Deg(-45.0))
-      << Matrix4.fromAngleY(Deg(-45.0))
-      << Matrix4.fromScale(scale);
+    open Math.Matrix4.Operators;
+    let transform = rotation << Matrix4.fromScale(scale);
 
     let cubeSize = {j|$(cubeSize)px|j};
 

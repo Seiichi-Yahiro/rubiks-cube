@@ -9,6 +9,15 @@ let rec zip4 =
   | (_, _, _, _) => []
   };
 
+let clamp = (v, ~min, ~max) =>
+  if (v < min) {
+    min;
+  } else if (v > max) {
+    max;
+  } else {
+    v;
+  };
+
 module Angle = {
   type t =
     | Deg(float)
@@ -23,6 +32,18 @@ module Angle = {
     fun
     | Deg(deg) => deg *. Js.Math._PI /. 180.0
     | Rad(rad) => rad;
+
+  let add = (left, right) =>
+    switch (left) {
+    | Deg(deg) => Deg(deg +. right->toDegree)
+    | Rad(rad) => Rad(rad +. right->toRadian)
+    };
+
+  let clamp = (angle, ~min, ~max) =>
+    switch (angle) {
+    | Deg(deg) => deg->clamp(~min=min->toDegree, ~max=max->toDegree)->Deg
+    | Rad(rad) => rad->clamp(~min=min->toRadian, ~max=max->toRadian)->Rad
+    };
 };
 
 module Vector4 = {
@@ -127,7 +148,7 @@ module Matrix4 = {
     {j|matrix3d($values)|j};
   };
 
-  module Operator = {
+  module Operators = {
     let (<<) = multiply;
   };
 };
