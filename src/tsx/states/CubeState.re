@@ -1,12 +1,17 @@
 module State = {
+  type rotation = {
+    pitch: Math.Angle.t,
+    yaw: Math.Angle.t,
+    transform: Math.Matrix4.t,
+  };
+
   type t = {
     numberOfCubicles: int,
     size: float,
     gap: float,
     scale: float,
     rotationAnimationSpeed: int,
-    pitch: Math.Angle.t,
-    yaw: Math.Angle.t,
+    rotation,
     cubicles: list(RubiksCubeUtils.Cubicle.t),
   };
 
@@ -15,10 +20,14 @@ module State = {
     size: 300.0,
     gap: 1.05,
     scale: 1.0,
-    pitch: Deg(-45.0),
-    yaw: Deg(-45.0),
+    rotation: {
+      pitch: Deg(-45.0),
+      yaw: Deg(-45.0),
+      // initialized by epic
+      transform: Math.Matrix4.identity,
+    },
     rotationAnimationSpeed: 750,
-    cubicles: [],
+    cubicles: [] // initialized by epic
   };
 };
 
@@ -47,12 +56,26 @@ let reducer = (state: State.t, action: Action.t) =>
       ...state,
       rotationAnimationSpeed,
     }
-  | UpdateRotation(pitch, yaw) => {
+  | UpdateRotation(pitch, yaw) =>
+    open Math;
+    open Math.Matrix4.Operators;
+
+    let pitch =
+      state.rotation.pitch
+      ->Angle.add(pitch)
+      ->Angle.clamp(~min=Deg(-45.0), ~max=Deg(45.0));
+
+    let yaw = state.rotation.yaw->Angle.add(yaw);
+
+    let transform = Matrix4.fromAngleX(pitch) << Matrix4.fromAngleY(yaw);
+
+    {
       ...state,
-      pitch:
-        state.pitch
-        ->Math.Angle.add(pitch)
-        ->Math.Angle.clamp(~min=Deg(-45.0), ~max=Deg(45.0)),
-      yaw: state.yaw->Math.Angle.add(yaw),
-    }
+      rotation: {
+        pitch,
+
+        yaw,
+        transform,
+      },
+    };
   };

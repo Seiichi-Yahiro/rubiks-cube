@@ -62,6 +62,13 @@ module Vector4 = {
 module Matrix4 = {
   type t = (Vector4.t, Vector4.t, Vector4.t, Vector4.t);
 
+  let identity: t = (
+    (1.0, 0.0, 0.0, 0.0),
+    (0.0, 1.0, 0.0, 0.0),
+    (0.0, 0.0, 1.0, 0.0),
+    (0.0, 0.0, 0.0, 1.0),
+  );
+
   let fromTranslation = (x: float, y: float, z: float): t => (
     (1.0, 0.0, 0.0, 0.0),
     (0.0, 1.0, 0.0, 0.0),
