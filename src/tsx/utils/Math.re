@@ -49,6 +49,10 @@ module Angle = {
 module Vector4 = {
   type t = (float, float, float, float);
 
+  let getX = ((x, _, _, _): t) => x;
+  let getY = ((_, y, _, _): t) => y;
+  let getZ = ((_, _, z, _): t) => z;
+
   let toList = ((x, y, z, w): t) => [x, y, z, w];
 
   let dot = (vector1: t, vector2: t): float =>
@@ -141,6 +145,16 @@ module Matrix4 = {
       (x1->dot(y2), y1->dot(y2), z1->dot(y2), w1->dot(y2)),
       (x1->dot(z2), y1->dot(z2), z1->dot(z2), w1->dot(z2)),
       (x1->dot(w2), y1->dot(w2), z1->dot(w2), w1->dot(w2)),
+    );
+  };
+
+  let applyPoint = (matrix: t, point: Vector4.t) => {
+    let (mx, my, mz, mw) = matrix->transpose;
+    Vector4.(
+      mx->dot(point),
+      my->dot(point),
+      mz->dot(point),
+      mw->dot(point),
     );
   };
 
