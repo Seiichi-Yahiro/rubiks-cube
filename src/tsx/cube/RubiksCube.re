@@ -1,10 +1,16 @@
 module Face = {
   [@react.component]
   let make = (~transform, ~color) => {
+    let (isHovered, setHovered) = React.useState(() => false);
+
+    let onMouseEnter = _ => setHovered(_ => true);
+    let onMouseLeave = _ => setHovered(_ => false);
+
     let style = {
       let transform = transform->Math.Matrix4.toCssMatrix;
       let color = color->RubiksCubeUtils.Color.toHex;
       ReactDOMRe.Style.make(
+        ~backfaceVisibility="hidden",
         ~position="absolute",
         ~transform,
         ~backgroundColor=color,
@@ -14,7 +20,13 @@ module Face = {
       );
     };
 
-    <div style> <FaceArrows /> </div>;
+    <div style onMouseEnter onMouseLeave>
+      {switch (color, isHovered) {
+       | (Gray, _)
+       | (_, false) => React.null
+       | (_, true) => <FaceArrows />
+       }}
+    </div>;
   };
 
   let make = make->React.memo;
