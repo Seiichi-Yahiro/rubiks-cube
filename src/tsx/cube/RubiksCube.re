@@ -14,7 +14,7 @@ module Face = {
       );
     };
 
-    <div style />;
+    <div style> <FaceArrows /> </div>;
   };
 
   let make = make->React.memo;
