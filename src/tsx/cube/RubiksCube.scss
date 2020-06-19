@@ -1,0 +1,17 @@
+.rubiks-cube {
+    position: relative;
+    transform-style: preserve-3d;
+
+    &__cubicle {
+        position: absolute;
+        transform-style: preserve-3d;
+    }
+
+    &__face {
+        backface-visibility: hidden;
+        position: absolute;
+        width: inherit;
+        height: inherit;
+        border: 2px solid #333;
+    }
+}

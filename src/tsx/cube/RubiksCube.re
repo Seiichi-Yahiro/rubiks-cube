@@ -1,3 +1,5 @@
+[@bs.module] external rubiksCubeScss: _ = "./RubiksCube.scss";
+
 module Face = {
   [@react.component]
   let make = (~transform, ~color) => {
@@ -9,18 +11,10 @@ module Face = {
     let style = {
       let transform = transform->Math.Matrix4.toCssMatrix;
       let color = color->RubiksCubeUtils.Color.toHex;
-      ReactDOMRe.Style.make(
-        ~backfaceVisibility="hidden",
-        ~position="absolute",
-        ~transform,
-        ~backgroundColor=color,
-        ~width="inherit",
-        ~height="inherit",
-        (),
-      );
+      ReactDOMRe.Style.make(~transform, ~backgroundColor=color, ());
     };
 
-    <div style onMouseEnter onMouseLeave>
+    <div className="rubiks-cube__face" style onMouseEnter onMouseLeave>
       {switch (color, isHovered) {
        | (Gray, _)
        | (_, false) => React.null
@@ -40,16 +34,14 @@ module Cubicle = {
       let cubicleSize = {j|$(cubicleSize)px|j};
 
       ReactDOMRe.Style.make(
-        ~position="absolute",
         ~transform,
-        ~transformStyle="preserve-3d",
         ~width=cubicleSize,
         ~height=cubicleSize,
         (),
       );
     };
 
-    <div style>
+    <div className="rubiks-cube__cubicle" style>
       {faces
        ->Belt.List.map((RubiksCubeUtils.Face.{id, transform, color}) =>
            <Face key=id transform color />
@@ -83,8 +75,6 @@ let make = () => {
       ~width=cubeSize,
       ~height=cubeSize,
       ~transform=transform->Matrix4.toCssMatrix,
-      ~transformStyle="preserve-3d",
-      ~position="relative",
       (),
     );
   };
@@ -100,7 +90,7 @@ let make = () => {
   };
 
   <div className="app__cube">
-    <div style>
+    <div className="rubiks-cube" style>
       <div style=positionCorrectionStyle>
         {cubicles
          ->Belt.List.map(({id, faces, transform, axis}) =>

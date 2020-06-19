@@ -18,7 +18,7 @@ module State = {
   let initial: t = {
     numberOfCubicles: 3,
     size: 300.0,
-    gap: 1.05,
+    gap: 1.01,
     scale: 1.0,
     rotation: {
       pitch: Deg(-45.0),
