@@ -46,32 +46,28 @@ module Token = {
     | Letter(Letter.t, Case.t)
     | Wide
     | Prime
-    | Number(string)
+    | Number(int)
     | OpeningParenthesis
     | ClosingParenthesis
-    | Separator;
-
-  let combine = tokens => {
-    let rec aux = (~result=[], tokens) =>
-      switch (tokens) {
-      | [] => result
-      | [Number(a), Number(b), ...tail] =>
-        aux(~result=[Number(a ++ b), ...result], tail)
-      | [Separator, Separator, ...tail] =>
-        aux(~result=[Separator, ...result], tail)
-      | [_, ...tail] => aux(~result, tail)
-      };
-
-    aux(tokens);
-  };
+    | Separator
+    | EOF;
 };
 
-let tokenize = (notation: string): list(Token.t) => {
+let tokenize =
+    (notation: string): Belt.Result.t(list(Token.t), Compiler.Error.t) => {
+  open Token;
   let rec aux = (~result=[], chars) =>
     switch (chars) {
-    | [] => result
+    | [] => result->Ok
+    | [char, ...tail] when char->Utils.isInt =>
+      let (ints, tail) = tail->Tablecloth.List.span(~f=Utils.isInt);
+      let number =
+        ints
+        ->Belt.List.reduce("", (++))
+        ->Belt.Int.fromString
+        ->Belt.Option.getExn;
+      aux(~result=[number->Number, ...result], tail);
     | [char, ...tail] =>
-      open Token;
       let token =
         switch (char) {
         | "W"
@@ -79,39 +75,26 @@ let tokenize = (notation: string): list(Token.t) => {
         | "'" => Prime->Some
         | "(" => OpeningParenthesis->Some
         | ")" => ClosingParenthesis->Some
-        | "0"
-        | "1"
-        | "2"
-        | "3"
-        | "4"
-        | "5"
-        | "6"
-        | "7"
-        | "8"
-        | "9" => Number(char)->Some
         | " "
         | ","
         | ";"
         | "/"
         | "|" => Separator->Some
         | _ =>
-          switch (char->Letter.fromString) {
-          | Some(letter) => Letter(letter, char->Case.fromString)->Some
-          | None => None
-          }
+          char
+          ->Letter.fromString
+          ->Belt.Option.map(letter => Letter(letter, char->Case.fromString))
         };
 
-      let result =
-        switch (token) {
-        | Some(token) => [token, ...result]
-        | None => result
-        };
-
-      aux(~result, tail);
+      switch (token) {
+      | Some(token) => aux(~result=[token, ...result], tail)
+      | None => char->Compiler.Error.UnknownExpression->Error
+      };
     };
 
   let chars =
     Belt.List.makeBy(notation->Js.String2.length, Js.String2.get(notation));
-
-  aux(chars)->Token.combine;
+  aux(chars)
+  ->Belt.Result.map(Belt.List.add(_, EOF))
+  ->Belt.Result.map(Belt.List.reverse);
 };

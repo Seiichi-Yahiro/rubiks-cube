@@ -20,7 +20,8 @@
         "reductive": "2.1.0",
         "reductive-observable": "0.1.6",
         "redux": "4.0.5",
-        "redux-devtools-extension": "2.13.8"
+        "redux-devtools-extension": "2.13.8",
+        "tablecloth-bucklescript": "0.0.7"
     },
     "devDependencies": {
         "@types/enzyme": "3.10.5",

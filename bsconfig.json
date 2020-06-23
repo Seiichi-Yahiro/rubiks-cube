@@ -26,7 +26,8 @@
         "bs-fetch",
         "@jsiebern/bs-material-ui",
         "@mscharley/bs-material-ui-icons",
-        "bs-guid"
+        "bs-guid",
+        "tablecloth-bucklescript"
     ],
     "ppx-flags": [],
     "refmt": 3
