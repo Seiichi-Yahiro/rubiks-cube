@@ -36,7 +36,8 @@ module Action = {
     | UpdateNumberOfCubicles(int)
     | UpdateScale(float)
     | UpdateRotationAnimationSpeed(int)
-    | UpdateRotation(Math.Angle.t, Math.Angle.t);
+    | UpdateRotation(Math.Angle.t, Math.Angle.t)
+    | ApplyRotation;
 };
 
 let reducer = (state: State.t, action: Action.t) =>
@@ -78,4 +79,5 @@ let reducer = (state: State.t, action: Action.t) =>
         transform,
       },
     };
+  | _ => state
   };
