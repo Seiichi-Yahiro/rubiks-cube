@@ -35,7 +35,7 @@ let make = () => {
           {switch (playerStatus) {
            | Stopped
            | Paused =>
-             let onPlay = _ => (); // TODO
+             let onPlay = _ => Play->AlgorithmPlayerAction->dispatch;
 
              <IconButton onClick=onPlay disabled=isNotationEmpty>
                <MscharleyBsMaterialUiIcons.PlayArrow.Filled />
@@ -48,7 +48,7 @@ let make = () => {
              </IconButton>;
            | _ => React.null
            }}
-          <IconButton onClick=onStop disabled=isStopped>
+          <IconButton onClick=onStop disabled=false>
             <MscharleyBsMaterialUiIcons.Stop.Filled />
           </IconButton>
           <IconButton
