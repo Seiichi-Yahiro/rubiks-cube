@@ -48,7 +48,7 @@ let make = () => {
              </IconButton>;
            | _ => React.null
            }}
-          <IconButton onClick=onStop disabled=false>
+          <IconButton onClick=onStop disabled=isStopped>
             <MscharleyBsMaterialUiIcons.Stop.Filled />
           </IconButton>
           <IconButton

@@ -1,6 +1,4 @@
-type t = (AppState.Action.t, AppState.State.t);
-
-let init = (ro: Rx.Observable.t(t)) =>
+let init = (ro: AppState.Observable.t) =>
   ro
   |> ReductiveObservable.Utils.optmap(
        fun
@@ -17,4 +15,4 @@ let init = (ro: Rx.Observable.t(t)) =>
        |> Rx.of_
      );
 
-let root = (ro: Rx.Observable.t(t)) => [|ro |> init|] |> Rx.merge;
+let root = (ro: AppState.Observable.t) => [|ro |> init|] |> Rx.merge;

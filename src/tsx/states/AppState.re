@@ -34,3 +34,7 @@ let reducer = (state: State.t, action: Action.t) =>
     }
   | _ => state
   };
+
+module Observable = {
+  type t = Rx.Observable.t((Action.t, State.t));
+};
