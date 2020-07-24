@@ -12,7 +12,7 @@ type t = (AppState.Action.t, AppState.State.t);
        | _ => None,
      );*/
 
-let compile = (ro: Rx.Observable.t(t)) =>
+let parseNotation = (ro: Rx.Observable.t(t)) =>
   ro
   |> ReductiveObservable.Utils.optmap(
        fun
@@ -50,4 +50,4 @@ let countMoves = (ro: Rx.Observable.t(t)) =>
      );
 
 let root = (ro: Rx.Observable.t(t)) =>
-  [|ro |> compile, ro |> countMoves|] |> Rx.merge;
+  [|ro |> parseNotation, ro |> countMoves|] |> Rx.merge;
