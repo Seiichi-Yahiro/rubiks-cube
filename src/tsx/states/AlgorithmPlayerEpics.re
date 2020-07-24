@@ -29,4 +29,25 @@ let compile = (ro: Rx.Observable.t(t)) =>
        parseOutput->ParsedNotation->AppState.Action.AlgorithmPlayerAction
      );
 
-let root = (ro: Rx.Observable.t(t)) => [|ro |> compile|] |> Rx.merge;
+let countMoves = (ro: Rx.Observable.t(t)) =>
+  ro
+  |> ReductiveObservable.Utils.optmap(
+       fun
+       | (
+           AppState.Action.AlgorithmPlayerAction(ParsedNotation(parseOutput)),
+           _,
+         ) =>
+         parseOutput->Tablecloth.Result.toOption
+       | _ => None,
+     )
+  |> Rx.Operators.mapn(commands =>
+       commands
+       ->Belt.List.map(RotationCommand.countMoves)
+       ->Belt.List.reduce(0, (+))
+     )
+  |> Rx.Operators.mapn(moves =>
+       moves->UpdateNumberOfMoves->AppState.Action.AlgorithmPlayerAction
+     );
+
+let root = (ro: Rx.Observable.t(t)) =>
+  [|ro |> compile, ro |> countMoves|] |> Rx.merge;

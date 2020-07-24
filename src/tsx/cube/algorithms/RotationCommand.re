@@ -125,3 +125,13 @@ let rec wide =
   | Full(slice, letter, _, degree) => Full(slice, letter, true, degree)
   | Simple(letter, degree) => Full(1, letter, true, degree)
   | Group(commands, i) => Group(commands->Belt.List.map(wide), i);
+
+let rec countMoves =
+  fun
+  | Full(_, _, _, Deg90(_))
+  | Simple(_, Deg90(_)) => 1
+  | Full(_, _, _, Deg180(_))
+  | Simple(_, Deg180(_)) => 2
+  | Group(commands, iterations) =>
+    commands->Belt.List.map(countMoves)->Belt.List.reduce(0, (+))
+    * iterations;

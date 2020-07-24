@@ -10,3 +10,5 @@ let rotationTransform = (state: Store.State.t) =>
 let playerNotation = (state: Store.State.t) => state.algorithmPlayer.notation;
 let playerStatus = (state: Store.State.t) => state.algorithmPlayer.status;
 let parseOutput = (state: Store.State.t) => state.algorithmPlayer.parseOutput;
+let numberOfMoves = (state: Store.State.t) =>
+  state.algorithmPlayer.numberOfMoves;

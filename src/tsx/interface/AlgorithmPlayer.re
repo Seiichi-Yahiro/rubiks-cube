@@ -6,18 +6,16 @@ let make = () => {
   let numberOfCubicles = Store.useSelector(Selectors.numberOfCubicles);
   let playerNotation = Store.useSelector(Selectors.playerNotation);
   let playerStatus = Store.useSelector(Selectors.playerStatus);
-  let parseOutput = Store.useSelector(Selectors.parseOutput);
+  let hasParseError =
+    Store.useSelector(Selectors.parseOutput)->Belt.Result.isError;
+  let numberOfMoves = Store.useSelector(Selectors.numberOfMoves);
 
   let updateNotation = event => {
     let value = event->ReactEvent.Form.target##value;
     value->UpdateNotation->AlgorithmPlayerAction->dispatch;
   };
 
-  let isNotationEmpty =
-    parseOutput
-    ->Belt.Result.map(Belt.List.length)
-    ->Belt.Result.getWithDefault(0)
-    === 0;
+  let isNotationEmpty = numberOfMoves === 0;
   let isStopped = playerStatus === Stopped;
 
   let onStop = _ => Stop->AlgorithmPlayerAction->dispatch;
@@ -42,7 +40,8 @@ let make = () => {
            | Paused =>
              let onPlay = _ => (); // TODO
 
-             <IconButton onClick=onPlay disabled=isNotationEmpty>
+             <IconButton
+               onClick=onPlay disabled={isNotationEmpty || hasParseError}>
                <MscharleyBsMaterialUiIcons.PlayArrow.Filled />
              </IconButton>;
            | Playing =>
@@ -58,9 +57,15 @@ let make = () => {
           </IconButton>
           <IconButton
             onClick=onJumpToEnd
-            disabled={playerStatus === Playing || isNotationEmpty}>
+            disabled={
+              playerStatus === Playing || isNotationEmpty || hasParseError
+            }>
             <MscharleyBsMaterialUiIcons.SkipNext.Filled />
           </IconButton>
+          <Typography variant=`Button>
+            "0 / "->React.string
+            numberOfMoves->React.int
+          </Typography>
         </div>
         <div>
           <IconButton onClick=onShuffle disabled={!isStopped}>
