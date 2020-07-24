@@ -6,13 +6,18 @@ let make = () => {
   let numberOfCubicles = Store.useSelector(Selectors.numberOfCubicles);
   let playerNotation = Store.useSelector(Selectors.playerNotation);
   let playerStatus = Store.useSelector(Selectors.playerStatus);
+  let parseOutput = Store.useSelector(Selectors.parseOutput);
 
   let updateNotation = event => {
     let value = event->ReactEvent.Form.target##value;
     value->UpdateNotation->AlgorithmPlayerAction->dispatch;
   };
 
-  let isNotationEmpty = playerNotation->String.length === 0;
+  let isNotationEmpty =
+    parseOutput
+    ->Belt.Result.map(Belt.List.length)
+    ->Belt.Result.getWithDefault(0)
+    === 0;
   let isStopped = playerStatus === Stopped;
 
   let onStop = _ => Stop->AlgorithmPlayerAction->dispatch;
