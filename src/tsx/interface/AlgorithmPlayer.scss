@@ -8,4 +8,18 @@
         flex-direction: row;
         justify-content: space-between;
     }
+
+    &-error {
+        &__pos {
+            color: dodgerblue;
+        }
+
+        &__got {
+            color: red;
+        }
+
+        &__expected {
+            color: orange;
+        }
+    }
 }

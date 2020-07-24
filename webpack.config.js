@@ -18,21 +18,10 @@ module.exports = {
         chunkFilename: 'js/[name].chunk.js',
     },
     resolve: {
-        extensions: ['.js', '.ts', '.tsx'],
+        extensions: ['.js'],
     },
     module: {
         rules: [
-            {
-                test: /\.(ts|tsx)$/,
-                use: [
-                    {
-                        loader: 'ts-loader',
-                        options: {
-                            transpileOnly: true,
-                        },
-                    },
-                ],
-            },
             {
                 test: /\.(s)?css$/,
                 use: [

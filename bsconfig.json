@@ -1,11 +1,15 @@
 {
-    "name": "Rubiks-Cube",
+    "name": "rubiks-cube",
     "reason": { "react-jsx": 3 },
     "bsc-flags": ["-bs-super-errors", "-bs-g"],
     "sources": [
         {
             "dir": "src",
             "subdirs": true
+        },
+        {
+            "dir": "__tests__",
+            "type": "dev"
         }
     ],
     "package-specs": [
@@ -26,8 +30,11 @@
         "bs-fetch",
         "@jsiebern/bs-material-ui",
         "@mscharley/bs-material-ui-icons",
-        "bs-guid"
+        "bs-guid",
+        "tablecloth-bucklescript",
+        "re-parse"
     ],
+    "bs-dev-dependencies": ["@glennsl/bs-jest"],
     "ppx-flags": [],
     "refmt": 3
 }

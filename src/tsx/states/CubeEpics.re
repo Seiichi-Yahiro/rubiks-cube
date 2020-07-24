@@ -17,4 +17,4 @@ let init = (ro: Rx.Observable.t(t)) =>
        |> Rx.of_
      );
 
-let root = (ro: Rx.Observable.t(t)) => Rx.merge([|ro |> init|]);
+let root = (ro: Rx.Observable.t(t)) => [|ro |> init|] |> Rx.merge;

@@ -12,6 +12,7 @@
         "bs-guid": "1.0.1",
         "lodash": "4.17.15",
         "quaternion": "1.1.0",
+        "re-parse": "https://github.com/Seiichi-Yahiro/re-parse#v0.1.0",
         "react": "16.13.1",
         "react-dom": "16.13.1",
         "react-tracked": "1.4.0",
@@ -20,9 +21,11 @@
         "reductive": "2.1.0",
         "reductive-observable": "0.1.6",
         "redux": "4.0.5",
-        "redux-devtools-extension": "2.13.8"
+        "redux-devtools-extension": "2.13.8",
+        "tablecloth-bucklescript": "0.0.7"
     },
     "devDependencies": {
+        "@glennsl/bs-jest": "0.5.1",
         "@types/enzyme": "3.10.5",
         "@types/enzyme-adapter-react-16": "1.0.6",
         "@types/jest": "26.0.0",
@@ -31,6 +34,7 @@
         "@types/react-dom": "16.9.8",
         "@typescript-eslint/eslint-plugin": "3.2.0",
         "@typescript-eslint/parser": "3.2.0",
+        "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
         "bs-platform": "7.3.2",
         "css-loader": "3.6.0",
         "enzyme": "3.11.0",
@@ -62,11 +66,16 @@
         "start": "webpack-dev-server --config webpack.config.js",
         "build:dev": "rimraf build && webpack --config webpack.config.js",
         "pretty-quick": "pretty-quick",
-        "test": "rimraf build/coverage && jest --coverage"
+        "test": "jest"
     },
     "husky": {
         "hooks": {
             "pre-commit": "pretty-quick --staged"
         }
+    },
+    "jest": {
+        "transformIgnorePatterns": [
+            "/node_modules/(?!@glennsl/bs-jest|bs-platform|tablecloth-bucklescript|re-parse).+\\.js$"
+        ]
     }
 }

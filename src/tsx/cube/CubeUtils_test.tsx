@@ -51,7 +51,7 @@ describe('CubeUtils', () => {
             [1,3,3], [2,3,3], [3,3,3]
         ];
 
-        expect(cubes.map(cube => cube.axes.toVector())).toEqual(cube3x3x3);
+        expect(cubes.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
     });
 
     it('should rotate the x1 (L) axis of a 3x3x3', () => {
@@ -76,7 +76,7 @@ describe('CubeUtils', () => {
             [1,1,3], [2,3,3], [3,3,3]
         ];
 
-        expect(result.map(cube => cube.axes.toVector())).toEqual(cube3x3x3);
+        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
     });
 
     it("should rotate the x-1 (L') axis of a 3x3x3", () => {
@@ -101,7 +101,7 @@ describe('CubeUtils', () => {
             [1,3,1], [2,3,3], [3,3,3]
         ];
 
-        expect(result.map(cube => cube.axes.toVector())).toEqual(cube3x3x3);
+        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
     });
 
     it("should rotate the x-2 (M') axis of a 3x3x3", () => {
@@ -126,7 +126,7 @@ describe('CubeUtils', () => {
             [1,3,3], [2,3,1], [3,3,3]
         ];
 
-        expect(result.map(cube => cube.axes.toVector())).toEqual(cube3x3x3);
+        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
     });
 
     it('should rotate the y1 (U) axis of a 3x3x3', () => {
@@ -151,7 +151,7 @@ describe('CubeUtils', () => {
             [1,3,3], [2,3,3], [3,3,3]
         ];
 
-        expect(result.map(cube => cube.axes.toVector())).toEqual(cube3x3x3);
+        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
     });
 
     it("should rotate the y-1 (U') axis of a 3x3x3", () => {
@@ -176,7 +176,7 @@ describe('CubeUtils', () => {
             [1,3,3], [2,3,3], [3,3,3]
         ];
 
-        expect(result.map(cube => cube.axes.toVector())).toEqual(cube3x3x3);
+        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
     });
 
     it('should rotate the y3 (D) axis of a 3x3x3', () => {
@@ -201,7 +201,7 @@ describe('CubeUtils', () => {
             [3,3,3], [3,3,2], [3,3,1]
         ];
 
-        expect(result.map(cube => cube.axes.toVector())).toEqual(cube3x3x3);
+        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
     });
 
     it("should rotate the z1 (F') axis of a 3x3x3", () => {
@@ -226,7 +226,7 @@ describe('CubeUtils', () => {
             [1,3,3], [2,3,3], [3,3,3]
         ];
 
-        expect(result.map(cube => cube.axes.toVector())).toEqual(cube3x3x3);
+        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
     });
 
     it('should rotate the z-1 (F) axis of a 3x3x3', () => {
@@ -251,7 +251,7 @@ describe('CubeUtils', () => {
             [1,3,3], [2,3,3], [3,3,3]
         ];
 
-        expect(result.map(cube => cube.axes.toVector())).toEqual(cube3x3x3);
+        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
     });
 
     it("should rotate the z-3 (B') axis of a 3x3x3", () => {
@@ -276,7 +276,7 @@ describe('CubeUtils', () => {
             [1,1,3], [1,2,3], [1,3,3],
         ];
 
-        expect(result.map(cube => cube.axes.toVector())).toEqual(cube3x3x3);
+        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
     });
 
     it('should generate the axes for a 2x2x2', () => {
@@ -294,7 +294,7 @@ describe('CubeUtils', () => {
 
         ];
 
-        expect(cubes.map(cube => cube.axes.toVector())).toEqual(cube2x2x2);
+        expect(cubes.map((cube) => cube.axes.toVector())).toEqual(cube2x2x2);
     });
 
     it('should rotate the x1 (L) axis of a 2x2x2', () => {
@@ -313,7 +313,7 @@ describe('CubeUtils', () => {
             [1,1,2], [2,2,2]
         ];
 
-        expect(result.map(cube => cube.axes.toVector())).toEqual(cube2x2x2);
+        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube2x2x2);
     });
 
     it('should rotate multiple axes together', () => {
@@ -332,17 +332,17 @@ describe('CubeUtils', () => {
             [1,1,2], [2,1,2]
         ];
 
-        expect(result.map(cube => cube.axes.toVector())).toEqual(cube2x2x2);
+        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube2x2x2);
     });
 
     const compareFaceArrows = (expected: IFaces<Maybe<[D3, D3]>>, result: IFaces<Maybe<[D3, D3]>>, axes: D3) => {
         const convert = (v: IFaces<Maybe<[D3, D3]>>, layer: string) =>
-            (v[layer] as Maybe<[D3, D3]>).map(it => it.map(d3 => d3.toVector())).unwrapOr([]);
+            (v[layer] as Maybe<[D3, D3]>).map((it) => it.map((d3) => d3.toVector())).unwrapOr([]);
 
         const multiplyExpectedArrows = (): IFaces<Maybe<[D3, D3]>> =>
-            mapValues(expected, v => v.map(d3s => d3s.map(d3 => d3.mul(axes)))) as IFaces<Maybe<[D3, D3]>>;
+            mapValues(expected, (v) => v.map((d3s) => d3s.map((d3) => d3.mul(axes)))) as IFaces<Maybe<[D3, D3]>>;
 
-        keys(expected).forEach(layer => {
+        keys(expected).forEach((layer) => {
             expect(convert(result, layer)).toEqual(convert(multiplyExpectedArrows(), layer));
         });
     };
@@ -446,7 +446,7 @@ describe('CubeUtils', () => {
         const result = animateRotation(cubes, [rotation]);
 
         expect(
-            result.every(cube => {
+            result.every((cube) => {
                 if (cube.axes.hasMatchingAxis(rotation)) {
                     return cube.rotationAnimation.isSome();
                 } else {
@@ -465,7 +465,7 @@ describe('CubeUtils', () => {
         let result = animateRotation(cubes, [rotation]);
         result = rotate(result, numberOfCubes, [rotation]);
 
-        expect(result.every(cube => cube.rotationAnimation.isNone()));
+        expect(result.every((cube) => cube.rotationAnimation.isNone()));
     });
 
     it('should correctly calculate animationRotation', () => {

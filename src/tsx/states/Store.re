@@ -10,16 +10,19 @@ let reductiveDevToolsEnhancer =
     (),
   );
 
-let enhancer = (store, next) =>
-  ReductiveObservable.middleware(Rx.of1(AppEpics.root), store) @@
-  Logger.logger(store) @@
-  next;
+module Middleware = {
+  let reductiveObservable =
+    ReductiveObservable.middleware(Rx.of1(AppEpics.root));
+
+  let enhancer = (store, next) =>
+    reductiveObservable(store) @@ Logger.logger(store) @@ next;
+};
 
 let store =
   (reductiveDevToolsEnhancer @@ Reductive.Store.create)(
     ~reducer,
     ~preloadedState=State.initial,
-    ~enhancer,
+    ~enhancer=Middleware.enhancer,
     (),
   );
 
