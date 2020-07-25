@@ -28,15 +28,26 @@ module Face = {
 
 module Cubicle = {
   [@react.component]
-  let make = (~faces, ~transform, ~axis, ~cubicleSize) => {
+  let make =
+      (
+        ~faces,
+        ~transform,
+        ~animationTransform,
+        ~rotationAnimationSpeed,
+        ~axis,
+        ~cubicleSize,
+      ) => {
     let style = {
-      let transform = transform->Math.Matrix4.toCssMatrix;
+      let transform =
+        animationTransform->Math.Matrix4.toCssMatrix
+        ++ transform->Math.Matrix4.toCssMatrix;
       let cubicleSize = {j|$(cubicleSize)px|j};
 
       ReactDOMRe.Style.make(
         ~transform,
         ~width=cubicleSize,
         ~height=cubicleSize,
+        ~transition={j|$(rotationAnimationSpeed)ms transform|j},
         (),
       );
     };
@@ -58,6 +69,8 @@ module Cubicle = {
 let make = () => {
   let cubicles = Store.useSelector(Selectors.cubicles);
   let rotation = Store.useSelector(Selectors.rotationTransform);
+  let rotationAnimationSpeed =
+    Store.useSelector(Selectors.rotationAnimationSpeed);
   let scale = Store.useSelector(Selectors.scale);
   let cubeSize = Store.useSelector(Selectors.cubeSize);
   let numberOfCubicles = Store.useSelector(Selectors.numberOfCubicles);
@@ -93,8 +106,16 @@ let make = () => {
     <div className="rubiks-cube" style>
       <div style=positionCorrectionStyle>
         {cubicles
-         ->Belt.List.map(({id, faces, transform, axis}) =>
-             <Cubicle key=id faces transform axis cubicleSize />
+         ->Belt.List.map(({id, faces, transform, animationTransform, axis}) =>
+             <Cubicle
+               key=id
+               faces
+               transform
+               animationTransform
+               rotationAnimationSpeed
+               axis
+               cubicleSize
+             />
            )
          ->Belt.List.toArray
          ->React.array}

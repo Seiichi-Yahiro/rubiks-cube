@@ -36,7 +36,9 @@ module Action = {
     | UpdateNumberOfCubicles(int)
     | UpdateScale(float)
     | UpdateRotationAnimationSpeed(int)
-    | UpdateRotation(Math.Angle.t, Math.Angle.t);
+    | UpdateRotation(Math.Angle.t, Math.Angle.t)
+    | StartRotationCommand(RotationCommand.t)
+    | FinishRotationCommmand;
 };
 
 let reducer = (state: State.t, action: Action.t) =>
@@ -73,9 +75,101 @@ let reducer = (state: State.t, action: Action.t) =>
       ...state,
       rotation: {
         pitch,
-
         yaw,
         transform,
       },
     };
+  | StartRotationCommand(command) =>
+    switch (command) {
+    | Full(slice, letter, wide, degree) =>
+      let slices = wide ? Belt.List.makeBy(slice, i => i + 1) : [slice];
+      let commandAxis = letter->RotationCommand.Letter.toAxis;
+
+      let hasMatchingAxis =
+        RubiksCubeUtils.Axis.matchesRotationCommandAxis(
+          ~commandAxis,
+          ~slices,
+          ~numberOfCubicles=state.numberOfCubicles,
+        );
+
+      let cubicles =
+        state.cubicles
+        ->Belt.List.map(cubicle =>
+            if (cubicle.axis->hasMatchingAxis) {
+              {
+                ...cubicle,
+                animationTransform:
+                  degree->RotationCommand.Degree.toMatrix4(~axis=commandAxis),
+              };
+            } else {
+              cubicle;
+            }
+          );
+
+      {...state, cubicles};
+
+    | Simple(letter, degree) =>
+      let slices =
+        switch (letter) {
+        | L(case)
+        | R(case)
+        | U(case)
+        | D(case)
+        | F(case)
+        | B(case) => case->RotationCommand.Case.isLowerCase ? [1, 2] : [1]
+        | M(case)
+        | E(case)
+        | S(case) =>
+          case->RotationCommand.Case.isLowerCase
+            ? state.numberOfCubicles mod 2 === 0
+                ? [
+                  state.numberOfCubicles / 2,
+                  state.numberOfCubicles / 2 + 1,
+                ]
+                : [state.numberOfCubicles / 2]
+            : Belt.List.makeBy(state.numberOfCubicles - 2, i => i + 2)
+        | X(_)
+        | Y(_)
+        | Z(_) => Belt.List.makeBy(state.numberOfCubicles, i => i + 1)
+        };
+      let commandAxis = letter->RotationCommand.Letter.toAxis;
+
+      let hasMatchingAxis =
+        RubiksCubeUtils.Axis.matchesRotationCommandAxis(
+          ~commandAxis,
+          ~slices,
+          ~numberOfCubicles=state.numberOfCubicles,
+        );
+
+      let cubicles =
+        state.cubicles
+        ->Belt.List.map(cubicle =>
+            if (cubicle.axis->hasMatchingAxis) {
+              {
+                ...cubicle,
+                animationTransform:
+                  degree->RotationCommand.Degree.toMatrix4(~axis=commandAxis),
+              };
+            } else {
+              cubicle;
+            }
+          );
+      {...state, cubicles};
+
+    | Group(_, _) => state
+    }
+  | FinishRotationCommmand => {
+      ...state,
+      cubicles:
+        state.cubicles
+        ->Belt.List.map(cubicle =>
+            {
+              ...cubicle,
+              animationTransform: Math.Matrix4.identity,
+              transform:
+                cubicle.animationTransform
+                ->Math.Matrix4.multiply(cubicle.transform),
+            }
+          ),
+    }
   };

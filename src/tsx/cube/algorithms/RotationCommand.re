@@ -16,6 +16,11 @@ module Case = {
 
   let fromString = letter =>
     letter === letter->Js.String2.toLowerCase ? Lower : Upper;
+
+  let isLowerCase =
+    fun
+    | Lower => true
+    | Upper => false;
 };
 
 module Letter = {
@@ -66,6 +71,23 @@ module Letter = {
     | S(_)
     | Z(_) => Axis.Z(Forwards)
     | B(_) => Axis.Z(Backwards);
+
+  let getCase =
+    fun
+    | L(case)
+    | M(case)
+    | X(case)
+    | R(case)
+    | U(case)
+    | E(case)
+    | Y(case)
+    | D(case)
+    | F(case)
+    | S(case)
+    | Z(case)
+    | B(case) => case;
+
+  let isLowerCase = letter => letter->getCase->Case.isLowerCase;
 };
 
 module Direction = {
@@ -93,6 +115,23 @@ module Degree = {
     fun
     | Deg90(direction) => Deg180(direction)
     | Deg180(_) as rotation => rotation;
+
+  let toAngle =
+    fun
+    | Deg90(Clockwise) => Math.Angle.Deg(90.0)
+    | Deg90(Counterclockwise) => Math.Angle.Deg(-90.0)
+    | Deg180(Clockwise) => Math.Angle.Deg(180.0)
+    | Deg180(Counterclockwise) => Math.Angle.Deg(-180.0);
+
+  let toMatrix4 = (degree, ~axis) =>
+    switch (axis) {
+    | Axis.X(Forwards) => Math.Matrix4.fromAngleX(degree->prime->toAngle) // view from L
+    | Axis.X(Backwards) => Math.Matrix4.fromAngleX(degree->toAngle) // view from R
+    | Axis.Y(Forwards) => Math.Matrix4.fromAngleY(degree->prime->toAngle) // view from U
+    | Axis.Y(Backwards) => Math.Matrix4.fromAngleY(degree->toAngle) // view from D
+    | Axis.Z(Forwards) => Math.Matrix4.fromAngleZ(degree->toAngle) // view from F
+    | Axis.Z(Backwards) => Math.Matrix4.fromAngleZ(degree->prime->toAngle) // view from B
+    };
 };
 
 type t =
@@ -128,10 +167,8 @@ let rec wide =
 
 let rec countMoves =
   fun
-  | Full(_, _, _, Deg90(_))
-  | Simple(_, Deg90(_)) => 1
-  | Full(_, _, _, Deg180(_))
-  | Simple(_, Deg180(_)) => 2
+  | Full(_, _, _, _)
+  | Simple(_, _) => 1
   | Group(commands, iterations) =>
     commands->Belt.List.map(countMoves)->Belt.List.reduce(0, (+))
     * iterations;

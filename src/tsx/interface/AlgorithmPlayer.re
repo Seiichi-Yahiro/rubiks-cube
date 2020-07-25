@@ -8,6 +8,7 @@ let make = () => {
   let playerStatus = Store.useSelector(Selectors.playerStatus);
   let hasParseError =
     Store.useSelector(Selectors.parseOutput)->Belt.Result.isError;
+  let currentMove = Store.useSelector(Selectors.currentMove);
   let numberOfMoves = Store.useSelector(Selectors.numberOfMoves);
 
   let updateNotation = event => {
@@ -38,7 +39,7 @@ let make = () => {
           {switch (playerStatus) {
            | Stopped
            | Paused =>
-             let onPlay = _ => (); // TODO
+             let onPlay = _ => Play->AlgorithmPlayerAction->dispatch;
 
              <IconButton
                onClick=onPlay disabled={isNotationEmpty || hasParseError}>
@@ -63,7 +64,8 @@ let make = () => {
             <MscharleyBsMaterialUiIcons.SkipNext.Filled />
           </IconButton>
           <Typography variant=`Button>
-            "0 / "->React.string
+            currentMove->React.int
+            " / "->React.string
             numberOfMoves->React.int
           </Typography>
         </div>

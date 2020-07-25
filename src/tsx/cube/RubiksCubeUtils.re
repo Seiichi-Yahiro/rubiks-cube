@@ -73,6 +73,29 @@ module Side = {
 module Axis = {
   type t = (int, int, int);
 
+  let matchesRotationCommandAxis =
+      (
+        (x, y, z): t,
+        ~commandAxis: RotationCommand.Axis.t,
+        ~slices: list(int),
+        ~numberOfCubicles: int,
+      ) => {
+    let slices =
+      switch (commandAxis) {
+      | X(Backwards)
+      | Y(Backwards)
+      | Z(Backwards) =>
+        slices->Belt.List.map(slice => numberOfCubicles + 1 - slice)
+      | _ => slices
+      };
+
+    switch (commandAxis) {
+    | X(_) => slices->Tablecloth.List.member(~value=x)
+    | Y(_) => slices->Tablecloth.List.member(~value=y)
+    | Z(_) => slices->Tablecloth.List.member(~value=z)
+    };
+  };
+
   let toList = ((x, y, z): t) => [x, y, z];
 
   let toTranslation =
@@ -133,6 +156,7 @@ module Cubicle = {
     id: string,
     faces: list(Face.t),
     transform: Math.Matrix4.t,
+    animationTransform: Math.Matrix4.t,
     axis: Axis.t,
   };
 
@@ -159,6 +183,7 @@ module Cubicle = {
           ~cubicleSize,
           ~cubicleGap,
         ),
+      animationTransform: Math.Matrix4.identity,
       axis,
     };
   };
