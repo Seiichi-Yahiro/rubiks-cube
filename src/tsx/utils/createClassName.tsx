@@ -20,19 +20,19 @@ const isClassNameList = (arg: ClassNameDictionary | IClassNameList): arg is ICla
  */
 const createClassName = (...classNames: (string | undefined | ClassNameDictionary | IClassNameList)[]) =>
     classNames
-        .map(className => {
+        .map((className) => {
             if (typeof className === 'object') {
                 if (isClassNameList(className)) {
                     return className.hasClasses ? className.classNames.join(' ') : '';
                 } else {
                     return Object.keys(className)
-                        .filter(key => className[key])
+                        .filter((key) => className[key])
                         .join(' ');
                 }
             }
             return className;
         })
-        .filter(className => className && className.length)
+        .filter((className) => className?.length)
         .join(' ');
 
 export default createClassName;

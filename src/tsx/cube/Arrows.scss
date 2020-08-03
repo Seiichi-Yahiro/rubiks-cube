@@ -5,6 +5,10 @@
     transition: opacity 400ms;
 }
 
+.face-arrows-wrapper {
+    transform: translate(50%, 50%);
+}
+
 .face-arrow {
     transform: translateY(50%) scale(0.4) translateY(-50%) rotate(180deg);
     opacity: 0;

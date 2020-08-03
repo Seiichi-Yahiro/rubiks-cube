@@ -5,17 +5,17 @@ import Arrow from './Arrow';
 interface IArrowsProps {
     up: () => void;
     down: () => void;
-    right: () => void;
     left: () => void;
+    right: () => void;
 }
 
 const FaceArrows: React.FunctionComponent<IArrowsProps> = ({ up, down, right, left }) => (
     <svg viewBox="0 0 100 100" className="face-arrows-svg">
-        <g style={{ transform: 'translate(50%, 50%)' }}>
+        <g className="face-arrows-wrapper">
             <FaceArrow direction={FaceArrowDirection.UP} onClick={up} />
             <FaceArrow direction={FaceArrowDirection.DOWN} onClick={down} />
-            <FaceArrow direction={FaceArrowDirection.RIGHT} onClick={right} />
             <FaceArrow direction={FaceArrowDirection.LEFT} onClick={left} />
+            <FaceArrow direction={FaceArrowDirection.RIGHT} onClick={right} />
         </g>
     </svg>
 );
@@ -24,7 +24,7 @@ export enum FaceArrowDirection {
     UP = '180deg',
     LEFT = '90deg',
     RIGHT = '-90deg',
-    DOWN = '0deg'
+    DOWN = '0deg',
 }
 
 interface IArrowProps {

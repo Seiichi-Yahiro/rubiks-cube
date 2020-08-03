@@ -4,24 +4,24 @@ import Settings from './Settings';
 import './Interface.scss';
 import Algorithms from './Algorithms';
 import Category from './Category';
-import AlgorithmPlayer from './AlgorithmPlayer';
+import Player from './Player';
 import { ListItem } from '@material-ui/core';
 
 enum Menu {
     ALGORITHMS = 'ALGORITHMS',
     SETTINGS = 'SETTINGS',
-    NONE = 'NONE'
+    NONE = 'NONE',
 }
 
 const Interface: React.FunctionComponent = () => {
     const [openedMenu, setOpenedMenu] = useState(Menu.SETTINGS);
-    const setMenu = (menu: Menu) => setOpenedMenu(prevMenu => (prevMenu === menu ? Menu.NONE : menu));
+    const setMenu = (menu: Menu) => setOpenedMenu((prevMenu) => (prevMenu === menu ? Menu.NONE : menu));
 
     return (
         <div className="app__interface">
             <List>
                 <ListItem className="interface-list__item">
-                    <AlgorithmPlayer />
+                    <Player />
                 </ListItem>
                 <Category
                     isOpen={openedMenu === Menu.ALGORITHMS}

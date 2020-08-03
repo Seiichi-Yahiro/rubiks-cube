@@ -1,6 +1,5 @@
-export interface IAction<T, S> {
-    type: T;
-    payload: Partial<S>;
-}
+import { Action } from 'redux';
+import { CubeActionType } from './cube/CubeActions';
+import { PlayerActionType } from './player/PlayerActions';
 
-export type ActionCreator<T, S> = (prevState: S) => IAction<T, S>;
+export type AppAction = Action<CubeActionType | PlayerActionType>;

@@ -1,8 +1,8 @@
 import React from 'react';
-import { CubeColors } from '../cube/CubeUtils';
+import { Color } from '../cube/CubeTypes';
 
 interface IStartConfigurationProps {
-    configuration: CubeColors[][];
+    configuration: Color[][];
 }
 
 const StartConfiguration: React.FunctionComponent<IStartConfigurationProps> = ({ configuration }) => (
@@ -10,13 +10,13 @@ const StartConfiguration: React.FunctionComponent<IStartConfigurationProps> = ({
         {configuration.flatMap((row, rowIndex) =>
             row.map((color, colorIndex) => (
                 <React.Fragment key={`${rowIndex}-${colorIndex}`}>
-                    {color !== CubeColors.TRANSPARENT && (
+                    {color !== Color.TRANSPARENT && (
                         <div
                             className="start-configuration__face"
                             style={{
                                 backgroundColor: color,
                                 gridRow: rowIndex + 1,
-                                gridColumn: colorIndex + 1
+                                gridColumn: colorIndex + 1,
                             }}
                         />
                     )}

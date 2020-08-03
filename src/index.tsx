@@ -1,9 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from "./tsx/App";
+import App from './tsx/App';
+import { Provider } from 'react-redux';
+import { setupStore } from './tsx/states/Store';
 
 window.addEventListener('load', function load() {
     window.removeEventListener('load', load);
-    ReactDOM.render(<App/>, document.getElementById('root'));
-});
 
+    const store = setupStore();
+
+    ReactDOM.render(
+        <Provider store={store}>
+            <App />
+        </Provider>,
+        document.getElementById('root')
+    );
+});

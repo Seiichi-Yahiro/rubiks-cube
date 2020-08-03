@@ -22,3 +22,5 @@ src/generated/*
 wasm/target
 **/*.rs.bk
 wasm/Cargo.lock
+
+.eslintcache

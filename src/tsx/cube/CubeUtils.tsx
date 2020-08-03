@@ -1,177 +1,68 @@
-import { flow, mapValues, range } from 'lodash';
-import Quaternion from 'quaternion';
-import { ICube, IFaces } from './CubeTypes';
-import D3, { D3Group } from './D3';
-import Maybe from '../utils/Maybe';
+import { range } from 'lodash';
+import { ICubicle, IFace, Axis, Color, Side } from './CubeTypes';
+import { v4 } from 'uuid';
+import { Mat4, identity, multiply, fromTranslation, fromAngleY, fromAngleX } from '../utils/Matrix4';
 
 export const cubeIsTransitioning = 'cube--is-transitioning';
 
-export enum CubeColors {
-    BLUE = '#3d81f6',
-    GREEN = '#009d54',
-    RED = '#dc422f',
-    ORANGE = '#ff6c00',
-    WHITE = '#ffffff',
-    YELLOW = '#fdcc09',
-    DEFAULT = '#383838',
-    TRANSPARENT = 'transparent'
-}
-
-export function createFaces<T>(initialValue: T): IFaces<T> {
-    const initialLayers = {
-        FRONT: undefined,
-        BACK: undefined,
-        UP: undefined,
-        DOWN: undefined,
-        RIGHT: undefined,
-        LEFT: undefined
-    } as IFaces<undefined>;
-
-    return mapValues(initialLayers, () => initialValue);
-}
-
-export const defaultColors: IFaces<string> = createFaces(CubeColors.DEFAULT);
-
-export const calculateCubePosition = (d3: D3, numberOfCubes: number, sizeOfCube: number): D3 => {
-    const offset = sizeOfCube * (numberOfCubes / 2 - 0.5);
-    const [x, y, z] = d3.sub(1).toVector();
-
-    return d3
-        .clone()
-        .setX(x * sizeOfCube - offset)
-        .setY(y * sizeOfCube - offset)
-        .setZ(-z * sizeOfCube + offset);
+const sideToColor = {
+    [Side.FRONT]: Color.BLUE,
+    [Side.BACK]: Color.GREEN,
+    [Side.LEFT]: Color.ORANGE,
+    [Side.RIGHT]: Color.RED,
+    [Side.UP]: Color.YELLOW,
+    [Side.DOWN]: Color.WHITE,
 };
 
-export const generateCubes = (numberOfCubes: number, sizeOfCube: number) => {
-    const cubes: ICube[] = [];
-
-    const indexes = range(1, numberOfCubes + 1);
-
-    for (const z of indexes) {
-        for (const y of indexes) {
-            for (const x of indexes) {
-                if (![x, y, z].some(dimension => dimension === 1 || dimension === numberOfCubes)) {
-                    continue;
-                }
-
-                const axes = new D3(x, y, z);
-
-                const cube: ICube = {
-                    id: axes.clone(),
-                    colors: {},
-                    translation: calculateCubePosition(axes, numberOfCubes, sizeOfCube),
-                    rotation: new Quaternion(),
-                    axes,
-                    faceArrows: createFaces(Maybe.none<[D3, D3]>()),
-                    rotationAnimation: Maybe.none()
-                };
-
-                if (z === 1) {
-                    cube.colors.FRONT = CubeColors.BLUE;
-                    cube.faceArrows.FRONT = Maybe.some([new D3().setX(-x), new D3().setY(-y)]);
-                } else if (z === numberOfCubes) {
-                    cube.colors.BACK = CubeColors.GREEN;
-                    cube.faceArrows.BACK = Maybe.some([new D3().setX(x), new D3().setY(-y)]);
-                }
-
-                if (y === 1) {
-                    cube.colors.UP = CubeColors.YELLOW;
-                    cube.faceArrows.UP = Maybe.some([new D3().setX(-x), new D3().setZ(-z)]);
-                } else if (y === numberOfCubes) {
-                    cube.colors.DOWN = CubeColors.WHITE;
-                    cube.faceArrows.DOWN = Maybe.some([new D3().setX(-x), new D3().setZ(z)]);
-                }
-
-                if (x === 1) {
-                    cube.colors.LEFT = CubeColors.ORANGE;
-                    cube.faceArrows.LEFT = Maybe.some([new D3().setZ(-z), new D3().setY(-y)]);
-                } else if (x === numberOfCubes) {
-                    cube.colors.RIGHT = CubeColors.RED;
-                    cube.faceArrows.RIGHT = Maybe.some([new D3().setZ(z), new D3().setY(-y)]);
-                }
-
-                cubes.push(cube);
-            }
-        }
-    }
-
-    return cubes;
-};
-
-const degree90 = Math.PI / 2;
-export const rotate = (cubes: ICube[], numberOfCubes: number, rotationAxes: D3Group): ICube[] => {
-    const translation = numberOfCubes / 2 + 0.5;
-
-    const multiAxisRotation: (cube: ICube) => ICube = flow(
-        ...rotationAxes.map(rotationAxis => {
-            // TODO find out why this is necessary to rotate the axes correctly on z rotations
-            const axesRotation = rotationAxis.z !== 0 ? rotationAxis.invert() : rotationAxis;
-            return rotateAxis(rotationAxis, axesRotation, translation);
-        })
-    );
-
-    return cubes.map(multiAxisRotation);
-};
-
-const rotateAxis = (rotationAxis: D3, axesRotation: D3, translation: number) => (cube: ICube): ICube => {
-    if (!cube.axes.hasMatchingAxis(rotationAxis)) {
-        return cube;
-    }
-
-    const newAxes = cube.axes
-        .sub(translation)
-        .rotate(axesRotation, degree90)
-        .add(translation)
-        .map(Math.round);
-
-    const newFaceArrows = mapValues(cube.faceArrows, maybeArrowRotations =>
-        maybeArrowRotations.map(
-            arrowRotations =>
-                arrowRotations.map(arrowRotation =>
-                    arrowRotation
-                        .unit()
-                        .rotate(rotationAxis.invert(), degree90)
-                        .map(Math.round)
-                        .mul(newAxes)
-                ) as [D3, D3]
-        )
-    );
-
+const sideToTransform = (side: Side, cubicleSize: number): Mat4 => {
+    const halfCubicleSize = cubicleSize / 2.0;
     return {
-        ...cube,
-        axes: newAxes,
-        rotation: cube.rotation.mul(rotationAxis.toQuaternion(degree90)),
-        faceArrows: newFaceArrows,
-        rotationAnimation: Maybe.none()
-    };
+        [Side.FRONT]: fromTranslation(0, 0, halfCubicleSize),
+        [Side.BACK]: multiply(fromTranslation(0, 0, -halfCubicleSize), fromAngleY(180)),
+        [Side.LEFT]: multiply(fromTranslation(-halfCubicleSize, 0, 0), fromAngleY(-90)),
+        [Side.RIGHT]: multiply(fromTranslation(halfCubicleSize, 0, 0), fromAngleY(90)),
+        [Side.UP]: multiply(fromTranslation(0, -halfCubicleSize, 0), fromAngleX(90)),
+        [Side.DOWN]: multiply(fromTranslation(0, halfCubicleSize, 0), fromAngleX(-90)),
+    }[side];
 };
 
-export const animateRotation = (cubes: ICube[], rotationAxes: D3Group): ICube[] => {
-    const multiAxisRotation: (cube: ICube) => ICube = flow(
-        ...rotationAxes.map(rotationAxis => animateRotationAxis(rotationAxis))
+const axisToTransform = ([x, y, z]: Axis, cubicleSize: number, cubicleGap: number, cubeDimension: number): Mat4 => {
+    const offset = (cubeDimension + 1) * cubicleSize * (cubicleGap / 2);
+    return fromTranslation(
+        x * cubicleSize * cubicleGap - offset,
+        y * cubicleSize * cubicleGap - offset,
+        -z * cubicleSize * cubicleGap + offset
     );
-    return cubes.map(multiAxisRotation);
 };
 
-const animateRotationAxis = (rotationAxis: D3) => (cube: ICube): ICube => {
-    if (!cube.axes.hasMatchingAxis(rotationAxis)) {
-        return cube;
-    }
+const isCubicleVisible = (axis: Axis, cubeDimension: number) => axis.some((it) => it === 1 || it === cubeDimension);
 
-    const rotationAnimation = cube.rotation
-        .rotateVector(
-            rotationAxis
-                .unit()
-                .invert()
-                .toVector()
-        )
-        .map(Math.round);
+const isOuterFace = (side: Side, [x, y, z]: Axis, cubeDimension: number) =>
+    ({
+        [Side.FRONT]: z === 1,
+        [Side.BACK]: z === cubeDimension,
+        [Side.LEFT]: x === 1,
+        [Side.RIGHT]: x === cubeDimension,
+        [Side.UP]: y === 1,
+        [Side.DOWN]: y === cubeDimension,
+    }[side]);
 
-    return {
-        ...cube,
-        rotationAnimation: Maybe.some(new D3(...rotationAnimation))
-    };
+const generateFace = (side: Side, axis: Axis, cubicleSize: number, cubeDimension: number): IFace => ({
+    id: v4(),
+    color: isOuterFace(side, axis, cubeDimension) ? sideToColor[side] : Color.DEFAULT,
+    transform: sideToTransform(side, cubicleSize),
+});
+
+export const generateCubicles = (cubicleSize: number, cubicleGap: number, cubeDimension: number): ICubicle[] => {
+    const indexes = range(1, cubeDimension + 1);
+    return indexes
+        .flatMap((z) => indexes.flatMap((y) => indexes.map((x) => [x, y, z] as Axis)))
+        .filter((axis) => isCubicleVisible(axis, cubeDimension))
+        .map((axis) => ({
+            id: v4(),
+            axis,
+            faces: Object.values(Side).map((side) => generateFace(side, axis, cubicleSize, cubeDimension)),
+            transform: axisToTransform(axis, cubicleSize, cubicleGap, cubeDimension),
+            animatedTransform: identity(),
+        }));
 };
-
-// const calculateNumberOfCubes = (cubes: number): number => (12 + Math.sqrt(144 - 24 * (8 - cubes))) / 12;

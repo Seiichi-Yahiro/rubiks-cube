@@ -23,7 +23,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(ts|tsx)$/,
+                test: /\.tsx?$/,
                 use: [
                     {
                         loader: 'ts-loader',
@@ -34,7 +34,7 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(s)?css$/,
+                test: /\.s?css$/,
                 use: [
                     {
                         loader: MiniCssExtractPlugin.loader,
@@ -68,7 +68,7 @@ module.exports = {
     plugins: [
         new ForkTsCheckerWebpackPlugin({
             eslint: {
-                files: './src/**/*',
+                files: './src/**/*.{ts,tsx}',
                 options: {
                     cache: true,
                 },

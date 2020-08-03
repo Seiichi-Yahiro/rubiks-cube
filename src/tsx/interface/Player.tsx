@@ -1,40 +1,35 @@
 import React, { useCallback } from 'react';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
-import './AlgorithmPlayer.scss';
-import { AlgorithmStatus } from '../states/AlgorithmPlayerState';
-import Maybe from '../utils/Maybe';
-import { createRandomNotation, interpretNotation } from '../cube/algorithms/Interpreter';
+import './Player.scss';
+import { PlayerStatus } from '../states/player/PlayerState';
+//import { createRandomNotation } from '../cube/algorithms/Interpreter';
 import { Pause, PlayArrow, Shuffle, SkipNext, Stop, Refresh } from '@material-ui/icons';
-import { useGlobalState } from '../states/State';
-import {
-    jumpToEndOfAlgorithmAction,
-    pauseAlgorithmAction,
-    playAlgorithmAction,
-    resetCubeAction,
-    updatePlayerNotationAction,
-    stopAlgorithmAction
-} from '../states/AlgorithmPlayerActions';
+import { playerActions } from '../states/player/PlayerActions';
+import { useDispatch } from 'react-redux';
+import { useRedux } from '../states/States';
 
-const AlgorithmPlayer: React.FunctionComponent = () => {
-    const [state, dispatch] = useGlobalState();
-    const { numberOfCubes, playerNotation, playerStatus } = state;
+const Player: React.FunctionComponent = () => {
+    const dispatch = useDispatch();
+    const cubeDimension = useRedux((state) => state.cube.dimension);
+    const playerNotation = useRedux((state) => state.player.notation);
+    const playerStatus = useRedux((state) => state.player.status);
 
     const updateNotation = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => dispatch(updatePlayerNotationAction(event.target.value)),
+        (event: React.ChangeEvent<HTMLInputElement>) => dispatch(playerActions.updateNotation(event.target.value)),
         []
     );
 
     const isNotationEmpty = playerNotation.length === 0;
-    const isStopped = playerStatus === AlgorithmStatus.STOPPED;
+    const isStopped = playerStatus === PlayerStatus.STOPPED;
 
-    const generateMoveGenerator = () => Maybe.some(interpretNotation(playerNotation, numberOfCubes));
+    // const generateMoveGenerator = () => Maybe.some(interpretNotation(playerNotation, cubeDimension));
 
     const playOrPause = () => {
         switch (playerStatus) {
-            case AlgorithmStatus.STOPPED:
-            case AlgorithmStatus.PAUSED: {
-                const onPlay = () => dispatch(playAlgorithmAction(generateMoveGenerator));
+            case PlayerStatus.STOPPED:
+            case PlayerStatus.PAUSED: {
+                const onPlay = () => dispatch(playerActions.play(/*generateMoveGenerator*/));
 
                 return (
                     <IconButton onClick={onPlay} disabled={isNotationEmpty}>
@@ -43,8 +38,8 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
                 );
             }
 
-            case AlgorithmStatus.PLAYING: {
-                const onPause = () => dispatch(pauseAlgorithmAction());
+            case PlayerStatus.PLAYING: {
+                const onPause = () => dispatch(playerActions.pause());
 
                 return (
                     <IconButton onClick={onPause}>
@@ -58,10 +53,10 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
         }
     };
 
-    const onStop = () => dispatch(stopAlgorithmAction());
-    const onJumpToEnd = () => dispatch(jumpToEndOfAlgorithmAction(generateMoveGenerator));
-    const onShuffle = () => dispatch(updatePlayerNotationAction(createRandomNotation(numberOfCubes)));
-    const onRefresh = () => dispatch(resetCubeAction());
+    const onStop = () => dispatch(playerActions.stop());
+    const onJumpToEnd = () => dispatch(playerActions.jumpToEnd(/*generateMoveGenerator*/));
+    const onShuffle = () => dispatch(playerActions.updateNotation('' /*createRandomNotation(cubeDimension))*/));
+    const onRefresh = () => dispatch(playerActions.resetCube());
 
     return (
         <div className="algorithm-player">
@@ -80,7 +75,7 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
                     </IconButton>
                     <IconButton
                         onClick={onJumpToEnd}
-                        disabled={playerStatus === AlgorithmStatus.PLAYING || isNotationEmpty}
+                        disabled={playerStatus === PlayerStatus.PLAYING || isNotationEmpty}
                     >
                         <SkipNext />
                     </IconButton>
@@ -98,4 +93,4 @@ const AlgorithmPlayer: React.FunctionComponent = () => {
     );
 };
 
-export default React.memo(AlgorithmPlayer);
+export default React.memo(Player);

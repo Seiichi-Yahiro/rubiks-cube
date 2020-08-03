@@ -1,7 +1,7 @@
 import { IAlgorithm } from './AlgorithmTypes';
-import { CubeColors } from '../CubeUtils';
+import { Color } from '../CubeTypes';
 
-const { YELLOW, ORANGE, RED, GREEN, BLUE, DEFAULT, TRANSPARENT } = CubeColors;
+const { YELLOW, ORANGE, RED, GREEN, BLUE, DEFAULT, TRANSPARENT } = Color;
 
 const Look2CFOP: IAlgorithm = {
     name: '2 Look CFOP',
@@ -21,8 +21,8 @@ const Look2CFOP: IAlgorithm = {
                                 [TRANSPARENT, DEFAULT, DEFAULT, DEFAULT, TRANSPARENT],
                                 [TRANSPARENT, DEFAULT, YELLOW, DEFAULT, TRANSPARENT],
                                 [TRANSPARENT, DEFAULT, DEFAULT, DEFAULT, TRANSPARENT],
-                                [TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT]
-                            ]
+                                [TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT],
+                            ],
                         },
                         {
                             name: 'L',
@@ -33,8 +33,8 @@ const Look2CFOP: IAlgorithm = {
                                 [TRANSPARENT, DEFAULT, DEFAULT, DEFAULT, TRANSPARENT],
                                 [TRANSPARENT, DEFAULT, YELLOW, YELLOW, TRANSPARENT],
                                 [TRANSPARENT, DEFAULT, YELLOW, DEFAULT, TRANSPARENT],
-                                [TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT]
-                            ]
+                                [TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT],
+                            ],
                         },
                         {
                             name: 'Line',
@@ -45,10 +45,10 @@ const Look2CFOP: IAlgorithm = {
                                 [TRANSPARENT, DEFAULT, DEFAULT, DEFAULT, TRANSPARENT],
                                 [TRANSPARENT, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                 [TRANSPARENT, DEFAULT, DEFAULT, DEFAULT, TRANSPARENT],
-                                [TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT]
-                            ]
-                        }
-                    ]
+                                [TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT],
+                            ],
+                        },
+                    ],
                 },
                 {
                     name: 'Corners',
@@ -65,8 +65,8 @@ const Look2CFOP: IAlgorithm = {
                                         [TRANSPARENT, DEFAULT, YELLOW, DEFAULT, TRANSPARENT],
                                         [TRANSPARENT, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                         [TRANSPARENT, DEFAULT, YELLOW, DEFAULT, TRANSPARENT],
-                                        [TRANSPARENT, YELLOW, TRANSPARENT, YELLOW, TRANSPARENT]
-                                    ]
+                                        [TRANSPARENT, YELLOW, TRANSPARENT, YELLOW, TRANSPARENT],
+                                    ],
                                 },
                                 {
                                     name: 'Pi',
@@ -77,10 +77,10 @@ const Look2CFOP: IAlgorithm = {
                                         [YELLOW, DEFAULT, YELLOW, DEFAULT, TRANSPARENT],
                                         [TRANSPARENT, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                         [YELLOW, DEFAULT, YELLOW, DEFAULT, TRANSPARENT],
-                                        [TRANSPARENT, TRANSPARENT, TRANSPARENT, YELLOW, TRANSPARENT]
-                                    ]
-                                }
-                            ]
+                                        [TRANSPARENT, TRANSPARENT, TRANSPARENT, YELLOW, TRANSPARENT],
+                                    ],
+                                },
+                            ],
                         },
                         {
                             name: '1 Corner solved',
@@ -94,8 +94,8 @@ const Look2CFOP: IAlgorithm = {
                                         [TRANSPARENT, DEFAULT, YELLOW, DEFAULT, YELLOW],
                                         [TRANSPARENT, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                         [TRANSPARENT, YELLOW, YELLOW, DEFAULT, TRANSPARENT],
-                                        [TRANSPARENT, TRANSPARENT, TRANSPARENT, YELLOW, TRANSPARENT]
-                                    ]
+                                        [TRANSPARENT, TRANSPARENT, TRANSPARENT, YELLOW, TRANSPARENT],
+                                    ],
                                 },
                                 {
                                     name: 'Anti-Sune',
@@ -106,10 +106,10 @@ const Look2CFOP: IAlgorithm = {
                                         [YELLOW, DEFAULT, YELLOW, DEFAULT, TRANSPARENT],
                                         [TRANSPARENT, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                         [TRANSPARENT, DEFAULT, YELLOW, YELLOW, TRANSPARENT],
-                                        [TRANSPARENT, YELLOW, TRANSPARENT, TRANSPARENT, TRANSPARENT]
-                                    ]
-                                }
-                            ]
+                                        [TRANSPARENT, YELLOW, TRANSPARENT, TRANSPARENT, TRANSPARENT],
+                                    ],
+                                },
+                            ],
                         },
                         {
                             name: '2 Corners solved',
@@ -123,8 +123,8 @@ const Look2CFOP: IAlgorithm = {
                                         [TRANSPARENT, YELLOW, YELLOW, DEFAULT, YELLOW],
                                         [TRANSPARENT, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                         [TRANSPARENT, DEFAULT, YELLOW, YELLOW, TRANSPARENT],
-                                        [TRANSPARENT, YELLOW, TRANSPARENT, TRANSPARENT, TRANSPARENT]
-                                    ]
+                                        [TRANSPARENT, YELLOW, TRANSPARENT, TRANSPARENT, TRANSPARENT],
+                                    ],
                                 },
                                 {
                                     name: 'T',
@@ -135,8 +135,8 @@ const Look2CFOP: IAlgorithm = {
                                         [TRANSPARENT, DEFAULT, YELLOW, YELLOW, TRANSPARENT],
                                         [TRANSPARENT, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                         [TRANSPARENT, DEFAULT, YELLOW, YELLOW, TRANSPARENT],
-                                        [TRANSPARENT, YELLOW, TRANSPARENT, TRANSPARENT, TRANSPARENT]
-                                    ]
+                                        [TRANSPARENT, YELLOW, TRANSPARENT, TRANSPARENT, TRANSPARENT],
+                                    ],
                                 },
                                 {
                                     name: 'U',
@@ -147,12 +147,12 @@ const Look2CFOP: IAlgorithm = {
                                         [TRANSPARENT, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                         [TRANSPARENT, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                         [TRANSPARENT, DEFAULT, YELLOW, DEFAULT, TRANSPARENT],
-                                        [TRANSPARENT, YELLOW, TRANSPARENT, YELLOW, TRANSPARENT]
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
+                                        [TRANSPARENT, YELLOW, TRANSPARENT, YELLOW, TRANSPARENT],
+                                    ],
+                                },
+                            ],
+                        },
+                    ],
                 },
                 {
                     name: 'Parity',
@@ -167,12 +167,12 @@ const Look2CFOP: IAlgorithm = {
                                 [TRANSPARENT, YELLOW, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                 [TRANSPARENT, YELLOW, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                 [TRANSPARENT, YELLOW, DEFAULT, DEFAULT, YELLOW, TRANSPARENT],
-                                [TRANSPARENT, TRANSPARENT, YELLOW, YELLOW, TRANSPARENT, TRANSPARENT]
-                            ]
-                        }
-                    ]
-                }
-            ]
+                                [TRANSPARENT, TRANSPARENT, YELLOW, YELLOW, TRANSPARENT, TRANSPARENT],
+                            ],
+                        },
+                    ],
+                },
+            ],
         },
         {
             name: 'PLL',
@@ -189,8 +189,8 @@ const Look2CFOP: IAlgorithm = {
                                 [DEFAULT, YELLOW, YELLOW, YELLOW, DEFAULT],
                                 [TRANSPARENT, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                 [DEFAULT, YELLOW, YELLOW, YELLOW, DEFAULT],
-                                [TRANSPARENT, DEFAULT, TRANSPARENT, DEFAULT, TRANSPARENT]
-                            ]
+                                [TRANSPARENT, DEFAULT, TRANSPARENT, DEFAULT, TRANSPARENT],
+                            ],
                         },
                         {
                             name: 'Adjacent',
@@ -201,10 +201,10 @@ const Look2CFOP: IAlgorithm = {
                                 [ORANGE, YELLOW, YELLOW, YELLOW, DEFAULT],
                                 [TRANSPARENT, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                 [ORANGE, YELLOW, YELLOW, YELLOW, DEFAULT],
-                                [TRANSPARENT, DEFAULT, TRANSPARENT, DEFAULT, TRANSPARENT]
-                            ]
-                        }
-                    ]
+                                [TRANSPARENT, DEFAULT, TRANSPARENT, DEFAULT, TRANSPARENT],
+                            ],
+                        },
+                    ],
                 },
                 {
                     name: 'Edges',
@@ -221,8 +221,8 @@ const Look2CFOP: IAlgorithm = {
                                         [ORANGE, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                         [DEFAULT, YELLOW, YELLOW, YELLOW, ORANGE],
                                         [ORANGE, YELLOW, YELLOW, YELLOW, TRANSPARENT],
-                                        [TRANSPARENT, BLUE, DEFAULT, BLUE, TRANSPARENT]
-                                    ]
+                                        [TRANSPARENT, BLUE, DEFAULT, BLUE, TRANSPARENT],
+                                    ],
                                 },
                                 {
                                     name: 'Left to Right',
@@ -233,10 +233,10 @@ const Look2CFOP: IAlgorithm = {
                                         [TRANSPARENT, YELLOW, YELLOW, YELLOW, RED],
                                         [RED, YELLOW, YELLOW, YELLOW, DEFAULT],
                                         [TRANSPARENT, YELLOW, YELLOW, YELLOW, RED],
-                                        [TRANSPARENT, BLUE, DEFAULT, BLUE, TRANSPARENT]
-                                    ]
-                                }
-                            ]
+                                        [TRANSPARENT, BLUE, DEFAULT, BLUE, TRANSPARENT],
+                                    ],
+                                },
+                            ],
                         },
                         {
                             name: '4 Edges',
@@ -250,8 +250,8 @@ const Look2CFOP: IAlgorithm = {
                                         [ORANGE, YELLOW, YELLOW, YELLOW, RED],
                                         [RED, YELLOW, YELLOW, YELLOW, ORANGE],
                                         [ORANGE, YELLOW, YELLOW, YELLOW, RED],
-                                        [TRANSPARENT, BLUE, GREEN, BLUE, TRANSPARENT]
-                                    ]
+                                        [TRANSPARENT, BLUE, GREEN, BLUE, TRANSPARENT],
+                                    ],
                                 },
                                 {
                                     name: 'Diagonal',
@@ -262,12 +262,12 @@ const Look2CFOP: IAlgorithm = {
                                         [ORANGE, YELLOW, YELLOW, YELLOW, RED],
                                         [GREEN, YELLOW, YELLOW, YELLOW, BLUE],
                                         [ORANGE, YELLOW, YELLOW, YELLOW, RED],
-                                        [TRANSPARENT, BLUE, RED, BLUE, TRANSPARENT]
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
+                                        [TRANSPARENT, BLUE, RED, BLUE, TRANSPARENT],
+                                    ],
+                                },
+                            ],
+                        },
+                    ],
                 },
                 {
                     name: 'Parity',
@@ -282,14 +282,14 @@ const Look2CFOP: IAlgorithm = {
                                 [TRANSPARENT, YELLOW, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                 [TRANSPARENT, YELLOW, YELLOW, YELLOW, YELLOW, TRANSPARENT],
                                 [TRANSPARENT, YELLOW, YELLOW, YELLOW, YELLOW, TRANSPARENT],
-                                [TRANSPARENT, BLUE, GREEN, GREEN, BLUE, TRANSPARENT]
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+                                [TRANSPARENT, BLUE, GREEN, GREEN, BLUE, TRANSPARENT],
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
 };
 
 export default Look2CFOP;

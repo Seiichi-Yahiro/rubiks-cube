@@ -4,49 +4,47 @@ import ListItem from '@material-ui/core/ListItem';
 import Look2CFOP from '../cube/algorithms/CFOP';
 import { IAlgorithm } from '../cube/algorithms/AlgorithmTypes';
 import Misc from '../cube/algorithms/Misc';
-import { AlgorithmStatus } from '../states/AlgorithmPlayerState';
+import { PlayerStatus } from '../states/player/PlayerState';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import StartConfiguration from './StartConfiguration';
 import { take, last } from 'lodash';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
-import { useGlobalState } from '../states/State';
-import { updatePlayerNotationAction } from '../states/AlgorithmPlayerActions';
+import { playerActions } from '../states/player/PlayerActions';
+import { useDispatch } from 'react-redux';
+import { useRedux } from '../states/States';
 
 const flattenAlgorithms = (algorithm: IAlgorithm): IAlgorithm[] =>
     [algorithm]
         .concat(
             algorithm.children
-                .map(child => (child.notation ? child : { ...child, name: `${algorithm.name} / ${child.name}` }))
+                .map((child) => (child.notation ? child : { ...child, name: `${algorithm.name} / ${child.name}` }))
                 .flatMap(flattenAlgorithms)
         )
         .filter((item, index, list) => index + 1 >= list.length || item.notation || list[index + 1].notation);
 
 const categories = [Look2CFOP, Misc]
     .flatMap(flattenAlgorithms)
-    .map(item => ({ ...item, children: [] } as IAlgorithm))
-    .reduce(
-        (list, algorithm) => {
-            if (!algorithm.notation) {
-                return list.concat(algorithm);
-            }
+    .map((item) => ({ ...item, children: [] } as IAlgorithm))
+    .reduce((list, algorithm) => {
+        if (!algorithm.notation) {
+            return list.concat(algorithm);
+        }
 
-            const lastItem = last(list)!;
-            lastItem.children.push(algorithm as IAlgorithm);
-            const body = take(list, list.length - 1);
-            return body.concat(lastItem);
-        },
-        [] as IAlgorithm[]
-    ) as IAlgorithm[];
+        const lastItem = last(list)!;
+        lastItem.children.push(algorithm as IAlgorithm);
+        const body = take(list, list.length - 1);
+        return body.concat(lastItem);
+    }, [] as IAlgorithm[]) as IAlgorithm[];
 
 const filterCategories = (searchValue: string) =>
     categories
-        .map(group => {
+        .map((group) => {
             if (group.name.toLocaleLowerCase().includes(searchValue)) {
                 return group;
             }
 
-            const children = group.children.filter(child => child.name.toLocaleLowerCase().includes(searchValue));
+            const children = group.children.filter((child) => child.name.toLocaleLowerCase().includes(searchValue));
 
             if (children.length === 0) {
                 return (undefined as unknown) as IAlgorithm;
@@ -54,14 +52,14 @@ const filterCategories = (searchValue: string) =>
 
             return {
                 ...group,
-                children: children
+                children: children,
             };
         })
-        .filter(group => group);
+        .filter((group) => group);
 
 const Algorithms: React.FunctionComponent = () => {
-    const [globalState, dispatch] = useGlobalState();
-    const { playerStatus } = globalState;
+    const dispatch = useDispatch();
+    const playerStatus = useRedux((state) => state.player.status);
 
     const [filteredCategories, setFilteredCategories] = useState(categories);
     const filter = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -79,13 +77,13 @@ const Algorithms: React.FunctionComponent = () => {
                         {group.name}
                         <Divider />
                     </ListSubheader>
-                    {group.children.map(child => (
+                    {group.children.map((child) => (
                         <ListItem
                             key={child.name + index}
                             className="interface-list__item--moves"
                             button={true}
-                            onClick={() => dispatch(updatePlayerNotationAction(child.notation!))}
-                            disabled={playerStatus !== AlgorithmStatus.STOPPED}
+                            onClick={() => dispatch(playerActions.updateNotation(child.notation!))}
+                            disabled={playerStatus !== PlayerStatus.STOPPED}
                         >
                             {child.startConfiguration && (
                                 <StartConfiguration configuration={child.startConfiguration} />

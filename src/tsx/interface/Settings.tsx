@@ -3,19 +3,21 @@ import { Typography } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { AlgorithmStatus } from '../states/AlgorithmPlayerState';
-import { useGlobalState } from '../states/State';
-import {
-    updateNumberOfCubesAction,
-    updateCubeSizeAction,
-    updateRotationAnimationSpeedAction
-} from '../states/SettingsActions';
+import { PlayerStatus } from '../states/player/PlayerState';
+import { cubeActions } from '../states/cube/CubeActions';
+import { useDispatch } from 'react-redux';
+import { useRedux } from '../states/States';
 
 const Settings: React.FunctionComponent = () => {
-    const [state, dispatch] = useGlobalState();
-    const { numberOfCubes, cubeSize, rotationAnimationSpeed, playerStatus } = state;
-    const isDisabled = playerStatus !== AlgorithmStatus.STOPPED;
+    const dispatch = useDispatch();
+    const cubeDimension = useRedux((state) => state.cube.dimension);
+    const scale = useRedux((state) => state.cube.scale);
+    const rotationAnimationSpeed = useRedux((state) => state.cube.rotationAnimationSpeed);
+    const playerStatus = useRedux((state) => state.player.status);
 
+    const isDisabled = playerStatus !== PlayerStatus.STOPPED;
+
+    // TODO onChange
     return (
         <List disablePadding={true} dense={true} className="interface-list">
             <ListItem className="interface-list__item--settings">
@@ -27,22 +29,22 @@ const Settings: React.FunctionComponent = () => {
                     step={1}
                     min={2}
                     max={5}
-                    defaultValue={numberOfCubes}
-                    onChangeCommitted={(event, value) => dispatch(updateNumberOfCubesAction(value as number))}
+                    defaultValue={cubeDimension}
+                    onChangeCommitted={(event, value) => dispatch(cubeActions.setCubeDimension(value as number))}
                     disabled={isDisabled}
                 />
             </ListItem>
             <ListItem className="interface-list__item--settings">
-                <Typography id="size-slider">Size</Typography>
+                <Typography id="scale-slider">Scale</Typography>
                 <Slider
-                    aria-labelledby="size-slider"
+                    aria-labelledby="scale-slider"
                     valueLabelDisplay="auto"
                     marks={true}
-                    step={50}
-                    min={100}
-                    max={600}
-                    defaultValue={cubeSize}
-                    onChangeCommitted={(event, value) => dispatch(updateCubeSizeAction(value as number))}
+                    step={0.1}
+                    min={0.2}
+                    max={2.0}
+                    defaultValue={scale}
+                    onChangeCommitted={(event, value) => dispatch(cubeActions.setCubeScale(value as number))}
                     disabled={isDisabled}
                 />
             </ListItem>
@@ -55,7 +57,9 @@ const Settings: React.FunctionComponent = () => {
                     max={2000}
                     step={50}
                     defaultValue={rotationAnimationSpeed}
-                    onChangeCommitted={(event, value) => dispatch(updateRotationAnimationSpeedAction(value as number))}
+                    onChangeCommitted={(event, value) =>
+                        dispatch(cubeActions.setRotationAnimationSpeed(value as number))
+                    }
                 />
             </ListItem>
         </List>
