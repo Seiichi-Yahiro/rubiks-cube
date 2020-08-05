@@ -24,3 +24,4 @@ wasm/target
 wasm/Cargo.lock
 
 .eslintcache
+.merlin

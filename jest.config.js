@@ -1,14 +1,15 @@
 module.exports = {
     roots: ['<rootDir>/src'],
     transform: {
-        '^.+\\.tsx?$': 'ts-jest'
+        '^.+\\.(t|j)sx?$': 'ts-jest',
     },
+    transformIgnorePatterns: ['/node_modules/(?!bs-platform|tablecloth-bucklescript|re-parse).+\\.js$'],
     moduleNameMapper: {
-        '\\.s?css$': 'identity-obj-proxy'
+        '\\.s?css$': 'identity-obj-proxy',
     },
     setupFilesAfterEnv: ['<rootDir>src/setupTests.tsx', 'core-js'],
     testEnvironment: 'jsdom',
     coverageReporters: ['html'],
     coverageDirectory: '<rootDir>build/coverage',
-    collectCoverageFrom: ['src/**/*.{ts,tsx}']
+    collectCoverageFrom: ['src/**/*.{ts,tsx}'],
 };
