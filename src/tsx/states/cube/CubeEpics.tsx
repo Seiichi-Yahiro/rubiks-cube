@@ -8,6 +8,13 @@ const initEpic: AppEpic = (action$, state$) =>
     action$.pipe(
         ofType(CubeActionType.INIT_CUBE),
         withLatestFrom(state$),
+        map(([_, state]) => cubeActions.setCubeDimension(state.cube.dimension))
+    );
+
+const updateCubicles: AppEpic = (action$, state$) =>
+    action$.pipe(
+        ofType(CubeActionType.SET_CUBE_DIMENSION),
+        withLatestFrom(state$),
         map(([_, state]) =>
             cubeActions.updateCubicles(
                 generateCubicles(
@@ -19,4 +26,4 @@ const initEpic: AppEpic = (action$, state$) =>
         )
     );
 
-export const cubeEpics = [initEpic];
+export const cubeEpics = [initEpic, updateCubicles];

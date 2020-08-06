@@ -23,15 +23,15 @@ const Settings: React.FunctionComponent = () => {
     return (
         <List disablePadding={true} dense={true} className="interface-list">
             <ListItem className="interface-list__item--settings">
-                <Typography id="number-of-cubes-slider">
-                    Number of cubes
+                <Typography id="cube-dimension-slider">
+                    Cube dimension
                 </Typography>
                 <Slider
-                    aria-labelledby="number-of-cubes-slider"
+                    aria-labelledby="cube-dimension-slider"
                     valueLabelDisplay="auto"
                     marks={true}
                     step={1}
-                    min={2}
+                    min={1}
                     max={5}
                     defaultValue={cubeDimension}
                     onChangeCommitted={(event, value) =>
