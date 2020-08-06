@@ -87,7 +87,14 @@ export const letterToSlices = (
         case 'm':
         case 'e':
         case 's':
-            return cubeDimension > 1 ? range(2, cubeDimension) : [1];
+            switch (cubeDimension) {
+                case 1:
+                    return [1];
+                case 2:
+                    return [1, 2];
+                default:
+                    return range(2, cubeDimension);
+            }
         default:
             throw new Error(`${letter} is not a valid cube notation Letter!`);
     }

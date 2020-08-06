@@ -117,5 +117,6 @@ export const makeNotationParser = (cubeDimension: number) =>
         rotationCommands: (r) =>
             P.optWhitespace
                 .then(P.alt(r.simpleCommand, r.fullCommand, r.loop))
-                .sepBy1(r.separator),
+                .skip(r.separator)
+                .many(),
     });
