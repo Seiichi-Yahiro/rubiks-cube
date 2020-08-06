@@ -284,6 +284,54 @@ describe('Parser', () => {
         });
     });
 
+    describe('multiple slices', () => {
+        it('should parse [2]L', () => {
+            expect(parse('[2]L')).toStrictEqual([
+                { axis: 0, rotation: 90, slices: [2] },
+            ]);
+        });
+
+        it('should parse [2,3]L', () => {
+            expect(parse('[2,3]L')).toStrictEqual([
+                { axis: 0, rotation: 90, slices: [2, 3] },
+            ]);
+        });
+
+        it('should parse [1,3]L', () => {
+            expect(parse('[1,3]L')).toStrictEqual([
+                { axis: 0, rotation: 90, slices: [1, 3] },
+            ]);
+        });
+
+        it('should parse [1,3,2]L', () => {
+            expect(parse('[1,3,2]L')).toStrictEqual([
+                { axis: 0, rotation: 90, slices: [1, 2, 3] },
+            ]);
+        });
+
+        it('should parse [   1   ,   3   ,2   ]L', () => {
+            expect(parse('[   1   ,   3   ,2   ]L')).toStrictEqual([
+                { axis: 0, rotation: 90, slices: [1, 2, 3] },
+            ]);
+        });
+
+        it('should parse [1,4]L (not in cube dimension)', () => {
+            expect(() => parse('[1,4]L')).toThrowError();
+        });
+
+        it('should parse [0]L (not in cube dimension)', () => {
+            expect(() => parse('[0]L')).toThrowError();
+        });
+
+        it('should parse [1,-4]L (not in cube dimension)', () => {
+            expect(() => parse('[1,-4]L')).toThrowError();
+        });
+
+        it('should parse [2,3]Lw (wide not possible on multi slice)', () => {
+            expect(() => parse('[2,3]Lw')).toThrowError();
+        });
+    });
+
     describe('group and loop', () => {
         it('should parse (L)', () => {
             expect(parse('(L)')).toStrictEqual([

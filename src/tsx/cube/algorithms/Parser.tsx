@@ -11,12 +11,31 @@ import {
     wide,
 } from './RotationCommand';
 
+/**
+ * Creates a cube notation parser that knows about the used cubeDimension
+ *
+ * Possible syntax versions should be roughly equal to:
+ *
+ * 1: [LRUDFBlrudfbMESXYZmesxyz]'?2?
+ * 2: \d+[LRUDFBlrudfb]w?'?2?
+ * 3: \[\d+(,\d)*\][LRUDFBlrudfb]'?2?
+ *
+ * and groups and loops of:
+ *
+ * 4: \(((1|2|3|4)[ ,])*\)\d*
+ *
+ * @param cubeDimension
+ */
 export const makeNotationParser = (cubeDimension: number) =>
     P.createLanguage<{
         separator: string;
 
+        comma: string;
+
         lParenthesis: string;
         rParenthesis: string;
+        lBracket: string;
+        rBracket: string;
 
         wide: boolean;
         prime: boolean;
@@ -25,30 +44,36 @@ export const makeNotationParser = (cubeDimension: number) =>
         number: number;
         numberInDimension: number;
 
+        slices: number[];
+
         sliceableLetter: string;
         notSliceableLetter: string;
         letter: string;
 
         simpleCommand: Command;
-        fullCommand: Command;
+        slicedCommand: Command;
         loop: Loop;
 
         rotationCommands: RotationCommand[];
     }>({
         separator: (r) =>
-            P.optWhitespace
-                .then(
+            P.alt(
+                P.optWhitespace.then(
                     P.alt(
-                        P.string(','),
+                        r.comma,
                         P.lookahead(r.lParenthesis.or(r.rParenthesis)),
                         P.eof
                     )
-                )
-                .or(P.whitespace.atLeast(1))
-                .result(''),
+                ),
+                P.whitespace.atLeast(1)
+            ).result(''),
+
+        comma: () => P.string(','),
 
         lParenthesis: () => P.string('('),
         rParenthesis: () => P.string(')'),
+        lBracket: () => P.string('['),
+        rBracket: () => P.string(']'),
 
         wide: () =>
             P.letter
@@ -78,6 +103,13 @@ export const makeNotationParser = (cubeDimension: number) =>
                     : P.fail(`${num} is not in cube dimension ${cubeDimension}`)
             ),
 
+        slices: (r) =>
+            r.numberInDimension
+                .trim(P.optWhitespace)
+                .sepBy1(r.comma)
+                .map((nums) => nums.sort())
+                .wrap(r.lBracket, r.rBracket),
+
         sliceableLetter: () => P.regexp(/[LRUDFB]/i),
         notSliceableLetter: () => P.regexp(/[MESXYZ]/i),
         letter: (r) => P.alt(r.sliceableLetter, r.notSliceableLetter),
@@ -92,19 +124,24 @@ export const makeNotationParser = (cubeDimension: number) =>
                     slices: letterToSlices(letter, cubeDimension),
                 })
             ),
-        fullCommand: (r) =>
+        slicedCommand: (r) =>
             P.seq(
-                r.numberInDimension,
-                r.sliceableLetter,
-                r.wide,
+                P.alt(
+                    P.seq(
+                        r.numberInDimension.map((num) => [num]),
+                        r.sliceableLetter,
+                        r.wide
+                    ),
+                    P.seq(r.slices, r.sliceableLetter, P.succeed(false))
+                ),
                 r.prime,
                 r.double
-            ).map(([slice, letter, hasWide, hasPrime, hasDouble]) => ({
+            ).map(([[slices, letter, hasWide], hasPrime, hasDouble]) => ({
                 axis: letterToAxis(letter),
                 rotation: double(hasDouble)(
                     prime(hasPrime)(letterToRotation(letter))
                 ),
-                slices: wide(hasWide)(letter, [slice], cubeDimension),
+                slices: wide(hasWide)(letter, slices, cubeDimension),
             })),
         loop: (r) =>
             P.seq(
@@ -116,7 +153,7 @@ export const makeNotationParser = (cubeDimension: number) =>
             })),
         rotationCommands: (r) =>
             P.optWhitespace
-                .then(P.alt(r.simpleCommand, r.fullCommand, r.loop))
+                .then(P.alt(r.simpleCommand, r.slicedCommand, r.loop))
                 .skip(r.separator)
                 .many(),
     });
