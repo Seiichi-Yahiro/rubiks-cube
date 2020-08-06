@@ -14,9 +14,12 @@ const stop = createAction(PlayerActionType.STOP_ALGORITHM);
 const pause = createAction(PlayerActionType.PAUSE_ALGORITHM);
 const jumpToEnd = createAction(PlayerActionType.JUMP_TO_END_OF_ALGORITHM);
 const resetCube = createAction(PlayerActionType.RESET_CUBE);
-const updateNotation = createAction(PlayerActionType.UPDATE_NOTATION, (notation: string) => ({
-    payload: { notation },
-}));
+const updateNotation = createAction(
+    PlayerActionType.UPDATE_NOTATION,
+    (notation: string) => ({
+        payload: { notation },
+    })
+);
 
 const actions = {
     play,

@@ -3,7 +3,9 @@ module.exports = {
     transform: {
         '^.+\\.(t|j)sx?$': 'ts-jest',
     },
-    transformIgnorePatterns: ['/node_modules/(?!bs-platform|tablecloth-bucklescript|re-parse).+\\.js$'],
+    transformIgnorePatterns: [
+        '/node_modules/(?!bs-platform|tablecloth-bucklescript|re-parse).+\\.js$',
+    ],
     moduleNameMapper: {
         '\\.s?css$': 'identity-obj-proxy',
     },

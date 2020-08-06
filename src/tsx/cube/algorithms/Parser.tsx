@@ -37,7 +37,13 @@ export const makeNotationParser = (cubeDimension: number) =>
     }>({
         separator: (r) =>
             P.optWhitespace
-                .then(P.alt(P.string(','), P.lookahead(r.lParenthesis.or(r.rParenthesis)), P.eof))
+                .then(
+                    P.alt(
+                        P.string(','),
+                        P.lookahead(r.lParenthesis.or(r.rParenthesis)),
+                        P.eof
+                    )
+                )
                 .or(P.whitespace.atLeast(1))
                 .result(''),
 
@@ -46,7 +52,11 @@ export const makeNotationParser = (cubeDimension: number) =>
 
         wide: () =>
             P.letter
-                .chain((letter) => (['W', 'w'].includes(letter) ? P.succeed(true) : P.fail('w or W')))
+                .chain((letter) =>
+                    ['W', 'w'].includes(letter)
+                        ? P.succeed(true)
+                        : P.fail('w or W')
+                )
                 .fallback(false),
         prime: () =>
             P.string("'")
@@ -54,7 +64,11 @@ export const makeNotationParser = (cubeDimension: number) =>
                 .fallback(false),
 
         double: (r) =>
-            r.number.chain((num) => (num === 2 ? P.succeed(true) : P.fail(`'2 not ${num}'`))).fallback(false),
+            r.number
+                .chain((num) =>
+                    num === 2 ? P.succeed(true) : P.fail(`'2 not ${num}'`)
+                )
+                .fallback(false),
 
         number: () => P.regexp(/\d+/).map(Number).desc('number'),
         numberInDimension: (r) =>
@@ -69,26 +83,39 @@ export const makeNotationParser = (cubeDimension: number) =>
         letter: (r) => P.alt(r.sliceableLetter, r.notSliceableLetter),
 
         simpleCommand: (r) =>
-            P.seq(r.letter, r.prime, r.double).map(([letter, hasPrime, hasDouble]) => ({
-                axis: letterToAxis(letter),
-                rotation: double(hasDouble)(prime(hasPrime)(letterToRotation(letter))),
-                slices: letterToSlices(letter, cubeDimension),
-            })),
-        fullCommand: (r) =>
-            P.seq(r.numberInDimension, r.sliceableLetter, r.wide, r.prime, r.double).map(
-                ([slice, letter, hasWide, hasPrime, hasDouble]) => ({
+            P.seq(r.letter, r.prime, r.double).map(
+                ([letter, hasPrime, hasDouble]) => ({
                     axis: letterToAxis(letter),
-                    rotation: double(hasDouble)(prime(hasPrime)(letterToRotation(letter))),
-                    slices: wide(hasWide)(letter, [slice], cubeDimension),
+                    rotation: double(hasDouble)(
+                        prime(hasPrime)(letterToRotation(letter))
+                    ),
+                    slices: letterToSlices(letter, cubeDimension),
                 })
             ),
+        fullCommand: (r) =>
+            P.seq(
+                r.numberInDimension,
+                r.sliceableLetter,
+                r.wide,
+                r.prime,
+                r.double
+            ).map(([slice, letter, hasWide, hasPrime, hasDouble]) => ({
+                axis: letterToAxis(letter),
+                rotation: double(hasDouble)(
+                    prime(hasPrime)(letterToRotation(letter))
+                ),
+                slices: wide(hasWide)(letter, [slice], cubeDimension),
+            })),
         loop: (r) =>
-            P.seq(r.rotationCommands.wrap(r.lParenthesis, r.rParenthesis), r.number.fallback(1)).map(
-                ([commands, iterations]) => ({
-                    commands,
-                    iterations,
-                })
-            ),
+            P.seq(
+                r.rotationCommands.wrap(r.lParenthesis, r.rParenthesis),
+                r.number.fallback(1)
+            ).map(([commands, iterations]) => ({
+                commands,
+                iterations,
+            })),
         rotationCommands: (r) =>
-            P.optWhitespace.then(P.alt(r.simpleCommand, r.fullCommand, r.loop)).sepBy1(r.separator),
+            P.optWhitespace
+                .then(P.alt(r.simpleCommand, r.fullCommand, r.loop))
+                .sepBy1(r.separator),
     });

@@ -15,7 +15,8 @@ enum Menu {
 
 const Interface: React.FunctionComponent = () => {
     const [openedMenu, setOpenedMenu] = useState(Menu.SETTINGS);
-    const setMenu = (menu: Menu) => setOpenedMenu((prevMenu) => (prevMenu === menu ? Menu.NONE : menu));
+    const setMenu = (menu: Menu) =>
+        setOpenedMenu((prevMenu) => (prevMenu === menu ? Menu.NONE : menu));
 
     return (
         <div className="app__interface">

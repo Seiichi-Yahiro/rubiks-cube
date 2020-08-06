@@ -9,7 +9,12 @@ interface IArrowsProps {
     right: () => void;
 }
 
-const FaceArrows: React.FunctionComponent<IArrowsProps> = ({ up, down, right, left }) => (
+const FaceArrows: React.FunctionComponent<IArrowsProps> = ({
+    up,
+    down,
+    right,
+    left,
+}) => (
     <svg viewBox="0 0 100 100" className="face-arrows-svg">
         <g className="face-arrows-wrapper">
             <FaceArrow direction={FaceArrowDirection.UP} onClick={up} />
@@ -33,7 +38,11 @@ interface IArrowProps {
 }
 
 const FaceArrow: React.FC<IArrowProps> = ({ direction, onClick }) => (
-    <g className="face-arrow-wrapper" style={{ transform: `rotate(${direction})` }} onClick={onClick}>
+    <g
+        className="face-arrow-wrapper"
+        style={{ transform: `rotate(${direction})` }}
+        onClick={onClick}
+    >
         <rect width="100%" height="100%" className="face-arrow-wrapper__box" />
         <Arrow className="face-arrow" />
     </g>

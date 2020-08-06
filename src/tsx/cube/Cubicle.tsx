@@ -9,7 +9,11 @@ interface ICubicleProps {
     size: number;
 }
 
-const Cubicle: React.FunctionComponent<ICubicleProps> = ({ faces, transform, size }) => {
+const Cubicle: React.FunctionComponent<ICubicleProps> = ({
+    faces,
+    transform,
+    size,
+}) => {
     const style: React.CSSProperties = {
         transform: toCss(transform),
         width: size,

@@ -20,10 +20,22 @@ const Face: React.FunctionComponent<IFaceProps> = ({ transform, color }) => {
     };
 
     return (
-        <div className="rubiks-cube__face" style={style} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-            {isHovered && color !== Color.DEFAULT && color !== Color.TRANSPARENT && (
-                <FaceArrows up={() => void 0} down={() => void 0} right={() => void 0} left={() => void 0} />
-            )}
+        <div
+            className="rubiks-cube__face"
+            style={style}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+        >
+            {isHovered &&
+                color !== Color.DEFAULT &&
+                color !== Color.TRANSPARENT && (
+                    <FaceArrows
+                        up={() => void 0}
+                        down={() => void 0}
+                        right={() => void 0}
+                        left={() => void 0}
+                    />
+                )}
         </div>
     );
 };

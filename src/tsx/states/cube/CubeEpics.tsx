@@ -10,7 +10,11 @@ const initEpic: AppEpic = (action$, state$) =>
         withLatestFrom(state$),
         map(([_, state]) =>
             cubeActions.updateCubicles(
-                generateCubicles(state.cube.size / state.cube.dimension, state.cube.gapFactor, state.cube.dimension)
+                generateCubicles(
+                    state.cube.size / state.cube.dimension,
+                    state.cube.gapFactor,
+                    state.cube.dimension
+                )
             )
         )
     );

@@ -33,7 +33,12 @@ const RubiksCube: React.FunctionComponent = () => {
             <div className="rubiks-cube" style={style}>
                 <div style={positionCorrectionStyle()}>
                     {cubicles.map(({ id, faces, transform }) => (
-                        <Cubicle key={id} faces={faces} transform={transform} size={cubicleSize} />
+                        <Cubicle
+                            key={id}
+                            faces={faces}
+                            transform={transform}
+                            size={cubicleSize}
+                        />
                     ))}
                 </div>
             </div>

@@ -18,10 +18,22 @@ const flattenAlgorithms = (algorithm: IAlgorithm): IAlgorithm[] =>
     [algorithm]
         .concat(
             algorithm.children
-                .map((child) => (child.notation ? child : { ...child, name: `${algorithm.name} / ${child.name}` }))
+                .map((child) =>
+                    child.notation
+                        ? child
+                        : {
+                              ...child,
+                              name: `${algorithm.name} / ${child.name}`,
+                          }
+                )
                 .flatMap(flattenAlgorithms)
         )
-        .filter((item, index, list) => index + 1 >= list.length || item.notation || list[index + 1].notation);
+        .filter(
+            (item, index, list) =>
+                index + 1 >= list.length ||
+                item.notation ||
+                list[index + 1].notation
+        );
 
 const categories = [Look2CFOP, Misc]
     .flatMap(flattenAlgorithms)
@@ -44,7 +56,9 @@ const filterCategories = (searchValue: string) =>
                 return group;
             }
 
-            const children = group.children.filter((child) => child.name.toLocaleLowerCase().includes(searchValue));
+            const children = group.children.filter((child) =>
+                child.name.toLocaleLowerCase().includes(searchValue)
+            );
 
             if (children.length === 0) {
                 return (undefined as unknown) as IAlgorithm;
@@ -63,10 +77,16 @@ const Algorithms: React.FunctionComponent = () => {
 
     const [filteredCategories, setFilteredCategories] = useState(categories);
     const filter = (event: React.ChangeEvent<HTMLInputElement>) =>
-        setFilteredCategories(filterCategories(event.target.value.toLocaleLowerCase()));
+        setFilteredCategories(
+            filterCategories(event.target.value.toLocaleLowerCase())
+        );
 
     return (
-        <List disablePadding={true} dense={true} className="interface-list interface-algorithm-list">
+        <List
+            disablePadding={true}
+            dense={true}
+            className="interface-list interface-algorithm-list"
+        >
             <ListSubheader className="interface-algorithm-list__filer">
                 <TextField label="Search" fullWidth={true} onChange={filter} />
             </ListSubheader>
@@ -82,13 +102,24 @@ const Algorithms: React.FunctionComponent = () => {
                             key={child.name + index}
                             className="interface-list__item--moves"
                             button={true}
-                            onClick={() => dispatch(playerActions.updateNotation(child.notation!))}
+                            onClick={() =>
+                                dispatch(
+                                    playerActions.updateNotation(
+                                        child.notation!
+                                    )
+                                )
+                            }
                             disabled={playerStatus !== PlayerStatus.STOPPED}
                         >
                             {child.startConfiguration && (
-                                <StartConfiguration configuration={child.startConfiguration} />
+                                <StartConfiguration
+                                    configuration={child.startConfiguration}
+                                />
                             )}
-                            <ListItemText primary={child.name} secondary={child.notation} />
+                            <ListItemText
+                                primary={child.name}
+                                secondary={child.notation}
+                            />
                         </ListItem>
                     ))}
                 </React.Fragment>

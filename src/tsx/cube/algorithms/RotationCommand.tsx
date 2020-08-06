@@ -35,7 +35,10 @@ export const letterToAxis = (letter: string): number => {
     }
 };
 
-export const letterToSlices = (letter: string, cubeDimension: number): number[] => {
+export const letterToSlices = (
+    letter: string,
+    cubeDimension: number
+): number[] => {
     switch (letter) {
         case 'F':
         case 'U':
@@ -77,7 +80,9 @@ export const letterToSlices = (letter: string, cubeDimension: number): number[] 
         case 'S':
             return (() => {
                 const middleSlice = Math.ceil(cubeDimension / 2);
-                return cubeDimension % 2 === 0 ? [middleSlice, middleSlice + 1] : [middleSlice];
+                return cubeDimension % 2 === 0
+                    ? [middleSlice, middleSlice + 1]
+                    : [middleSlice];
             })();
         case 'm':
         case 'e':
@@ -109,7 +114,11 @@ export const letterToRotation = (letter: string): number => {
     }
 };
 
-export const wide = (hasWide: boolean) => (letter: string, slices: number[], cubeDimension: number): number[] => {
+export const wide = (hasWide: boolean) => (
+    letter: string,
+    slices: number[],
+    cubeDimension: number
+): number[] => {
     if (hasWide) {
         switch (letter.toUpperCase()) {
             case 'B':
@@ -131,6 +140,7 @@ export const wide = (hasWide: boolean) => (letter: string, slices: number[], cub
     }
 };
 
-export const prime = (hasPrime: boolean) => (rotation: number): number => (hasPrime ? rotation * -1 : rotation);
+export const prime = (hasPrime: boolean) => (rotation: number): number =>
+    hasPrime ? rotation * -1 : rotation;
 export const double = (hasDouble: boolean) => (rotation: number): number =>
     hasDouble ? Math.sign(rotation) * 180 : rotation;

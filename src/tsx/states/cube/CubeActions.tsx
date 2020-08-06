@@ -11,19 +11,31 @@ export const enum CubeActionType {
 
 const init = createAction(CubeActionType.INIT_CUBE);
 
-const setCubeDimension = createAction(CubeActionType.SET_CUBE_DIMENSION, (dimension: number) => ({
-    payload: { dimension },
-}));
+const setCubeDimension = createAction(
+    CubeActionType.SET_CUBE_DIMENSION,
+    (dimension: number) => ({
+        payload: { dimension },
+    })
+);
 
-const setCubeScale = createAction(CubeActionType.SET_CUBE_SCALE, (scale: number) => ({ payload: { scale } }));
+const setCubeScale = createAction(
+    CubeActionType.SET_CUBE_SCALE,
+    (scale: number) => ({ payload: { scale } })
+);
 
-const setRotationAnimationSpeed = createAction(CubeActionType.SET_ROTATION_ANIMATION_SPEED, (speed: number) => ({
-    payload: { speed },
-}));
+const setRotationAnimationSpeed = createAction(
+    CubeActionType.SET_ROTATION_ANIMATION_SPEED,
+    (speed: number) => ({
+        payload: { speed },
+    })
+);
 
-const updateCubicles = createAction(CubeActionType.UPDATE_CUBICLES, (cubicles: ICubicle[]) => ({
-    payload: { cubicles },
-}));
+const updateCubicles = createAction(
+    CubeActionType.UPDATE_CUBICLES,
+    (cubicles: ICubicle[]) => ({
+        payload: { cubicles },
+    })
+);
 
 const actions = {
     init,

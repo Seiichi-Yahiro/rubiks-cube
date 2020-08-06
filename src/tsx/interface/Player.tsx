@@ -4,7 +4,14 @@ import IconButton from '@material-ui/core/IconButton';
 import './Player.scss';
 import { PlayerStatus } from '../states/player/PlayerState';
 //import { createRandomNotation } from '../cube/algorithms/Interpreter';
-import { Pause, PlayArrow, Shuffle, SkipNext, Stop, Refresh } from '@material-ui/icons';
+import {
+    Pause,
+    PlayArrow,
+    Shuffle,
+    SkipNext,
+    Stop,
+    Refresh,
+} from '@material-ui/icons';
 import { playerActions } from '../states/player/PlayerActions';
 import { useDispatch } from 'react-redux';
 import { useRedux } from '../states/States';
@@ -16,7 +23,8 @@ const Player: React.FunctionComponent = () => {
     const playerStatus = useRedux((state) => state.player.status);
 
     const updateNotation = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => dispatch(playerActions.updateNotation(event.target.value)),
+        (event: React.ChangeEvent<HTMLInputElement>) =>
+            dispatch(playerActions.updateNotation(event.target.value)),
         []
     );
 
@@ -29,7 +37,8 @@ const Player: React.FunctionComponent = () => {
         switch (playerStatus) {
             case PlayerStatus.STOPPED:
             case PlayerStatus.PAUSED: {
-                const onPlay = () => dispatch(playerActions.play(/*generateMoveGenerator*/));
+                const onPlay = () =>
+                    dispatch(playerActions.play(/*generateMoveGenerator*/));
 
                 return (
                     <IconButton onClick={onPlay} disabled={isNotationEmpty}>
@@ -54,8 +63,14 @@ const Player: React.FunctionComponent = () => {
     };
 
     const onStop = () => dispatch(playerActions.stop());
-    const onJumpToEnd = () => dispatch(playerActions.jumpToEnd(/*generateMoveGenerator*/));
-    const onShuffle = () => dispatch(playerActions.updateNotation('' /*createRandomNotation(cubeDimension))*/));
+    const onJumpToEnd = () =>
+        dispatch(playerActions.jumpToEnd(/*generateMoveGenerator*/));
+    const onShuffle = () =>
+        dispatch(
+            playerActions.updateNotation(
+                '' /*createRandomNotation(cubeDimension))*/
+            )
+        );
     const onRefresh = () => dispatch(playerActions.resetCube());
 
     return (
@@ -75,7 +90,10 @@ const Player: React.FunctionComponent = () => {
                     </IconButton>
                     <IconButton
                         onClick={onJumpToEnd}
-                        disabled={playerStatus === PlayerStatus.PLAYING || isNotationEmpty}
+                        disabled={
+                            playerStatus === PlayerStatus.PLAYING ||
+                            isNotationEmpty
+                        }
                     >
                         <SkipNext />
                     </IconButton>

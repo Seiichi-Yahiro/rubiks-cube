@@ -5,7 +5,9 @@ interface IStartConfigurationProps {
     configuration: Color[][];
 }
 
-const StartConfiguration: React.FunctionComponent<IStartConfigurationProps> = ({ configuration }) => (
+const StartConfiguration: React.FunctionComponent<IStartConfigurationProps> = ({
+    configuration,
+}) => (
     <div className="start-configuration">
         {configuration.flatMap((row, rowIndex) =>
             row.map((color, colorIndex) => (

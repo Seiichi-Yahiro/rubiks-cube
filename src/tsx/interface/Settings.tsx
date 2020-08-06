@@ -12,7 +12,9 @@ const Settings: React.FunctionComponent = () => {
     const dispatch = useDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const scale = useRedux((state) => state.cube.scale);
-    const rotationAnimationSpeed = useRedux((state) => state.cube.rotationAnimationSpeed);
+    const rotationAnimationSpeed = useRedux(
+        (state) => state.cube.rotationAnimationSpeed
+    );
     const playerStatus = useRedux((state) => state.player.status);
 
     const isDisabled = playerStatus !== PlayerStatus.STOPPED;
@@ -21,7 +23,9 @@ const Settings: React.FunctionComponent = () => {
     return (
         <List disablePadding={true} dense={true} className="interface-list">
             <ListItem className="interface-list__item--settings">
-                <Typography id="number-of-cubes-slider">Number of cubes</Typography>
+                <Typography id="number-of-cubes-slider">
+                    Number of cubes
+                </Typography>
                 <Slider
                     aria-labelledby="number-of-cubes-slider"
                     valueLabelDisplay="auto"
@@ -30,7 +34,9 @@ const Settings: React.FunctionComponent = () => {
                     min={2}
                     max={5}
                     defaultValue={cubeDimension}
-                    onChangeCommitted={(event, value) => dispatch(cubeActions.setCubeDimension(value as number))}
+                    onChangeCommitted={(event, value) =>
+                        dispatch(cubeActions.setCubeDimension(value as number))
+                    }
                     disabled={isDisabled}
                 />
             </ListItem>
@@ -44,12 +50,16 @@ const Settings: React.FunctionComponent = () => {
                     min={0.2}
                     max={2.0}
                     defaultValue={scale}
-                    onChangeCommitted={(event, value) => dispatch(cubeActions.setCubeScale(value as number))}
+                    onChangeCommitted={(event, value) =>
+                        dispatch(cubeActions.setCubeScale(value as number))
+                    }
                     disabled={isDisabled}
                 />
             </ListItem>
             <ListItem className="interface-list__item--settings">
-                <Typography id="animation-duration-slider">Animation duration</Typography>
+                <Typography id="animation-duration-slider">
+                    Animation duration
+                </Typography>
                 <Slider
                     aria-labelledby="animation-duration-slider"
                     valueLabelDisplay="auto"
@@ -58,7 +68,11 @@ const Settings: React.FunctionComponent = () => {
                     step={50}
                     defaultValue={rotationAnimationSpeed}
                     onChangeCommitted={(event, value) =>
-                        dispatch(cubeActions.setRotationAnimationSpeed(value as number))
+                        dispatch(
+                            cubeActions.setRotationAnimationSpeed(
+                                value as number
+                            )
+                        )
                     }
                 />
             </ListItem>

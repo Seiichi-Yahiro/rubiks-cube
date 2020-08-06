@@ -77,5 +77,11 @@ export const multiply = (a: Mat4, [x2, y2, z2, w2]: Mat4): Mat4 => {
     ] as Mat4;
 };
 
-export const toArray = ([x, y, z, w]: Mat4): number[] => [...x, ...y, ...z, ...w];
-export const toCss = (mat: Mat4): string => `matrix3d(${toArray(mat).join(',')})`;
+export const toArray = ([x, y, z, w]: Mat4): number[] => [
+    ...x,
+    ...y,
+    ...z,
+    ...w,
+];
+export const toCss = (mat: Mat4): string =>
+    `matrix3d(${toArray(mat).join(',')})`;

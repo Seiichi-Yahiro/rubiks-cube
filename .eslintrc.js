@@ -32,7 +32,10 @@ module.exports = {
         'no-floating-decimal': 'error',
 
         'no-unused-vars': 'off',
-        '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_', argsIgnorePattern: '^_' }],
+        '@typescript-eslint/no-unused-vars': [
+            'warn',
+            { varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
+        ],
 
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -44,7 +47,10 @@ module.exports = {
         '@typescript-eslint/prefer-optional-chain': 'warn',
 
         'react/display-name': 'off',
-        'react/jsx-filename-extension': ['warn', { extensions: ['.jsx', '.tsx'] }],
+        'react/jsx-filename-extension': [
+            'warn',
+            { extensions: ['.jsx', '.tsx'] },
+        ],
         'react/prop-types': 'off',
 
         'react-hooks/exhaustive-deps': 'off',
