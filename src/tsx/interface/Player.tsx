@@ -15,12 +15,14 @@ import {
 import { playerActions } from '../states/player/PlayerActions';
 import { useDispatch } from 'react-redux';
 import { useRedux } from '../states/States';
+import { isError } from '../cube/algorithms/RotationCommand';
 
 const Player: React.FunctionComponent = () => {
     const dispatch = useDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const playerNotation = useRedux((state) => state.player.notation);
     const playerStatus = useRedux((state) => state.player.status);
+    const rotationCommands = useRedux((state) => state.player.rotationCommands);
 
     const updateNotation = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -81,6 +83,7 @@ const Player: React.FunctionComponent = () => {
                 value={playerNotation}
                 onChange={updateNotation}
                 disabled={!isStopped}
+                error={isError(rotationCommands)}
             />
             <div className="algorithm-player__buttons">
                 <div>

@@ -1,4 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
+import { Result } from 'parsimmon';
+import { RotationCommand } from '../../cube/algorithms/RotationCommand';
 
 export enum PlayerActionType {
     PLAY_ALGORITHM = 'PLAY_ALGORITHM',
@@ -7,6 +9,7 @@ export enum PlayerActionType {
     JUMP_TO_END_OF_ALGORITHM = 'JUMP_TO_END_OF_ALGORITHM',
     RESET_CUBE = 'RESET_CUBE',
     UPDATE_NOTATION = 'UPDATE_NOTATION',
+    PARSED_NOTATION = 'PARSED_NOTATION',
 }
 
 const play = createAction(PlayerActionType.PLAY_ALGORITHM);
@@ -20,6 +23,12 @@ const updateNotation = createAction(
         payload: { notation },
     })
 );
+const parsedNotation = createAction(
+    PlayerActionType.PARSED_NOTATION,
+    (rotationCommands: Result<RotationCommand[]>) => ({
+        payload: { rotationCommands },
+    })
+);
 
 const actions = {
     play,
@@ -28,6 +37,7 @@ const actions = {
     jumpToEnd,
     resetCube,
     updateNotation,
+    parsedNotation,
 };
 
 export { actions as playerActions };

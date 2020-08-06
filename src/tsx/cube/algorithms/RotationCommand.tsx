@@ -1,4 +1,5 @@
 import { range } from 'lodash';
+import { Failure, Result, Success } from 'parsimmon';
 
 export interface Command {
     readonly axis: number;
@@ -151,3 +152,10 @@ export const prime = (hasPrime: boolean) => (rotation: number): number =>
     hasPrime ? rotation * -1 : rotation;
 export const double = (hasDouble: boolean) => (rotation: number): number =>
     hasDouble ? Math.sign(rotation) * 180 : rotation;
+
+export const isError = (result: Result<RotationCommand[]>): result is Failure =>
+    !result.status;
+
+export const isOk = (
+    result: Result<RotationCommand[]>
+): result is Success<RotationCommand[]> => result.status;

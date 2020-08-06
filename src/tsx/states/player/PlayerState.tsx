@@ -1,4 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { playerActions } from './PlayerActions';
+import { RotationCommand } from '../../cube/algorithms/RotationCommand';
+import { Result } from 'parsimmon';
 
 export enum PlayerStatus {
     STOPPED = 'STOPPED',
@@ -9,12 +12,22 @@ export enum PlayerStatus {
 
 export interface IPlayerState {
     notation: string;
+    rotationCommands: Result<RotationCommand[]>;
     status: PlayerStatus;
 }
 
 const initialPlayerState: IPlayerState = {
     notation: '',
+    rotationCommands: { status: true, value: [] },
     status: PlayerStatus.STOPPED,
 };
 
-export const playerReducer = createReducer(initialPlayerState, {});
+export const playerReducer = createReducer(initialPlayerState, (builder) => {
+    builder
+        .addCase(playerActions.updateNotation, (state, action) => {
+            state.notation = action.payload.notation;
+        })
+        .addCase(playerActions.parsedNotation, (state, action) => {
+            state.rotationCommands = action.payload.rotationCommands;
+        });
+});
