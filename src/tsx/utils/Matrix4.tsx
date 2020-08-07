@@ -5,7 +5,7 @@ export type Mat4 = [Vec4, Vec4, Vec4, Vec4];
 
 const toRadian = (degree: number) => (degree / 180) * Math.PI;
 
-export const identity = (): Mat4 => [
+export const identity: Mat4 = [
     [1.0, 0.0, 0.0, 0.0],
     [0.0, 1.0, 0.0, 0.0],
     [0.0, 0.0, 1.0, 0.0],
@@ -77,11 +77,7 @@ export const multiply = (a: Mat4, [x2, y2, z2, w2]: Mat4): Mat4 => {
     ] as Mat4;
 };
 
-export const toArray = ([x, y, z, w]: Mat4): number[] => [
-    ...x,
-    ...y,
-    ...z,
-    ...w,
-];
-export const toCss = (mat: Mat4): string =>
-    `matrix3d(${toArray(mat).join(',')})`;
+export const apply = (point: Vec4, mat: Mat4): Vec4 =>
+    transpose(mat).map((row) => dot(row, point)) as Vec4;
+
+export const toCss = (mat: Mat4): string => `matrix3d(${mat.flat().join(',')})`;

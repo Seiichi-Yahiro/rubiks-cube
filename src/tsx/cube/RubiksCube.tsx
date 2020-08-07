@@ -10,6 +10,7 @@ const RubiksCube: React.FunctionComponent = () => {
     const cubeSize = useRedux((state) => state.cube.size);
     const scale = useRedux((state) => state.cube.scale);
     const rotation = useRedux((state) => state.cube.rotation);
+    const rotationDuration = useRedux((state) => state.cube.rotationDuration);
 
     const cubicleSize = cubeSize / cubeDimension;
 
@@ -32,14 +33,18 @@ const RubiksCube: React.FunctionComponent = () => {
         <div className="app__cube">
             <div className="rubiks-cube" style={style}>
                 <div style={positionCorrectionStyle()}>
-                    {cubicles.map(({ id, faces, transform }) => (
-                        <Cubicle
-                            key={id}
-                            faces={faces}
-                            transform={transform}
-                            size={cubicleSize}
-                        />
-                    ))}
+                    {cubicles.map(
+                        ({ id, faces, transform, animatedTransform }) => (
+                            <Cubicle
+                                key={id}
+                                faces={faces}
+                                animatedTransform={animatedTransform}
+                                transform={transform}
+                                size={cubicleSize}
+                                rotationDuration={rotationDuration}
+                            />
+                        )
+                    )}
                 </div>
             </div>
         </div>

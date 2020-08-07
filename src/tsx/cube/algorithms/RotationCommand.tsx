@@ -1,8 +1,9 @@
 import { range } from 'lodash';
 import { Failure, Result, Success } from 'parsimmon';
+import { fromAngleX, fromAngleY, fromAngleZ, Mat4 } from '../../utils/Matrix4';
 
 export interface Command {
-    readonly axis: number;
+    readonly axis: Axis;
     readonly slices: number[];
     readonly rotation: number;
 }
@@ -14,23 +15,52 @@ export interface Loop {
 
 export type RotationCommand = Command | Loop;
 
-export const letterToAxis = (letter: string): number => {
+export const isLoop = (
+    rotationCommand: RotationCommand
+): rotationCommand is Loop =>
+    (rotationCommand as Loop).iterations !== undefined;
+
+export enum Axis {
+    X = 0,
+    Y = 1,
+    Z = 2,
+}
+
+export const rotationToMat4 = (
+    axis: Axis,
+    rotation: number,
+    isAxisRotation: boolean
+): Mat4 => {
+    switch (axis) {
+        case Axis.X: {
+            return fromAngleX(isAxisRotation ? -rotation : rotation);
+        }
+        case Axis.Y: {
+            return fromAngleY(isAxisRotation ? -rotation : rotation);
+        }
+        case Axis.Z: {
+            return fromAngleZ(rotation);
+        }
+    }
+};
+
+export const letterToAxis = (letter: string): Axis => {
     switch (letter.toUpperCase()) {
         case 'L':
         case 'R':
         case 'M':
         case 'X':
-            return 0; // X
+            return Axis.X;
         case 'U':
         case 'D':
         case 'E':
         case 'Y':
-            return 1; // Y
+            return Axis.Y;
         case 'F':
         case 'B':
         case 'S':
         case 'Z':
-            return 2; //Z
+            return Axis.Z;
         default:
             throw new Error(`${letter} is not a valid cube notation Letter!`);
     }
@@ -103,19 +133,19 @@ export const letterToSlices = (
 
 export const letterToRotation = (letter: string): number => {
     switch (letter.toUpperCase()) {
-        case 'B':
-        case 'U':
-        case 'L':
-        case 'M':
-        case 'Y':
-            return 90;
         case 'F':
         case 'D':
         case 'R':
-        case 'E':
-        case 'S':
-        case 'X':
-        case 'Z':
+        case 'E': // Same as D
+        case 'S': // Same as F
+        case 'X': // Same as R
+        case 'Z': // Same as F
+            return 90;
+        case 'B':
+        case 'U':
+        case 'L':
+        case 'M': // Same as L
+        case 'Y': // Same as U
             return -90;
         default:
             throw new Error(`${letter} is not a valid cube notation Letter!`);

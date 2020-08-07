@@ -8,7 +8,10 @@ import {
     fromTranslation,
     fromAngleY,
     fromAngleX,
+    apply,
 } from '../utils/Matrix4';
+import { Vec4 } from '../utils/Vector4';
+import { Command, rotationToMat4 } from './algorithms/RotationCommand';
 
 export const cubeIsTransitioning = 'cube--is-transitioning';
 
@@ -48,18 +51,29 @@ const sideToTransform = (side: Side, cubicleSize: number): Mat4 => {
     }[side];
 };
 
-const axisToTransform = (
+const axisToTranslationPoint = (
     [x, y, z]: Axis,
     cubicleSize: number,
     cubicleGap: number,
     cubeDimension: number
-): Mat4 => {
+): Axis => {
     const offset = (cubeDimension + 1) * cubicleSize * (cubicleGap / 2);
-    return fromTranslation(
+    return [
         x * cubicleSize * cubicleGap - offset,
         y * cubicleSize * cubicleGap - offset,
-        -z * cubicleSize * cubicleGap + offset
-    );
+        -z * cubicleSize * cubicleGap + offset,
+    ];
+};
+
+export const rotateAxis = (
+    axis: Axis,
+    rotation: Mat4,
+    cubeDimension: number
+): Axis => {
+    const offset = (cubeDimension + 1) * 0.5;
+    const point = axis.map((it) => it - offset);
+    const rotatedPoint = apply([...point, 1] as Vec4, rotation).slice(0, 3);
+    return rotatedPoint.map((it) => it + offset) as Axis;
 };
 
 const isCubicleVisible = (axis: Axis, cubeDimension: number) =>
@@ -105,12 +119,35 @@ export const generateCubicles = (
             faces: Object.values(Side).map((side) =>
                 generateFace(side, axis, cubicleSize, cubeDimension)
             ),
-            transform: axisToTransform(
-                axis,
-                cubicleSize,
-                cubicleGap,
-                cubeDimension
+            transform: fromTranslation(
+                ...axisToTranslationPoint(
+                    axis,
+                    cubicleSize,
+                    cubicleGap,
+                    cubeDimension
+                )
             ),
-            animatedTransform: identity(),
+            animatedTransform: identity,
         }));
 };
+
+export const executeRotationCommand = (
+    cubicles: ICubicle[],
+    { axis, slices, rotation }: Command,
+    cubeDimension: number
+): ICubicle[] =>
+    cubicles.map((cubicle) => {
+        if (slices.includes(cubicle.axis[axis])) {
+            return {
+                ...cubicle,
+                axis: rotateAxis(
+                    cubicle.axis,
+                    rotationToMat4(axis, rotation, true),
+                    cubeDimension
+                ),
+                animatedTransform: rotationToMat4(axis, rotation, false),
+            };
+        } else {
+            return cubicle;
+        }
+    });

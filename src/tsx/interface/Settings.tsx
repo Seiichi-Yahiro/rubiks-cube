@@ -13,7 +13,7 @@ const Settings: React.FunctionComponent = () => {
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const scale = useRedux((state) => state.cube.scale);
     const rotationAnimationSpeed = useRedux(
-        (state) => state.cube.rotationAnimationSpeed
+        (state) => state.cube.rotationDuration
     );
     const playerStatus = useRedux((state) => state.player.status);
 

@@ -1,364 +1,289 @@
-import D3 from './D3';
-import {
-    animateRotation,
-    calculateCubePosition,
-    createFaces,
-    generateCubes,
-    rotate,
-} from './CubeUtils';
-import Maybe from '../utils/Maybe';
-import { keys, mapValues } from 'lodash';
-import { IFaces } from './CubeTypes';
+import { executeRotationCommand, generateCubicles } from './CubeUtils';
+import { makeNotationParser } from './algorithms/Parser';
+import { Command } from './algorithms/RotationCommand';
 
+/**
+ * TESTS SHOW THE NEW AXIS OF A CUBICLE
+ * TESTS DON'T SHOW WHAT CUBICLE NOW MOVED TO THAT POSITION
+ * AXIS ROTATION IS THE INVERSE ROTATION OF THE CUBICLE ROTATION (X and Y but not Z)
+ */
 describe('CubeUtils', () => {
-    it('should calculate the cube position for a 3x3x3', () => {
-        const numberOfCubes = 3;
-        const sizeOfCube = 100;
+    describe('3x3x3', () => {
+        const cubeDimension = 3;
+        const cubicleSize = 100;
 
-        const cornerCube = new D3(1, 1, 1);
-        const cornerCubeResult = calculateCubePosition(
-            cornerCube,
-            numberOfCubes,
-            sizeOfCube
-        );
-        expect(cornerCubeResult.toVector()).toEqual([-100, -100, 100]);
+        const testAxis = (notation: string, cube: number[][]) => {
+            const cubicles = generateCubicles(cubicleSize, 1.0, cubeDimension);
 
-        const edgeCube = new D3(3, 2, 3);
-        const edgeCubeResult = calculateCubePosition(
-            edgeCube,
-            numberOfCubes,
-            sizeOfCube
-        );
-        expect(edgeCubeResult.toVector()).toEqual([100, 0, -100]);
+            const result = executeRotationCommand(
+                cubicles,
+                makeNotationParser(cubeDimension).rotationCommands.tryParse(
+                    notation
+                )[0] as Command,
+                cubeDimension
+            );
+
+            expect(result.map((cubicle) => cubicle.axis)).toEqual(cube);
+        };
+
+        it('should generate the axes for a 3x3x3', () => {
+            const cubicles = generateCubicles(cubicleSize, 1.0, cubeDimension);
+
+            // prettier-ignore
+            const cube3x3x3 = [
+                [1,1,1], [2,1,1], [3,1,1],
+                [1,2,1], [2,2,1], [3,2,1],
+                [1,3,1], [2,3,1], [3,3,1],
+
+                [1,1,2], [2,1,2], [3,1,2],
+                [1,2,2],          [3,2,2],
+                [1,3,2], [2,3,2], [3,3,2],
+
+                [1,1,3], [2,1,3], [3,1,3],
+                [1,2,3], [2,2,3], [3,2,3],
+                [1,3,3], [2,3,3], [3,3,3]
+            ];
+
+            expect(cubicles.map((cubicle) => cubicle.axis)).toEqual(cube3x3x3);
+        });
+
+        it('should rotate the (L) axis of a 3x3x3', () => {
+            // prettier-ignore
+            const cube3x3x3 = [
+                [1,3,1], [2,1,1], [3,1,1],
+                [1,3,2], [2,2,1], [3,2,1],
+                [1,3,3], [2,3,1], [3,3,1],
+
+                [1,2,1], [2,1,2], [3,1,2],
+                [1,2,2],          [3,2,2],
+                [1,2,3], [2,3,2], [3,3,2],
+
+                [1,1,1], [2,1,3], [3,1,3],
+                [1,1,2], [2,2,3], [3,2,3],
+                [1,1,3], [2,3,3], [3,3,3]
+            ];
+
+            testAxis('L', cube3x3x3);
+        });
+
+        it("should rotate the (L') axis of a 3x3x3", () => {
+            // prettier-ignore
+            const cube3x3x3 = [
+                [1,1,3], [2,1,1], [3,1,1],
+                [1,1,2], [2,2,1], [3,2,1],
+                [1,1,1], [2,3,1], [3,3,1],
+
+                [1,2,3], [2,1,2], [3,1,2],
+                [1,2,2],          [3,2,2],
+                [1,2,1], [2,3,2], [3,3,2],
+
+                [1,3,3], [2,1,3], [3,1,3],
+                [1,3,2], [2,2,3], [3,2,3],
+                [1,3,1], [2,3,3], [3,3,3]
+            ];
+
+            testAxis("L'", cube3x3x3);
+        });
+
+        it("should rotate the (M') axis of a 3x3x3", () => {
+            // prettier-ignore
+            const cube3x3x3 = [
+                [1,1,1], [2,1,3], [3,1,1],
+                [1,2,1], [2,1,2], [3,2,1],
+                [1,3,1], [2,1,1], [3,3,1],
+
+                [1,1,2], [2,2,3], [3,1,2],
+                [1,2,2],          [3,2,2],
+                [1,3,2], [2,2,1], [3,3,2],
+
+                [1,1,3], [2,3,3], [3,1,3],
+                [1,2,3], [2,3,2], [3,2,3],
+                [1,3,3], [2,3,1], [3,3,3]
+            ];
+
+            testAxis("M'", cube3x3x3);
+        });
+
+        it('should rotate the (U) axis of a 3x3x3', () => {
+            // prettier-ignore
+            const cube3x3x3 = [
+                [1,1,3], [1,1,2], [1,1,1],
+                [1,2,1], [2,2,1], [3,2,1],
+                [1,3,1], [2,3,1], [3,3,1],
+
+                [2,1,3], [2,1,2], [2,1,1],
+                [1,2,2],          [3,2,2],
+                [1,3,2], [2,3,2], [3,3,2],
+
+                [3,1,3], [3,1,2], [3,1,1],
+                [1,2,3], [2,2,3], [3,2,3],
+                [1,3,3], [2,3,3], [3,3,3]
+            ];
+
+            testAxis('U', cube3x3x3);
+        });
+
+        it("should rotate the (U') axis of a 3x3x3", () => {
+            // prettier-ignore
+            const cube3x3x3 = [
+                [3,1,1], [3,1,2], [3,1,3],
+                [1,2,1], [2,2,1], [3,2,1],
+                [1,3,1], [2,3,1], [3,3,1],
+
+                [2,1,1], [2,1,2], [2,1,3],
+                [1,2,2],          [3,2,2],
+                [1,3,2], [2,3,2], [3,3,2],
+
+                [1,1,1], [1,1,2], [1,1,3],
+                [1,2,3], [2,2,3], [3,2,3],
+                [1,3,3], [2,3,3], [3,3,3]
+            ];
+
+            testAxis("U'", cube3x3x3);
+        });
+
+        it('should rotate the (D) axis of a 3x3x3', () => {
+            // prettier-ignore
+            const cube3x3x3 = [
+                [1,1,1], [2,1,1], [3,1,1],
+                [1,2,1], [2,2,1], [3,2,1],
+                [3,3,1], [3,3,2], [3,3,3],
+
+                [1,1,2], [2,1,2], [3,1,2],
+                [1,2,2],          [3,2,2],
+                [2,3,1], [2,3,2], [2,3,3],
+
+                [1,1,3], [2,1,3], [3,1,3],
+                [1,2,3], [2,2,3], [3,2,3],
+                [1,3,1], [1,3,2], [1,3,3],
+            ];
+
+            testAxis('D', cube3x3x3);
+        });
+
+        it("should rotate the (F') axis of a 3x3x3", () => {
+            // prettier-ignore
+            const cube3x3x3 = [
+                [1,3,1], [1,2,1], [1,1,1],
+                [2,3,1], [2,2,1], [2,1,1],
+                [3,3,1], [3,2,1], [3,1,1],
+
+                [1,1,2], [2,1,2], [3,1,2],
+                [1,2,2],          [3,2,2],
+                [1,3,2], [2,3,2], [3,3,2],
+
+                [1,1,3], [2,1,3], [3,1,3],
+                [1,2,3], [2,2,3], [3,2,3],
+                [1,3,3], [2,3,3], [3,3,3]
+            ];
+
+            testAxis("F'", cube3x3x3);
+        });
+
+        it('should rotate the (F) axis of a 3x3x3', () => {
+            // prettier-ignore
+            const cube3x3x3 = [
+                [3,1,1], [3,2,1], [3,3,1],
+                [2,1,1], [2,2,1], [2,3,1],
+                [1,1,1], [1,2,1], [1,3,1],
+
+                [1,1,2], [2,1,2], [3,1,2],
+                [1,2,2],          [3,2,2],
+                [1,3,2], [2,3,2], [3,3,2],
+
+                [1,1,3], [2,1,3], [3,1,3],
+                [1,2,3], [2,2,3], [3,2,3],
+                [1,3,3], [2,3,3], [3,3,3]
+            ];
+
+            testAxis('F', cube3x3x3);
+        });
+
+        it("should rotate the z-3 (B') axis of a 3x3x3", () => {
+            // prettier-ignore
+            const cube3x3x3 = [
+                [1,1,1], [2,1,1], [3,1,1],
+                [1,2,1], [2,2,1], [3,2,1],
+                [1,3,1], [2,3,1], [3,3,1],
+
+                [1,1,2], [2,1,2], [3,1,2],
+                [1,2,2],          [3,2,2],
+                [1,3,2], [2,3,2], [3,3,2],
+
+                [3,1,3], [3,2,3], [3,3,3],
+                [2,1,3], [2,2,3], [2,3,3],
+                [1,1,3], [1,2,3], [1,3,3],
+            ];
+
+            testAxis("B'", cube3x3x3);
+        });
     });
 
-    it('should calculate the cube position for a 4x4x4', () => {
-        const numberOfCubes = 4;
-        const sizeOfCube = 100;
+    describe('2x2x2', () => {
+        const cubeDimension = 2;
+        const cubicleSize = 100;
 
-        const cornerCube = new D3(1, 1, 1);
-        const cornerCubeResult = calculateCubePosition(
-            cornerCube,
-            numberOfCubes,
-            sizeOfCube
-        );
-        expect(cornerCubeResult.toVector()).toEqual([-150, -150, 150]);
+        const testAxis = (notation: string, cube: number[][]) => {
+            const cubicles = generateCubicles(cubicleSize, 1.0, cubeDimension);
 
-        const middleCube = new D3(3, 2, 3);
-        const middleCubeResult = calculateCubePosition(
-            middleCube,
-            numberOfCubes,
-            sizeOfCube
-        );
-        expect(middleCubeResult.toVector()).toEqual([50, -50, -50]);
+            const result = executeRotationCommand(
+                cubicles,
+                makeNotationParser(cubeDimension).rotationCommands.tryParse(
+                    notation
+                )[0] as Command,
+                cubeDimension
+            );
+
+            expect(result.map((cubicle) => cubicle.axis)).toEqual(cube);
+        };
+
+        it('should generate the axes for a 2x2x2', () => {
+            const cubicles = generateCubicles(cubicleSize, 1.0, cubeDimension);
+
+            // prettier-ignore
+            const cube2x2x2 = [
+                [1,1,1], [2,1,1],
+                [1,2,1], [2,2,1],
+
+                [1,1,2], [2,1,2],
+                [1,2,2], [2,2,2]
+
+            ];
+
+            expect(cubicles.map((cubicle) => cubicle.axis)).toEqual(cube2x2x2);
+        });
+
+        it('should rotate the (L) axis of a 2x2x2', () => {
+            // prettier-ignore
+            const cube2x2x2 = [
+                [1,2,1], [2,1,1],
+                [1,2,2], [2,2,1],
+
+                [1,1,1], [2,1,2],
+                [1,1,2], [2,2,2]
+            ];
+
+            testAxis('L', cube2x2x2);
+        });
+
+        it('should rotate multiple axes together', () => {
+            // prettier-ignore
+            const cube2x2x2 = [
+                [1,2,1], [2,2,1],
+                [1,2,2], [2,2,2],
+
+                [1,1,1], [2,1,1],
+                [1,1,2], [2,1,2]
+            ];
+
+            testAxis('[1,2]L', cube2x2x2);
+        });
     });
 
-    it('should generate the axes for a 3x3x3', () => {
-        const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+    /*
 
-        // prettier-ignore
-        const cube3x3x3 = [
-            [1,1,1], [2,1,1], [3,1,1],
-            [1,2,1], [2,2,1], [3,2,1],
-            [1,3,1], [2,3,1], [3,3,1],
 
-            [1,1,2], [2,1,2], [3,1,2],
-            [1,2,2],          [3,2,2],
-            [1,3,2], [2,3,2], [3,3,2],
 
-            [1,1,3], [2,1,3], [3,1,3],
-            [1,2,3], [2,2,3], [3,2,3],
-            [1,3,3], [2,3,3], [3,3,3]
-        ];
-
-        expect(cubes.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
-    });
-
-    it('should rotate the x1 (L) axis of a 3x3x3', () => {
-        const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
-
-        const result = rotate(cubes, numberOfCubes, [new D3().setX(1)]);
-
-        // prettier-ignore
-        const cube3x3x3 = [
-            [1,3,1], [2,1,1], [3,1,1],
-            [1,3,2], [2,2,1], [3,2,1],
-            [1,3,3], [2,3,1], [3,3,1],
-
-            [1,2,1], [2,1,2], [3,1,2],
-            [1,2,2],          [3,2,2],
-            [1,2,3], [2,3,2], [3,3,2],
-
-            [1,1,1], [2,1,3], [3,1,3],
-            [1,1,2], [2,2,3], [3,2,3],
-            [1,1,3], [2,3,3], [3,3,3]
-        ];
-
-        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
-    });
-
-    it("should rotate the x-1 (L') axis of a 3x3x3", () => {
-        const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
-
-        const result = rotate(cubes, numberOfCubes, [new D3().setX(-1)]);
-
-        // prettier-ignore
-        const cube3x3x3 = [
-            [1,1,3], [2,1,1], [3,1,1],
-            [1,1,2], [2,2,1], [3,2,1],
-            [1,1,1], [2,3,1], [3,3,1],
-
-            [1,2,3], [2,1,2], [3,1,2],
-            [1,2,2],          [3,2,2],
-            [1,2,1], [2,3,2], [3,3,2],
-
-            [1,3,3], [2,1,3], [3,1,3],
-            [1,3,2], [2,2,3], [3,2,3],
-            [1,3,1], [2,3,3], [3,3,3]
-        ];
-
-        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
-    });
-
-    it("should rotate the x-2 (M') axis of a 3x3x3", () => {
-        const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
-
-        const result = rotate(cubes, numberOfCubes, [new D3().setX(-2)]);
-
-        // prettier-ignore
-        const cube3x3x3 = [
-            [1,1,1], [2,1,3], [3,1,1],
-            [1,2,1], [2,1,2], [3,2,1],
-            [1,3,1], [2,1,1], [3,3,1],
-
-            [1,1,2], [2,2,3], [3,1,2],
-            [1,2,2],          [3,2,2],
-            [1,3,2], [2,2,1], [3,3,2],
-
-            [1,1,3], [2,3,3], [3,1,3],
-            [1,2,3], [2,3,2], [3,2,3],
-            [1,3,3], [2,3,1], [3,3,3]
-        ];
-
-        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
-    });
-
-    it('should rotate the y1 (U) axis of a 3x3x3', () => {
-        const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
-
-        const result = rotate(cubes, numberOfCubes, [new D3().setY(1)]);
-
-        // prettier-ignore
-        const cube3x3x3 = [
-            [1,1,3], [1,1,2], [1,1,1],
-            [1,2,1], [2,2,1], [3,2,1],
-            [1,3,1], [2,3,1], [3,3,1],
-
-            [2,1,3], [2,1,2], [2,1,1],
-            [1,2,2],          [3,2,2],
-            [1,3,2], [2,3,2], [3,3,2],
-
-            [3,1,3], [3,1,2], [3,1,1],
-            [1,2,3], [2,2,3], [3,2,3],
-            [1,3,3], [2,3,3], [3,3,3]
-        ];
-
-        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
-    });
-
-    it("should rotate the y-1 (U') axis of a 3x3x3", () => {
-        const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
-
-        const result = rotate(cubes, numberOfCubes, [new D3().setY(-1)]);
-
-        // prettier-ignore
-        const cube3x3x3 = [
-            [3,1,1], [3,1,2], [3,1,3],
-            [1,2,1], [2,2,1], [3,2,1],
-            [1,3,1], [2,3,1], [3,3,1],
-
-            [2,1,1], [2,1,2], [2,1,3],
-            [1,2,2],          [3,2,2],
-            [1,3,2], [2,3,2], [3,3,2],
-
-            [1,1,1], [1,1,2], [1,1,3],
-            [1,2,3], [2,2,3], [3,2,3],
-            [1,3,3], [2,3,3], [3,3,3]
-        ];
-
-        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
-    });
-
-    it('should rotate the y3 (D) axis of a 3x3x3', () => {
-        const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
-
-        const result = rotate(cubes, numberOfCubes, [new D3().setY(3)]);
-
-        // prettier-ignore
-        const cube3x3x3 = [
-            [1,1,1], [2,1,1], [3,1,1],
-            [1,2,1], [2,2,1], [3,2,1],
-            [1,3,3], [1,3,2], [1,3,1],
-
-            [1,1,2], [2,1,2], [3,1,2],
-            [1,2,2],          [3,2,2],
-            [2,3,3], [2,3,2], [2,3,1],
-
-            [1,1,3], [2,1,3], [3,1,3],
-            [1,2,3], [2,2,3], [3,2,3],
-            [3,3,3], [3,3,2], [3,3,1]
-        ];
-
-        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
-    });
-
-    it("should rotate the z1 (F') axis of a 3x3x3", () => {
-        const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
-
-        const result = rotate(cubes, numberOfCubes, [new D3().setZ(1)]);
-
-        // prettier-ignore
-        const cube3x3x3 = [
-            [1,3,1], [1,2,1], [1,1,1],
-            [2,3,1], [2,2,1], [2,1,1],
-            [3,3,1], [3,2,1], [3,1,1],
-
-            [1,1,2], [2,1,2], [3,1,2],
-            [1,2,2],          [3,2,2],
-            [1,3,2], [2,3,2], [3,3,2],
-
-            [1,1,3], [2,1,3], [3,1,3],
-            [1,2,3], [2,2,3], [3,2,3],
-            [1,3,3], [2,3,3], [3,3,3]
-        ];
-
-        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
-    });
-
-    it('should rotate the z-1 (F) axis of a 3x3x3', () => {
-        const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
-
-        const result = rotate(cubes, numberOfCubes, [new D3().setZ(-1)]);
-
-        // prettier-ignore
-        const cube3x3x3 = [
-            [3,1,1], [3,2,1], [3,3,1],
-            [2,1,1], [2,2,1], [2,3,1],
-            [1,1,1], [1,2,1], [1,3,1],
-
-            [1,1,2], [2,1,2], [3,1,2],
-            [1,2,2],          [3,2,2],
-            [1,3,2], [2,3,2], [3,3,2],
-
-            [1,1,3], [2,1,3], [3,1,3],
-            [1,2,3], [2,2,3], [3,2,3],
-            [1,3,3], [2,3,3], [3,3,3]
-        ];
-
-        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
-    });
-
-    it("should rotate the z-3 (B') axis of a 3x3x3", () => {
-        const numberOfCubes = 3;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
-
-        const result = rotate(cubes, numberOfCubes, [new D3().setZ(-3)]);
-
-        // prettier-ignore
-        const cube3x3x3 = [
-            [1,1,1], [2,1,1], [3,1,1],
-            [1,2,1], [2,2,1], [3,2,1],
-            [1,3,1], [2,3,1], [3,3,1],
-
-            [1,1,2], [2,1,2], [3,1,2],
-            [1,2,2],          [3,2,2],
-            [1,3,2], [2,3,2], [3,3,2],
-
-            [3,1,3], [3,2,3], [3,3,3],
-            [2,1,3], [2,2,3], [2,3,3],
-            [1,1,3], [1,2,3], [1,3,3],
-        ];
-
-        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube3x3x3);
-    });
-
-    it('should generate the axes for a 2x2x2', () => {
-        const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
-
-        // prettier-ignore
-        const cube2x2x2 = [
-            [1,1,1], [2,1,1],
-            [1,2,1], [2,2,1],
-
-            [1,1,2], [2,1,2],
-            [1,2,2], [2,2,2]
-
-        ];
-
-        expect(cubes.map((cube) => cube.axes.toVector())).toEqual(cube2x2x2);
-    });
-
-    it('should rotate the x1 (L) axis of a 2x2x2', () => {
-        const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
-
-        const result = rotate(cubes, numberOfCubes, [new D3().setX(1)]);
-
-        // prettier-ignore
-        const cube2x2x2 = [
-            [1,2,1], [2,1,1],
-            [1,2,2], [2,2,1],
-
-            [1,1,1], [2,1,2],
-            [1,1,2], [2,2,2]
-        ];
-
-        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube2x2x2);
-    });
-
-    it('should rotate multiple axes together', () => {
-        const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
-
-        const result = rotate(cubes, numberOfCubes, [
-            new D3().setX(1),
-            new D3().setX(2),
-        ]);
-
-        // prettier-ignore
-        const cube2x2x2 = [
-            [1,2,1], [2,2,1],
-            [1,2,2], [2,2,2],
-
-            [1,1,1], [2,1,1],
-            [1,1,2], [2,1,2]
-        ];
-
-        expect(result.map((cube) => cube.axes.toVector())).toEqual(cube2x2x2);
-    });
 
     const compareFaceArrows = (
         expected: IFaces<Maybe<[D3, D3]>>,
@@ -383,11 +308,11 @@ describe('CubeUtils', () => {
     };
 
     it('should rotate the face arrows on x1 (L)', () => {
-        const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubeDimension = 2;
+        const cubicleSize = 100;
+        const cubes = generateCubicles(cubeDimension, cubicleSize);
 
-        const result = rotate(cubes, numberOfCubes, [new D3().setX(1)]);
+        const result = rotate(cubes, cubeDimension, [new D3().setX(1)]);
 
         const expected = createFaces(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setX(-1), new D3().setZ(1)]);
@@ -398,11 +323,11 @@ describe('CubeUtils', () => {
     });
 
     it("should rotate the face arrows on x-1 (L')", () => {
-        const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubeDimension = 2;
+        const cubicleSize = 100;
+        const cubes = generateCubicles(cubeDimension, cubicleSize);
 
-        const result = rotate(cubes, numberOfCubes, [new D3().setX(-1)]);
+        const result = rotate(cubes, cubeDimension, [new D3().setX(-1)]);
 
         const expected = createFaces(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setX(-1), new D3().setZ(-1)]);
@@ -413,11 +338,11 @@ describe('CubeUtils', () => {
     });
 
     it('should rotate the face arrows on y1 (U)', () => {
-        const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubeDimension = 2;
+        const cubicleSize = 100;
+        const cubes = generateCubicles(cubeDimension, cubicleSize);
 
-        const result = rotate(cubes, numberOfCubes, [new D3().setY(1)]);
+        const result = rotate(cubes, cubeDimension, [new D3().setY(1)]);
 
         const expected = createFaces(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setZ(-1), new D3().setY(-1)]);
@@ -428,11 +353,11 @@ describe('CubeUtils', () => {
     });
 
     it("should rotate the face arrows on y-1 (U')", () => {
-        const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubeDimension = 2;
+        const cubicleSize = 100;
+        const cubes = generateCubicles(cubeDimension, cubicleSize);
 
-        const result = rotate(cubes, numberOfCubes, [new D3().setY(-1)]);
+        const result = rotate(cubes, cubeDimension, [new D3().setY(-1)]);
 
         const expected = createFaces(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setZ(1), new D3().setY(-1)]);
@@ -443,11 +368,11 @@ describe('CubeUtils', () => {
     });
 
     it("should rotate the face arrows on z1 (F')", () => {
-        const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubeDimension = 2;
+        const cubicleSize = 100;
+        const cubes = generateCubicles(cubeDimension, cubicleSize);
 
-        const result = rotate(cubes, numberOfCubes, [new D3().setZ(1)]);
+        const result = rotate(cubes, cubeDimension, [new D3().setZ(1)]);
 
         const expected = createFaces(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setY(1), new D3().setX(-1)]);
@@ -458,11 +383,11 @@ describe('CubeUtils', () => {
     });
 
     it('should rotate the face arrows on z-1 (F)', () => {
-        const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubeDimension = 2;
+        const cubicleSize = 100;
+        const cubes = generateCubicles(cubeDimension, cubicleSize);
 
-        const result = rotate(cubes, numberOfCubes, [new D3().setZ(-1)]);
+        const result = rotate(cubes, cubeDimension, [new D3().setZ(-1)]);
 
         const expected = createFaces(Maybe.none<[D3, D3]>());
         expected.FRONT = Maybe.some([new D3().setY(-1), new D3().setX(1)]);
@@ -473,9 +398,9 @@ describe('CubeUtils', () => {
     });
 
     it('should set animationRotation on the correct cubes', () => {
-        const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubeDimension = 2;
+        const cubicleSize = 100;
+        const cubes = generateCubicles(cubeDimension, cubicleSize);
 
         const rotation = new D3().setX(1);
         const result = animateRotation(cubes, [rotation]);
@@ -492,23 +417,23 @@ describe('CubeUtils', () => {
     });
 
     it('should remove animationRotation on rotate', () => {
-        const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubeDimension = 2;
+        const cubicleSize = 100;
+        const cubes = generateCubicles(cubeDimension, cubicleSize);
 
         const rotation = new D3().setX(1);
         let result = animateRotation(cubes, [rotation]);
-        result = rotate(result, numberOfCubes, [rotation]);
+        result = rotate(result, cubeDimension, [rotation]);
 
         expect(result.every((cube) => cube.rotationAnimation.isNone()));
     });
 
     it('should correctly calculate animationRotation', () => {
-        const numberOfCubes = 2;
-        const sizeOfCube = 100;
-        const cubes = generateCubes(numberOfCubes, sizeOfCube);
+        const cubeDimension = 2;
+        const cubicleSize = 100;
+        const cubes = generateCubicles(cubeDimension, cubicleSize);
 
-        let result = rotate(cubes, numberOfCubes, [new D3().setX(1)]);
+        let result = rotate(cubes, cubeDimension, [new D3().setX(1)]);
         result = animateRotation(result, [new D3().setZ(1)]);
 
         expect(result[0].rotationAnimation.unwrap().toVector()).toEqual([
@@ -516,5 +441,5 @@ describe('CubeUtils', () => {
             1,
             0,
         ]);
-    });
+    });*/
 });

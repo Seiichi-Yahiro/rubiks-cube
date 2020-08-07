@@ -15,6 +15,7 @@ import { playerActions } from '../states/player/PlayerActions';
 import { useDispatch } from 'react-redux';
 import { useRedux } from '../states/States';
 import { isError } from '../cube/algorithms/RotationCommand';
+import { cubeActions } from '../states/cube/CubeActions';
 
 const Player: React.FunctionComponent = () => {
     const dispatch = useDispatch();
@@ -76,7 +77,7 @@ const Player: React.FunctionComponent = () => {
                 '' /*createRandomNotation(cubeDimension))*/
             )
         );
-    const onRefresh = () => dispatch(playerActions.resetCube());
+    const onRefresh = () => dispatch(cubeActions.resetCube());
 
     return (
         <div className="algorithm-player">

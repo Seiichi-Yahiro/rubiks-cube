@@ -13,7 +13,7 @@ const initEpic: AppEpic = (action$, state$) =>
 
 const updateCubicles: AppEpic = (action$, state$) =>
     action$.pipe(
-        ofType(CubeActionType.SET_CUBE_DIMENSION),
+        ofType(CubeActionType.SET_CUBE_DIMENSION, CubeActionType.RESET_CUBE),
         withLatestFrom(state$),
         map(([_, state]) =>
             cubeActions.updateCubicles(
