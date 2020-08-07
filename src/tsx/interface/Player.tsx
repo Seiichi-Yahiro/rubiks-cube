@@ -29,6 +29,7 @@ const Player: React.FunctionComponent = () => {
         []
     );
 
+    const hasParseError = isError(rotationCommands);
     const isNotationEmpty = playerNotation.length === 0;
     const isStopped = playerStatus === PlayerStatus.STOPPED;
 
@@ -42,7 +43,10 @@ const Player: React.FunctionComponent = () => {
                     dispatch(playerActions.play(/*generateMoveGenerator*/));
 
                 return (
-                    <IconButton onClick={onPlay} disabled={isNotationEmpty}>
+                    <IconButton
+                        onClick={onPlay}
+                        disabled={isNotationEmpty || hasParseError}
+                    >
                         <PlayArrow />
                     </IconButton>
                 );
@@ -82,7 +86,7 @@ const Player: React.FunctionComponent = () => {
                 value={playerNotation}
                 onChange={updateNotation}
                 disabled={!isStopped}
-                error={isError(rotationCommands)}
+                error={hasParseError}
             />
             {isError(rotationCommands) && (
                 <div style={{ marginTop: 5, marginBottom: 5 }}>
@@ -106,7 +110,8 @@ const Player: React.FunctionComponent = () => {
                         onClick={onJumpToEnd}
                         disabled={
                             playerStatus === PlayerStatus.PLAYING ||
-                            isNotationEmpty
+                            isNotationEmpty ||
+                            hasParseError
                         }
                     >
                         <SkipNext />
