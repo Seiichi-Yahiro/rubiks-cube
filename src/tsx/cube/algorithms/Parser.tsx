@@ -68,31 +68,30 @@ export const makeNotationParser = (cubeDimension: number) =>
                 P.whitespace.atLeast(1)
             ).result(''),
 
-        comma: () => P.string(','),
+        comma: () => P.string(',').desc(','),
 
-        lParenthesis: () => P.string('('),
-        rParenthesis: () => P.string(')'),
-        lBracket: () => P.string('['),
-        rBracket: () => P.string(']'),
+        lParenthesis: () => P.string('(').desc('('),
+        rParenthesis: () => P.string(')').desc(')'),
+        lBracket: () => P.string('[').desc('['),
+        rBracket: () => P.string(']').desc(']'),
 
         wide: () =>
             P.letter
                 .chain((letter) =>
                     ['W', 'w'].includes(letter)
                         ? P.succeed(true)
-                        : P.fail('w or W')
+                        : P.fail('/[W]/i')
                 )
                 .fallback(false),
         prime: () =>
             P.string("'")
+                .desc("'")
                 .map((_) => true)
                 .fallback(false),
 
         double: (r) =>
             r.number
-                .chain((num) =>
-                    num === 2 ? P.succeed(true) : P.fail(`'2 not ${num}'`)
-                )
+                .chain((num) => (num === 2 ? P.succeed(true) : P.fail('2')))
                 .fallback(false),
 
         number: () => P.regexp(/\d+/).map(Number).desc('number'),
@@ -100,7 +99,7 @@ export const makeNotationParser = (cubeDimension: number) =>
             r.number.chain((num) =>
                 num > 0 && num <= cubeDimension
                     ? P.succeed(num)
-                    : P.fail(`${num} is not in cube dimension ${cubeDimension}`)
+                    : P.fail(`1-${cubeDimension}`)
             ),
 
         slices: (r) =>

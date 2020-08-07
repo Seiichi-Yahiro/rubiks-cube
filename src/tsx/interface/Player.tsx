@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
-import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
+import { Chip, IconButton, TextField } from '@material-ui/core';
 import './Player.scss';
 import { PlayerStatus } from '../states/player/PlayerState';
 //import { createRandomNotation } from '../cube/algorithms/Interpreter';
@@ -85,6 +84,18 @@ const Player: React.FunctionComponent = () => {
                 disabled={!isStopped}
                 error={isError(rotationCommands)}
             />
+            {isError(rotationCommands) && (
+                <div style={{ marginTop: 5, marginBottom: 5 }}>
+                    {rotationCommands.expected.map((errorMsg) => (
+                        <Chip
+                            key={errorMsg}
+                            color={'secondary'}
+                            size={'small'}
+                            label={errorMsg}
+                        />
+                    ))}
+                </div>
+            )}
             <div className="algorithm-player__buttons">
                 <div>
                     {playOrPause()}
