@@ -78,7 +78,7 @@ export const rotateAxis = (
     const offset = (cubeDimension + 1) * 0.5;
     const point = axis.map((it) => it - offset);
     const rotatedPoint = apply([...point, 1] as Vec4, rotation).slice(0, 3);
-    return rotatedPoint.map((it) => it + offset) as Axis;
+    return rotatedPoint.map((it) => it + offset).map(Math.round) as Axis;
 };
 
 const isCubicleVisible = (axis: Axis, cubeDimension: number) =>
