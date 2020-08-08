@@ -8,7 +8,10 @@ import {
     Mat4,
     multiply,
 } from '../../utils/Matrix4';
-import { executeRotationCommand } from '../../cube/CubeUtils';
+import {
+    animateRotationCommand,
+    applyRotationCommand,
+} from '../../cube/CubeUtils';
 
 export interface ICubeState {
     dimension: number;
@@ -44,14 +47,14 @@ export const cubeReducer = createReducer(initialCubeState, (builder) => {
         .addCase(cubeActions.updateCubicles, (state, action) => {
             state.cubicles = action.payload.cubicles;
         })
-        .addCase(cubeActions.executeRotationCommand, (state, action) => {
-            state.cubicles = executeRotationCommand(
+        .addCase(cubeActions.animateRotationCommand, (state, action) => {
+            state.cubicles = animateRotationCommand(
                 state.cubicles,
                 action.payload.rotationCommand,
                 state.dimension
             );
         })
-        .addCase(cubeActions.applyRotation, (state, _action) => {
+        .addCase(cubeActions.applyAnimatedRotationCommand, (state, _action) => {
             state.cubicles = state.cubicles.map((cubicle) => ({
                 ...cubicle,
                 transform: multiply(
@@ -60,5 +63,12 @@ export const cubeReducer = createReducer(initialCubeState, (builder) => {
                 ),
                 animatedTransform: identity,
             }));
+        })
+        .addCase(cubeActions.applyRotationCommands, (state, action) => {
+            state.cubicles = action.payload.rotationCommands.reduce(
+                (cubicles, command) =>
+                    applyRotationCommand(cubicles, command, state.dimension),
+                state.cubicles
+            );
         });
 });

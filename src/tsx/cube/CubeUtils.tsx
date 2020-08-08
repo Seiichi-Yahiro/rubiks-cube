@@ -1,6 +1,5 @@
 import { range } from 'lodash';
 import { ICubicle, IFace, Axis, Color, Side } from './CubeTypes';
-import { v4 } from 'uuid';
 import {
     Mat4,
     identity,
@@ -11,7 +10,13 @@ import {
     apply,
 } from '../utils/Matrix4';
 import { Vec4 } from '../utils/Vector4';
-import { Command, rotationToMat4 } from './algorithms/RotationCommand';
+import {
+    RotationCommand,
+    isLoopedRotationCommands,
+    rotationToAxisMat4,
+    rotationToCubicleMat4,
+    SingleRotationCommand,
+} from './algorithms/RotationCommand';
 
 export const cubeIsTransitioning = 'cube--is-transitioning';
 
@@ -95,7 +100,7 @@ const generateFace = (
     cubicleSize: number,
     cubeDimension: number
 ): IFace => ({
-    id: v4(),
+    id: side,
     color: isOuterFace(side, axis, cubeDimension)
         ? sideToColor[side]
         : Color.DEFAULT,
@@ -110,11 +115,11 @@ export const generateCubicles = (
     const indexes = range(1, cubeDimension + 1);
     return indexes
         .flatMap((z) =>
-            indexes.flatMap((y) => indexes.map((x) => [x, y, z] as Axis))
+            indexes.flatMap((y) => indexes.map<Axis>((x) => [x, y, z]))
         )
         .filter((axis) => isCubicleVisible(axis, cubeDimension))
-        .map((axis) => ({
-            id: v4(),
+        .map<ICubicle>((axis) => ({
+            id: axis,
             axis,
             faces: Object.values(Side).map((side) =>
                 generateFace(side, axis, cubicleSize, cubeDimension)
@@ -131,9 +136,9 @@ export const generateCubicles = (
         }));
 };
 
-export const executeRotationCommand = (
+export const animateRotationCommand = (
     cubicles: ICubicle[],
-    { axis, slices, rotation }: Command,
+    { axis, slices, rotation }: SingleRotationCommand,
     cubeDimension: number
 ): ICubicle[] =>
     cubicles.map((cubicle) => {
@@ -142,12 +147,51 @@ export const executeRotationCommand = (
                 ...cubicle,
                 axis: rotateAxis(
                     cubicle.axis,
-                    rotationToMat4(axis, rotation, true),
+                    rotationToAxisMat4(axis, rotation),
                     cubeDimension
                 ),
-                animatedTransform: rotationToMat4(axis, rotation, false),
+                animatedTransform: rotationToCubicleMat4(axis, rotation),
             };
         } else {
             return cubicle;
         }
     });
+
+export const applyRotationCommand = (
+    cubicles: ICubicle[],
+    rotationCommand: RotationCommand,
+    cubeDimension: number
+): ICubicle[] => {
+    if (isLoopedRotationCommands(rotationCommand)) {
+        return range(0, rotationCommand.iterations).reduce(
+            (cubicles2, _) =>
+                rotationCommand.commands.reduce(
+                    (cubicles3, command) =>
+                        applyRotationCommand(cubicles3, command, cubeDimension),
+                    cubicles2
+                ),
+            cubicles
+        );
+    } else {
+        const { axis, slices, rotation } = rotationCommand;
+
+        return cubicles.map((cubicle) => {
+            if (slices.includes(cubicle.axis[axis])) {
+                return {
+                    ...cubicle,
+                    axis: rotateAxis(
+                        cubicle.axis,
+                        rotationToAxisMat4(axis, rotation),
+                        cubeDimension
+                    ),
+                    transform: multiply(
+                        rotationToCubicleMat4(axis, rotation),
+                        cubicle.transform
+                    ),
+                };
+            } else {
+                return cubicle;
+            }
+        });
+    }
+};

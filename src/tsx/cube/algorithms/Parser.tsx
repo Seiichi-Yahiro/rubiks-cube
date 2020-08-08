@@ -1,11 +1,11 @@
 import P from 'parsimmon';
 import {
-    Command,
+    SingleRotationCommand,
     double,
     letterToAxis,
     letterToRotation,
     letterToSlices,
-    Loop,
+    LoopedRotationCommands,
     prime,
     RotationCommand,
     wide,
@@ -50,9 +50,9 @@ export const makeNotationParser = (cubeDimension: number) =>
         notSliceableLetter: string;
         letter: string;
 
-        simpleCommand: Command;
-        slicedCommand: Command;
-        loop: Loop;
+        simpleCommand: SingleRotationCommand;
+        slicedCommand: SingleRotationCommand;
+        loop: LoopedRotationCommands;
 
         rotationCommands: RotationCommand[];
     }>({

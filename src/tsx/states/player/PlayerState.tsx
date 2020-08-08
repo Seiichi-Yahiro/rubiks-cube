@@ -7,7 +7,6 @@ export enum PlayerStatus {
     STOPPED = 'STOPPED',
     PLAYING = 'PLAYING',
     PAUSED = 'PAUSED',
-    JUMP_TO_END = 'JUMP_TO_END',
 }
 
 export interface IPlayerState {

@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { Chip, IconButton, TextField } from '@material-ui/core';
 import './Player.scss';
 import { PlayerStatus } from '../states/player/PlayerState';
-//import { createRandomNotation } from '../cube/algorithms/Interpreter';
 import {
     Pause,
     PlayArrow,
@@ -14,7 +13,7 @@ import {
 import { playerActions } from '../states/player/PlayerActions';
 import { useDispatch } from 'react-redux';
 import { useRedux } from '../states/States';
-import { isError } from '../cube/algorithms/RotationCommand';
+import { isError, isOk } from '../cube/algorithms/RotationCommand';
 import { cubeActions } from '../states/cube/CubeActions';
 
 const Player: React.FunctionComponent = () => {
@@ -69,8 +68,13 @@ const Player: React.FunctionComponent = () => {
     };
 
     const onStop = () => dispatch(playerActions.stop());
-    const onJumpToEnd = () =>
-        dispatch(playerActions.jumpToEnd(/*generateMoveGenerator*/));
+
+    const onJumpToEnd = () => {
+        if (isOk(rotationCommands)) {
+            dispatch(cubeActions.applyRotationCommands(rotationCommands.value));
+        }
+    };
+
     const onShuffle = () =>
         dispatch(
             playerActions.updateNotation(

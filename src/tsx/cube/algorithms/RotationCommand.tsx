@@ -2,23 +2,23 @@ import { range } from 'lodash';
 import { Failure, Result, Success } from 'parsimmon';
 import { fromAngleX, fromAngleY, fromAngleZ, Mat4 } from '../../utils/Matrix4';
 
-export interface Command {
+export interface SingleRotationCommand {
     readonly axis: Axis;
     readonly slices: number[];
     readonly rotation: number;
 }
 
-export interface Loop {
+export interface LoopedRotationCommands {
     readonly commands: RotationCommand[];
     readonly iterations: number;
 }
 
-export type RotationCommand = Command | Loop;
+export type RotationCommand = SingleRotationCommand | LoopedRotationCommands;
 
-export const isLoop = (
+export const isLoopedRotationCommands = (
     rotationCommand: RotationCommand
-): rotationCommand is Loop =>
-    (rotationCommand as Loop).iterations !== undefined;
+): rotationCommand is LoopedRotationCommands =>
+    (rotationCommand as LoopedRotationCommands).iterations !== undefined;
 
 export enum Axis {
     X = 0,
@@ -26,17 +26,27 @@ export enum Axis {
     Z = 2,
 }
 
-export const rotationToMat4 = (
-    axis: Axis,
-    rotation: number,
-    isAxisRotation: boolean
-): Mat4 => {
+export const rotationToCubicleMat4 = (axis: Axis, rotation: number): Mat4 => {
     switch (axis) {
         case Axis.X: {
-            return fromAngleX(isAxisRotation ? -rotation : rotation);
+            return fromAngleX(rotation);
         }
         case Axis.Y: {
-            return fromAngleY(isAxisRotation ? -rotation : rotation);
+            return fromAngleY(rotation);
+        }
+        case Axis.Z: {
+            return fromAngleZ(rotation);
+        }
+    }
+};
+
+export const rotationToAxisMat4 = (axis: Axis, rotation: number): Mat4 => {
+    switch (axis) {
+        case Axis.X: {
+            return fromAngleX(-rotation);
+        }
+        case Axis.Y: {
+            return fromAngleY(-rotation);
         }
         case Axis.Z: {
             return fromAngleZ(rotation);

@@ -1,6 +1,9 @@
 import { createAction } from '@reduxjs/toolkit';
 import { ICubicle } from '../../cube/CubeTypes';
-import { Command } from '../../cube/algorithms/RotationCommand';
+import {
+    RotationCommand,
+    SingleRotationCommand,
+} from '../../cube/algorithms/RotationCommand';
 
 export const enum CubeActionType {
     INIT_CUBE = 'INIT_CUBE',
@@ -8,8 +11,9 @@ export const enum CubeActionType {
     SET_CUBE_SCALE = 'SET_CUBE_SCALE',
     SET_ROTATION_ANIMATION_SPEED = 'SET_ROTATION_ANIMATION_SPEED',
     UPDATE_CUBICLES = 'UPDATE_CUBICLES',
-    EXECUTE_ROTATION_COMMAND = 'EXECUTE_ROTATION_COMMAND',
-    APPLY_ROTATION = 'APPLY_ROTATION',
+    ANIMATE_ROTATION_COMMAND = 'ANIMATE_ROTATION_COMMAND',
+    APPLY_ANIMATED_ROTATION_COMMAND = 'APPLY_ANIMATED_ROTATION_COMMAND',
+    APPLY_ROTATION_COMMANDS = 'APPLY_ROTATION_COMMANDS',
     RESET_CUBE = 'RESET_CUBE',
 }
 
@@ -41,14 +45,23 @@ const updateCubicles = createAction(
     })
 );
 
-const executeRotationCommand = createAction(
-    CubeActionType.EXECUTE_ROTATION_COMMAND,
-    (rotationCommand: Command) => ({
+const animateRotationCommand = createAction(
+    CubeActionType.ANIMATE_ROTATION_COMMAND,
+    (rotationCommand: SingleRotationCommand) => ({
         payload: { rotationCommand },
     })
 );
 
-const applyRotation = createAction(CubeActionType.APPLY_ROTATION);
+const applyAnimatedRotationCommand = createAction(
+    CubeActionType.APPLY_ANIMATED_ROTATION_COMMAND
+);
+
+const applyRotationCommands = createAction(
+    CubeActionType.APPLY_ROTATION_COMMANDS,
+    (rotationCommands: RotationCommand[]) => ({
+        payload: { rotationCommands },
+    })
+);
 
 const resetCube = createAction(CubeActionType.RESET_CUBE);
 
@@ -58,8 +71,9 @@ const actions = {
     setCubeScale,
     setRotationAnimationSpeed,
     updateCubicles,
-    executeRotationCommand,
-    applyRotation,
+    animateRotationCommand,
+    applyAnimatedRotationCommand,
+    applyRotationCommands,
     resetCube,
 };
 

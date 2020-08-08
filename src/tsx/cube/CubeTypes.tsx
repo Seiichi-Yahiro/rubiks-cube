@@ -28,13 +28,13 @@ export enum Direction {
 }
 
 export interface IFace {
-    id: string;
+    id: Side;
     color: Color;
     transform: Mat4;
 }
 
 export interface ICubicle {
-    id: string;
+    id: Axis;
     axis: Axis;
     faces: IFace[];
     transform: Mat4;

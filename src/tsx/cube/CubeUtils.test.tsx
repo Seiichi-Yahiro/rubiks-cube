@@ -1,6 +1,6 @@
-import { executeRotationCommand, generateCubicles } from './CubeUtils';
+import { applyRotationCommand, generateCubicles } from './CubeUtils';
 import { makeNotationParser } from './algorithms/Parser';
-import { Command } from './algorithms/RotationCommand';
+import { SingleRotationCommand } from './algorithms/RotationCommand';
 
 /**
  * TESTS SHOW THE NEW AXIS OF A CUBICLE
@@ -15,11 +15,11 @@ describe('CubeUtils', () => {
         const testAxis = (notation: string, cube: number[][]) => {
             const cubicles = generateCubicles(cubicleSize, 1.0, cubeDimension);
 
-            const result = executeRotationCommand(
+            const result = applyRotationCommand(
                 cubicles,
                 makeNotationParser(cubeDimension).rotationCommands.tryParse(
                     notation
-                )[0] as Command,
+                )[0] as SingleRotationCommand,
                 cubeDimension
             );
 
@@ -226,11 +226,11 @@ describe('CubeUtils', () => {
         const testAxis = (notation: string, cube: number[][]) => {
             const cubicles = generateCubicles(cubicleSize, 1.0, cubeDimension);
 
-            const result = executeRotationCommand(
+            const result = applyRotationCommand(
                 cubicles,
                 makeNotationParser(cubeDimension).rotationCommands.tryParse(
                     notation
-                )[0] as Command,
+                )[0] as SingleRotationCommand,
                 cubeDimension
             );
 

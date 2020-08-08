@@ -36,7 +36,7 @@ const RubiksCube: React.FunctionComponent = () => {
                     {cubicles.map(
                         ({ id, faces, transform, animatedTransform }) => (
                             <Cubicle
-                                key={id}
+                                key={id.join(',')}
                                 faces={faces}
                                 animatedTransform={animatedTransform}
                                 transform={transform}
