@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Typography } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import List from '@material-ui/core/List';
@@ -19,7 +19,6 @@ const Settings: React.FunctionComponent = () => {
 
     const isDisabled = playerStatus !== PlayerStatus.STOPPED;
 
-    // TODO onChange
     return (
         <List disablePadding={true} dense={true} className="interface-list">
             <ListItem className="interface-list__item--settings">
@@ -33,7 +32,7 @@ const Settings: React.FunctionComponent = () => {
                     step={1}
                     min={1}
                     max={5}
-                    defaultValue={cubeDimension}
+                    defaultValue={useMemo(() => cubeDimension, [])}
                     onChangeCommitted={(event, value) =>
                         dispatch(cubeActions.setCubeDimension(value as number))
                     }
@@ -49,7 +48,7 @@ const Settings: React.FunctionComponent = () => {
                     step={0.1}
                     min={0.2}
                     max={2.0}
-                    defaultValue={scale}
+                    defaultValue={useMemo(() => scale, [])}
                     onChangeCommitted={(event, value) =>
                         dispatch(cubeActions.setCubeScale(value as number))
                     }
@@ -66,7 +65,7 @@ const Settings: React.FunctionComponent = () => {
                     min={100}
                     max={2000}
                     step={50}
-                    defaultValue={rotationAnimationSpeed}
+                    defaultValue={useMemo(() => rotationAnimationSpeed, [])}
                     onChangeCommitted={(event, value) =>
                         dispatch(
                             cubeActions.setRotationAnimationSpeed(
