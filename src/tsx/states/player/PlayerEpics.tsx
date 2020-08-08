@@ -3,19 +3,15 @@ import { playerActions, PlayerActionType } from './PlayerActions';
 import {
     concatMap,
     debounceTime,
-    exhaustMap,
     filter,
     first,
     map,
     mapTo,
-    repeat,
-    takeUntil,
-    tap,
     withLatestFrom,
 } from 'rxjs/operators';
 import { makeNotationParser } from '../../cube/algorithms/Parser';
 import { cubeActions, CubeActionType } from '../cube/CubeActions';
-import { combineLatest, concat, fromEvent, Observable, of } from 'rxjs';
+import { combineLatest, fromEvent, merge, Subject } from 'rxjs';
 import { ofType } from 'redux-observable';
 import {
     Command,
@@ -23,7 +19,9 @@ import {
     isOk,
     RotationCommand,
 } from '../../cube/algorithms/RotationCommand';
-import { fromArray } from 'rxjs/internal/observable/fromArray';
+import { AppAction } from '../Actions';
+import Maybe from '../../utils/Maybe';
+import { PlayerStatus } from './PlayerState';
 
 const parseNotation: AppEpic = (action$, state$) => {
     const parser$ = action$.pipe(
@@ -45,7 +43,7 @@ const parseNotation: AppEpic = (action$, state$) => {
     );
 };
 
-/*function* commandGenerator(
+function* commandGenerator(
     rotationCommands: RotationCommand[]
 ): Generator<Command> {
     for (const rotationCommand of rotationCommands) {
@@ -57,62 +55,72 @@ const parseNotation: AppEpic = (action$, state$) => {
             yield rotationCommand;
         }
     }
-}*/
-
-const transitionEnd$ = fromEvent<TransitionEvent>(window, 'transitionend').pipe(
-    filter(
-        (event) =>
-            event.propertyName === 'transform' &&
-            (event.target as HTMLElement).className.includes(
-                'rubiks-cube__cubicle'
-            )
-    ),
-    tap((_) => console.log('transitionend')),
-    debounceTime(50)
-);
+}
 
 const player: AppEpic = (action$, state$) => {
     const play$ = action$.pipe(ofType(PlayerActionType.PLAY_ALGORITHM));
-    const pause$ = action$.pipe(ofType(PlayerActionType.PAUSE_ALGORITHM));
-    const stop$ = action$.pipe(ofType(PlayerActionType.STOP_ALGORITHM));
 
-    // TODO check for 0 in iterations
-    const flattenRotationCommands = (
-        rotationCommands: RotationCommand[]
-    ): Observable<Command> =>
-        fromArray(rotationCommands).pipe(
-            concatMap((command) => {
-                if (isLoop(command)) {
-                    return flattenRotationCommands(command.commands).pipe(
-                        repeat(command.iterations)
-                    );
-                } else {
-                    return of(command);
-                }
-            })
-        );
+    let generator: Maybe<Generator<Command, Command>> = Maybe.none();
+    const subject = new Subject<boolean>();
 
-    return play$.pipe(
+    play$
+        .pipe(filter((_) => generator.isSome()))
+        .subscribe((_) => subject.next(true));
+
+    play$
+        .pipe(
+            filter((_) => generator.isNone()),
+            withLatestFrom(state$),
+            map(([_, state]) => state.player.rotationCommands),
+            filter(isOk),
+            map((it) => it.value),
+            map(commandGenerator)
+        )
+        .subscribe((it) => {
+            generator = Maybe.some(it);
+            subject.next(true);
+        });
+
+    action$.pipe(ofType(PlayerActionType.STOP_ALGORITHM)).subscribe((_) => {
+        generator = Maybe.none();
+    });
+
+    const commands$ = subject.pipe(
         withLatestFrom(state$),
-        map(([_, state]) => state.player.rotationCommands),
-        filter(isOk),
-        map((rotationCommands) => rotationCommands.value),
-        exhaustMap((rotationCommands) =>
-            flattenRotationCommands(rotationCommands).pipe(
-                map(cubeActions.executeRotationCommand),
-                concatMap((command) =>
-                    concat(
-                        of(command),
-                        transitionEnd$.pipe(
-                            first(),
-                            mapTo(cubeActions.applyRotation())
-                        )
-                    )
-                ),
-                takeUntil(stop$)
-            )
+        filter(([_, state]) => state.player.status === PlayerStatus.PLAYING),
+        map((_) =>
+            generator
+                .map((it) => it.next().value)
+                .map<AppAction>(cubeActions.executeRotationCommand)
+                .unwrapOr(playerActions.stop)
         )
     );
+
+    const transitionEnd$ = fromEvent<TransitionEvent>(
+        window,
+        'transitionend'
+    ).pipe(
+        filter(
+            (event) =>
+                event.propertyName === 'transform' &&
+                (event.target as HTMLElement).className.includes(
+                    'rubiks-cube__cubicle'
+                )
+        ),
+        debounceTime(50)
+    );
+
+    const applyRotation$ = action$.pipe(
+        ofType(CubeActionType.EXECUTE_ROTATION_COMMAND),
+        concatMap((_) => transitionEnd$.pipe(first())),
+        mapTo(cubeActions.applyRotation())
+    );
+
+    action$
+        .pipe(ofType(CubeActionType.APPLY_ROTATION))
+        .subscribe((_) => subject.next(true));
+
+    return merge(commands$, applyRotation$);
 };
 
 export const playerEpics = [parseNotation, player];

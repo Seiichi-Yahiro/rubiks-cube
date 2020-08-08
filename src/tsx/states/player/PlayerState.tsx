@@ -29,5 +29,14 @@ export const playerReducer = createReducer(initialPlayerState, (builder) => {
         })
         .addCase(playerActions.parsedNotation, (state, action) => {
             state.rotationCommands = action.payload.rotationCommands;
+        })
+        .addCase(playerActions.play, (state, _action) => {
+            state.status = PlayerStatus.PLAYING;
+        })
+        .addCase(playerActions.pause, (state, _action) => {
+            state.status = PlayerStatus.PAUSED;
+        })
+        .addCase(playerActions.stop, (state, _action) => {
+            state.status = PlayerStatus.STOPPED;
         });
 });
