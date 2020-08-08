@@ -10,6 +10,7 @@ import {
     RotationCommand,
     wide,
 } from './RotationCommand';
+import { range, sample, sampleSize } from 'lodash';
 
 /**
  * Creates a cube notation parser that knows about the used cubeDimension
@@ -156,3 +157,39 @@ export const makeNotationParser = (cubeDimension: number) =>
                 .skip(r.separator)
                 .many(),
     });
+
+export const createRandomNotation = (cubeDimension: number): string => {
+    const letters = 'LRUDFB'.split('');
+    const loops = 20;
+
+    let moves = '';
+    let prevLetter = '';
+    let prevIsPrime = false;
+
+    const randomLetter = (slices: number[]) => {
+        let letter = '';
+        let isPrime = false;
+
+        do {
+            const slice = sample(slices) ?? '';
+            letter = slice + sample(letters)!;
+            isPrime = sample([true, false])!;
+        } while (prevLetter === letter && prevIsPrime !== isPrime);
+
+        prevLetter = letter;
+        prevIsPrime = isPrime;
+        moves += letter + (isPrime ? "' " : ' ');
+    };
+
+    if (cubeDimension > 3) {
+        const slices = range(2, cubeDimension);
+        const length = range(0, slices.length);
+        range(loops).forEach(() =>
+            randomLetter(sampleSize(slices, sample(length)))
+        );
+    } else {
+        range(loops).forEach(() => randomLetter([]));
+    }
+
+    return moves;
+};

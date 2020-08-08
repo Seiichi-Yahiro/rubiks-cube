@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { useRedux } from '../states/States';
 import { isError, isOk } from '../cube/algorithms/RotationCommand';
 import { cubeActions } from '../states/cube/CubeActions';
+import { createRandomNotation } from '../cube/algorithms/Parser';
 
 const Player: React.FunctionComponent = () => {
     const dispatch = useDispatch();
@@ -69,6 +70,7 @@ const Player: React.FunctionComponent = () => {
 
     const onStop = () => dispatch(playerActions.stop());
 
+    // TODO when paused
     const onJumpToEnd = () => {
         if (isOk(rotationCommands)) {
             dispatch(cubeActions.applyRotationCommands(rotationCommands.value));
@@ -77,10 +79,9 @@ const Player: React.FunctionComponent = () => {
 
     const onShuffle = () =>
         dispatch(
-            playerActions.updateNotation(
-                '' /*createRandomNotation(cubeDimension))*/
-            )
+            playerActions.updateNotation(createRandomNotation(cubeDimension))
         );
+
     const onRefresh = () => dispatch(cubeActions.resetCube());
 
     return (
