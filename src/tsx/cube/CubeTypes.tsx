@@ -1,6 +1,6 @@
 import { Mat4 } from '../utils/Matrix4';
 
-export type Axis = [number, number, number];
+export type CubeAxis = [number, number, number];
 
 export enum Color {
     BLUE = '#3d81f6',
@@ -34,8 +34,8 @@ export interface IFace {
 }
 
 export interface ICubicle {
-    id: Axis;
-    axis: Axis;
+    id: CubeAxis;
+    axis: CubeAxis;
     faces: IFace[];
     transform: Mat4;
     animatedTransform: Mat4;

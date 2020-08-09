@@ -3,7 +3,7 @@ import { Failure, Result, Success } from 'parsimmon';
 import { fromAngleX, fromAngleY, fromAngleZ, Mat4 } from '../../utils/Matrix4';
 
 export interface SingleRotationCommand {
-    readonly axis: Axis;
+    readonly axis: RotationAxis;
     readonly slices: number[];
     readonly rotation: number;
 }
@@ -20,57 +20,63 @@ export const isLoopedRotationCommands = (
 ): rotationCommand is LoopedRotationCommands =>
     (rotationCommand as LoopedRotationCommands).iterations !== undefined;
 
-export enum Axis {
+export enum RotationAxis {
     X = 0,
     Y = 1,
     Z = 2,
 }
 
-export const rotationToCubicleMat4 = (axis: Axis, rotation: number): Mat4 => {
+export const rotationToCubicleMat4 = (
+    axis: RotationAxis,
+    rotation: number
+): Mat4 => {
     switch (axis) {
-        case Axis.X: {
+        case RotationAxis.X: {
             return fromAngleX(rotation);
         }
-        case Axis.Y: {
+        case RotationAxis.Y: {
             return fromAngleY(rotation);
         }
-        case Axis.Z: {
+        case RotationAxis.Z: {
             return fromAngleZ(rotation);
         }
     }
 };
 
-export const rotationToAxisMat4 = (axis: Axis, rotation: number): Mat4 => {
+export const rotationToAxisMat4 = (
+    axis: RotationAxis,
+    rotation: number
+): Mat4 => {
     switch (axis) {
-        case Axis.X: {
+        case RotationAxis.X: {
             return fromAngleX(-rotation);
         }
-        case Axis.Y: {
+        case RotationAxis.Y: {
             return fromAngleY(-rotation);
         }
-        case Axis.Z: {
+        case RotationAxis.Z: {
             return fromAngleZ(rotation);
         }
     }
 };
 
-export const letterToAxis = (letter: string): Axis => {
+export const letterToAxis = (letter: string): RotationAxis => {
     switch (letter.toUpperCase()) {
         case 'L':
         case 'R':
         case 'M':
         case 'X':
-            return Axis.X;
+            return RotationAxis.X;
         case 'U':
         case 'D':
         case 'E':
         case 'Y':
-            return Axis.Y;
+            return RotationAxis.Y;
         case 'F':
         case 'B':
         case 'S':
         case 'Z':
-            return Axis.Z;
+            return RotationAxis.Z;
         default:
             throw new Error(`${letter} is not a valid cube notation Letter!`);
     }

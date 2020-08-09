@@ -1,5 +1,5 @@
 import { range } from 'lodash';
-import { ICubicle, IFace, Axis, Color, Side } from './CubeTypes';
+import { ICubicle, IFace, CubeAxis, Color, Side } from './CubeTypes';
 import {
     Mat4,
     identity,
@@ -57,11 +57,11 @@ const sideToTransform = (side: Side, cubicleSize: number): Mat4 => {
 };
 
 const axisToTranslationPoint = (
-    [x, y, z]: Axis,
+    [x, y, z]: CubeAxis,
     cubicleSize: number,
     cubicleGap: number,
     cubeDimension: number
-): Axis => {
+): CubeAxis => {
     const offset = (cubeDimension + 1) * cubicleSize * (cubicleGap / 2);
     return [
         x * cubicleSize * cubicleGap - offset,
@@ -71,20 +71,20 @@ const axisToTranslationPoint = (
 };
 
 export const rotateAxis = (
-    axis: Axis,
+    axis: CubeAxis,
     rotation: Mat4,
     cubeDimension: number
-): Axis => {
+): CubeAxis => {
     const offset = (cubeDimension + 1) * 0.5;
     const point = axis.map((it) => it - offset);
     const rotatedPoint = apply([...point, 1] as Vec4, rotation).slice(0, 3);
-    return rotatedPoint.map((it) => it + offset).map(Math.round) as Axis;
+    return rotatedPoint.map((it) => it + offset).map(Math.round) as CubeAxis;
 };
 
-const isCubicleVisible = (axis: Axis, cubeDimension: number) =>
+const isCubicleVisible = (axis: CubeAxis, cubeDimension: number) =>
     axis.some((it) => it === 1 || it === cubeDimension);
 
-const isOuterFace = (side: Side, [x, y, z]: Axis, cubeDimension: number) =>
+const isOuterFace = (side: Side, [x, y, z]: CubeAxis, cubeDimension: number) =>
     ({
         [Side.FRONT]: z === 1,
         [Side.BACK]: z === cubeDimension,
@@ -96,7 +96,7 @@ const isOuterFace = (side: Side, [x, y, z]: Axis, cubeDimension: number) =>
 
 const generateFace = (
     side: Side,
-    axis: Axis,
+    axis: CubeAxis,
     cubicleSize: number,
     cubeDimension: number
 ): IFace => ({
@@ -115,7 +115,7 @@ export const generateCubicles = (
     const indexes = range(1, cubeDimension + 1);
     return indexes
         .flatMap((z) =>
-            indexes.flatMap((y) => indexes.map<Axis>((x) => [x, y, z]))
+            indexes.flatMap((y) => indexes.map<CubeAxis>((x) => [x, y, z]))
         )
         .filter((axis) => isCubicleVisible(axis, cubeDimension))
         .map<ICubicle>((axis) => ({
