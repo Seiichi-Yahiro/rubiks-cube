@@ -12,9 +12,9 @@ import { Vec4 } from '../utils/Vector4';
 import {
     RotationCommand,
     isLoopedRotationCommands,
-    rotationToAxisMat4,
-    rotationToCubicleMat4,
+    rotationCommandToMat4,
 } from './algorithms/RotationCommand';
+// import { zip } from 'lodash';
 
 export const cubeIsTransitioning = 'cube--is-transitioning';
 
@@ -61,11 +61,8 @@ const axisToTranslationPoint = (
     cubeDimension: number
 ): CubeAxis => {
     const offset = (cubeDimension + 1) * cubicleSize * (cubicleGap / 2);
-    return [
-        x * cubicleSize * cubicleGap - offset,
-        y * cubicleSize * cubicleGap - offset,
-        -z * cubicleSize * cubicleGap + offset,
-    ];
+    const sizeGap = cubicleSize * cubicleGap;
+    return [x * sizeGap - offset, y * sizeGap - offset, -z * sizeGap + offset];
 };
 
 export const rotateAxis = (
@@ -74,9 +71,13 @@ export const rotateAxis = (
     cubeDimension: number
 ): CubeAxis => {
     const offset = (cubeDimension + 1) * 0.5;
-    const point = axis.map((it) => it - offset);
+    const point = axis.map((it, index) =>
+        index === 2 ? -it + offset : it - offset
+    );
     const rotatedPoint = apply([...point, 1] as Vec4, rotation).slice(0, 3);
-    return rotatedPoint.map((it) => it + offset).map(Math.round) as CubeAxis;
+    return rotatedPoint
+        .map((it, index) => (index === 2 ? -it + offset : it + offset))
+        .map(Math.round) as CubeAxis;
 };
 
 const isCubicleVisible = (axis: CubeAxis, cubeDimension: number) =>
@@ -149,21 +150,15 @@ export const applyRotationCommand = (
             cubicles
         );
     } else {
-        const { axis, slices, rotation } = rotationCommand;
+        const { axis, slices } = rotationCommand;
+        const rotationMat = rotationCommandToMat4(rotationCommand);
 
         return cubicles.map((cubicle) => {
             if (slices.includes(cubicle.axis[axis])) {
                 return {
                     ...cubicle,
-                    axis: rotateAxis(
-                        cubicle.axis,
-                        rotationToAxisMat4(axis, rotation),
-                        cubeDimension
-                    ),
-                    transform: multiply(
-                        rotationToCubicleMat4(axis, rotation),
-                        cubicle.transform
-                    ),
+                    axis: rotateAxis(cubicle.axis, rotationMat, cubeDimension),
+                    transform: multiply(rotationMat, cubicle.transform),
                 };
             } else {
                 return cubicle;

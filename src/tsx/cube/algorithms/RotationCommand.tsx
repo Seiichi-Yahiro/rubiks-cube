@@ -26,33 +26,16 @@ export enum RotationAxis {
     Z = 2,
 }
 
-export const rotationToCubicleMat4 = (
-    axis: RotationAxis,
-    rotation: number
-): Mat4 => {
+export const rotationCommandToMat4 = ({
+    axis,
+    rotation,
+}: SingleRotationCommand): Mat4 => {
     switch (axis) {
         case RotationAxis.X: {
             return fromAngleX(rotation);
         }
         case RotationAxis.Y: {
             return fromAngleY(rotation);
-        }
-        case RotationAxis.Z: {
-            return fromAngleZ(rotation);
-        }
-    }
-};
-
-export const rotationToAxisMat4 = (
-    axis: RotationAxis,
-    rotation: number
-): Mat4 => {
-    switch (axis) {
-        case RotationAxis.X: {
-            return fromAngleX(-rotation);
-        }
-        case RotationAxis.Y: {
-            return fromAngleY(-rotation);
         }
         case RotationAxis.Z: {
             return fromAngleZ(rotation);

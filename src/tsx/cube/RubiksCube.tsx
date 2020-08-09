@@ -10,7 +10,7 @@ import {
 import Cubicle from './Cubicle';
 import './RubiksCube.scss';
 import Maybe from '../utils/Maybe';
-import { rotationToCubicleMat4 } from './algorithms/RotationCommand';
+import { rotationCommandToMat4 } from './algorithms/RotationCommand';
 
 const RubiksCube: React.FunctionComponent = () => {
     const cubicles = useRedux((state) => state.cube.cubicles);
@@ -49,9 +49,7 @@ const RubiksCube: React.FunctionComponent = () => {
                             .filter(({ axis: rotationAxis, slices }) =>
                                 slices.includes(axis[rotationAxis])
                             )
-                            .map(({ axis: rotationAxis, rotation }) =>
-                                rotationToCubicleMat4(rotationAxis, rotation)
-                            )
+                            .map(rotationCommandToMat4)
                             .unwrapOr(identity);
 
                         return (

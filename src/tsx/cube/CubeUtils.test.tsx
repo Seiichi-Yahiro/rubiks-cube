@@ -5,7 +5,6 @@ import { SingleRotationCommand } from './algorithms/RotationCommand';
 /**
  * TESTS SHOW THE NEW AXIS OF A CUBICLE
  * TESTS DON'T SHOW WHAT CUBICLE NOW MOVED TO THAT POSITION
- * AXIS ROTATION IS THE INVERSE ROTATION OF THE CUBICLE ROTATION (X and Y but not Z)
  */
 describe('CubeUtils', () => {
     describe('3x3x3', () => {
