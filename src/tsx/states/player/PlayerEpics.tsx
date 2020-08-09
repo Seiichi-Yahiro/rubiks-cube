@@ -3,6 +3,7 @@ import { playerActions, PlayerActionType } from './PlayerActions';
 import {
     concatMap,
     debounceTime,
+    delay,
     filter,
     first,
     map,
@@ -110,7 +111,7 @@ const player: AppEpic = (action$, state$) => {
                     'rubiks-cube__cubicle'
                 )
         ),
-        debounceTime(50)
+        debounceTime(10)
     );
 
     const applyRotation$ = action$.pipe(
@@ -120,7 +121,7 @@ const player: AppEpic = (action$, state$) => {
     );
 
     action$
-        .pipe(ofType(CubeActionType.APPLY_ANIMATED_ROTATION_COMMAND))
+        .pipe(ofType(CubeActionType.APPLY_ANIMATED_ROTATION_COMMAND), delay(10))
         .subscribe((_) => subject.next(true));
 
     return merge(commands$, applyRotation$);
