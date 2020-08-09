@@ -12,7 +12,7 @@ class Maybe<T> {
      */
     static some<T>(value: FunctionOrValue<T>): Maybe<NonNullable<T>> {
         if (isNil(value)) {
-            throw Error("Provided value must not be empty");
+            throw Error('Provided value must not be empty');
         }
 
         const result = isFunction(value) ? value()! : value!;
@@ -71,7 +71,7 @@ class Maybe<T> {
      */
     unwrap = (): T => {
         if (this.isNone()) {
-            throw Error("Provided value must not be empty");
+            throw Error('Provided value must not be empty');
         }
 
         return this.value!;
@@ -113,7 +113,7 @@ class Maybe<T> {
             return (this as unknown) as Maybe<NonNullable<U>>;
         }
 
-        return Maybe.of(onSome(this.value!));
+        return Maybe.of(() => onSome(this.value!));
     }
 
     /**

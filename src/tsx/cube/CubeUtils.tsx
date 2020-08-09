@@ -2,7 +2,6 @@ import { range } from 'lodash';
 import { ICubicle, IFace, CubeAxis, Color, Side } from './CubeTypes';
 import {
     Mat4,
-    identity,
     multiply,
     fromTranslation,
     fromAngleY,
@@ -15,7 +14,6 @@ import {
     isLoopedRotationCommands,
     rotationToAxisMat4,
     rotationToCubicleMat4,
-    SingleRotationCommand,
 } from './algorithms/RotationCommand';
 
 export const cubeIsTransitioning = 'cube--is-transitioning';
@@ -132,30 +130,8 @@ export const generateCubicles = (
                     cubeDimension
                 )
             ),
-            animatedTransform: identity,
         }));
 };
-
-export const animateRotationCommand = (
-    cubicles: ICubicle[],
-    { axis, slices, rotation }: SingleRotationCommand,
-    cubeDimension: number
-): ICubicle[] =>
-    cubicles.map((cubicle) => {
-        if (slices.includes(cubicle.axis[axis])) {
-            return {
-                ...cubicle,
-                axis: rotateAxis(
-                    cubicle.axis,
-                    rotationToAxisMat4(axis, rotation),
-                    cubeDimension
-                ),
-                animatedTransform: rotationToCubicleMat4(axis, rotation),
-            };
-        } else {
-            return cubicle;
-        }
-    });
 
 export const applyRotationCommand = (
     cubicles: ICubicle[],

@@ -1,17 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { cubeActions } from './CubeActions';
 import { ICubicle } from '../../cube/CubeTypes';
-import {
-    fromAngleX,
-    fromAngleY,
-    identity,
-    Mat4,
-    multiply,
-} from '../../utils/Matrix4';
-import {
-    animateRotationCommand,
-    applyRotationCommand,
-} from '../../cube/CubeUtils';
+import { fromAngleX, fromAngleY, Mat4, multiply } from '../../utils/Matrix4';
+import { applyRotationCommand } from '../../cube/CubeUtils';
 
 export interface ICubeState {
     dimension: number;
@@ -46,23 +37,6 @@ export const cubeReducer = createReducer(initialCubeState, (builder) => {
         })
         .addCase(cubeActions.updateCubicles, (state, action) => {
             state.cubicles = action.payload.cubicles;
-        })
-        .addCase(cubeActions.animateRotationCommand, (state, action) => {
-            state.cubicles = animateRotationCommand(
-                state.cubicles,
-                action.payload.rotationCommand,
-                state.dimension
-            );
-        })
-        .addCase(cubeActions.applyAnimatedRotationCommand, (state, _action) => {
-            state.cubicles = state.cubicles.map((cubicle) => ({
-                ...cubicle,
-                transform: multiply(
-                    cubicle.animatedTransform,
-                    cubicle.transform
-                ),
-                animatedTransform: identity,
-            }));
         })
         .addCase(cubeActions.applyRotationCommands, (state, action) => {
             state.cubicles = action.payload.rotationCommands.reduce(

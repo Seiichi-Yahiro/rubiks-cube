@@ -38,5 +38,4 @@ export interface ICubicle {
     axis: CubeAxis;
     faces: IFace[];
     transform: Mat4;
-    animatedTransform: Mat4;
 }

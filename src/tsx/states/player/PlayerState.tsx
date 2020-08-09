@@ -1,7 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { playerActions } from './PlayerActions';
-import { RotationCommand } from '../../cube/algorithms/RotationCommand';
+import {
+    RotationCommand,
+    SingleRotationCommand,
+} from '../../cube/algorithms/RotationCommand';
 import { Result } from 'parsimmon';
+import { cubeActions } from '../cube/CubeActions';
 
 export enum PlayerStatus {
     STOPPED = 'STOPPED',
@@ -12,6 +16,7 @@ export enum PlayerStatus {
 export interface IPlayerState {
     notation: string;
     rotationCommands: Result<RotationCommand[]>;
+    currentCommand?: SingleRotationCommand;
     status: PlayerStatus;
 }
 
@@ -37,5 +42,11 @@ export const playerReducer = createReducer(initialPlayerState, (builder) => {
         })
         .addCase(playerActions.stop, (state, _action) => {
             state.status = PlayerStatus.STOPPED;
+        })
+        .addCase(playerActions.setCurrentRotationCommand, (state, action) => {
+            state.currentCommand = action.payload.command;
+        })
+        .addCase(cubeActions.applyRotationCommands, (state, _action) => {
+            state.currentCommand = undefined;
         });
 });

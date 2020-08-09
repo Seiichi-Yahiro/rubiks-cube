@@ -1,8 +1,16 @@
 import React from 'react';
 import { useRedux } from '../states/States';
-import { toCss, multiply, fromScale, fromTranslation } from '../utils/Matrix4';
+import {
+    toCss,
+    multiply,
+    fromScale,
+    fromTranslation,
+    identity,
+} from '../utils/Matrix4';
 import Cubicle from './Cubicle';
 import './RubiksCube.scss';
+import Maybe from '../utils/Maybe';
+import { rotationToCubicleMat4 } from './algorithms/RotationCommand';
 
 const RubiksCube: React.FunctionComponent = () => {
     const cubicles = useRedux((state) => state.cube.cubicles);
@@ -11,6 +19,9 @@ const RubiksCube: React.FunctionComponent = () => {
     const scale = useRedux((state) => state.cube.scale);
     const rotation = useRedux((state) => state.cube.rotation);
     const rotationDuration = useRedux((state) => state.cube.rotationDuration);
+    const currentRotationCommand = Maybe.of(
+        useRedux((state) => state.player.currentCommand)
+    );
 
     const cubicleSize = cubeSize / cubeDimension;
 
@@ -33,8 +44,17 @@ const RubiksCube: React.FunctionComponent = () => {
         <div className="app__cube">
             <div className="rubiks-cube" style={style}>
                 <div style={positionCorrectionStyle()}>
-                    {cubicles.map(
-                        ({ id, faces, transform, animatedTransform }) => (
+                    {cubicles.map(({ id, faces, transform, axis }) => {
+                        const animatedTransform = currentRotationCommand
+                            .filter(({ axis: rotationAxis, slices }) =>
+                                slices.includes(axis[rotationAxis])
+                            )
+                            .map(({ axis: rotationAxis, rotation }) =>
+                                rotationToCubicleMat4(rotationAxis, rotation)
+                            )
+                            .unwrapOr(identity);
+
+                        return (
                             <Cubicle
                                 key={id.join(',')}
                                 faces={faces}
@@ -43,8 +63,8 @@ const RubiksCube: React.FunctionComponent = () => {
                                 size={cubicleSize}
                                 rotationDuration={rotationDuration}
                             />
-                        )
-                    )}
+                        );
+                    })}
                 </div>
             </div>
         </div>

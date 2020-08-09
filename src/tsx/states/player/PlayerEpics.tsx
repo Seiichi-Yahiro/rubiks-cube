@@ -7,7 +7,6 @@ import {
     filter,
     first,
     map,
-    mapTo,
     withLatestFrom,
 } from 'rxjs/operators';
 import { makeNotationParser } from '../../cube/algorithms/Parser';
@@ -95,7 +94,7 @@ const player: AppEpic = (action$, state$) => {
         map((_) =>
             rotationCommandGenerator
                 .map((it) => it.next().value)
-                .map<AppAction>(cubeActions.animateRotationCommand)
+                .map<AppAction>(playerActions.setCurrentRotationCommand)
                 .unwrapOr(playerActions.stop)
         )
     );
@@ -114,17 +113,21 @@ const player: AppEpic = (action$, state$) => {
         debounceTime(10)
     );
 
-    const applyRotation$ = action$.pipe(
-        ofType(CubeActionType.ANIMATE_ROTATION_COMMAND),
+    const applyRotationCommand$ = action$.pipe(
+        ofType(PlayerActionType.SET_CURRENT_ROTATION_COMMAND),
         concatMap((_) => transitionEnd$.pipe(first())),
-        mapTo(cubeActions.applyAnimatedRotationCommand())
+        withLatestFrom(state$),
+        map(([_, state]) => state.player.currentCommand),
+        filter((command) => command !== undefined),
+        map((command) => [command!]),
+        map(cubeActions.applyRotationCommands)
     );
 
     action$
-        .pipe(ofType(CubeActionType.APPLY_ANIMATED_ROTATION_COMMAND), delay(10))
+        .pipe(ofType(CubeActionType.APPLY_ROTATION_COMMANDS), delay(10))
         .subscribe((_) => subject.next(true));
 
-    return merge(commands$, applyRotation$);
+    return merge(commands$, applyRotationCommand$);
 };
 
 export const playerEpics = [parseNotation, player];
