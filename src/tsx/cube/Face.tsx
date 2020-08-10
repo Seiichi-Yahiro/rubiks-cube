@@ -1,15 +1,33 @@
 import React, { useState } from 'react';
-import { Color } from './CubeTypes';
+import { Color, FaceArrowDirection } from './CubeTypes';
 import { Mat4, toCss } from '../utils/Matrix4';
 import FaceArrows from './FaceArrows';
+import { SingleRotationCommand } from './algorithms/RotationCommand';
+import { useDispatch } from 'react-redux';
+import { playerActions } from '../states/player/PlayerActions';
 
 interface IFaceProps {
     transform: Mat4;
     color: Color;
+    generateArrowCommand: (
+        faceArrow: FaceArrowDirection
+    ) => SingleRotationCommand;
 }
 
-const Face: React.FunctionComponent<IFaceProps> = ({ transform, color }) => {
+const Face: React.FunctionComponent<IFaceProps> = ({
+    transform,
+    color,
+    generateArrowCommand,
+}) => {
     const [isHovered, setHovered] = useState(false);
+    const dispatch = useDispatch();
+
+    const rotate = (faceArrow: FaceArrowDirection) =>
+        dispatch(
+            playerActions.setCurrentRotationCommand(
+                generateArrowCommand(faceArrow)
+            )
+        );
 
     const onMouseEnter = () => setHovered(true);
     const onMouseLeave = () => setHovered(false);
@@ -28,14 +46,7 @@ const Face: React.FunctionComponent<IFaceProps> = ({ transform, color }) => {
         >
             {isHovered &&
                 color !== Color.DEFAULT &&
-                color !== Color.TRANSPARENT && (
-                    <FaceArrows
-                        up={() => void 0}
-                        down={() => void 0}
-                        right={() => void 0}
-                        left={() => void 0}
-                    />
-                )}
+                color !== Color.TRANSPARENT && <FaceArrows rotate={rotate} />}
         </div>
     );
 };

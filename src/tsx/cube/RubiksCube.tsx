@@ -55,6 +55,7 @@ const RubiksCube: React.FunctionComponent = () => {
                         return (
                             <Cubicle
                                 key={id.join(',')}
+                                axis={axis}
                                 faces={faces}
                                 animatedTransform={animatedTransform}
                                 transform={transform}

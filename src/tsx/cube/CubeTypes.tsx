@@ -27,6 +27,13 @@ export enum Direction {
     ANTI_CLOCKWISE = -1,
 }
 
+export enum FaceArrowDirection {
+    UP = 180,
+    LEFT = 90,
+    RIGHT = -90,
+    DOWN = 0,
+}
+
 export interface IFace {
     id: Side;
     color: Color;

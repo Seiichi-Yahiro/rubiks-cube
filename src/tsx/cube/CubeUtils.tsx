@@ -1,5 +1,12 @@
-import { range } from 'lodash';
-import { ICubicle, IFace, CubeAxis, Color, Side } from './CubeTypes';
+import { range, zip, curry } from 'lodash';
+import {
+    ICubicle,
+    IFace,
+    CubeAxis,
+    Color,
+    Side,
+    FaceArrowDirection,
+} from './CubeTypes';
 import {
     Mat4,
     multiply,
@@ -13,8 +20,8 @@ import {
     RotationCommand,
     isLoopedRotationCommands,
     rotationCommandToMat4,
+    SingleRotationCommand,
 } from './algorithms/RotationCommand';
-// import { zip } from 'lodash';
 
 export const cubeIsTransitioning = 'cube--is-transitioning';
 
@@ -166,3 +173,63 @@ export const applyRotationCommand = (
         });
     }
 };
+
+export const generateFaceArrowCommand = curry(
+    (
+        cubeAxis: CubeAxis,
+        cubicleRotation: Mat4,
+        originalSide: Side,
+        faceArrow: FaceArrowDirection
+    ): SingleRotationCommand => {
+        const [down, right] = {
+            [Side.FRONT]: [
+                [-1, 0, 0],
+                [0, 1, 0],
+            ],
+            [Side.BACK]: [
+                [1, 0, 0],
+                [0, 1, 0],
+            ],
+            [Side.LEFT]: [
+                [0, 0, -1],
+                [0, 1, 0],
+            ],
+            [Side.RIGHT]: [
+                [0, 0, 1],
+                [0, 1, 0],
+            ],
+            [Side.UP]: [
+                [-1, 0, 0],
+                [0, 0, 1],
+            ],
+            [Side.DOWN]: [
+                [-1, 0, 0],
+                [0, 0, -1],
+            ],
+        }[originalSide];
+
+        const point = {
+            [FaceArrowDirection.DOWN]: down,
+            [FaceArrowDirection.RIGHT]: right,
+            [FaceArrowDirection.UP]: down.map((it) => it * -1),
+            [FaceArrowDirection.LEFT]: right.map((it) => it * -1),
+        }[faceArrow];
+
+        const rotatedPoint = apply([...point, 0] as Vec4, cubicleRotation)
+            .slice(0, 3)
+            .map(Math.round);
+
+        const newCubeAxis = zip(cubeAxis, rotatedPoint).map(
+            ([it, sign]) => it! * sign!
+        );
+
+        const axis = newCubeAxis.findIndex((it) => it !== 0);
+        const slice = newCubeAxis[axis];
+
+        return {
+            axis,
+            slices: [Math.abs(slice)],
+            rotation: 90 * Math.sign(slice),
+        };
+    }
+);

@@ -1,47 +1,33 @@
 import React from 'react';
 import './Arrows.scss';
 import Arrow from './Arrow';
+import { FaceArrowDirection } from './CubeTypes';
 
 interface IArrowsProps {
-    up: () => void;
-    down: () => void;
-    left: () => void;
-    right: () => void;
+    rotate: (faceArrow: FaceArrowDirection) => void;
 }
 
-const FaceArrows: React.FunctionComponent<IArrowsProps> = ({
-    up,
-    down,
-    right,
-    left,
-}) => (
+const FaceArrows: React.FunctionComponent<IArrowsProps> = ({ rotate }) => (
     <svg viewBox="0 0 100 100" className="face-arrows-svg">
         <g className="face-arrows-wrapper">
-            <FaceArrow direction={FaceArrowDirection.UP} onClick={up} />
-            <FaceArrow direction={FaceArrowDirection.DOWN} onClick={down} />
-            <FaceArrow direction={FaceArrowDirection.LEFT} onClick={left} />
-            <FaceArrow direction={FaceArrowDirection.RIGHT} onClick={right} />
+            <FaceArrow direction={FaceArrowDirection.UP} rotate={rotate} />
+            <FaceArrow direction={FaceArrowDirection.DOWN} rotate={rotate} />
+            <FaceArrow direction={FaceArrowDirection.LEFT} rotate={rotate} />
+            <FaceArrow direction={FaceArrowDirection.RIGHT} rotate={rotate} />
         </g>
     </svg>
 );
 
-export enum FaceArrowDirection {
-    UP = '180deg',
-    LEFT = '90deg',
-    RIGHT = '-90deg',
-    DOWN = '0deg',
-}
-
 interface IArrowProps {
     direction: FaceArrowDirection;
-    onClick: () => void;
+    rotate: (faceArrow: FaceArrowDirection) => void;
 }
 
-const FaceArrow: React.FC<IArrowProps> = ({ direction, onClick }) => (
+const FaceArrow: React.FC<IArrowProps> = ({ direction, rotate }) => (
     <g
         className="face-arrow-wrapper"
-        style={{ transform: `rotate(${direction})` }}
-        onClick={onClick}
+        style={{ transform: `rotate(${direction}deg)` }}
+        onClick={() => rotate(direction)}
     >
         <rect width="100%" height="100%" className="face-arrow-wrapper__box" />
         <Arrow className="face-arrow" />
