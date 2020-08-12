@@ -7,6 +7,7 @@ import {
     first,
     map,
     mapTo,
+    startWith,
     withLatestFrom,
 } from 'rxjs/operators';
 import { makeNotationParser } from '../../cube/algorithms/Parser';
@@ -21,10 +22,15 @@ import Maybe from '../../utils/Maybe';
 import { PlayerStatus } from './PlayerState';
 import { Action } from 'redux';
 
-const parseNotation: AppEpic = (action$, _state$) => {
+const parseNotation: AppEpic = (action$, state$) => {
     const parser$ = action$.pipe(
         filter(cubeActions.setCubeDimension.match),
-        map((action) => makeNotationParser(action.payload).rotationCommands)
+        map((action) => action.payload),
+        startWith(state$.value.cube.dimension),
+        map(
+            (cubeDimension) =>
+                makeNotationParser(cubeDimension).rotationCommands
+        )
     );
 
     const notation$ = action$.pipe(
