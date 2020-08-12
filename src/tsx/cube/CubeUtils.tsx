@@ -139,6 +139,11 @@ export const generateCubicles = (
         }));
 };
 
+export const canApplyRotationCommand = (
+    cubeAxis: CubeAxis,
+    { slices, axis }: SingleRotationCommand
+): boolean => slices.includes(cubeAxis[axis]);
+
 export const applyRotationCommand = (
     cubicles: ICubicle[],
     rotationCommand: RotationCommand,
@@ -155,11 +160,9 @@ export const applyRotationCommand = (
             cubicles
         );
     } else {
-        const { axis, slices } = rotationCommand;
-        const rotationMat = rotationCommandToMat4(rotationCommand);
-
         return cubicles.map((cubicle) => {
-            if (slices.includes(cubicle.axis[axis])) {
+            if (canApplyRotationCommand(cubicle.axis, rotationCommand)) {
+                const rotationMat = rotationCommandToMat4(rotationCommand);
                 return {
                     ...cubicle,
                     axis: rotateAxis(cubicle.axis, rotationMat, cubeDimension),

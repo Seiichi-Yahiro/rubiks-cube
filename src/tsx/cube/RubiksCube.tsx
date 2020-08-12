@@ -6,6 +6,7 @@ import './RubiksCube.scss';
 import Maybe from '../utils/Maybe';
 import { rotationCommandToCssRotation } from './algorithms/RotationCommand';
 import createClassName from '../utils/createClassName';
+import { canApplyRotationCommand } from './CubeUtils';
 
 const RubiksCube: React.FunctionComponent = () => {
     const cubicles = useRedux((state) => state.cube.cubicles);
@@ -46,8 +47,8 @@ const RubiksCube: React.FunctionComponent = () => {
                 <div style={positionCorrectionStyle()}>
                     {cubicles.map(({ id, faces, transform, axis }) => {
                         const animatedTransform = currentRotationCommand
-                            .filter(({ axis: rotationAxis, slices }) =>
-                                slices.includes(axis[rotationAxis])
+                            .filter((command) =>
+                                canApplyRotationCommand(axis, command)
                             )
                             .map(rotationCommandToCssRotation)
                             .unwrapOr('rotate(0)');
