@@ -1,14 +1,13 @@
-import { IAlgorithm } from './AlgorithmTypes';
+import { AlgorithmTree } from './AlgorithmTree';
 
-const Misc: IAlgorithm = {
+const Misc: AlgorithmTree = {
     name: 'Misc',
-    children: [
+    algorithms: [
         {
             name: 'Sexy',
-            children: [],
-            notation: "R U R' U'"
-        }
-    ]
+            notation: "R U R' U'",
+        },
+    ],
 };
 
 export default Misc;

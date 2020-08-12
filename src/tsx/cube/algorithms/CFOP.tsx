@@ -1,20 +1,19 @@
-import { IAlgorithm } from './AlgorithmTypes';
 import { Color } from '../CubeTypes';
+import { AlgorithmTree } from './AlgorithmTree';
 
 const { YELLOW, ORANGE, RED, GREEN, BLUE, DEFAULT, TRANSPARENT } = Color;
 
-const Look2CFOP: IAlgorithm = {
+const Look2CFOP: AlgorithmTree = {
     name: '2 Look CFOP',
-    children: [
+    groups: [
         {
             name: 'OLL',
-            children: [
+            groups: [
                 {
                     name: 'Edges',
-                    children: [
+                    algorithms: [
                         {
                             name: 'Dot',
-                            children: [],
                             notation: "F (R U R' U') F' f (R U R' U') f'",
                             startConfiguration: [
                                 [
@@ -56,7 +55,6 @@ const Look2CFOP: IAlgorithm = {
                         },
                         {
                             name: 'L',
-                            children: [],
                             notation: "f (R U R' U') f'",
                             startConfiguration: [
                                 [
@@ -98,7 +96,6 @@ const Look2CFOP: IAlgorithm = {
                         },
                         {
                             name: 'Line',
-                            children: [],
                             notation: "F (R U R' U') F'",
                             startConfiguration: [
                                 [
@@ -142,13 +139,12 @@ const Look2CFOP: IAlgorithm = {
                 },
                 {
                     name: 'Corners',
-                    children: [
+                    groups: [
                         {
                             name: 'No Corners solved',
-                            children: [
+                            algorithms: [
                                 {
                                     name: 'H',
-                                    children: [],
                                     notation: "F (R U R' U')3 F'",
                                     startConfiguration: [
                                         [
@@ -190,7 +186,6 @@ const Look2CFOP: IAlgorithm = {
                                 },
                                 {
                                     name: 'Pi',
-                                    children: [],
                                     notation: "R U2 (R2 U' R2 U' R2) U2 R",
                                     startConfiguration: [
                                         [
@@ -234,10 +229,9 @@ const Look2CFOP: IAlgorithm = {
                         },
                         {
                             name: '1 Corner solved',
-                            children: [
+                            algorithms: [
                                 {
                                     name: 'Sune',
-                                    children: [],
                                     notation: "R U R' U R U2 R'",
                                     startConfiguration: [
                                         [
@@ -279,7 +273,6 @@ const Look2CFOP: IAlgorithm = {
                                 },
                                 {
                                     name: 'Anti-Sune',
-                                    children: [],
                                     notation: "L' U' L U' L' U2 L",
                                     startConfiguration: [
                                         [
@@ -323,10 +316,9 @@ const Look2CFOP: IAlgorithm = {
                         },
                         {
                             name: '2 Corners solved',
-                            children: [
+                            algorithms: [
                                 {
                                     name: 'L',
-                                    children: [],
                                     notation: "x (R' U R D') (R' U' R D) x'",
                                     startConfiguration: [
                                         [
@@ -368,7 +360,6 @@ const Look2CFOP: IAlgorithm = {
                                 },
                                 {
                                     name: 'T',
-                                    children: [],
                                     notation: "x (L U R' U') (L' U R U') x'",
                                     startConfiguration: [
                                         [
@@ -410,7 +401,6 @@ const Look2CFOP: IAlgorithm = {
                                 },
                                 {
                                     name: 'U',
-                                    children: [],
                                     notation: "R2 D R' U2 R D' R' U2 R'",
                                     startConfiguration: [
                                         [
@@ -456,10 +446,9 @@ const Look2CFOP: IAlgorithm = {
                 },
                 {
                     name: 'Parity',
-                    children: [
+                    algorithms: [
                         {
                             name: 'Edge flipped',
-                            children: [],
                             notation:
                                 "(2R2 B2 U2) (2L U2) (2R' U2) (2R U2) (F2 2R F2) (2L' B2 2R2)",
                             startConfiguration: [
@@ -519,13 +508,12 @@ const Look2CFOP: IAlgorithm = {
         },
         {
             name: 'PLL',
-            children: [
+            groups: [
                 {
                     name: 'Corners',
-                    children: [
+                    algorithms: [
                         {
                             name: 'Diagonal',
-                            children: [],
                             notation:
                                 "(F R U' R' U' R U R' F') (R U R' U' R' F R F')",
                             startConfiguration: [
@@ -556,7 +544,6 @@ const Look2CFOP: IAlgorithm = {
                         },
                         {
                             name: 'Adjacent',
-                            children: [],
                             notation:
                                 "(R U R' U' R' F) R2 (U' R' U' R U R' F')",
                             startConfiguration: [
@@ -589,13 +576,12 @@ const Look2CFOP: IAlgorithm = {
                 },
                 {
                     name: 'Edges',
-                    children: [
+                    groups: [
                         {
                             name: '3 Edges',
-                            children: [
+                            algorithms: [
                                 {
                                     name: 'Right to Left',
-                                    children: [],
                                     notation: "R U' R U R U R U' R' U' R2",
                                     startConfiguration: [
                                         [
@@ -637,7 +623,6 @@ const Look2CFOP: IAlgorithm = {
                                 },
                                 {
                                     name: 'Left to Right',
-                                    children: [],
                                     notation: "R2 U R U R' U' R' U' R' U R'",
                                     startConfiguration: [
                                         [
@@ -675,10 +660,9 @@ const Look2CFOP: IAlgorithm = {
                         },
                         {
                             name: '4 Edges',
-                            children: [
+                            algorithms: [
                                 {
                                     name: 'Cross',
-                                    children: [],
                                     notation: "M2 U' M2 U2 M2 U' M2",
                                     startConfiguration: [
                                         [
@@ -702,7 +686,6 @@ const Look2CFOP: IAlgorithm = {
                                 },
                                 {
                                     name: 'Diagonal',
-                                    children: [],
                                     notation: "M' U' M2 U' M2 U' M' U2 M2",
                                     startConfiguration: [
                                         [
@@ -730,10 +713,9 @@ const Look2CFOP: IAlgorithm = {
                 },
                 {
                     name: 'Parity',
-                    children: [
+                    algorithms: [
                         {
                             name: 'Corners / Edges swapped',
-                            children: [],
                             notation: '2R2 U2 2R2 u2 2R2 2U2',
                             startConfiguration: [
                                 [

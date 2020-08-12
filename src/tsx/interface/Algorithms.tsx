@@ -2,74 +2,42 @@ import React, { useState } from 'react';
 import { List, ListItemText } from '@material-ui/core';
 import ListItem from '@material-ui/core/ListItem';
 import Look2CFOP from '../cube/algorithms/CFOP';
-import { IAlgorithm } from '../cube/algorithms/AlgorithmTypes';
 import Misc from '../cube/algorithms/Misc';
 import { PlayerStatus } from '../states/player/PlayerState';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import StartConfiguration from './StartConfiguration';
-import { take, last } from 'lodash';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import { playerActions } from '../states/player/PlayerActions';
 import { useDispatch } from 'react-redux';
 import { useRedux } from '../states/States';
+import { AlgorithmGroup, flattenTree } from '../cube/algorithms/AlgorithmTree';
 
-const flattenAlgorithms = (algorithm: IAlgorithm): IAlgorithm[] =>
-    [algorithm]
-        .concat(
-            algorithm.children
-                .map((child) =>
-                    child.notation
-                        ? child
-                        : {
-                              ...child,
-                              name: `${algorithm.name} / ${child.name}`,
-                          }
-                )
-                .flatMap(flattenAlgorithms)
-        )
-        .filter(
-            (item, index, list) =>
-                index + 1 >= list.length ||
-                item.notation ||
-                list[index + 1].notation
-        );
+const categories = [Look2CFOP, Misc].flatMap((algorithm) =>
+    flattenTree(algorithm)
+);
 
-const categories = [Look2CFOP, Misc]
-    .flatMap(flattenAlgorithms)
-    .map((item) => ({ ...item, children: [] } as IAlgorithm))
-    .reduce((list, algorithm) => {
-        if (!algorithm.notation) {
-            return list.concat(algorithm);
-        }
-
-        const lastItem = last(list)!;
-        lastItem.children.push(algorithm as IAlgorithm);
-        const body = take(list, list.length - 1);
-        return body.concat(lastItem);
-    }, [] as IAlgorithm[]) as IAlgorithm[];
-
-const filterCategories = (searchValue: string) =>
+const filterCategories = (searchValue: string): AlgorithmGroup[] =>
     categories
-        .map((group) => {
+        .map<AlgorithmGroup | undefined>((group) => {
             if (group.name.toLocaleLowerCase().includes(searchValue)) {
                 return group;
             }
 
-            const children = group.children.filter((child) =>
-                child.name.toLocaleLowerCase().includes(searchValue)
+            const algorithms = group.algorithms.filter((algorithm) =>
+                algorithm.name.toLocaleLowerCase().includes(searchValue)
             );
 
-            if (children.length === 0) {
-                return (undefined as unknown) as IAlgorithm;
+            if (algorithms.length === 0) {
+                return;
             }
 
             return {
                 ...group,
-                children: children,
+                algorithms,
             };
         })
-        .filter((group) => group);
+        .filter((group): group is AlgorithmGroup => group !== undefined);
 
 const Algorithms: React.FunctionComponent = () => {
     const dispatch = useDispatch();
@@ -97,28 +65,28 @@ const Algorithms: React.FunctionComponent = () => {
                         {group.name}
                         <Divider />
                     </ListSubheader>
-                    {group.children.map((child) => (
+                    {group.algorithms.map((algorithm) => (
                         <ListItem
-                            key={child.name + index}
+                            key={algorithm.name + index}
                             className="interface-list__item--moves"
                             button={true}
                             onClick={() =>
                                 dispatch(
                                     playerActions.updateNotation(
-                                        child.notation!
+                                        algorithm.notation!
                                     )
                                 )
                             }
                             disabled={playerStatus !== PlayerStatus.STOPPED}
                         >
-                            {child.startConfiguration && (
+                            {algorithm.startConfiguration && (
                                 <StartConfiguration
-                                    configuration={child.startConfiguration}
+                                    configuration={algorithm.startConfiguration}
                                 />
                             )}
                             <ListItemText
-                                primary={child.name}
-                                secondary={child.notation}
+                                primary={algorithm.name}
+                                secondary={algorithm.notation}
                             />
                         </ListItem>
                     ))}
