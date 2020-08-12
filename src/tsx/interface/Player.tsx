@@ -71,7 +71,6 @@ const Player: React.FunctionComponent = () => {
 
     const onStop = () => dispatch(playerActions.stop());
 
-    // TODO when paused
     const onJumpToEnd = () => {
         if (isOk(rotationCommands)) {
             dispatch(cubeActions.applyRotationCommands(rotationCommands.value));
@@ -116,9 +115,7 @@ const Player: React.FunctionComponent = () => {
                     <IconButton
                         onClick={onJumpToEnd}
                         disabled={
-                            playerStatus === PlayerStatus.PLAYING ||
-                            isNotationEmpty ||
-                            hasParseError
+                            !isStopped || isNotationEmpty || hasParseError
                         }
                     >
                         <SkipNext />
