@@ -1,6 +1,5 @@
-import { combineReducers } from 'redux';
+import { Action, combineReducers } from 'redux';
 import { Epic } from 'redux-observable';
-import { AppAction } from './Actions';
 import { cubeReducer, ICubeState } from './cube/CubeState';
 import { useSelector } from 'react-redux';
 import { IPlayerState, playerReducer } from './player/PlayerState';
@@ -15,7 +14,7 @@ export const reducer = combineReducers<AppState>({
     player: playerReducer,
 });
 
-export type AppEpic = Epic<AppAction, AppAction, AppState>;
+export type AppEpic = Epic<Action, Action, AppState>;
 
 export const useRedux = function <T>(selector: (state: AppState) => T) {
     return useSelector<AppState, T>(selector);

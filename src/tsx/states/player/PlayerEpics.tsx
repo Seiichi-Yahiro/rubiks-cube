@@ -1,5 +1,5 @@
 import { AppEpic } from '../States';
-import { playerActions, PlayerActionType } from './PlayerActions';
+import { playerActions } from './PlayerActions';
 import {
     concatMap,
     debounceTime,
@@ -7,34 +7,31 @@ import {
     filter,
     first,
     map,
+    mapTo,
     withLatestFrom,
 } from 'rxjs/operators';
 import { makeNotationParser } from '../../cube/algorithms/Parser';
-import { cubeActions, CubeActionType } from '../cube/CubeActions';
+import { cubeActions } from '../cube/CubeActions';
 import { combineLatest, fromEvent, merge, Subject } from 'rxjs';
-import { ofType } from 'redux-observable';
 import {
     SingleRotationCommand,
     isLoopedRotationCommands,
     isOk,
     RotationCommand,
 } from '../../cube/algorithms/RotationCommand';
-import { AppAction } from '../Actions';
 import Maybe from '../../utils/Maybe';
 import { PlayerStatus } from './PlayerState';
+import { Action } from 'redux';
 
-const parseNotation: AppEpic = (action$, state$) => {
+const parseNotation: AppEpic = (action$, _state$) => {
     const parser$ = action$.pipe(
-        ofType(CubeActionType.SET_CUBE_DIMENSION),
-        withLatestFrom(state$),
-        map(([_, state]) => state.cube.dimension),
-        map((dimension) => makeNotationParser(dimension).rotationCommands)
+        filter(cubeActions.setCubeDimension.match),
+        map((action) => makeNotationParser(action.payload).rotationCommands)
     );
 
     const notation$ = action$.pipe(
-        ofType(PlayerActionType.UPDATE_NOTATION),
-        withLatestFrom(state$),
-        map(([_, state]) => state.player.notation)
+        filter(playerActions.updateNotation.match),
+        map((action) => action.payload)
     );
 
     return combineLatest([parser$, notation$]).pipe(
@@ -58,7 +55,7 @@ function* singleRotationCommandGenerator(
 }
 
 const player: AppEpic = (action$, state$) => {
-    const play$ = action$.pipe(ofType(PlayerActionType.PLAY_ALGORITHM));
+    const play$ = action$.pipe(filter(playerActions.play.match));
 
     let rotationCommandGenerator: Maybe<Generator<
         SingleRotationCommand,
@@ -84,7 +81,7 @@ const player: AppEpic = (action$, state$) => {
             subject.next(true);
         });
 
-    action$.pipe(ofType(PlayerActionType.STOP_ALGORITHM)).subscribe((_) => {
+    action$.pipe(filter(playerActions.stop.match)).subscribe((_) => {
         rotationCommandGenerator = Maybe.none();
     });
 
@@ -94,7 +91,7 @@ const player: AppEpic = (action$, state$) => {
         map((_) =>
             rotationCommandGenerator
                 .map((it) => it.next().value)
-                .map<AppAction>(playerActions.setCurrentRotationCommand)
+                .map<Action>(playerActions.setCurrentRotationCommand)
                 .unwrapOr(playerActions.stop)
         )
     );
@@ -114,17 +111,14 @@ const player: AppEpic = (action$, state$) => {
     );
 
     const applyRotationCommand$ = action$.pipe(
-        ofType(PlayerActionType.SET_CURRENT_ROTATION_COMMAND),
-        concatMap((_) => transitionEnd$.pipe(first())),
-        withLatestFrom(state$),
-        map(([_, state]) => state.player.currentCommand),
-        filter((command) => command !== undefined),
-        map((command) => [command!]),
-        map(cubeActions.applyRotationCommands)
+        filter(playerActions.setCurrentRotationCommand.match),
+        map((action) => [action.payload]),
+        map(cubeActions.applyRotationCommands),
+        concatMap((action) => transitionEnd$.pipe(first(), mapTo(action)))
     );
 
     action$
-        .pipe(ofType(CubeActionType.APPLY_ROTATION_COMMANDS), delay(10))
+        .pipe(filter(cubeActions.applyRotationCommands.match), delay(10))
         .subscribe((_) => subject.next(true));
 
     return merge(commands$, applyRotationCommand$);

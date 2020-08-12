@@ -1,19 +1,19 @@
 import { ofType } from 'redux-observable';
-import { cubeActions, CubeActionType } from './CubeActions';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { cubeActions } from './CubeActions';
+import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { AppEpic } from '../States';
 import { generateCubicles } from '../../cube/CubeUtils';
 
 const initEpic: AppEpic = (action$, state$) =>
     action$.pipe(
-        ofType(CubeActionType.INIT_CUBE),
+        filter(cubeActions.init.match),
         withLatestFrom(state$),
         map(([_, state]) => cubeActions.setCubeDimension(state.cube.dimension))
     );
 
 const updateCubicles: AppEpic = (action$, state$) =>
     action$.pipe(
-        ofType(CubeActionType.SET_CUBE_DIMENSION, CubeActionType.RESET_CUBE),
+        ofType(cubeActions.setCubeDimension.type, cubeActions.resetCube.type),
         withLatestFrom(state$),
         map(([_, state]) =>
             cubeActions.updateCubicles(

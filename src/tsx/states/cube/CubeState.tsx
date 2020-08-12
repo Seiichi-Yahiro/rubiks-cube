@@ -27,19 +27,19 @@ const initialCubeState: ICubeState = {
 export const cubeReducer = createReducer(initialCubeState, (builder) => {
     builder
         .addCase(cubeActions.setCubeDimension, (state, action) => {
-            state.dimension = action.payload.dimension;
+            state.dimension = action.payload;
         })
         .addCase(cubeActions.setCubeScale, (state, action) => {
-            state.scale = action.payload.scale;
+            state.scale = action.payload;
         })
         .addCase(cubeActions.setRotationAnimationSpeed, (state, action) => {
-            state.rotationDuration = action.payload.speed;
+            state.rotationDuration = action.payload;
         })
         .addCase(cubeActions.updateCubicles, (state, action) => {
-            state.cubicles = action.payload.cubicles;
+            state.cubicles = action.payload;
         })
         .addCase(cubeActions.applyRotationCommands, (state, action) => {
-            state.cubicles = action.payload.rotationCommands.reduce(
+            state.cubicles = action.payload.reduce(
                 (cubicles, command) =>
                     applyRotationCommand(cubicles, command, state.dimension),
                 state.cubicles
