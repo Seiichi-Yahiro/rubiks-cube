@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 import { useRedux } from '../states/States';
 import { AlgorithmGroup, flattenTree } from '../cube/algorithms/AlgorithmTree';
 
-const categories = [Look2CFOP, Misc].flatMap((algorithm) =>
+export const categories = [Look2CFOP, Misc].flatMap((algorithm) =>
     flattenTree(algorithm)
 );
 
