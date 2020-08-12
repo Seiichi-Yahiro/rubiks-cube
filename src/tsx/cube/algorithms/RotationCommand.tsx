@@ -43,6 +43,23 @@ export const rotationCommandToMat4 = ({
     }
 };
 
+export const rotationCommandToCssRotation = ({
+    axis,
+    rotation,
+}: SingleRotationCommand): string => {
+    switch (axis) {
+        case RotationAxis.X: {
+            return `rotateX(${rotation}deg)`;
+        }
+        case RotationAxis.Y: {
+            return `rotateY(${rotation}deg)`;
+        }
+        case RotationAxis.Z: {
+            return `rotateZ(${rotation}deg)`;
+        }
+    }
+};
+
 export const letterToAxis = (letter: string): RotationAxis => {
     switch (letter.toUpperCase()) {
         case 'L':

@@ -1,5 +1,5 @@
 import React from 'react';
-import { identity, Mat4, toCss } from '../utils/Matrix4';
+import { Mat4, toCss } from '../utils/Matrix4';
 import { CubeAxis, IFace } from './CubeTypes';
 import Face from './Face';
 import { generateFaceArrowCommand } from './CubeUtils';
@@ -7,7 +7,7 @@ import { generateFaceArrowCommand } from './CubeUtils';
 interface ICubicleProps {
     axis: CubeAxis;
     faces: IFace[];
-    animatedTransform: Mat4;
+    animatedTransform: string;
     transform: Mat4;
     size: number;
     rotationDuration: number;
@@ -22,11 +22,11 @@ const Cubicle: React.FunctionComponent<ICubicleProps> = ({
     rotationDuration,
 }) => {
     const style: React.CSSProperties = {
-        transform: toCss(animatedTransform) + toCss(transform),
+        transform: animatedTransform + toCss(transform),
         width: size,
         height: size,
         transition:
-            animatedTransform === identity
+            animatedTransform === 'rotate(0)'
                 ? ''
                 : `transform ${rotationDuration}ms`,
     };
