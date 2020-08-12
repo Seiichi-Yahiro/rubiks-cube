@@ -9,7 +9,7 @@ const App: React.FunctionComponent = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(cubeActions.init());
+        dispatch(cubeActions.resetCube());
     }, []);
 
     return (
