@@ -33,7 +33,6 @@
         "enzyme-adapter-react-16": "1.15.2",
         "eslint": "7.6.0",
         "eslint-config-prettier": "6.11.0",
-        "eslint-plugin-css-modules": "2.11.0",
         "eslint-plugin-react": "7.20.5",
         "eslint-plugin-react-hooks": "4.0.8",
         "fork-ts-checker-webpack-plugin": "5.0.14",

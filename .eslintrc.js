@@ -1,7 +1,7 @@
 const path = require('path');
 module.exports = {
     parser: '@typescript-eslint/parser',
-    plugins: ['@typescript-eslint', 'react', 'react-hooks', 'css-modules'],
+    plugins: ['@typescript-eslint', 'react', 'react-hooks'],
     env: {
         browser: true,
         jest: true,
@@ -12,7 +12,6 @@ module.exports = {
         'plugin:react/recommended',
         'prettier/react', // disables react-specific linting rules that conflict with prettier
         'plugin:react-hooks/recommended',
-        'plugin:css-modules/recommended',
     ],
     parserOptions: {
         project: path.resolve(__dirname, './tsconfig.json'),
