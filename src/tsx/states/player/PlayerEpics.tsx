@@ -2,7 +2,6 @@ import { AppEpic } from '../States';
 import { playerActions } from './PlayerActions';
 import {
     concatMap,
-    debounceTime,
     delay,
     filter,
     first,
@@ -14,10 +13,9 @@ import { makeNotationParser } from '../../cube/algorithms/Parser';
 import { cubeActions } from '../cube/CubeActions';
 import { combineLatest, fromEvent, merge, Subject } from 'rxjs';
 import {
-    SingleRotationCommand,
     isLoopedRotationCommands,
-    isOk,
     RotationCommand,
+    SingleRotationCommand,
 } from '../../cube/algorithms/RotationCommand';
 import Maybe from '../../utils/Maybe';
 import { PlayerStatus } from './PlayerState';
@@ -70,10 +68,7 @@ const player: AppEpic = (action$, state$) => {
     play$
         .pipe(
             filter((_) => rotationCommandGenerator.isNone()),
-            withLatestFrom(state$),
-            map(([_, state]) => state.player.rotationCommands),
-            filter(isOk),
-            map((it) => it.value),
+            map((it) => it.payload),
             map(singleRotationCommandGenerator)
         )
         .subscribe((it) => {
@@ -106,8 +101,7 @@ const player: AppEpic = (action$, state$) => {
                 (event.target as HTMLElement).className.includes(
                     'rubiks-cube__cubicle'
                 )
-        ),
-        debounceTime(10)
+        )
     );
 
     const applyRotationCommand$ = action$.pipe(

@@ -23,11 +23,7 @@ const Face: React.FunctionComponent<IFaceProps> = ({
     const dispatch = useDispatch();
 
     const rotate = (faceArrow: FaceArrowDirection) =>
-        dispatch(
-            playerActions.setCurrentRotationCommand(
-                generateArrowCommand(faceArrow)
-            )
-        );
+        dispatch(playerActions.play([generateArrowCommand(faceArrow)]));
 
     const onMouseEnter = () => setHovered(true);
     const onMouseLeave = () => setHovered(false);

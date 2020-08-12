@@ -5,7 +5,7 @@ import {
     SingleRotationCommand,
 } from '../../cube/algorithms/RotationCommand';
 
-const play = createAction('PLAY');
+const play = createAction<RotationCommand[]>('PLAY');
 const stop = createAction('STOP');
 const pause = createAction('PAUSE');
 

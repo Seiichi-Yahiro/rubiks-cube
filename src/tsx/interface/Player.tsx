@@ -34,14 +34,15 @@ const Player: React.FunctionComponent = () => {
     const isNotationEmpty = playerNotation.length === 0;
     const isStopped = playerStatus === PlayerStatus.STOPPED;
 
-    // const generateMoveGenerator = () => Maybe.some(interpretNotation(playerNotation, cubeDimension));
-
     const playOrPause = () => {
         switch (playerStatus) {
             case PlayerStatus.STOPPED:
             case PlayerStatus.PAUSED: {
-                const onPlay = () =>
-                    dispatch(playerActions.play(/*generateMoveGenerator*/));
+                const onPlay = () => {
+                    if (isOk(rotationCommands)) {
+                        dispatch(playerActions.play(rotationCommands.value));
+                    }
+                };
 
                 return (
                     <IconButton
