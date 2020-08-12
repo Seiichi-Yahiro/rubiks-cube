@@ -11,6 +11,7 @@ import Cubicle from './Cubicle';
 import './RubiksCube.scss';
 import Maybe from '../utils/Maybe';
 import { rotationCommandToMat4 } from './algorithms/RotationCommand';
+import createClassName from '../utils/createClassName';
 
 const RubiksCube: React.FunctionComponent = () => {
     const cubicles = useRedux((state) => state.cube.cubicles);
@@ -42,7 +43,12 @@ const RubiksCube: React.FunctionComponent = () => {
 
     return (
         <div className="app__cube">
-            <div className="rubiks-cube" style={style}>
+            <div
+                className={createClassName('rubiks-cube', {
+                    'rubiks-cube--is-transitioning': currentRotationCommand.isSome(),
+                })}
+                style={style}
+            >
                 <div style={positionCorrectionStyle()}>
                     {cubicles.map(({ id, faces, transform, axis }) => {
                         const animatedTransform = currentRotationCommand

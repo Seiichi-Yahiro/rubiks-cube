@@ -23,8 +23,6 @@ import {
     SingleRotationCommand,
 } from './algorithms/RotationCommand';
 
-export const cubeIsTransitioning = 'cube--is-transitioning';
-
 const sideToColor = {
     [Side.FRONT]: Color.BLUE,
     [Side.BACK]: Color.GREEN,
