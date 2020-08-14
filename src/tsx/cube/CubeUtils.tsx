@@ -184,6 +184,7 @@ export const generateFaceArrowCommand = curry(
         originalSide: Side,
         faceArrow: FaceArrowDirection
     ): SingleRotationCommand => {
+        // TODO find a way to calculate this from existing matrices
         const [down, right] = {
             [Side.FRONT]: [
                 [-1, 0, 0],
