@@ -1,6 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { ICubicle } from '../../cube/CubeTypes';
 import { RotationCommand } from '../../cube/algorithms/RotationCommand';
+import { MouseMoveDelta } from '../../hooks/useDrag';
 
 const setCubeDimension = createAction<number>('SET_CUBE_DIMENSION');
 
@@ -18,6 +19,8 @@ const applyRotationCommands = createAction<RotationCommand[]>(
 
 const resetCube = createAction('RESET_CUBE');
 
+const updateViewRotation = createAction<MouseMoveDelta>('UPDATE_VIEW_ROTATION');
+
 const actions = {
     setCubeDimension,
     setCubeScale,
@@ -25,6 +28,7 @@ const actions = {
     updateCubicles,
     applyRotationCommands,
     resetCube,
+    updateViewRotation,
 };
 
 export { actions as cubeActions };

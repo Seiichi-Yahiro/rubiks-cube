@@ -1,6 +1,13 @@
 import React from 'react';
 import { useRedux } from '../states/States';
-import { fromScale, fromTranslation, multiply, toCss } from '../utils/Matrix4';
+import {
+    fromAngleX,
+    fromAngleY,
+    fromScale,
+    fromTranslation,
+    multiply,
+    toCss,
+} from '../utils/Matrix4';
 import Cubicle from './Cubicle';
 import './RubiksCube.scss';
 import Maybe from '../utils/Maybe';
@@ -28,7 +35,12 @@ const RubiksCube: React.FunctionComponent = () => {
     const style: React.CSSProperties = {
         width: cubeSize,
         height: cubeSize,
-        transform: toCss(multiply(rotation, fromScale(scale))),
+        transform: toCss(
+            multiply(
+                multiply(fromAngleX(rotation.pitch), fromAngleY(rotation.yaw)),
+                fromScale(scale)
+            )
+        ),
     };
 
     const positionCorrectionStyle = (): React.CSSProperties => {

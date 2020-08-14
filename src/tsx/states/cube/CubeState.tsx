@@ -1,7 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { cubeActions } from './CubeActions';
 import { ICubicle } from '../../cube/CubeTypes';
-import { fromAngleX, fromAngleY, Mat4, multiply } from '../../utils/Matrix4';
 import { applyRotationCommand } from '../../cube/CubeUtils';
 
 export interface ICubeState {
@@ -11,7 +10,10 @@ export interface ICubeState {
     scale: number;
     rotationDuration: number;
     cubicles: ICubicle[];
-    rotation: Mat4;
+    rotation: {
+        pitch: number;
+        yaw: number;
+    };
 }
 
 const initialCubeState: ICubeState = {
@@ -21,7 +23,10 @@ const initialCubeState: ICubeState = {
     scale: 1.0,
     rotationDuration: 750,
     cubicles: [],
-    rotation: multiply(fromAngleX(-45), fromAngleY(-45)),
+    rotation: {
+        pitch: -45,
+        yaw: -45,
+    },
 };
 
 export const cubeReducer = createReducer(initialCubeState, (builder) => {
@@ -44,5 +49,15 @@ export const cubeReducer = createReducer(initialCubeState, (builder) => {
                     applyRotationCommand(cubicles, command, state.dimension),
                 state.cubicles
             );
+        })
+        .addCase(cubeActions.updateViewRotation, (state, action) => {
+            const { x, y } = action.payload;
+            const clamp = (value: number, min: number, max: number): number =>
+                Math.min(Math.max(value, min), max);
+
+            state.rotation = {
+                pitch: clamp(state.rotation.pitch - y, -45, 45),
+                yaw: (state.rotation.yaw + x) % 360,
+            };
         });
 });

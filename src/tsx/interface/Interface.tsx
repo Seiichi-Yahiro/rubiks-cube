@@ -6,6 +6,7 @@ import Algorithms from './Algorithms';
 import Category from './Category';
 import Player from './Player';
 import { ListItem } from '@material-ui/core';
+import RotationPad from './RotationPad';
 
 enum Menu {
     ALGORITHMS = 'ALGORITHMS',
@@ -39,6 +40,7 @@ const Interface: React.FunctionComponent = () => {
                     <Settings />
                 </Category>
             </List>
+            <RotationPad />
         </div>
     );
 };
