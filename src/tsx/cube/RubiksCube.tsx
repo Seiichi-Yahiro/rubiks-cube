@@ -11,15 +11,10 @@ import CubeArrows from './CubeArrows';
 import { PlayerStatus } from '../states/player/PlayerState';
 
 const RubiksCube: React.FunctionComponent = () => {
-    const cubicles = useRedux((state) => state.cube.cubicles);
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const cubeSize = useRedux((state) => state.cube.size);
     const scale = useRedux((state) => state.cube.scale);
     const rotation = useRedux((state) => state.cube.rotation);
-    const rotationDuration = useRedux((state) => state.cube.rotationDuration);
-    const currentRotationCommand = Maybe.of(
-        useRedux((state) => state.player.currentCommand)
-    );
     const isStopped =
         useRedux((state) => state.player.status) === PlayerStatus.STOPPED;
 
@@ -49,28 +44,7 @@ const RubiksCube: React.FunctionComponent = () => {
                 style={style}
             >
                 <div style={positionCorrectionStyle()}>
-                    <div className="display-contents">
-                        {cubicles.map(({ id, faces, transform, axis }) => {
-                            const animatedTransform = currentRotationCommand
-                                .filter((command) =>
-                                    canApplyRotationCommand(axis, command)
-                                )
-                                .map(rotationCommandToCssRotation)
-                                .unwrapOr('rotate(0)');
-
-                            return (
-                                <Cubicle
-                                    key={id.join(',')}
-                                    axis={axis}
-                                    faces={faces}
-                                    animatedTransform={animatedTransform}
-                                    transform={transform}
-                                    size={cubicleSize}
-                                    rotationDuration={rotationDuration}
-                                />
-                            );
-                        })}
-                    </div>
+                    <Cubicles cubicleSize={cubicleSize} />
                     {cubeDimension > 1 && (
                         <CubeArrows
                             cubeDimension={cubeDimension}
@@ -83,5 +57,46 @@ const RubiksCube: React.FunctionComponent = () => {
         </div>
     );
 };
+
+interface CubiclesProps {
+    cubicleSize: number;
+}
+
+const Cubicles: React.FunctionComponent<CubiclesProps> = React.memo(
+    ({ cubicleSize }) => {
+        const cubicles = useRedux((state) => state.cube.cubicles);
+        const rotationDuration = useRedux(
+            (state) => state.cube.rotationDuration
+        );
+        const currentRotationCommand = Maybe.of(
+            useRedux((state) => state.player.currentCommand)
+        );
+
+        return (
+            <div className="display-contents">
+                {cubicles.map(({ id, faces, transform, axis }) => {
+                    const animatedTransform = currentRotationCommand
+                        .filter((command) =>
+                            canApplyRotationCommand(axis, command)
+                        )
+                        .map(rotationCommandToCssRotation)
+                        .unwrapOr('rotate(0)');
+
+                    return (
+                        <Cubicle
+                            key={id.join(',')}
+                            axis={axis}
+                            faces={faces}
+                            animatedTransform={animatedTransform}
+                            transform={transform}
+                            size={cubicleSize}
+                            rotationDuration={rotationDuration}
+                        />
+                    );
+                })}
+            </div>
+        );
+    }
+);
 
 export default RubiksCube;
