@@ -59,15 +59,19 @@ const sideToTransform = (side: Side, cubicleSize: number): Mat4 => {
     }[side];
 };
 
-const axisToTranslationPoint = (
+const axisToTranslation = (
     [x, y, z]: CubeAxis,
     cubicleSize: number,
     cubicleGap: number,
     cubeDimension: number
-): CubeAxis => {
+): Mat4 => {
     const offset = (cubeDimension + 1) * cubicleSize * (cubicleGap / 2);
     const sizeGap = cubicleSize * cubicleGap;
-    return [x * sizeGap - offset, y * sizeGap - offset, -z * sizeGap + offset];
+    return fromTranslation(
+        x * sizeGap - offset,
+        y * sizeGap - offset,
+        -z * sizeGap + offset
+    );
 };
 
 export const rotateAxis = (
@@ -128,13 +132,11 @@ export const generateCubicles = (
             faces: Object.values(Side).map((side) =>
                 generateFace(side, axis, cubicleSize, cubeDimension)
             ),
-            transform: fromTranslation(
-                ...axisToTranslationPoint(
-                    axis,
-                    cubicleSize,
-                    cubicleGap,
-                    cubeDimension
-                )
+            transform: axisToTranslation(
+                axis,
+                cubicleSize,
+                cubicleGap,
+                cubeDimension
             ),
         }));
 };
