@@ -1,0 +1,12 @@
+.arrow{stroke:#383838;stroke-width:4px;stroke-linecap:round;transition:opacity 400ms}.face-arrows-wrapper{transform:translate(50%, 50%)}.face-arrow{transform:translateY(50%) scale(0.4) translateY(-50%) rotate(180deg);opacity:0}.face-arrow-wrapper{pointer-events:all;cursor:pointer}.face-arrow-wrapper__box{fill:transparent;stroke:transparent;width:100%;height:100%;transform:translateX(-50%) scale(0.4) translateY(-50%);transform-origin:center}.face-arrow-wrapper:hover .arrow{opacity:1}.cube-arrow{opacity:0.2}.cube-arrows-svg:hover .arrow{opacity:1}.rubiks-cube--is-transitioning .face-arrows-svg,.rubiks-cube--is-transitioning .cube-arrows-svg{display:none}
+
+.rubiks-cube{position:relative;transform-style:preserve-3d}.rubiks-cube__cubicle{position:absolute;transform-style:preserve-3d}.rubiks-cube__face{backface-visibility:hidden;position:absolute;width:inherit;height:inherit;border:2px solid #333}
+
+.interface-list{width:100%}.interface-list__item{background-color:#ffffff !important}.interface-list__item--settings{display:flex;flex-direction:column}.interface-list__item--moves{cursor:pointer}.interface-list__sub-list{list-style:none;padding:0;background-color:#ffffff}.interface-algorithm-list{overflow:auto;height:400px}.interface-algorithm-list__filer{position:sticky !important;top:0 !important;z-index:100 !important;background-color:white !important}.interface-algorithm-list__header{position:sticky !important;top:48px !important}.interface-category{width:100%}.interface-category__summary{height:48px;min-height:unset !important}.interface-category__details{padding:5px !important}.start-configuration{display:grid;grid-gap:1px;margin-right:5px}.start-configuration__face{width:10px;height:10px}
+
+.algorithm-player{display:flex;flex-direction:column;width:100%}.algorithm-player__buttons{display:flex;flex-direction:row;justify-content:space-between}
+
+*{box-sizing:border-box}html,body,#root{width:100%;height:100%;margin:0}.app{display:flex;justify-content:center;align-items:center;width:100%;height:100%}.app__interface{position:absolute;left:0;top:0;width:450px;margin:15px}.app__cube{perspective:1000px}.display-contents{display:contents}
+
+
+/*# sourceMappingURL=app.css.map*/
