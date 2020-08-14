@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRedux } from '../states/States';
-import { toCss, multiply, fromScale, fromTranslation } from '../utils/Matrix4';
+import { fromScale, fromTranslation, multiply, toCss } from '../utils/Matrix4';
 import Cubicle from './Cubicle';
 import './RubiksCube.scss';
 import Maybe from '../utils/Maybe';
@@ -8,6 +8,7 @@ import { rotationCommandToCssRotation } from './algorithms/RotationCommand';
 import createClassName from '../utils/createClassName';
 import { canApplyRotationCommand } from './CubeUtils';
 import CubeArrows from './CubeArrows';
+import { PlayerStatus } from '../states/player/PlayerState';
 
 const RubiksCube: React.FunctionComponent = () => {
     const cubicles = useRedux((state) => state.cube.cubicles);
@@ -19,6 +20,8 @@ const RubiksCube: React.FunctionComponent = () => {
     const currentRotationCommand = Maybe.of(
         useRedux((state) => state.player.currentCommand)
     );
+    const isStopped =
+        useRedux((state) => state.player.status) === PlayerStatus.STOPPED;
 
     const cubicleSize = cubeSize / cubeDimension;
 
@@ -41,7 +44,7 @@ const RubiksCube: React.FunctionComponent = () => {
         <div className="app__cube">
             <div
                 className={createClassName('rubiks-cube', {
-                    'rubiks-cube--is-transitioning': currentRotationCommand.isSome(),
+                    'rubiks-cube--is-transitioning': !isStopped,
                 })}
                 style={style}
             >
