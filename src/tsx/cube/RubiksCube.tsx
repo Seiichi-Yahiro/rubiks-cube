@@ -71,11 +71,13 @@ const RubiksCube: React.FunctionComponent = () => {
                             );
                         })}
                     </div>
-                    <CubeArrows
-                        cubeDimension={cubeDimension}
-                        size={cubeSize}
-                        cubicleSize={cubicleSize}
-                    />
+                    {cubeDimension > 1 && (
+                        <CubeArrows
+                            cubeDimension={cubeDimension}
+                            size={cubeSize}
+                            cubicleSize={cubicleSize}
+                        />
+                    )}
                 </div>
             </div>
         </div>
