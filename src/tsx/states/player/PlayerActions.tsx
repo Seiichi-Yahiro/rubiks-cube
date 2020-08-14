@@ -8,6 +8,7 @@ import {
 const play = createAction<RotationCommand[]>('PLAY');
 const stop = createAction('STOP');
 const pause = createAction('PAUSE');
+const unPause = createAction('UN_PAUSE');
 
 const updateNotation = createAction<string>('UPDATE_NOTATION');
 
@@ -23,6 +24,7 @@ const actions = {
     play,
     stop,
     pause,
+    unPause,
     updateNotation,
     parsedNotation,
     setCurrentRotationCommand,

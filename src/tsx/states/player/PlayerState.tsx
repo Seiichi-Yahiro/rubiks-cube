@@ -37,6 +37,9 @@ export const playerReducer = createReducer(initialPlayerState, (builder) => {
         .addCase(playerActions.play, (state, _action) => {
             state.status = PlayerStatus.PLAYING;
         })
+        .addCase(playerActions.unPause, (state, _action) => {
+            state.status = PlayerStatus.PLAYING;
+        })
         .addCase(playerActions.pause, (state, _action) => {
             state.status = PlayerStatus.PAUSED;
         })

@@ -5,10 +5,10 @@ import { PlayerStatus } from '../states/player/PlayerState';
 import {
     Pause,
     PlayArrow,
+    Refresh,
     Shuffle,
     SkipNext,
     Stop,
-    Refresh,
 } from '@material-ui/icons';
 import { playerActions } from '../states/player/PlayerActions';
 import { useDispatch } from 'react-redux';
@@ -34,41 +34,14 @@ const Player: React.FunctionComponent = () => {
     const isNotationEmpty = playerNotation.length === 0;
     const isStopped = playerStatus === PlayerStatus.STOPPED;
 
-    const playOrPause = () => {
-        switch (playerStatus) {
-            case PlayerStatus.STOPPED:
-            case PlayerStatus.PAUSED: {
-                const onPlay = () => {
-                    if (isOk(rotationCommands)) {
-                        dispatch(playerActions.play(rotationCommands.value));
-                    }
-                };
-
-                return (
-                    <IconButton
-                        onClick={onPlay}
-                        disabled={isNotationEmpty || hasParseError}
-                    >
-                        <PlayArrow />
-                    </IconButton>
-                );
-            }
-
-            case PlayerStatus.PLAYING: {
-                const onPause = () => dispatch(playerActions.pause());
-
-                return (
-                    <IconButton onClick={onPause}>
-                        <Pause />
-                    </IconButton>
-                );
-            }
-
-            default:
-                return;
+    const onPlay = () => {
+        if (playerStatus === PlayerStatus.STOPPED && isOk(rotationCommands)) {
+            dispatch(playerActions.play(rotationCommands.value));
+        } else if (playerStatus === PlayerStatus.PAUSED) {
+            dispatch(playerActions.unPause());
         }
     };
-
+    const onPause = () => dispatch(playerActions.pause());
     const onStop = () => dispatch(playerActions.stop());
 
     const onJumpToEnd = () => {
@@ -108,7 +81,18 @@ const Player: React.FunctionComponent = () => {
             )}
             <div className="algorithm-player__buttons">
                 <div>
-                    {playOrPause()}
+                    {playerStatus === PlayerStatus.PLAYING ? (
+                        <IconButton onClick={onPause}>
+                            <Pause />
+                        </IconButton>
+                    ) : (
+                        <IconButton
+                            onClick={onPlay}
+                            disabled={isNotationEmpty || hasParseError}
+                        >
+                            <PlayArrow />
+                        </IconButton>
+                    )}
                     <IconButton onClick={onStop} disabled={isStopped}>
                         <Stop />
                     </IconButton>
