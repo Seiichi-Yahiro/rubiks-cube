@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Chip, IconButton, TextField } from '@material-ui/core';
+import { Chip, IconButton, TextField, Typography } from '@material-ui/core';
 import './Player.scss';
 import { PlayerStatus } from '../states/player/PlayerState';
 import {
@@ -16,6 +16,7 @@ import { useRedux } from '../states/States';
 import { isError, isOk } from '../cube/algorithms/RotationCommand';
 import { cubeActions } from '../states/cube/CubeActions';
 import { createRandomNotation } from '../cube/algorithms/Parser';
+import { Failure } from 'parsimmon';
 
 const Player: React.FunctionComponent = () => {
     const dispatch = useDispatch();
@@ -66,18 +67,13 @@ const Player: React.FunctionComponent = () => {
                 onChange={updateNotation}
                 disabled={!isStopped}
                 error={hasParseError}
+                spellCheck={false}
             />
             {isError(rotationCommands) && (
-                <div style={{ marginTop: 5, marginBottom: 5 }}>
-                    {rotationCommands.expected.map((errorMsg) => (
-                        <Chip
-                            key={errorMsg}
-                            color={'secondary'}
-                            size={'small'}
-                            label={errorMsg}
-                        />
-                    ))}
-                </div>
+                <NotationError
+                    notation={playerNotation}
+                    error={rotationCommands}
+                />
             )}
             <div className="algorithm-player__buttons">
                 <div>
@@ -117,5 +113,45 @@ const Player: React.FunctionComponent = () => {
         </div>
     );
 };
+
+interface NotationErrorProps {
+    notation: string;
+    error: Failure;
+}
+
+const NotationError: React.FunctionComponent<NotationErrorProps> = ({
+    notation,
+    error,
+}) => (
+    <>
+        <div>
+            <Typography style={{ position: 'absolute' }}>
+                <span style={{ visibility: 'hidden' }}>
+                    {notation.substring(0, error.index.offset)}
+                </span>
+                <span
+                    style={{
+                        color: '#f44336',
+                        position: 'absolute',
+                        top: -14,
+                    }}
+                >
+                    ^
+                </span>
+            </Typography>
+        </div>
+        <div style={{ marginTop: 5, marginBottom: 5 }}>
+            {error.expected.map((errorMsg) => (
+                <Chip
+                    style={{ marginRight: 2 }}
+                    key={errorMsg}
+                    color={'secondary'}
+                    size={'small'}
+                    label={errorMsg}
+                />
+            ))}
+        </div>
+    </>
+);
 
 export default React.memo(Player);
