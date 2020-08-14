@@ -7,6 +7,7 @@ import Maybe from '../utils/Maybe';
 import { rotationCommandToCssRotation } from './algorithms/RotationCommand';
 import createClassName from '../utils/createClassName';
 import { canApplyRotationCommand } from './CubeUtils';
+import CubeArrows from './CubeArrows';
 
 const RubiksCube: React.FunctionComponent = () => {
     const cubicles = useRedux((state) => state.cube.cubicles);
@@ -45,26 +46,33 @@ const RubiksCube: React.FunctionComponent = () => {
                 style={style}
             >
                 <div style={positionCorrectionStyle()}>
-                    {cubicles.map(({ id, faces, transform, axis }) => {
-                        const animatedTransform = currentRotationCommand
-                            .filter((command) =>
-                                canApplyRotationCommand(axis, command)
-                            )
-                            .map(rotationCommandToCssRotation)
-                            .unwrapOr('rotate(0)');
+                    <div className="display-contents">
+                        {cubicles.map(({ id, faces, transform, axis }) => {
+                            const animatedTransform = currentRotationCommand
+                                .filter((command) =>
+                                    canApplyRotationCommand(axis, command)
+                                )
+                                .map(rotationCommandToCssRotation)
+                                .unwrapOr('rotate(0)');
 
-                        return (
-                            <Cubicle
-                                key={id.join(',')}
-                                axis={axis}
-                                faces={faces}
-                                animatedTransform={animatedTransform}
-                                transform={transform}
-                                size={cubicleSize}
-                                rotationDuration={rotationDuration}
-                            />
-                        );
-                    })}
+                            return (
+                                <Cubicle
+                                    key={id.join(',')}
+                                    axis={axis}
+                                    faces={faces}
+                                    animatedTransform={animatedTransform}
+                                    transform={transform}
+                                    size={cubicleSize}
+                                    rotationDuration={rotationDuration}
+                                />
+                            );
+                        })}
+                    </div>
+                    <CubeArrows
+                        cubeDimension={cubeDimension}
+                        size={cubeSize}
+                        cubicleSize={cubicleSize}
+                    />
                 </div>
             </div>
         </div>
