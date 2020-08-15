@@ -847,7 +847,7 @@
         "affectsGlobalScope": false
       },
       "../../src/tsx/cube/algorithms/parser.tsx": {
-        "version": "3e3b13d2ea672b1f95e245a6ac2901b2a50be0c45d1444290ae3d2a08bd88124",
+        "version": "02c8cd7893419a6e63b7c065a1961d365d9d5e4977e91bd8f34003953fcebb10",
         "signature": "e6d1c00a3d32886fa785ba48f442b56d2610347d615cf6e02e6bf823ba4cc3f5",
         "affectsGlobalScope": false
       },
@@ -857,7 +857,7 @@
         "affectsGlobalScope": false
       },
       "../../src/tsx/cube/rubikscube.tsx": {
-        "version": "632788492232f52b3000638067d36009099265e302618fec3ba9e862e5d528b1",
+        "version": "99c6d9c1e48d9ede775a8dd92ec07cfa071e63c9f101204a14f339a1dc665153",
         "signature": "266738dc4e007ad2c8ec4f52b05156d8a6e806e343e47f60ac338a8fab2ad568",
         "affectsGlobalScope": false
       },
@@ -2642,7 +2642,7 @@
         "affectsGlobalScope": false
       },
       "../../src/tsx/interface/player.tsx": {
-        "version": "9c0b3c7897d15a8412a7f9b97e8e443f23c57aca2343526c848d2f7a011613cd",
+        "version": "6addf49468ea12f79454f88127dd521220dc19c93ccde2deb63991c2b4ba63f8",
         "signature": "51a56ddcf3e0bd5a84ca786fabaa6e1ead525976ba712a0fcb0b84368f4a7a17",
         "affectsGlobalScope": false
       },
@@ -10759,6 +10759,7 @@
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts",
         "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/parsimmon/index.d.ts",
         "../../node_modules/@types/react-redux/index.d.ts",
         "../../node_modules/@types/react/index.d.ts",
         "../../src/@types/sass.d.ts",
