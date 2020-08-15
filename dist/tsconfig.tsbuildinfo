@@ -2642,7 +2642,7 @@
         "affectsGlobalScope": false
       },
       "../../src/tsx/interface/player.tsx": {
-        "version": "6addf49468ea12f79454f88127dd521220dc19c93ccde2deb63991c2b4ba63f8",
+        "version": "2a74a54a2f4c40579a884f3e3755e191e7f07611b6586b03cf279ae81130ae1e",
         "signature": "51a56ddcf3e0bd5a84ca786fabaa6e1ead525976ba712a0fcb0b84368f4a7a17",
         "affectsGlobalScope": false
       },
@@ -3591,27 +3591,27 @@
         "signature": "029769d13d9917e3284cb2356ed28a6576e8b07ae6a06ee1e672518adf21a102",
         "affectsGlobalScope": false
       },
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/cleanupsemantic.d.ts": {
+      "../../node_modules/jest-diff/build/cleanupsemantic.d.ts": {
         "version": "e222104af6cb9415238ad358488b74d76eceeff238c1268ec6e85655b05341da",
         "signature": "e222104af6cb9415238ad358488b74d76eceeff238c1268ec6e85655b05341da",
         "affectsGlobalScope": false
       },
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/types.d.ts": {
+      "../../node_modules/jest-diff/build/types.d.ts": {
         "version": "69da61a7b5093dac77fa3bec8be95dcf9a74c95a0e9161edb98bb24e30e439d2",
         "signature": "69da61a7b5093dac77fa3bec8be95dcf9a74c95a0e9161edb98bb24e30e439d2",
         "affectsGlobalScope": false
       },
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/difflines.d.ts": {
+      "../../node_modules/jest-diff/build/difflines.d.ts": {
         "version": "eba230221317c985ab1953ccc3edc517f248b37db4fef7875cb2c8d08aff7be7",
         "signature": "eba230221317c985ab1953ccc3edc517f248b37db4fef7875cb2c8d08aff7be7",
         "affectsGlobalScope": false
       },
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/printdiffs.d.ts": {
+      "../../node_modules/jest-diff/build/printdiffs.d.ts": {
         "version": "b83e796810e475da3564c6515bc0ae9577070596a33d89299b7d99f94ecfd921",
         "signature": "b83e796810e475da3564c6515bc0ae9577070596a33d89299b7d99f94ecfd921",
         "affectsGlobalScope": false
       },
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/index.d.ts": {
+      "../../node_modules/jest-diff/build/index.d.ts": {
         "version": "b4439890c168d646357928431100daac5cbdee1d345a34e6bf6eca9f3abe22bc",
         "signature": "b4439890c168d646357928431100daac5cbdee1d345a34e6bf6eca9f3abe22bc",
         "affectsGlobalScope": false
@@ -3627,8 +3627,8 @@
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/jest/index.d.ts": {
-        "version": "eb387c92e168f893fbb1c4b564b8d30175fa8fd8c26a734f308b0f6cd4dad55d",
-        "signature": "eb387c92e168f893fbb1c4b564b8d30175fa8fd8c26a734f308b0f6cd4dad55d",
+        "version": "73214238800a9ac5df6bdcb00d1a3a6c08f96cc46bd0d732a8d8fc41c51d6bb0",
+        "signature": "73214238800a9ac5df6bdcb00d1a3a6c08f96cc46bd0d732a8d8fc41c51d6bb0",
         "affectsGlobalScope": true
       },
       "../../node_modules/@types/jest/ts3.2/index.d.ts": {
@@ -7320,55 +7320,12 @@
       ],
       "../../node_modules/@types/jest/index.d.ts": [
         "../../node_modules/@types/graceful-fs/index.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/index.d.ts",
         "../../node_modules/@types/jest/node_modules/pretty-format/build/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts",
-        "../../node_modules/@types/node/util.d.ts"
-      ],
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/cleanupsemantic.d.ts": [
-        "../../node_modules/@types/graceful-fs/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts",
-        "../../node_modules/@types/node/util.d.ts"
-      ],
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/difflines.d.ts": [
-        "../../node_modules/@types/graceful-fs/index.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/cleanupsemantic.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts",
-        "../../node_modules/@types/node/util.d.ts"
-      ],
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/index.d.ts": [
-        "../../node_modules/@types/graceful-fs/index.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/cleanupsemantic.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/difflines.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/printdiffs.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts",
-        "../../node_modules/@types/node/util.d.ts"
-      ],
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/printdiffs.d.ts": [
-        "../../node_modules/@types/graceful-fs/index.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/cleanupsemantic.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts",
-        "../../node_modules/@types/node/util.d.ts"
-      ],
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/types.d.ts": [
-        "../../node_modules/@types/graceful-fs/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts",
-        "../../node_modules/@types/node/util.d.ts"
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/jest-diff/build/index.d.ts"
       ],
       "../../node_modules/@types/jest/node_modules/pretty-format/build/index.d.ts": [
         "../../node_modules/@types/graceful-fs/index.d.ts",
@@ -8501,6 +8458,49 @@
         "../../node_modules/@types/node/ts3.2/util.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/immer/dist/internal.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/cleanupsemantic.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/difflines.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
+        "../../node_modules/jest-diff/build/types.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/index.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
+        "../../node_modules/jest-diff/build/difflines.d.ts",
+        "../../node_modules/jest-diff/build/printdiffs.d.ts",
+        "../../node_modules/jest-diff/build/types.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/printdiffs.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
+        "../../node_modules/jest-diff/build/types.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/types.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts"
       ],
       "../../node_modules/jss/src/index.d.ts": [
         "../../node_modules/@types/graceful-fs/index.d.ts",
@@ -14496,55 +14496,12 @@
       ],
       "../../node_modules/@types/jest/index.d.ts": [
         "../../node_modules/@types/graceful-fs/index.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/index.d.ts",
         "../../node_modules/@types/jest/node_modules/pretty-format/build/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts",
-        "../../node_modules/@types/node/util.d.ts"
-      ],
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/cleanupsemantic.d.ts": [
-        "../../node_modules/@types/graceful-fs/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts",
-        "../../node_modules/@types/node/util.d.ts"
-      ],
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/difflines.d.ts": [
-        "../../node_modules/@types/graceful-fs/index.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/cleanupsemantic.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts",
-        "../../node_modules/@types/node/util.d.ts"
-      ],
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/index.d.ts": [
-        "../../node_modules/@types/graceful-fs/index.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/cleanupsemantic.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/difflines.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/printdiffs.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts",
-        "../../node_modules/@types/node/util.d.ts"
-      ],
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/printdiffs.d.ts": [
-        "../../node_modules/@types/graceful-fs/index.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/cleanupsemantic.d.ts",
-        "../../node_modules/@types/jest/node_modules/jest-diff/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts",
-        "../../node_modules/@types/node/util.d.ts"
-      ],
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/types.d.ts": [
-        "../../node_modules/@types/graceful-fs/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts",
-        "../../node_modules/@types/node/util.d.ts"
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/jest-diff/build/index.d.ts"
       ],
       "../../node_modules/@types/jest/node_modules/pretty-format/build/index.d.ts": [
         "../../node_modules/@types/graceful-fs/index.d.ts",
@@ -15677,6 +15634,49 @@
         "../../node_modules/@types/node/ts3.2/util.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/immer/dist/internal.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/cleanupsemantic.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/difflines.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
+        "../../node_modules/jest-diff/build/types.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/index.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
+        "../../node_modules/jest-diff/build/difflines.d.ts",
+        "../../node_modules/jest-diff/build/printdiffs.d.ts",
+        "../../node_modules/jest-diff/build/types.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/printdiffs.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
+        "../../node_modules/jest-diff/build/types.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/types.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts"
       ],
       "../../node_modules/jss/src/index.d.ts": [
         "../../node_modules/@types/graceful-fs/index.d.ts",
@@ -18157,11 +18157,6 @@
       "../../node_modules/@types/istanbul-lib-report/index.d.ts",
       "../../node_modules/@types/istanbul-reports/index.d.ts",
       "../../node_modules/@types/jest/index.d.ts",
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/cleanupsemantic.d.ts",
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/difflines.d.ts",
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/index.d.ts",
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/printdiffs.d.ts",
-      "../../node_modules/@types/jest/node_modules/jest-diff/build/types.d.ts",
       "../../node_modules/@types/jest/node_modules/pretty-format/build/index.d.ts",
       "../../node_modules/@types/jest/node_modules/pretty-format/build/types.d.ts",
       "../../node_modules/@types/jest/ts3.2/index.d.ts",
@@ -18278,6 +18273,11 @@
       "../../node_modules/immer/dist/utils/env.d.ts",
       "../../node_modules/immer/dist/utils/errors.d.ts",
       "../../node_modules/immer/dist/utils/plugins.d.ts",
+      "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
+      "../../node_modules/jest-diff/build/difflines.d.ts",
+      "../../node_modules/jest-diff/build/index.d.ts",
+      "../../node_modules/jest-diff/build/printdiffs.d.ts",
+      "../../node_modules/jest-diff/build/types.d.ts",
       "../../node_modules/jss/src/index.d.ts",
       "../../node_modules/popper.js/index.d.ts",
       "../../node_modules/redux-observable/index.d.ts",
