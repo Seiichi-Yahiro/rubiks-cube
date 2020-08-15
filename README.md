@@ -28,7 +28,7 @@ Valid examples: `L` / `L'` / `L2` / `L'2`
 
 Use one or multiple `sliceable` letters followed by optionally `wide`, `prime` and `double`.
 The cube axis slices are numbered starting with 1 which means that `2L` means "second axis slice from the left".
-If you want to turn multiple slices you can use square brackets `[1,2]L` (turn slice 1 and to from the left)
+If you want to turn multiple slices you can use square brackets `[1,2]L` (turn slice 1 and 2 from the left)
 
 Valid examples:
 
