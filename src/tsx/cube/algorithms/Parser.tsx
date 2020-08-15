@@ -76,32 +76,28 @@ export const makeNotationParser = (cubeDimension: number) =>
         lBracket: () => P.string('[').desc('['),
         rBracket: () => P.string(']').desc(']'),
 
-        wide: () =>
-            P.letter
-                .chain((letter) =>
-                    ['W', 'w'].includes(letter)
-                        ? P.succeed(true)
-                        : P.fail('/[W]/i')
-                )
-                .fallback(false),
-        prime: () =>
-            P.string("'")
-                .desc("'")
-                .map((_) => true)
-                .fallback(false),
+        wide: () => P.regexp(/[W]/i).result(true).fallback(false),
 
-        double: (r) =>
-            r.number
-                .chain((num) => (num === 2 ? P.succeed(true) : P.fail('2')))
-                .fallback(false),
+        prime: () => P.string("'").desc("'").result(true).fallback(false),
+
+        double: () => P.string('2').desc('2').result(true).fallback(false),
 
         number: () => P.regexp(/\d+/).map(Number).desc('number'),
-        numberInDimension: (r) =>
-            r.number.chain((num) =>
-                num > 0 && num <= cubeDimension
-                    ? P.succeed(num)
-                    : P.fail(`1-${cubeDimension}`)
-            ),
+        numberInDimension: () =>
+            P((input, i) => {
+                const matched = input.substr(i).match(/^\d+/);
+                if (matched) {
+                    const numStr = matched[0];
+                    const num = Number(numStr);
+                    const isInRange = num > 0 && num <= cubeDimension;
+
+                    if (isInRange) {
+                        return P.makeSuccess(i + numStr.length, num);
+                    }
+                }
+
+                return P.makeFailure(i, `1-${cubeDimension}`);
+            }),
 
         slices: (r) =>
             r.numberInDimension
