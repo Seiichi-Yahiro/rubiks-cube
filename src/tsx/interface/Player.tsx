@@ -68,6 +68,7 @@ const Player: React.FunctionComponent = () => {
                 disabled={!isStopped}
                 error={hasParseError}
                 spellCheck={false}
+                multiline={true}
             />
             {isError(rotationCommands) && (
                 <NotationError
@@ -124,22 +125,26 @@ const NotationError: React.FunctionComponent<NotationErrorProps> = ({
     error,
 }) => (
     <>
-        <div>
-            <Typography style={{ position: 'absolute' }}>
-                <span style={{ visibility: 'hidden' }}>
-                    {notation.substring(0, error.index.offset)}
-                </span>
+        <Typography
+            className="MuiInputBase-root"
+            style={{ display: 'initial', position: 'absolute', top: 30 }}
+        >
+            <span style={{ visibility: 'hidden', whiteSpace: 'pre-wrap' }}>
+                {notation.substring(0, error.index.offset)}
+            </span>
+            <span style={{ position: 'relative' }}>
                 <span
                     style={{
                         color: '#f44336',
                         position: 'absolute',
-                        top: -14,
+                        top: 14,
                     }}
                 >
                     ^
                 </span>
-            </Typography>
-        </div>
+            </span>
+        </Typography>
+
         <div style={{ marginTop: 5, marginBottom: 5 }}>
             {error.expected.map((errorMsg) => (
                 <Chip
