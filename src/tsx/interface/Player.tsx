@@ -127,7 +127,12 @@ const NotationError: React.FunctionComponent<NotationErrorProps> = ({
     <>
         <Typography
             className="MuiInputBase-root"
-            style={{ display: 'initial', position: 'absolute', top: 30 }}
+            style={{
+                display: 'initial',
+                position: 'absolute',
+                top: 30,
+                pointerEvents: 'none',
+            }}
         >
             <span style={{ visibility: 'hidden', whiteSpace: 'pre-wrap' }}>
                 {notation.substring(0, error.index.offset)}
