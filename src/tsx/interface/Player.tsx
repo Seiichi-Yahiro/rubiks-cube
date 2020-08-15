@@ -142,7 +142,7 @@ const NotationError: React.FunctionComponent<NotationErrorProps> = ({
                     style={{
                         color: '#f44336',
                         position: 'absolute',
-                        top: 14,
+                        top: 12,
                     }}
                 >
                     ^
