@@ -1,3 +1,11 @@
+.color-picker-component {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
+
 .color-picker {
     position: absolute;
     z-index: 2;

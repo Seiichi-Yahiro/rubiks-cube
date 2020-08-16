@@ -6,7 +6,7 @@ import { Color } from '../cube/CubeTypes';
 import { useDispatch } from 'react-redux';
 import { cubeActions } from '../states/cube/CubeActions';
 import useComplexState from '../hooks/useComplexState';
-import { ClickAwayListener } from '@material-ui/core';
+import { Button, ClickAwayListener } from '@material-ui/core';
 import createClassName from '../utils/createClassName';
 
 interface State {
@@ -24,6 +24,10 @@ const ColorPicker: React.FunctionComponent = () => {
             pickerColor: '',
         })
     );
+
+    const resetColors = () => {
+        dispatch(cubeActions.resetColors());
+    };
 
     const colors = Object.entries(colorMap)
         .filter(
@@ -46,36 +50,41 @@ const ColorPicker: React.FunctionComponent = () => {
         ));
 
     return (
-        <ClickAwayListener
-            onClickAway={() => {
-                if (selectedColor) {
-                    setState({ selectedColor: undefined });
-                }
-            }}
-        >
-            <div>
-                <div className="color-group">{colors}</div>
-                {selectedColor && (
-                    <div className="color-picker">
-                        <ChromePicker
-                            disableAlpha={true}
-                            color={pickerColor}
-                            onChange={(color) =>
-                                setState({ pickerColor: color.hex })
-                            }
-                            onChangeComplete={(color) =>
-                                dispatch(
-                                    cubeActions.setColor(
-                                        selectedColor,
-                                        color.hex
+        <div className="color-picker-component">
+            <ClickAwayListener
+                onClickAway={() => {
+                    if (selectedColor) {
+                        setState({ selectedColor: undefined });
+                    }
+                }}
+            >
+                <div>
+                    <div className="color-group">{colors}</div>
+                    {selectedColor && (
+                        <div className="color-picker">
+                            <ChromePicker
+                                disableAlpha={true}
+                                color={pickerColor}
+                                onChange={(color) =>
+                                    setState({ pickerColor: color.hex })
+                                }
+                                onChangeComplete={(color) =>
+                                    dispatch(
+                                        cubeActions.setColor(
+                                            selectedColor,
+                                            color.hex
+                                        )
                                     )
-                                )
-                            }
-                        />
-                    </div>
-                )}
-            </div>
-        </ClickAwayListener>
+                                }
+                            />
+                        </div>
+                    )}
+                </div>
+            </ClickAwayListener>
+            <Button size={'small'} onClick={resetColors}>
+                Reset Colors
+            </Button>
+        </div>
     );
 };
 

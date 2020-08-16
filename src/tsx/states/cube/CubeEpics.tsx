@@ -3,6 +3,8 @@ import { cubeActions } from './CubeActions';
 import { map, withLatestFrom } from 'rxjs/operators';
 import { AppEpic } from '../States';
 import { generateCubicles } from '../../cube/CubeUtils';
+import { EMPTY } from 'rxjs';
+import { COLOR_MAP } from '../LocalStorage';
 
 const updateCubicles: AppEpic = (action$, state$) =>
     action$.pipe(
@@ -19,4 +21,18 @@ const updateCubicles: AppEpic = (action$, state$) =>
         )
     );
 
-export const cubeEpics = [updateCubicles];
+const saveColors: AppEpic = (action$, state$) => {
+    action$
+        .pipe(
+            ofType(cubeActions.setColor.type, cubeActions.resetColors.type),
+            withLatestFrom(state$)
+        )
+        .subscribe(([_, state]) => {
+            const colorMap = state.cube.colorMap;
+            localStorage.setItem(COLOR_MAP, JSON.stringify(colorMap));
+        });
+
+    return EMPTY;
+};
+
+export const cubeEpics = [updateCubicles, saveColors];

@@ -1,8 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { cubeActions } from './CubeActions';
-import { Color, ColorMap, ICubicle } from '../../cube/CubeTypes';
+import { ColorMap, ICubicle } from '../../cube/CubeTypes';
 import { fromAngleX, fromAngleY, Mat4, multiply } from '../../utils/Matrix4';
 import { applyRotationCommand } from '../../cube/CubeUtils';
+import { defaultColorMap, loadColorMap } from '../LocalStorage';
 
 export interface ICubeState {
     dimension: number;
@@ -23,16 +24,7 @@ const initialCubeState: ICubeState = {
     rotationDuration: 750,
     cubicles: [],
     rotation: multiply(fromAngleX(-45), fromAngleY(-45)),
-    colorMap: {
-        [Color.BLUE]: Color.BLUE,
-        [Color.GREEN]: Color.GREEN,
-        [Color.RED]: Color.RED,
-        [Color.ORANGE]: Color.ORANGE,
-        [Color.WHITE]: Color.WHITE,
-        [Color.YELLOW]: Color.YELLOW,
-        [Color.DEFAULT]: Color.DEFAULT,
-        [Color.TRANSPARENT]: Color.TRANSPARENT,
-    },
+    colorMap: loadColorMap(),
 };
 
 export const cubeReducer = createReducer(initialCubeState, (builder) => {
@@ -58,5 +50,8 @@ export const cubeReducer = createReducer(initialCubeState, (builder) => {
         })
         .addCase(cubeActions.setColor, (state, action) => {
             state.colorMap[action.payload.key] = action.payload.value;
+        })
+        .addCase(cubeActions.resetColors, (state, _action) => {
+            state.colorMap = defaultColorMap;
         });
 });

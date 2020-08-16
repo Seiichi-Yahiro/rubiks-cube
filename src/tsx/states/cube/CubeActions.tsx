@@ -25,6 +25,8 @@ const setColor = createAction('SET_COLOR', (key: Color, value: string) => ({
     },
 }));
 
+const resetColors = createAction('RESET_COLORS');
+
 const actions = {
     setCubeDimension,
     setCubeScale,
@@ -33,6 +35,7 @@ const actions = {
     applyRotationCommands,
     resetCube,
     setColor,
+    resetColors,
 };
 
 export { actions as cubeActions };
