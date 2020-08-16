@@ -42,6 +42,7 @@ const filterCategories = (searchValue: string): AlgorithmGroup[] =>
 const Algorithms: React.FunctionComponent = () => {
     const dispatch = useDispatch();
     const playerStatus = useRedux((state) => state.player.status);
+    const colorMap = useRedux((state) => state.cube.colorMap);
 
     const [filteredCategories, setFilteredCategories] = useState(categories);
     const filter = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -81,7 +82,11 @@ const Algorithms: React.FunctionComponent = () => {
                         >
                             {algorithm.startConfiguration && (
                                 <StartConfiguration
-                                    configuration={algorithm.startConfiguration}
+                                    configuration={algorithm.startConfiguration.map(
+                                        (row) =>
+                                            row.map((color) => colorMap[color])
+                                    )}
+                                    transparentColor={colorMap.transparent}
                                 />
                             )}
                             <ListItemText

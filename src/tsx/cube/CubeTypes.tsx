@@ -13,6 +13,10 @@ export enum Color {
     TRANSPARENT = 'transparent',
 }
 
+export type ColorMap = {
+    [key in Color]: string;
+};
+
 export enum Side {
     FRONT = 'FRONT',
     BACK = 'BACK',

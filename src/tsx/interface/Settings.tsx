@@ -7,6 +7,7 @@ import { PlayerStatus } from '../states/player/PlayerState';
 import { cubeActions } from '../states/cube/CubeActions';
 import { useDispatch } from 'react-redux';
 import { useRedux } from '../states/States';
+import ColorPicker from './ColorPicker';
 
 const Settings: React.FunctionComponent = () => {
     const dispatch = useDispatch();
@@ -74,6 +75,9 @@ const Settings: React.FunctionComponent = () => {
                         )
                     }
                 />
+            </ListItem>
+            <ListItem>
+                <ColorPicker />
             </ListItem>
         </List>
     );

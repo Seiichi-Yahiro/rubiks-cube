@@ -1,18 +1,19 @@
 import React from 'react';
-import { Color } from '../cube/CubeTypes';
 
 interface IStartConfigurationProps {
-    configuration: Color[][];
+    configuration: string[][];
+    transparentColor: string;
 }
 
 const StartConfiguration: React.FunctionComponent<IStartConfigurationProps> = ({
     configuration,
+    transparentColor,
 }) => (
     <div className="start-configuration">
         {configuration.flatMap((row, rowIndex) =>
             row.map((color, colorIndex) => (
                 <React.Fragment key={`${rowIndex}-${colorIndex}`}>
-                    {color !== Color.TRANSPARENT && (
+                    {color !== transparentColor && (
                         <div
                             className="start-configuration__face"
                             style={{

@@ -1,0 +1,38 @@
+.color-picker {
+    position: absolute;
+    z-index: 2;
+    margin-top: 5px;
+}
+
+.color-group {
+    $size: 20px;
+
+    display: grid;
+    grid-template-columns: repeat(6, $size);
+    grid-gap: 5px;
+
+    &__color-square {
+        width: $size;
+        height: $size;
+        border: 1px solid #333333;
+        cursor: pointer;
+
+        @keyframes blink {
+            from {
+                box-shadow: #333333 0px 0px 4px 0px;
+            }
+
+            to {
+                box-shadow: #333333 0px 0px 4px 1px;
+            }
+        }
+
+        &--selected {
+            box-shadow: #333333 0px 0px 4px;
+            animation: blink;
+            animation-duration: 500ms;
+            animation-direction: alternate;
+            animation-iteration-count: infinite;
+        }
+    }
+}

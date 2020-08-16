@@ -5,6 +5,7 @@ import FaceArrows from './FaceArrows';
 import { SingleRotationCommand } from './algorithms/RotationCommand';
 import { useDispatch } from 'react-redux';
 import { playerActions } from '../states/player/PlayerActions';
+import { useRedux } from '../states/States';
 
 interface IFaceProps {
     transform: Mat4;
@@ -21,6 +22,7 @@ const Face: React.FunctionComponent<IFaceProps> = ({
 }) => {
     const [isHovered, setHovered] = useState(false);
     const dispatch = useDispatch();
+    const colorMap = useRedux((state) => state.cube.colorMap);
 
     const rotate = (faceArrow: FaceArrowDirection) =>
         dispatch(playerActions.play([generateArrowCommand(faceArrow)]));
@@ -29,7 +31,7 @@ const Face: React.FunctionComponent<IFaceProps> = ({
     const onMouseLeave = () => setHovered(false);
 
     const style: React.CSSProperties = {
-        backgroundColor: color,
+        backgroundColor: colorMap[color],
         transform: toCss(transform),
     };
 
@@ -41,8 +43,10 @@ const Face: React.FunctionComponent<IFaceProps> = ({
             onMouseLeave={onMouseLeave}
         >
             {isHovered &&
-                color !== Color.DEFAULT &&
-                color !== Color.TRANSPARENT && <FaceArrows rotate={rotate} />}
+                color !== colorMap[Color.DEFAULT] &&
+                color !== colorMap[Color.TRANSPARENT] && (
+                    <FaceArrows rotate={rotate} />
+                )}
         </div>
     );
 };

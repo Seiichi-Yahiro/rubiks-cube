@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { ICubicle } from '../../cube/CubeTypes';
+import { Color, ICubicle } from '../../cube/CubeTypes';
 import { RotationCommand } from '../../cube/algorithms/RotationCommand';
 
 const setCubeDimension = createAction<number>('SET_CUBE_DIMENSION');
@@ -18,6 +18,13 @@ const applyRotationCommands = createAction<RotationCommand[]>(
 
 const resetCube = createAction('RESET_CUBE');
 
+const setColor = createAction('SET_COLOR', (key: Color, value: string) => ({
+    payload: {
+        key,
+        value,
+    },
+}));
+
 const actions = {
     setCubeDimension,
     setCubeScale,
@@ -25,6 +32,7 @@ const actions = {
     updateCubicles,
     applyRotationCommands,
     resetCube,
+    setColor,
 };
 
 export { actions as cubeActions };
