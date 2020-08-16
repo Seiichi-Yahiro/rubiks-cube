@@ -752,8 +752,8 @@
         "affectsGlobalScope": false
       },
       "../../src/tsx/cube/cubetypes.tsx": {
-        "version": "5fe645c860a14e9959512a9ceb6d3dca6457ea0999c573e8c95109ed9734df7d",
-        "signature": "bb548ed6c15a6c8bc18489ed2dda54310a48fd1db7aeae2a0de1566d49aeeeff",
+        "version": "d052fd7ec63e79bdbc3020f54497a56760094617caf265bea4b9c0545ad4e12d",
+        "signature": "f0b21230cb401fcdff299aa61cfbd12ed10d7ae49e7a9b7b208c3978798725b8",
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/parsimmon/index.d.ts": {
@@ -767,8 +767,8 @@
         "affectsGlobalScope": false
       },
       "../../src/tsx/states/cube/cubeactions.tsx": {
-        "version": "8becbd35468a9c22ab99029b2e1177b11d6a3d55b3839ce9b65385f3a104ed08",
-        "signature": "3877e0ba97d37115e2cfd94387690e1a0dc347675d0bbacce05dfebb8ebd4584",
+        "version": "715d8a21dd09e059bb9de1ae48164fa8c3bf2ba1a0b074825a7b6bb724cadf5f",
+        "signature": "ac758d5922a5736d3a01a82983468d481ac7e65307c6ead5670e0c8c54086d85",
         "affectsGlobalScope": false
       },
       "../../src/tsx/cube/cubeutils.tsx": {
@@ -776,9 +776,14 @@
         "signature": "d052207f64d4beb9af09fe32ff4c9a2f3c610547ba8b5b5dbf7f41689455ebe8",
         "affectsGlobalScope": false
       },
+      "../../src/tsx/states/localstorage.tsx": {
+        "version": "1776e3f0685cdba76791cf816db44ee2ec10596de7df518517a426bc03ffbe60",
+        "signature": "f88d1671ec4756b8ee513ddd9296af11594d89c168e3c9e54b2aeda2009fed41",
+        "affectsGlobalScope": false
+      },
       "../../src/tsx/states/cube/cubestate.tsx": {
-        "version": "5843840793529873b3b8e406382819da16753d982303dfde1f60cac7ed90f7c3",
-        "signature": "496cc4be1ffa95528894b0e5f5a9be086f623d2818444f646d8eaca7c6148e66",
+        "version": "6e0306e4c79b2dfa71c7f0158b9f9e8214a68723fb8961182bffbc3b5b88e3d2",
+        "signature": "1bc250901bcd8d717df5f38ba0fb11169384901c6a62a756be7a2d03ee128be9",
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/react-redux/node_modules/@types/react/index.d.ts": {
@@ -832,7 +837,7 @@
         "affectsGlobalScope": false
       },
       "../../src/tsx/cube/face.tsx": {
-        "version": "462896e7a090f70b5d6de1ca69db467213247f0b8a58b38a585cb54d273569fe",
+        "version": "5422d270acaf1935b3ccaa37b8128a0c2d599e960f686e24ac1035605ac06e1f",
         "signature": "feef2882caf09b049d11e95a8cf14cbafefbc4b734e1e5c32105a061c609d941",
         "affectsGlobalScope": false
       },
@@ -2596,8 +2601,113 @@
         "signature": "a1a20466f016ed4fe9cb4d4f8c590a14f33f35631e080d6bf5ba44adf9b45f5b",
         "affectsGlobalScope": false
       },
+      "../../node_modules/@types/react-color/node_modules/@types/react/index.d.ts": {
+        "version": "ff067b0cf109036f6b1af410dd4cb59cb1d28e750d05a26fca3da3632a0b2b38",
+        "signature": "ff067b0cf109036f6b1af410dd4cb59cb1d28e750d05a26fca3da3632a0b2b38",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/@types/reactcss/node_modules/@types/react/index.d.ts": {
+        "version": "ff067b0cf109036f6b1af410dd4cb59cb1d28e750d05a26fca3da3632a0b2b38",
+        "signature": "ff067b0cf109036f6b1af410dd4cb59cb1d28e750d05a26fca3da3632a0b2b38",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/@types/reactcss/index.d.ts": {
+        "version": "16d120299a27bbd862a2e2e6befdfa8d84c5723d9d58a3490d2ec53d0fc5ed2c",
+        "signature": "16d120299a27bbd862a2e2e6befdfa8d84c5723d9d58a3490d2ec53d0fc5ed2c",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/alpha/alpha.d.ts": {
+        "version": "00b6f45000229b4e3543828539c45c22464c0a68a31f61858507322f74b623f0",
+        "signature": "00b6f45000229b4e3543828539c45c22464c0a68a31f61858507322f74b623f0",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/block/block.d.ts": {
+        "version": "f985765aba898ee871d1218cff0e094c34eaa62282dad92051b6f2835ab937de",
+        "signature": "f985765aba898ee871d1218cff0e094c34eaa62282dad92051b6f2835ab937de",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/common/checkboard.d.ts": {
+        "version": "64847b419bcd609d9e820df57e4401c6e2f9fbda1f375fc79f6895db0f507939",
+        "signature": "64847b419bcd609d9e820df57e4401c6e2f9fbda1f375fc79f6895db0f507939",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/chrome/chrome.d.ts": {
+        "version": "146e3a9b7f9e946b6a37f169c73161572118b7f9c79717d3568f9ab156fbe7f8",
+        "signature": "146e3a9b7f9e946b6a37f169c73161572118b7f9c79717d3568f9ab156fbe7f8",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/circle/circle.d.ts": {
+        "version": "4dc85e28c2667fe4bda7bb00202497b6e030475afe212e757e8f3b4d97f081ed",
+        "signature": "4dc85e28c2667fe4bda7bb00202497b6e030475afe212e757e8f3b4d97f081ed",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/compact/compact.d.ts": {
+        "version": "00c96c800c4afcf22e3ed424b94dfc5c49e21e5d5e9d58991f151d5e405131d1",
+        "signature": "00c96c800c4afcf22e3ed424b94dfc5c49e21e5d5e9d58991f151d5e405131d1",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/github/github.d.ts": {
+        "version": "d4b3a6a76a85846092c15e80b9061b66087c85ddff45d9d8523140c3ee0735a0",
+        "signature": "d4b3a6a76a85846092c15e80b9061b66087c85ddff45d9d8523140c3ee0735a0",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/hue/hue.d.ts": {
+        "version": "d13627e1139ba60a60fc432ef2d6da1429f5bd94b2afe9729c4eecac899347b5",
+        "signature": "d13627e1139ba60a60fc432ef2d6da1429f5bd94b2afe9729c4eecac899347b5",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/material/material.d.ts": {
+        "version": "606e865ef6827f7c9d15378662f3870d8b6bc6d3f595ff8031f08698eed2f2d0",
+        "signature": "606e865ef6827f7c9d15378662f3870d8b6bc6d3f595ff8031f08698eed2f2d0",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/photoshop/photoshop.d.ts": {
+        "version": "cbb71ec4fd9cf2044f33268b380bd542b175763577afdfe671d16ffc78868edc",
+        "signature": "cbb71ec4fd9cf2044f33268b380bd542b175763577afdfe671d16ffc78868edc",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/sketch/sketch.d.ts": {
+        "version": "e6cad696acf6a89867015c31adb6cb7261c210400e691a5705ccb0adf0ba8eb6",
+        "signature": "e6cad696acf6a89867015c31adb6cb7261c210400e691a5705ccb0adf0ba8eb6",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/slider/slider.d.ts": {
+        "version": "a25cb49718b0ec7f6f49c8c40d194fd49a9f4d894df3a00b615e3b6a9e4ab097",
+        "signature": "a25cb49718b0ec7f6f49c8c40d194fd49a9f4d894df3a00b615e3b6a9e4ab097",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/swatches/swatches.d.ts": {
+        "version": "8aa4b9f3b463c78aaa89cefbff1cd8ce3a37b2236c10dd0833331e104ce1da17",
+        "signature": "8aa4b9f3b463c78aaa89cefbff1cd8ce3a37b2236c10dd0833331e104ce1da17",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/twitter/twitter.d.ts": {
+        "version": "96e9c257ca435ebd5f5ca20a8434cd760129d222f7bc9b9718f93529532e0bf7",
+        "signature": "96e9c257ca435ebd5f5ca20a8434cd760129d222f7bc9b9718f93529532e0bf7",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/lib/components/common/colorwrap.d.ts": {
+        "version": "52cd4fa238b709532bf9eef3ef20c8ce40873f379b65945b7559a241e7ead40b",
+        "signature": "52cd4fa238b709532bf9eef3ef20c8ce40873f379b65945b7559a241e7ead40b",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-color/index.d.ts": {
+        "version": "c7b8121e93804228df43df4f24a75148d11f29945db8b163c38aff8dbb89d5a3",
+        "signature": "c7b8121e93804228df43df4f24a75148d11f29945db8b163c38aff8dbb89d5a3",
+        "affectsGlobalScope": false
+      },
+      "../../src/tsx/hooks/usecomplexstate.tsx": {
+        "version": "383e5f3604ff877f9289ab5a0efd53220ac67125f7074dcb6c14ce8a47f7cbb9",
+        "signature": "84da197fe55f9afd394faf1fb934ae81647aa471d0cba0b9f92829d800dcb216",
+        "affectsGlobalScope": false
+      },
+      "../../src/tsx/interface/colorpicker.tsx": {
+        "version": "2b0d55a8613dfed79c4ffeb05380812bfe3958b811cd146bca560ff8cbe59837",
+        "signature": "ac53cab0a2717937816d4ed773703e4005584f97e68286cd0d9bf5342f5116df",
+        "affectsGlobalScope": false
+      },
       "../../src/tsx/interface/settings.tsx": {
-        "version": "4df848da31509ae72f20f1425a816f89a5ca829c70cfc3b467b8b0bed8b441a7",
+        "version": "9d50d7c3573bd728d8e02ee6a1e085e982442240b0182d79d56ba7e9ba4da107",
         "signature": "9a43af19d062a397118176c2e208cb07399cdf91b807a4acede8dfda62181b9a",
         "affectsGlobalScope": false
       },
@@ -2617,12 +2727,12 @@
         "affectsGlobalScope": false
       },
       "../../src/tsx/interface/startconfiguration.tsx": {
-        "version": "98062fd0259c8216d3f8e5b02b46be3c6b65c53d58fab1f6a8913102ea2daab4",
-        "signature": "d278fbcb78702c474200825e260093e91525b405ce75f68ccc1c322e81b65d08",
+        "version": "18963873d448c7b7c9babe1c478f923a5d52b76632a365b1c54cbf0cf41c1cc5",
+        "signature": "de63aeac9c01fddef9a8761977fafdf9b253373180d5414de0d0a72649b4db95",
         "affectsGlobalScope": false
       },
       "../../src/tsx/interface/algorithms.tsx": {
-        "version": "0708fdcd8c49130f6bc37f13e0bede2d391a5aa8785d7b1e3862023026dec3b7",
+        "version": "6c33352f1926f4e94d3bd71e119f1598318182ce0ac4c63e714a0e7f0ed7db38",
         "signature": "92728198aeb89ce82f835dcdbbc8756c34559192b457a2817af01603d27e0fb1",
         "affectsGlobalScope": false
       },
@@ -2642,7 +2752,7 @@
         "affectsGlobalScope": false
       },
       "../../src/tsx/interface/player.tsx": {
-        "version": "2a74a54a2f4c40579a884f3e3755e191e7f07611b6586b03cf279ae81130ae1e",
+        "version": "1d36ca8a63bdd5ac883f975f786dba11842c288b48a2bab196a5771fbde6d4d4",
         "signature": "51a56ddcf3e0bd5a84ca786fabaa6e1ead525976ba712a0fcb0b84368f4a7a17",
         "affectsGlobalScope": false
       },
@@ -3177,7 +3287,7 @@
         "affectsGlobalScope": false
       },
       "../../src/tsx/states/cube/cubeepics.tsx": {
-        "version": "67a08fa8990472f57ee6c3f9f6c0ad64a08a3461c0374d33b21dc809091b3fae",
+        "version": "940196be422f2615bcdae3a48454dc7eeb599b313b250116133c0591fa71ff28",
         "signature": "75076925a563b90c1e75ec138a43f2e741bfdc14e3fc1ee1a27a06c36674108d",
         "affectsGlobalScope": false
       },
@@ -3494,11 +3604,6 @@
       "../../src/tsx/cube/algorithms/parser.test.tsx": {
         "version": "136d962dd918c1170086fb12d741ca18ef69e906fdb9c305777efd4338c5e2b5",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
-        "affectsGlobalScope": false
-      },
-      "../../src/tsx/hooks/usecomplexstate.tsx": {
-        "version": "383e5f3604ff877f9289ab5a0efd53220ac67125f7074dcb6c14ce8a47f7cbb9",
-        "signature": "84da197fe55f9afd394faf1fb934ae81647aa471d0cba0b9f92829d800dcb216",
         "affectsGlobalScope": false
       },
       "../../src/tsx/hooks/useonupdate.tsx": {
@@ -8101,6 +8206,187 @@
         "../../node_modules/@types/node/ts3.2/util.d.ts",
         "../../node_modules/@types/node/util.d.ts"
       ],
+      "../../node_modules/@types/react-color/index.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/lib/components/alpha/alpha.d.ts",
+        "../../node_modules/@types/react-color/lib/components/block/block.d.ts",
+        "../../node_modules/@types/react-color/lib/components/chrome/chrome.d.ts",
+        "../../node_modules/@types/react-color/lib/components/circle/circle.d.ts",
+        "../../node_modules/@types/react-color/lib/components/common/checkboard.d.ts",
+        "../../node_modules/@types/react-color/lib/components/common/colorwrap.d.ts",
+        "../../node_modules/@types/react-color/lib/components/compact/compact.d.ts",
+        "../../node_modules/@types/react-color/lib/components/github/github.d.ts",
+        "../../node_modules/@types/react-color/lib/components/hue/hue.d.ts",
+        "../../node_modules/@types/react-color/lib/components/material/material.d.ts",
+        "../../node_modules/@types/react-color/lib/components/photoshop/photoshop.d.ts",
+        "../../node_modules/@types/react-color/lib/components/sketch/sketch.d.ts",
+        "../../node_modules/@types/react-color/lib/components/slider/slider.d.ts",
+        "../../node_modules/@types/react-color/lib/components/swatches/swatches.d.ts",
+        "../../node_modules/@types/react-color/lib/components/twitter/twitter.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/alpha/alpha.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/block/block.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/chrome/chrome.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/circle/circle.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/common/checkboard.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/common/colorwrap.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/compact/compact.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/github/github.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/hue/hue.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/material/material.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/photoshop/photoshop.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/sketch/sketch.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/slider/slider.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/swatches/swatches.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/twitter/twitter.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/node_modules/@types/react/index.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/prop-types/index.d.ts",
+        "../../node_modules/@types/react-color/node_modules/@types/react/global.d.ts",
+        "../../node_modules/csstype/index.d.ts"
+      ],
       "../../node_modules/@types/react-dom/index.d.ts": [
         "../../node_modules/@types/graceful-fs/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
@@ -8232,6 +8518,24 @@
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts",
         "../../node_modules/@types/node/util.d.ts"
+      ],
+      "../../node_modules/@types/reactcss/index.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts"
+      ],
+      "../../node_modules/@types/reactcss/node_modules/@types/react/index.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/prop-types/index.d.ts",
+        "../../node_modules/@types/reactcss/node_modules/@types/react/global.d.ts",
+        "../../node_modules/csstype/index.d.ts"
       ],
       "../../node_modules/@types/source-list-map/index.d.ts": [
         "../../node_modules/@types/graceful-fs/index.d.ts",
@@ -10646,6 +10950,7 @@
         "../../src/tsx/cube/cubetypes.tsx",
         "../../src/tsx/cube/facearrows.tsx",
         "../../src/tsx/states/player/playeractions.tsx",
+        "../../src/tsx/states/states.tsx",
         "../../src/tsx/utils/matrix4.tsx"
       ],
       "../../src/tsx/cube/facearrows.tsx": [
@@ -10736,6 +11041,23 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/react/index.d.ts"
       ],
+      "../../src/tsx/interface/colorpicker.tsx": [
+        "../../node_modules/@material-ui/core/index.d.ts",
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-redux/index.d.ts",
+        "../../node_modules/@types/react/index.d.ts",
+        "../../src/@types/sass.d.ts",
+        "../../src/tsx/cube/cubetypes.tsx",
+        "../../src/tsx/hooks/usecomplexstate.tsx",
+        "../../src/tsx/states/cube/cubeactions.tsx",
+        "../../src/tsx/states/states.tsx",
+        "../../src/tsx/utils/createclassname.tsx"
+      ],
       "../../src/tsx/interface/interface.tsx": [
         "../../node_modules/@material-ui/core/index.d.ts",
         "../../node_modules/@material-ui/core/list/index.d.ts",
@@ -10768,7 +11090,8 @@
         "../../src/tsx/states/cube/cubeactions.tsx",
         "../../src/tsx/states/player/playeractions.tsx",
         "../../src/tsx/states/player/playerstate.tsx",
-        "../../src/tsx/states/states.tsx"
+        "../../src/tsx/states/states.tsx",
+        "../../src/tsx/utils/createclassname.tsx"
       ],
       "../../src/tsx/interface/settings.tsx": [
         "../../node_modules/@material-ui/core/index.d.ts",
@@ -10782,6 +11105,7 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/react-redux/index.d.ts",
         "../../node_modules/@types/react/index.d.ts",
+        "../../src/tsx/interface/colorpicker.tsx",
         "../../src/tsx/states/cube/cubeactions.tsx",
         "../../src/tsx/states/player/playerstate.tsx",
         "../../src/tsx/states/states.tsx"
@@ -10792,8 +11116,7 @@
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts",
         "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/react/index.d.ts",
-        "../../src/tsx/cube/cubetypes.tsx"
+        "../../node_modules/@types/react/index.d.ts"
       ],
       "../../src/tsx/states/cube/cubeactions.tsx": [
         "../../node_modules/@reduxjs/toolkit/dist/typings.d.ts",
@@ -10812,9 +11135,11 @@
         "../../node_modules/@types/node/ts3.2/util.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/redux-observable/index.d.ts",
+        "../../node_modules/rxjs/index.d.ts",
         "../../node_modules/rxjs/operators/index.d.ts",
         "../../src/tsx/cube/cubeutils.tsx",
         "../../src/tsx/states/cube/cubeactions.tsx",
+        "../../src/tsx/states/localstorage.tsx",
         "../../src/tsx/states/states.tsx"
       ],
       "../../src/tsx/states/cube/cubestate.tsx": [
@@ -10827,6 +11152,7 @@
         "../../src/tsx/cube/cubetypes.tsx",
         "../../src/tsx/cube/cubeutils.tsx",
         "../../src/tsx/states/cube/cubeactions.tsx",
+        "../../src/tsx/states/localstorage.tsx",
         "../../src/tsx/utils/matrix4.tsx"
       ],
       "../../src/tsx/states/epics.tsx": [
@@ -10840,6 +11166,14 @@
         "../../src/tsx/states/cube/cubeepics.tsx",
         "../../src/tsx/states/player/playerepics.tsx",
         "../../src/tsx/states/states.tsx"
+      ],
+      "../../src/tsx/states/localstorage.tsx": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../src/tsx/cube/cubetypes.tsx"
       ],
       "../../src/tsx/states/player/playeractions.tsx": [
         "../../node_modules/@reduxjs/toolkit/dist/typings.d.ts",
@@ -15277,6 +15611,187 @@
         "../../node_modules/@types/node/ts3.2/util.d.ts",
         "../../node_modules/@types/node/util.d.ts"
       ],
+      "../../node_modules/@types/react-color/index.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/lib/components/alpha/alpha.d.ts",
+        "../../node_modules/@types/react-color/lib/components/block/block.d.ts",
+        "../../node_modules/@types/react-color/lib/components/chrome/chrome.d.ts",
+        "../../node_modules/@types/react-color/lib/components/circle/circle.d.ts",
+        "../../node_modules/@types/react-color/lib/components/common/checkboard.d.ts",
+        "../../node_modules/@types/react-color/lib/components/common/colorwrap.d.ts",
+        "../../node_modules/@types/react-color/lib/components/compact/compact.d.ts",
+        "../../node_modules/@types/react-color/lib/components/github/github.d.ts",
+        "../../node_modules/@types/react-color/lib/components/hue/hue.d.ts",
+        "../../node_modules/@types/react-color/lib/components/material/material.d.ts",
+        "../../node_modules/@types/react-color/lib/components/photoshop/photoshop.d.ts",
+        "../../node_modules/@types/react-color/lib/components/sketch/sketch.d.ts",
+        "../../node_modules/@types/react-color/lib/components/slider/slider.d.ts",
+        "../../node_modules/@types/react-color/lib/components/swatches/swatches.d.ts",
+        "../../node_modules/@types/react-color/lib/components/twitter/twitter.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/alpha/alpha.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/block/block.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/chrome/chrome.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/circle/circle.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/common/checkboard.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/common/colorwrap.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/compact/compact.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/github/github.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/hue/hue.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/material/material.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/photoshop/photoshop.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/sketch/sketch.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/slider/slider.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/swatches/swatches.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/lib/components/twitter/twitter.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-color/index.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/reactcss/index.d.ts"
+      ],
+      "../../node_modules/@types/react-color/node_modules/@types/react/index.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/prop-types/index.d.ts",
+        "../../node_modules/@types/react-color/node_modules/@types/react/global.d.ts",
+        "../../node_modules/csstype/index.d.ts"
+      ],
       "../../node_modules/@types/react-dom/index.d.ts": [
         "../../node_modules/@types/graceful-fs/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
@@ -15408,6 +15923,24 @@
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts",
         "../../node_modules/@types/node/util.d.ts"
+      ],
+      "../../node_modules/@types/reactcss/index.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts"
+      ],
+      "../../node_modules/@types/reactcss/node_modules/@types/react/index.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/prop-types/index.d.ts",
+        "../../node_modules/@types/reactcss/node_modules/@types/react/global.d.ts",
+        "../../node_modules/csstype/index.d.ts"
       ],
       "../../node_modules/@types/source-list-map/index.d.ts": [
         "../../node_modules/@types/graceful-fs/index.d.ts",
@@ -17727,6 +18260,10 @@
       "../../src/tsx/interface/category.tsx": [
         "../../node_modules/@types/react/index.d.ts"
       ],
+      "../../src/tsx/interface/colorpicker.tsx": [
+        "../../node_modules/@types/react/index.d.ts",
+        "../../src/@types/sass.d.ts"
+      ],
       "../../src/tsx/interface/interface.tsx": [
         "../../node_modules/@types/react/index.d.ts",
         "../../src/@types/sass.d.ts"
@@ -17739,8 +18276,7 @@
         "../../node_modules/@types/react/index.d.ts"
       ],
       "../../src/tsx/interface/startconfiguration.tsx": [
-        "../../node_modules/@types/react/index.d.ts",
-        "../../src/tsx/cube/cubetypes.tsx"
+        "../../node_modules/@types/react/index.d.ts"
       ],
       "../../src/tsx/states/cube/cubeactions.tsx": [
         "../../node_modules/@reduxjs/toolkit/dist/typings.d.ts",
@@ -17759,6 +18295,9 @@
         "../../node_modules/redux-observable/index.d.ts",
         "../../node_modules/redux/index.d.ts",
         "../../src/tsx/states/states.tsx"
+      ],
+      "../../src/tsx/states/localstorage.tsx": [
+        "../../src/tsx/cube/cubetypes.tsx"
       ],
       "../../src/tsx/states/player/playeractions.tsx": [
         "../../node_modules/@reduxjs/toolkit/dist/typings.d.ts",
@@ -18231,6 +18770,23 @@
       "../../node_modules/@types/parsimmon/index.d.ts",
       "../../node_modules/@types/prettier/index.d.ts",
       "../../node_modules/@types/prop-types/index.d.ts",
+      "../../node_modules/@types/react-color/index.d.ts",
+      "../../node_modules/@types/react-color/lib/components/alpha/alpha.d.ts",
+      "../../node_modules/@types/react-color/lib/components/block/block.d.ts",
+      "../../node_modules/@types/react-color/lib/components/chrome/chrome.d.ts",
+      "../../node_modules/@types/react-color/lib/components/circle/circle.d.ts",
+      "../../node_modules/@types/react-color/lib/components/common/checkboard.d.ts",
+      "../../node_modules/@types/react-color/lib/components/common/colorwrap.d.ts",
+      "../../node_modules/@types/react-color/lib/components/compact/compact.d.ts",
+      "../../node_modules/@types/react-color/lib/components/github/github.d.ts",
+      "../../node_modules/@types/react-color/lib/components/hue/hue.d.ts",
+      "../../node_modules/@types/react-color/lib/components/material/material.d.ts",
+      "../../node_modules/@types/react-color/lib/components/photoshop/photoshop.d.ts",
+      "../../node_modules/@types/react-color/lib/components/sketch/sketch.d.ts",
+      "../../node_modules/@types/react-color/lib/components/slider/slider.d.ts",
+      "../../node_modules/@types/react-color/lib/components/swatches/swatches.d.ts",
+      "../../node_modules/@types/react-color/lib/components/twitter/twitter.d.ts",
+      "../../node_modules/@types/react-color/node_modules/@types/react/index.d.ts",
       "../../node_modules/@types/react-dom/index.d.ts",
       "../../node_modules/@types/react-dom/node_modules/@types/react/global.d.ts",
       "../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
@@ -18246,6 +18802,8 @@
       "../../node_modules/@types/react/global.d.ts",
       "../../node_modules/@types/react/index.d.ts",
       "../../node_modules/@types/react/node_modules/csstype/index.d.ts",
+      "../../node_modules/@types/reactcss/index.d.ts",
+      "../../node_modules/@types/reactcss/node_modules/@types/react/index.d.ts",
       "../../node_modules/@types/source-list-map/index.d.ts",
       "../../node_modules/@types/stack-utils/index.d.ts",
       "../../node_modules/@types/tapable/index.d.ts",
@@ -18518,6 +19076,7 @@
       "../../src/tsx/interface/algorithms.test.tsx",
       "../../src/tsx/interface/algorithms.tsx",
       "../../src/tsx/interface/category.tsx",
+      "../../src/tsx/interface/colorpicker.tsx",
       "../../src/tsx/interface/interface.tsx",
       "../../src/tsx/interface/player.tsx",
       "../../src/tsx/interface/settings.tsx",
@@ -18526,6 +19085,7 @@
       "../../src/tsx/states/cube/cubeepics.tsx",
       "../../src/tsx/states/cube/cubestate.tsx",
       "../../src/tsx/states/epics.tsx",
+      "../../src/tsx/states/localstorage.tsx",
       "../../src/tsx/states/player/playeractions.tsx",
       "../../src/tsx/states/player/playerepics.tsx",
       "../../src/tsx/states/player/playerstate.tsx",
