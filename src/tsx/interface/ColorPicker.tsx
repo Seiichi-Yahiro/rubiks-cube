@@ -88,4 +88,4 @@ const ColorPicker: React.FunctionComponent = () => {
     );
 };
 
-export default ColorPicker;
+export default React.memo(ColorPicker);
