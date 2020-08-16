@@ -17,6 +17,7 @@ import { isError, isOk } from '../cube/algorithms/RotationCommand';
 import { cubeActions } from '../states/cube/CubeActions';
 import { createRandomNotation } from '../cube/algorithms/Parser';
 import { Failure } from 'parsimmon';
+import createClassName from '../utils/createClassName';
 
 const Player: React.FunctionComponent = () => {
     const dispatch = useDispatch();
@@ -126,34 +127,20 @@ const NotationError: React.FunctionComponent<NotationErrorProps> = ({
 }) => (
     <>
         <Typography
-            className="MuiInputBase-root"
-            style={{
-                display: 'initial',
-                position: 'absolute',
-                top: 30,
-                pointerEvents: 'none',
-            }}
+            className={createClassName('MuiInputBase-root', 'notation-error')}
         >
-            <span style={{ visibility: 'hidden', whiteSpace: 'pre-wrap' }}>
+            <span className="notation-error__text">
                 {notation.substring(0, error.index.offset)}
             </span>
-            <span style={{ position: 'relative' }}>
-                <span
-                    style={{
-                        color: '#f44336',
-                        position: 'absolute',
-                        top: 12,
-                    }}
-                >
-                    ^
-                </span>
+            <span className="notation-error__letter">
+                {notation.substr(error.index.offset, 1).padEnd(1, ' ')}
             </span>
         </Typography>
 
-        <div style={{ marginTop: 5, marginBottom: 5 }}>
+        <div className="notation-error__chips">
             {error.expected.map((errorMsg) => (
                 <Chip
-                    style={{ marginRight: 2 }}
+                    className="notation-error__chip"
                     key={errorMsg}
                     color={'secondary'}
                     size={'small'}

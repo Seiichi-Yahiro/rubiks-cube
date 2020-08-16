@@ -9,3 +9,29 @@
         justify-content: space-between;
     }
 }
+
+.notation-error {
+    display: initial !important;
+    position: absolute !important;
+    top: 30px;
+    pointer-events: none;
+    white-space: pre-wrap;
+
+    &__text {
+        visibility: hidden;
+    }
+
+    &__letter {
+        color: #f44336;
+        text-decoration: underline #f44336;
+    }
+
+    &__chips {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    &__chip {
+        margin-right: 2px;
+    }
+}
