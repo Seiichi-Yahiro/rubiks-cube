@@ -2702,8 +2702,8 @@
         "affectsGlobalScope": false
       },
       "../../src/tsx/interface/colorpicker.tsx": {
-        "version": "2b0d55a8613dfed79c4ffeb05380812bfe3958b811cd146bca560ff8cbe59837",
-        "signature": "ac53cab0a2717937816d4ed773703e4005584f97e68286cd0d9bf5342f5116df",
+        "version": "5c92195c0dbe0b0b52196ca4db4d705cf109ad0300dcb773c57a8647bf7a4e7f",
+        "signature": "3092bf4610d30b92255ce2243d39ff1b0623ae4bff65543277848c7041b15f2b",
         "affectsGlobalScope": false
       },
       "../../src/tsx/interface/settings.tsx": {
@@ -3659,6 +3659,11 @@
       "../../node_modules/@types/eslint-visitor-keys/index.d.ts": {
         "version": "725d9be2fd48440256f4deb00649adffdbc5ecd282b09e89d4e200663792c34c",
         "signature": "725d9be2fd48440256f4deb00649adffdbc5ecd282b09e89d4e200663792c34c",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/favicons/index.d.ts": {
+        "version": "b1dfc90281b8135b40051d8623b00b0bd53a5c3bd90bfcd39b7dbf6ea9e42259",
+        "signature": "b1dfc90281b8135b40051d8623b00b0bd53a5c3bd90bfcd39b7dbf6ea9e42259",
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/minimatch/index.d.ts": {
@@ -7355,6 +7360,15 @@
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/util.d.ts"
+      ],
+      "../../node_modules/@types/favicons/index.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/stream.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/ts3.7/index.d.ts",
         "../../node_modules/@types/node/util.d.ts"
       ],
       "../../node_modules/@types/glob/index.d.ts": [
@@ -14762,6 +14776,15 @@
         "../../node_modules/@types/node/ts3.2/util.d.ts",
         "../../node_modules/@types/node/util.d.ts"
       ],
+      "../../node_modules/@types/favicons/index.d.ts": [
+        "../../node_modules/@types/graceful-fs/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/stream.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts",
+        "../../node_modules/@types/node/ts3.7/index.d.ts",
+        "../../node_modules/@types/node/util.d.ts"
+      ],
       "../../node_modules/@types/glob/index.d.ts": [
         "../../node_modules/@types/graceful-fs/index.d.ts",
         "../../node_modules/@types/minimatch/index.d.ts",
@@ -18687,6 +18710,7 @@
       "../../node_modules/@types/enzyme/index.d.ts",
       "../../node_modules/@types/enzyme/node_modules/@types/react/index.d.ts",
       "../../node_modules/@types/eslint-visitor-keys/index.d.ts",
+      "../../node_modules/@types/favicons/index.d.ts",
       "../../node_modules/@types/glob/index.d.ts",
       "../../node_modules/@types/graceful-fs/index.d.ts",
       "../../node_modules/@types/hoist-non-react-statics/index.d.ts",
