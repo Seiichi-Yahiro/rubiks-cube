@@ -1,25 +1,71 @@
 import { ofType } from 'redux-observable';
 import { cubeActions } from './CubeActions';
-import { map, withLatestFrom } from 'rxjs/operators';
+import {
+    debounceTime,
+    distinctUntilChanged,
+    filter,
+    map,
+    withLatestFrom,
+} from 'rxjs/operators';
 import { AppEpic } from '../States';
-import { generateCubicles } from '../../cube/CubeUtils';
-import { EMPTY } from 'rxjs';
+import { EMPTY, merge } from 'rxjs';
 import { COLOR_MAP } from '../LocalStorage';
+import { fromWorker } from 'observable-webworker';
+import { ICubicle } from '../../cube/CubeTypes';
+import { ApplyRotationCommandWorkerInput } from './workers/ApplyRotationCommandWorker';
+import { GenerateCubiclesWorkerInput } from './workers/GenerateCubiclesWorker';
 
-const updateCubicles: AppEpic = (action$, state$) =>
-    action$.pipe(
-        ofType(cubeActions.setCubeDimension.type, cubeActions.resetCube.type),
+const generateCubicles: AppEpic = (action$, state$) => {
+    const dimension$ = action$.pipe(
+        filter(cubeActions.setCubeDimension.match),
+        map((action) => action.payload),
+        distinctUntilChanged()
+    );
+    const reset$ = action$.pipe(
+        filter(cubeActions.resetCube.match),
+        debounceTime(250)
+    );
+
+    const input$ = merge(dimension$, reset$).pipe(
         withLatestFrom(state$),
-        map(([_, state]) =>
-            cubeActions.updateCubicles(
-                generateCubicles(
-                    state.cube.size / state.cube.dimension,
-                    state.cube.gapFactor,
-                    state.cube.dimension
-                )
-            )
+        map(
+            ([_, state]): GenerateCubiclesWorkerInput => ({
+                cubeSize: state.cube.size,
+                gapFactor: state.cube.gapFactor,
+                dimension: state.cube.dimension,
+            })
         )
     );
+
+    return fromWorker<GenerateCubiclesWorkerInput, ICubicle[]>(
+        () =>
+            new Worker('./workers/GenerateCubiclesWorker', { type: 'module' }),
+        input$
+    ).pipe(map(cubeActions.updateCubicles));
+};
+
+const applyRotationCommands: AppEpic = (action$, state$) => {
+    const input$ = action$.pipe(
+        filter(cubeActions.applyRotationCommands.match),
+        map((action) => action.payload),
+        withLatestFrom(state$),
+        map(
+            ([rotationCommands, state]): ApplyRotationCommandWorkerInput => ({
+                rotationCommands,
+                cubicles: state.cube.cubicles,
+                dimension: state.cube.dimension,
+            })
+        )
+    );
+
+    return fromWorker<ApplyRotationCommandWorkerInput, ICubicle[]>(
+        () =>
+            new Worker('./workers/ApplyRotationCommandWorker', {
+                type: 'module',
+            }),
+        input$
+    ).pipe(map(cubeActions.updateCubicles));
+};
 
 const saveColors: AppEpic = (action$, state$) => {
     action$
@@ -35,4 +81,4 @@ const saveColors: AppEpic = (action$, state$) => {
     return EMPTY;
 };
 
-export const cubeEpics = [updateCubicles, saveColors];
+export const cubeEpics = [generateCubicles, applyRotationCommands, saveColors];

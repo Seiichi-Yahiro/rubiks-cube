@@ -3,6 +3,7 @@ import { playerActions } from './PlayerActions';
 import {
     concatMap,
     delay,
+    distinctUntilChanged,
     filter,
     first,
     map,
@@ -20,14 +21,17 @@ import {
 import Maybe from '../../utils/Maybe';
 import { PlayerStatus } from './PlayerState';
 import { Action } from 'redux';
-import { ofType } from 'redux-observable';
 
-const parseNotation: AppEpic = (action$, state$) =>
-    action$.pipe(
-        ofType(
-            cubeActions.setCubeDimension.type,
-            playerActions.updateNotation.type
-        ),
+const parseNotation: AppEpic = (action$, state$) => {
+    const dimension$ = action$.pipe(
+        filter(cubeActions.setCubeDimension.match),
+        map((action) => action.payload),
+        distinctUntilChanged()
+    );
+
+    const notation$ = action$.pipe(filter(playerActions.updateNotation.match));
+
+    return merge(dimension$, notation$).pipe(
         withLatestFrom(state$),
         map(([_, state]) => {
             const parser = makeNotationParser(state.cube.dimension);
@@ -35,6 +39,7 @@ const parseNotation: AppEpic = (action$, state$) =>
         }),
         map(playerActions.parsedNotation)
     );
+};
 
 function* singleRotationCommandGenerator(
     rotationCommands: RotationCommand[]

@@ -152,15 +152,17 @@ export const applyRotationCommand = (
     cubeDimension: number
 ): ICubicle[] => {
     if (isLoopedRotationCommands(rotationCommand)) {
-        return range(0, rotationCommand.iterations).reduce(
-            (cubicles2, _) =>
-                rotationCommand.commands.reduce(
-                    (cubicles3, command) =>
-                        applyRotationCommand(cubicles3, command, cubeDimension),
-                    cubicles2
-                ),
-            cubicles
-        );
+        let newCubicles = cubicles;
+        for (let _i = 0; _i < rotationCommand.iterations; _i++) {
+            for (const command of rotationCommand.commands) {
+                newCubicles = applyRotationCommand(
+                    newCubicles,
+                    command,
+                    cubeDimension
+                );
+            }
+        }
+        return newCubicles;
     } else {
         return cubicles.map((cubicle) => {
             if (canApplyRotationCommand(cubicle.axis, rotationCommand)) {

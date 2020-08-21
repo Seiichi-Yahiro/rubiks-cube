@@ -7,6 +7,7 @@
         "@material-ui/icons": "4.9.1",
         "@reduxjs/toolkit": "1.4.0",
         "lodash": "4.17.20",
+        "observable-webworker": "3.2.4",
         "parsimmon": "1.15.0",
         "react": "16.13.1",
         "react-color": "2.18.1",
@@ -53,7 +54,8 @@
         "typescript": "3.9.7",
         "webpack": "4.44.1",
         "webpack-cli": "3.3.12",
-        "webpack-dev-server": "3.11.0"
+        "webpack-dev-server": "3.11.0",
+        "worker-plugin": "5.0.0"
     },
     "scripts": {
         "start": "webpack-dev-server --config webpack.config.js",

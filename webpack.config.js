@@ -4,6 +4,7 @@ const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const WorkerPlugin = require('worker-plugin');
 
 module.exports = {
     mode: 'development',
@@ -66,6 +67,7 @@ module.exports = {
         },
     },
     plugins: [
+        new WorkerPlugin(),
         new ForkTsCheckerWebpackPlugin({
             eslint: {
                 files: './src/**/*.{ts,tsx}',

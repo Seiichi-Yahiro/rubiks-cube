@@ -49,7 +49,7 @@ export const playerReducer = createReducer(initialPlayerState, (builder) => {
         .addCase(playerActions.setCurrentRotationCommand, (state, action) => {
             state.currentCommand = action.payload;
         })
-        .addCase(cubeActions.applyRotationCommands, (state, _action) => {
+        .addCase(cubeActions.updateCubicles, (state, _action) => {
             state.currentCommand = undefined;
         });
 });
