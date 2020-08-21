@@ -18,8 +18,6 @@ const Settings: React.FunctionComponent = () => {
     );
     const playerStatus = useRedux((state) => state.player.status);
 
-    const isDisabled = playerStatus !== PlayerStatus.STOPPED;
-
     return (
         <List disablePadding={true} dense={true} className="interface-list">
             <ListItem className="interface-list__item--settings">
@@ -37,7 +35,7 @@ const Settings: React.FunctionComponent = () => {
                     onChangeCommitted={(event, value) =>
                         dispatch(cubeActions.setCubeDimension(value as number))
                     }
-                    disabled={isDisabled}
+                    disabled={playerStatus !== PlayerStatus.STOPPED}
                 />
             </ListItem>
             <ListItem className="interface-list__item--settings">
@@ -53,7 +51,6 @@ const Settings: React.FunctionComponent = () => {
                     onChangeCommitted={(event, value) =>
                         dispatch(cubeActions.setCubeScale(value as number))
                     }
-                    disabled={isDisabled}
                 />
             </ListItem>
             <ListItem className="interface-list__item--settings">
