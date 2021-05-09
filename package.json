@@ -6,7 +6,7 @@
         "@material-ui/core": "4.11.0",
         "@material-ui/icons": "4.9.1",
         "@reduxjs/toolkit": "1.4.0",
-        "lodash": "4.17.20",
+        "lodash": "4.17.21",
         "parsimmon": "1.15.0",
         "react": "16.13.1",
         "react-color": "2.18.1",
