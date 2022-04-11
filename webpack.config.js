@@ -39,7 +39,6 @@ module.exports = {
                     {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
-                            sourceMap: true,
                             publicPath: '../',
                         },
                     },
@@ -66,14 +65,7 @@ module.exports = {
         },
     },
     plugins: [
-        new ForkTsCheckerWebpackPlugin({
-            eslint: {
-                files: './src/**/*.{ts,tsx}',
-                options: {
-                    cache: true,
-                },
-            },
-        }),
+        new ForkTsCheckerWebpackPlugin(),
         new HtmlWebpackPlugin({
             inject: 'head',
             filename: 'index.html',
@@ -86,7 +78,6 @@ module.exports = {
         }),
     ],
     devServer: {
-        contentBase: 'build',
         port: 3000,
         headers: {
             'Access-Control-Allow-Origin': '*',

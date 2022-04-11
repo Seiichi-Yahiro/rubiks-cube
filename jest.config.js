@@ -9,7 +9,7 @@ module.exports = {
     moduleNameMapper: {
         '\\.s?css$': 'identity-obj-proxy',
     },
-    setupFilesAfterEnv: ['<rootDir>src/setupTests.tsx', 'core-js'],
+    setupFilesAfterEnv: ['core-js'],
     testEnvironment: 'jsdom',
     coverageReporters: ['html'],
     coverageDirectory: '<rootDir>build/coverage',
