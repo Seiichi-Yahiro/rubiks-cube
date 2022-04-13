@@ -56,7 +56,7 @@
     "scripts": {
         "start": "webpack-dev-server --config webpack.config.js",
         "build:dev": "rimraf build/* && webpack --config webpack.config.js",
-        "build:prod": "rimraf build/* && webpack --config webpack.config.js -p",
+        "build:prod": "rimraf build/* && webpack --config webpack.config.js --mode=production",
         "pretty-quick": "pretty-quick",
         "test": "rimraf build/coverage && jest --coverage"
     },
