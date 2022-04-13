@@ -1,11 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import List from '@material-ui/core/List';
+import { List, ListItem } from '@mui/material';
 import Settings from './Settings';
 import './Interface.scss';
 import Algorithms from './Algorithms';
 import Category from './Category';
 import Player from './Player';
-import { ListItem } from '@material-ui/core';
 
 enum Menu {
     ALGORITHMS = 'ALGORITHMS',

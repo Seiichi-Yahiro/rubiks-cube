@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Chip, IconButton, TextField, Typography } from '@material-ui/core';
+import { Chip, IconButton, TextField, Typography } from '@mui/material';
 import './Player.scss';
 import { PlayerStatus } from '../states/player/PlayerState';
 import {
@@ -9,7 +9,7 @@ import {
     Shuffle,
     SkipNext,
     Stop,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { playerActions } from '../states/player/PlayerActions';
 import { useDispatch } from 'react-redux';
 import { useRedux } from '../states/States';
@@ -17,7 +17,6 @@ import { isError, isOk } from '../cube/algorithms/RotationCommand';
 import { cubeActions } from '../states/cube/CubeActions';
 import { createRandomNotation } from '../cube/algorithms/Parser';
 import { Failure } from 'parsimmon';
-import createClassName from '../utils/createClassName';
 
 const Player: React.FunctionComponent = () => {
     const dispatch = useDispatch();
@@ -63,6 +62,7 @@ const Player: React.FunctionComponent = () => {
         <div className="algorithm-player">
             <TextField
                 label="Algorithm"
+                variant="standard"
                 fullWidth={true}
                 value={playerNotation}
                 onChange={updateNotation}
@@ -126,14 +126,12 @@ const NotationError: React.FunctionComponent<NotationErrorProps> = ({
     error,
 }) => (
     <>
-        <Typography
-            className={createClassName('MuiInputBase-root', 'notation-error')}
-        >
+        <Typography className="notation-error">
             <span className="notation-error__text">
                 {notation.substring(0, error.index.offset)}
             </span>
             <span className="notation-error__letter">
-                {notation.substr(error.index.offset, 1).padEnd(1, ' ')}
+                {notation.substring(error.index.offset, error.index.offset + 1)}
             </span>
         </Typography>
 
@@ -142,8 +140,8 @@ const NotationError: React.FunctionComponent<NotationErrorProps> = ({
                 <Chip
                     className="notation-error__chip"
                     key={errorMsg}
-                    color={'secondary'}
-                    size={'small'}
+                    color="error"
+                    size="small"
                     label={errorMsg}
                 />
             ))}

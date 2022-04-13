@@ -1,8 +1,5 @@
 import React, { useMemo } from 'react';
-import { Typography } from '@material-ui/core';
-import Slider from '@material-ui/core/Slider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import { Typography, Slider, List, ListItem } from '@mui/material';
 import { PlayerStatus } from '../states/player/PlayerState';
 import { cubeActions } from '../states/cube/CubeActions';
 import { useDispatch } from 'react-redux';

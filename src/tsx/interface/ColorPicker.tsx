@@ -6,7 +6,7 @@ import { Color } from '../cube/CubeTypes';
 import { useDispatch } from 'react-redux';
 import { cubeActions } from '../states/cube/CubeActions';
 import useComplexState from '../hooks/useComplexState';
-import { Button, ClickAwayListener } from '@material-ui/core';
+import { Button, ClickAwayListener } from '@mui/material';
 import createClassName from '../utils/createClassName';
 
 interface State {

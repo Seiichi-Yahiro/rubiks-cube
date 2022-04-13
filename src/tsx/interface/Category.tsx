@@ -1,17 +1,18 @@
 import React from 'react';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { ExpandMore } from '@mui/icons-material';
 import {
     Accordion,
     AccordionSummary,
     AccordionDetails,
-} from '@material-ui/core';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
+    Typography,
+    ListItem,
+} from '@mui/material';
 
 interface ICategoryProps {
     isOpen: boolean;
     setMenu: () => void;
     title: string;
+    children: React.ReactNode;
 }
 
 const Category: React.FunctionComponent<ICategoryProps> = ({
@@ -28,7 +29,7 @@ const Category: React.FunctionComponent<ICategoryProps> = ({
         >
             <AccordionSummary
                 onClick={setMenu}
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={<ExpandMore />}
                 className="interface-category__summary"
             >
                 <Typography>{title}</Typography>

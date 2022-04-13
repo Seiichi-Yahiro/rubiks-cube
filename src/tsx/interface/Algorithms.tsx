@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { List, ListItemText } from '@material-ui/core';
-import ListItem from '@material-ui/core/ListItem';
+import {
+    List,
+    ListItemText,
+    ListItem,
+    ListSubheader,
+    Divider,
+    TextField,
+} from '@mui/material';
 import Look2CFOP from '../cube/algorithms/CFOP';
 import Misc from '../cube/algorithms/Misc';
 import { PlayerStatus } from '../states/player/PlayerState';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import StartConfiguration from './StartConfiguration';
-import Divider from '@material-ui/core/Divider';
-import TextField from '@material-ui/core/TextField';
 import { playerActions } from '../states/player/PlayerActions';
 import { useDispatch } from 'react-redux';
 import { useRedux } from '../states/States';
@@ -57,7 +60,12 @@ const Algorithms: React.FunctionComponent = () => {
             className="interface-list interface-algorithm-list"
         >
             <ListSubheader className="interface-algorithm-list__filer">
-                <TextField label="Search" fullWidth={true} onChange={filter} />
+                <TextField
+                    label="Search"
+                    variant="standard"
+                    fullWidth={true}
+                    onChange={filter}
+                />
             </ListSubheader>
             {filteredCategories.map((group, index) => (
                 <React.Fragment key={group.name + index}>
