@@ -2,6 +2,7 @@
 
 const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -66,6 +67,7 @@ module.exports = {
     },
     plugins: [
         new ForkTsCheckerWebpackPlugin(),
+        new ESLintPlugin({ extensions: ['ts', 'tsx'] }),
         new HtmlWebpackPlugin({
             inject: 'head',
             filename: 'index.html',
