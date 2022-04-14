@@ -59,11 +59,7 @@
         "build:dev": "rimraf build/* && webpack --config webpack.config.js",
         "build:prod": "rimraf build/* && webpack --config webpack.config.js --mode=production",
         "pretty-quick": "pretty-quick",
-        "test": "rimraf build/coverage && jest --coverage"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "pretty-quick --staged"
-        }
+        "test": "rimraf build/coverage && jest --coverage",
+        "prepare": "husky install"
     }
 }
