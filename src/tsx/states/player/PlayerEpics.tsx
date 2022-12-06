@@ -55,10 +55,9 @@ const player: AppEpic = (action$, state$) => {
     const unPause$ = action$.pipe(filter(playerActions.unPause.match));
     const stop$ = action$.pipe(filter(playerActions.stop.match));
 
-    let rotationCommandGenerator: Maybe<Generator<
-        SingleRotationCommand,
-        SingleRotationCommand
-    >> = Maybe.none();
+    let rotationCommandGenerator: Maybe<
+        Generator<SingleRotationCommand, SingleRotationCommand>
+    > = Maybe.none();
 
     const rotationCommandDelay$ = new Subject<boolean>();
 
@@ -111,7 +110,7 @@ const player: AppEpic = (action$, state$) => {
     );
 
     action$
-        .pipe(filter(cubeActions.applyRotationCommands.match), delay(10))
+        .pipe(filter(cubeActions.applyRotationCommands.match), delay(50))
         .subscribe((_) => rotationCommandDelay$.next(true));
 
     return merge(setCurrentRotationCommand$, applyRotationCommand$);
