@@ -1,5 +1,4 @@
 import React from 'react';
-import './ColorPicker.scss';
 import { ChromePicker } from 'react-color';
 import { useRedux } from '../states/States';
 import { Color } from '../cube/CubeTypes';
@@ -36,10 +35,12 @@ const ColorPicker: React.FunctionComponent = () => {
         .map(([key, value]: [Color, string]) => (
             <div
                 key={key}
-                className={createClassName('color-group__color-square', {
-                    'color-group__color-square--selected':
-                        selectedColor === key,
-                })}
+                className={createClassName(
+                    'border border-cube-gray w-5 h-5 cursor-pointer',
+                    {
+                        'animate-wiggle': selectedColor === key,
+                    }
+                )}
                 style={{
                     backgroundColor: value,
                 }}
@@ -50,7 +51,7 @@ const ColorPicker: React.FunctionComponent = () => {
         ));
 
     return (
-        <div className="color-picker-component">
+        <div className="flex flex-1 flex-row justify-between items-center">
             <ClickAwayListener
                 onClickAway={() => {
                     if (selectedColor) {
@@ -59,9 +60,9 @@ const ColorPicker: React.FunctionComponent = () => {
                 }}
             >
                 <div>
-                    <div className="color-group">{colors}</div>
+                    <div className="grid grid-cols-6 gap-1">{colors}</div>
                     {selectedColor && (
-                        <div className="color-picker">
+                        <div className="absolute mt-1 z-10">
                             <ChromePicker
                                 disableAlpha={true}
                                 color={pickerColor}

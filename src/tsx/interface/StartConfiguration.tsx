@@ -9,13 +9,13 @@ const StartConfiguration: React.FunctionComponent<IStartConfigurationProps> = ({
     configuration,
     transparentColor,
 }) => (
-    <div className="start-configuration">
+    <div className="grid gap-0.5 mr-1">
         {configuration.flatMap((row, rowIndex) =>
             row.map((color, colorIndex) => (
                 <React.Fragment key={`${rowIndex}-${colorIndex}`}>
                     {color !== transparentColor && (
                         <div
-                            className="start-configuration__face"
+                            className="w-2.5 h-2.5"
                             style={{
                                 backgroundColor: color,
                                 gridRow: rowIndex + 1,

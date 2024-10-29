@@ -1,6 +1,5 @@
 import React from 'react';
 import Arrow from './Arrow';
-import './Arrows.scss';
 import { Direction } from './CubeTypes';
 import { makeNotationParser } from './algorithms/Parser';
 import { useDispatch } from 'react-redux';
@@ -49,8 +48,11 @@ const CubeArrows: React.FunctionComponent<ICubeArrowsProps> = ({
     });
 
     const arrow = (
-        <svg className="cube-arrows-svg" viewBox="-50 -50 100 100">
-            <Arrow className="cube-arrow" />
+        <svg
+            className="group/svg-cube-arrow group-[.is-transitioning]/transitioning:hidden"
+            viewBox="-50 -50 100 100"
+        >
+            <Arrow className="opacity-20 group-hover/svg-cube-arrow:opacity-100" />
         </svg>
     );
 
@@ -61,7 +63,7 @@ const CubeArrows: React.FunctionComponent<ICubeArrowsProps> = ({
     };
 
     return (
-        <div className="display-contents">
+        <div className="contents">
             <div
                 onClick={() => rotateWithNotation("Z'")}
                 style={style(Side.FRONT, Direction.ANTI_CLOCKWISE)}

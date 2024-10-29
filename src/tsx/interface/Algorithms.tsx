@@ -57,9 +57,9 @@ const Algorithms: React.FunctionComponent = () => {
         <List
             disablePadding={true}
             dense={true}
-            className="interface-list interface-algorithm-list"
+            className="w-full h-96 overflow-auto"
         >
-            <ListSubheader className="interface-algorithm-list__filer">
+            <ListSubheader className="!sticky !top-0 !z-50 !bg-white">
                 <TextField
                     label="Search"
                     variant="standard"
@@ -69,7 +69,7 @@ const Algorithms: React.FunctionComponent = () => {
             </ListSubheader>
             {filteredCategories.map((group, index) => (
                 <React.Fragment key={group.name + index}>
-                    <ListSubheader className="interface-list__item interface-algorithm-list__header">
+                    <ListSubheader className="!bg-white !sticky !top-12">
                         <Divider />
                         {group.name}
                         <Divider />
@@ -77,7 +77,7 @@ const Algorithms: React.FunctionComponent = () => {
                     {group.algorithms.map((algorithm) => (
                         <ListItem
                             key={algorithm.name + index}
-                            className="interface-list__item--moves"
+                            className="cursor-pointer"
                             button={true}
                             onClick={() =>
                                 dispatch(

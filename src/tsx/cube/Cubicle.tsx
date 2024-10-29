@@ -4,6 +4,8 @@ import { CubeAxis, IFace } from './CubeTypes';
 import Face from './Face';
 import { generateFaceArrowCommand } from './CubeUtils';
 
+export const cubicleClassname = 'cubicle';
+
 interface ICubicleProps {
     axis: CubeAxis;
     faces: IFace[];
@@ -34,7 +36,10 @@ const Cubicle: React.FunctionComponent<ICubicleProps> = ({
     const generateArrowCommand = generateFaceArrowCommand(axis, transform);
 
     return (
-        <div className="rubiks-cube__cubicle" style={style}>
+        <div
+            className={`${cubicleClassname} absolute [transform-style:preserve-3d]`}
+            style={style}
+        >
             {faces.map(({ id, transform, color }) => (
                 <Face
                     key={id}

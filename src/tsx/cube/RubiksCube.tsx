@@ -2,7 +2,6 @@ import React from 'react';
 import { useRedux } from '../states/States';
 import { fromScale, fromTranslation, multiply, toCss } from '../utils/Matrix4';
 import Cubicle from './Cubicle';
-import './RubiksCube.scss';
 import Maybe from '../utils/Maybe';
 import { rotationCommandToCssRotation } from './algorithms/RotationCommand';
 import createClassName from '../utils/createClassName';
@@ -36,11 +35,14 @@ const RubiksCube: React.FunctionComponent = () => {
     };
 
     return (
-        <div className="app__cube">
+        <div className="[perspective:1000px]">
             <div
-                className={createClassName('rubiks-cube', {
-                    'rubiks-cube--is-transitioning': !isStopped,
-                })}
+                className={createClassName(
+                    'relative [transform-style:preserve-3d]',
+                    {
+                        'group/transitioning is-transitioning': !isStopped,
+                    }
+                )}
                 style={style}
             >
                 <div style={positionCorrectionStyle()}>
@@ -73,7 +75,7 @@ const Cubicles: React.FunctionComponent<CubiclesProps> = React.memo(
         );
 
         return (
-            <div className="display-contents">
+            <div className="contents">
                 {cubicles.map(({ id, faces, transform, axis }) => {
                     const animatedTransform = currentRotationCommand
                         .filter((command) =>

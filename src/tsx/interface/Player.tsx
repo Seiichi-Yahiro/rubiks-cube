@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { Chip, IconButton, TextField, Typography } from '@mui/material';
-import './Player.scss';
 import { PlayerStatus } from '../states/player/PlayerState';
 import {
     Pause,
@@ -59,7 +58,7 @@ const Player: React.FunctionComponent = () => {
     const onRefresh = () => dispatch(cubeActions.resetCube());
 
     return (
-        <div className="algorithm-player">
+        <div className="flex flex-col w-full relative">
             <TextField
                 label="Algorithm"
                 variant="standard"
@@ -77,7 +76,7 @@ const Player: React.FunctionComponent = () => {
                     error={rotationCommands}
                 />
             )}
-            <div className="algorithm-player__buttons">
+            <div className="flex flex-row justify-between">
                 <div>
                     {playerStatus === PlayerStatus.PLAYING ? (
                         <IconButton onClick={onPause}>
@@ -126,19 +125,18 @@ const NotationError: React.FunctionComponent<NotationErrorProps> = ({
     error,
 }) => (
     <>
-        <Typography className="notation-error">
-            <span className="notation-error__text">
+        <Typography className="![display:initial] ![line-height:1.4375em] !absolute top-[20px] pointer-events-none whitespace-pre-wrap">
+            <span className="invisible">
                 {notation.substring(0, error.index.offset)}
             </span>
-            <span className="notation-error__letter">
+            <span className="text-error underline decoration-error">
                 {notation.substring(error.index.offset, error.index.offset + 1)}
             </span>
         </Typography>
 
-        <div className="notation-error__chips">
+        <div className="my-1 space-x-0.5">
             {error.expected.map((errorMsg) => (
                 <Chip
-                    className="notation-error__chip"
                     key={errorMsg}
                     color="error"
                     size="small"

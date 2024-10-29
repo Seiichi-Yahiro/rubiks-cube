@@ -16,8 +16,8 @@ const Settings: React.FunctionComponent = () => {
     const playerStatus = useRedux((state) => state.player.status);
 
     return (
-        <List disablePadding={true} dense={true} className="interface-list">
-            <ListItem className="interface-list__item--settings">
+        <List disablePadding={true} dense={true} className="w-full">
+            <ListItem className="flex flex-col">
                 <Typography id="cube-dimension-slider">
                     Cube dimension
                 </Typography>
@@ -35,7 +35,7 @@ const Settings: React.FunctionComponent = () => {
                     disabled={playerStatus !== PlayerStatus.STOPPED}
                 />
             </ListItem>
-            <ListItem className="interface-list__item--settings">
+            <ListItem className="flex flex-col">
                 <Typography id="scale-slider">Scale</Typography>
                 <Slider
                     aria-labelledby="scale-slider"
@@ -50,7 +50,7 @@ const Settings: React.FunctionComponent = () => {
                     }
                 />
             </ListItem>
-            <ListItem className="interface-list__item--settings">
+            <ListItem className="flex flex-col">
                 <Typography id="animation-duration-slider">
                     Animation duration
                 </Typography>

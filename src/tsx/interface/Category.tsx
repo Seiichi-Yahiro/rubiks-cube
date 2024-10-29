@@ -21,22 +21,20 @@ const Category: React.FunctionComponent<ICategoryProps> = ({
     setMenu,
     children,
 }) => (
-    <ListItem className="interface-list__item">
+    <ListItem className="!bg-white">
         <Accordion
             expanded={isOpen}
             TransitionProps={{ unmountOnExit: true }}
-            className="interface-category"
+            className="w-full"
         >
             <AccordionSummary
                 onClick={setMenu}
                 expandIcon={<ExpandMore />}
-                className="interface-category__summary"
+                className="h-12 ![min-height:unset]"
             >
                 <Typography>{title}</Typography>
             </AccordionSummary>
-            <AccordionDetails className="interface-category__details">
-                {children}
-            </AccordionDetails>
+            <AccordionDetails className="!p-1">{children}</AccordionDetails>
         </Accordion>
     </ListItem>
 );

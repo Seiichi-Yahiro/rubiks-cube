@@ -37,7 +37,7 @@ const Face: React.FunctionComponent<IFaceProps> = ({
 
     return (
         <div
-            className="rubiks-cube__face"
+            className="absolute [width:inherit] [height:inherit] [backface-visibility:hidden] border-2 border-cube-gray"
             style={style}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}

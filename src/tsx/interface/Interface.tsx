@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { List, ListItem } from '@mui/material';
 import Settings from './Settings';
-import './Interface.scss';
 import Algorithms from './Algorithms';
 import Category from './Category';
 import Player from './Player';
@@ -18,9 +17,9 @@ const Interface: React.FunctionComponent = () => {
         setOpenedMenu((prevMenu) => (prevMenu === menu ? Menu.NONE : menu));
 
     return (
-        <div className="app__interface">
+        <div className="absolute left-0 top-0 w-96">
             <List>
-                <ListItem className="interface-list__item">
+                <ListItem className="!bg-white">
                     <Player />
                 </ListItem>
                 <Category

@@ -21,6 +21,7 @@ import Maybe from '../../utils/Maybe';
 import { PlayerStatus } from './PlayerState';
 import { Action } from 'redux';
 import { ofType } from 'redux-observable';
+import { cubicleClassname } from '../../cube/Cubicle';
 
 const parseNotation: AppEpic = (action$, state$) =>
     action$.pipe(
@@ -97,7 +98,7 @@ const player: AppEpic = (action$, state$) => {
             (event) =>
                 event.propertyName === 'transform' &&
                 (event.target as HTMLElement).className.includes(
-                    'rubiks-cube__cubicle'
+                    cubicleClassname
                 )
         )
     );
