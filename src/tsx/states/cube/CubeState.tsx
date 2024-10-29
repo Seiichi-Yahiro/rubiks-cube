@@ -2,7 +2,11 @@ import { createReducer } from '@reduxjs/toolkit';
 import { cubeActions } from './CubeActions';
 import { ColorMap, ICubicle } from '../../cube/CubeTypes';
 import { fromAngleX, fromAngleY, Mat4, multiply } from '../../utils/Matrix4';
-import { applyRotationCommand } from '../../cube/CubeUtils';
+import {
+    applyRotationCommand,
+    axisToTranslation,
+    sideToTransform,
+} from '../../cube/CubeUtils';
 import { defaultColorMap, loadColorMap } from '../LocalStorage';
 
 export interface ICubeState {
@@ -27,6 +31,23 @@ const initialCubeState: ICubeState = {
 
 export const cubeReducer = createReducer(initialCubeState, (builder) => {
     builder
+        .addCase(cubeActions.setCubeSize, (state, action) => {
+            state.size = action.payload;
+            const cubicleSize = state.size / state.dimension;
+
+            for (const cubicle of state.cubicles) {
+                cubicle.transform[3] = axisToTranslation(
+                    cubicle.axis,
+                    cubicleSize,
+                    state.gapFactor,
+                    state.dimension
+                )[3];
+
+                for (const face of cubicle.faces) {
+                    face.transform = sideToTransform(face.id, cubicleSize);
+                }
+            }
+        })
         .addCase(cubeActions.setCubeDimension, (state, action) => {
             state.dimension = action.payload;
         })

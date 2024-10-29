@@ -2,6 +2,8 @@ import { createAction } from '@reduxjs/toolkit';
 import { Color, ICubicle } from '../../cube/CubeTypes';
 import { RotationCommand } from '../../cube/algorithms/RotationCommand';
 
+const setCubeSize = createAction<number>('SET_CUBE_SIZE');
+
 const setCubeDimension = createAction<number>('SET_CUBE_DIMENSION');
 
 const setRotationAnimationSpeed = createAction<number>(
@@ -26,6 +28,7 @@ const setColor = createAction('SET_COLOR', (key: Color, value: string) => ({
 const resetColors = createAction('RESET_COLORS');
 
 const actions = {
+    setCubeSize,
     setCubeDimension,
     setRotationAnimationSpeed,
     updateCubicles,

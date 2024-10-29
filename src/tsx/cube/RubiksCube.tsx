@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useRedux } from '../states/States';
 import { fromTranslation, toCss } from '../utils/Matrix4';
 import Cubicle from './Cubicle';
@@ -8,13 +8,35 @@ import createClassName from '../utils/createClassName';
 import { canApplyRotationCommand } from './CubeUtils';
 import CubeArrows from './CubeArrows';
 import { PlayerStatus } from '../states/player/PlayerState';
+import { useDispatch } from 'react-redux';
+import { cubeActions } from '../states/cube/CubeActions';
 
 const RubiksCube: React.FunctionComponent = () => {
+    const dispatch = useDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const cubeSize = useRedux((state) => state.cube.size);
     const rotation = useRedux((state) => state.cube.rotation);
     const isStopped =
         useRedux((state) => state.player.status) === PlayerStatus.STOPPED;
+
+    const container = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!container.current) {
+            return;
+        }
+
+        const resizeObserver = new ResizeObserver(() => {
+            const width = container.current!.offsetWidth;
+            const height = container.current!.offsetHeight;
+            const containerSize = Math.min(width, height);
+            dispatch(cubeActions.setCubeSize(containerSize / 2));
+        });
+
+        resizeObserver.observe(container.current);
+
+        return () => resizeObserver.disconnect();
+    }, [dispatch, container.current]);
 
     const cubicleSize = cubeSize / cubeDimension;
 
@@ -34,7 +56,10 @@ const RubiksCube: React.FunctionComponent = () => {
     };
 
     return (
-        <div className="[perspective:1000px]">
+        <div
+            ref={container}
+            className="[perspective:1000px] flex-1 flex justify-center items-center"
+        >
             <div
                 className={createClassName(
                     'relative [transform-style:preserve-3d]',

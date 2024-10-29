@@ -32,7 +32,7 @@ const sideToColor = {
     [Side.DOWN]: Color.WHITE,
 };
 
-const sideToTransform = (side: Side, cubicleSize: number): Mat4 => {
+export const sideToTransform = (side: Side, cubicleSize: number): Mat4 => {
     const halfCubicleSize = cubicleSize / 2.0;
     return {
         [Side.FRONT]: fromTranslation(0, 0, halfCubicleSize),
@@ -59,7 +59,7 @@ const sideToTransform = (side: Side, cubicleSize: number): Mat4 => {
     }[side];
 };
 
-const axisToTranslation = (
+export const axisToTranslation = (
     [x, y, z]: CubeAxis,
     cubicleSize: number,
     cubicleGap: number,

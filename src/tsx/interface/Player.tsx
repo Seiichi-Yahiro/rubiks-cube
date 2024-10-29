@@ -58,7 +58,7 @@ const Player: React.FunctionComponent = () => {
     const onRefresh = () => dispatch(cubeActions.resetCube());
 
     return (
-        <div className="flex flex-col w-full relative">
+        <div className="flex-1 md:flex-none flex flex-col md:w-full relative">
             <TextField
                 label="Algorithm"
                 variant="standard"

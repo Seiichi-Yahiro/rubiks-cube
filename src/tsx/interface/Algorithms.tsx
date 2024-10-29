@@ -57,7 +57,7 @@ const Algorithms: React.FunctionComponent = () => {
         <List
             disablePadding={true}
             dense={true}
-            className="w-full h-96 overflow-auto"
+            className="w-full h-60 md:h-80 overflow-auto"
         >
             <ListSubheader className="!sticky !top-0 !z-50 !bg-white">
                 <TextField

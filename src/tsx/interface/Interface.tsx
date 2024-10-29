@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { List, ListItem } from '@mui/material';
 import Settings from './Settings';
 import Algorithms from './Algorithms';
 import Category from './Category';
 import Player from './Player';
+import { List } from '@mui/material';
+import { Settings as SettingsIcon, ManageSearch } from '@mui/icons-material';
 
 enum Menu {
     ALGORITHMS = 'ALGORITHMS',
@@ -17,15 +18,14 @@ const Interface: React.FunctionComponent = () => {
         setOpenedMenu((prevMenu) => (prevMenu === menu ? Menu.NONE : menu));
 
     return (
-        <div className="absolute left-0 top-0 w-96">
-            <List>
-                <ListItem className="!bg-white">
-                    <Player />
-                </ListItem>
+        <div className="p-2 md:w-96 self-center md:self-start flex flex-row-reverse md:flex-col">
+            <Player />
+            <List className="flex flex-row-reverse md:block">
                 <Category
                     isOpen={openedMenu === Menu.ALGORITHMS}
                     setMenu={useCallback(() => setMenu(Menu.ALGORITHMS), [])}
                     title="Algorithms"
+                    icon={<ManageSearch />}
                 >
                     <Algorithms />
                 </Category>
@@ -33,6 +33,7 @@ const Interface: React.FunctionComponent = () => {
                     isOpen={openedMenu === Menu.SETTINGS}
                     setMenu={useCallback(() => setMenu(Menu.SETTINGS), [])}
                     title="Settings"
+                    icon={<SettingsIcon />}
                 >
                     <Settings />
                 </Category>

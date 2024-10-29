@@ -13,7 +13,7 @@ const App: React.FunctionComponent = () => {
     }, []);
 
     return (
-        <div className="w-full h-full flex justify-center items-center">
+        <div className="container mx-auto h-full flex flex-col md:flex-row">
             <Interface />
             <RubiksCube />
         </div>
