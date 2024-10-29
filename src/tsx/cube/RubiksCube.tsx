@@ -58,7 +58,7 @@ const RubiksCube: React.FunctionComponent = () => {
     return (
         <div
             ref={container}
-            className="[perspective:1000px] flex-1 flex justify-center items-center"
+            className="[perspective:1000px] flex-1 p-2 md:mt-10 max-h-[30rem] flex justify-center items-center"
         >
             <div
                 className={createClassName(
