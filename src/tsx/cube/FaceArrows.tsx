@@ -34,9 +34,18 @@ const FaceArrow: React.FC<IArrowProps> = ({ direction, rotate }) => (
         <rect
             width="100%"
             height="100%"
-            className="[fill:transparent] [stroke:transparent] w-full h-full origin-center [transform:translateX(-50%)scale(0.4)translateY(-50%)]"
+            style={{
+                transform: 'translateX(-50%) scale(0.4) translateY(-50%)',
+            }}
+            className="[fill:transparent] [stroke:transparent] w-full h-full origin-center"
         />
-        <Arrow className="opacity-0 group-hover:opacity-100 [transform:translateY(50%)scale(0.4)translateY(-50%)rotate(180deg)]" />
+        <Arrow
+            style={{
+                transform:
+                    'translateY(50%) scale(0.4) translateY(-50%) rotate(180deg)',
+            }}
+            className="opacity-0 [@media(hover:none)]:opacity-100 group-hover:opacity-100"
+        />
     </g>
 );
 
