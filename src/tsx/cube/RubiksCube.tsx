@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRedux } from '../states/States';
-import { fromScale, fromTranslation, multiply, toCss } from '../utils/Matrix4';
+import { fromTranslation, toCss } from '../utils/Matrix4';
 import Cubicle from './Cubicle';
 import Maybe from '../utils/Maybe';
 import { rotationCommandToCssRotation } from './algorithms/RotationCommand';
@@ -12,7 +12,6 @@ import { PlayerStatus } from '../states/player/PlayerState';
 const RubiksCube: React.FunctionComponent = () => {
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const cubeSize = useRedux((state) => state.cube.size);
-    const scale = useRedux((state) => state.cube.scale);
     const rotation = useRedux((state) => state.cube.rotation);
     const isStopped =
         useRedux((state) => state.player.status) === PlayerStatus.STOPPED;
@@ -22,7 +21,7 @@ const RubiksCube: React.FunctionComponent = () => {
     const style: React.CSSProperties = {
         width: cubeSize,
         height: cubeSize,
-        transform: toCss(multiply(rotation, fromScale(scale))),
+        transform: toCss(rotation),
     };
 
     const positionCorrectionStyle = (): React.CSSProperties => {

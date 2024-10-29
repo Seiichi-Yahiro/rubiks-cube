@@ -58,13 +58,6 @@ export const fromAngleZ = (degree: number): Mat4 => {
     ];
 };
 
-export const fromScale = (scale: number): Mat4 => [
-    [scale, 0.0, 0.0, 0.0],
-    [0.0, scale, 0.0, 0.0],
-    [0.0, 0.0, scale, 0.0],
-    [0.0, 0.0, 0.0, 1.0],
-];
-
 export const transpose = ([x, y, z, w]: Mat4): Mat4 => zip(x, y, z, w) as Mat4;
 
 export const multiply = (a: Mat4, [x2, y2, z2, w2]: Mat4): Mat4 => {

@@ -4,8 +4,6 @@ import { RotationCommand } from '../../cube/algorithms/RotationCommand';
 
 const setCubeDimension = createAction<number>('SET_CUBE_DIMENSION');
 
-const setCubeScale = createAction<number>('SET_CUBE_SCALE');
-
 const setRotationAnimationSpeed = createAction<number>(
     'SET_ROTATION_ANIMATION_SPEED'
 );
@@ -29,7 +27,6 @@ const resetColors = createAction('RESET_COLORS');
 
 const actions = {
     setCubeDimension,
-    setCubeScale,
     setRotationAnimationSpeed,
     updateCubicles,
     applyRotationCommands,

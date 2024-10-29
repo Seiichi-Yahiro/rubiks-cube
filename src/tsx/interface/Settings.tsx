@@ -9,7 +9,6 @@ import ColorPicker from './ColorPicker';
 const Settings: React.FunctionComponent = () => {
     const dispatch = useDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
-    const scale = useRedux((state) => state.cube.scale);
     const rotationAnimationSpeed = useRedux(
         (state) => state.cube.rotationDuration
     );
@@ -33,21 +32,6 @@ const Settings: React.FunctionComponent = () => {
                         dispatch(cubeActions.setCubeDimension(value as number))
                     }
                     disabled={playerStatus !== PlayerStatus.STOPPED}
-                />
-            </ListItem>
-            <ListItem className="flex flex-col">
-                <Typography id="scale-slider">Scale</Typography>
-                <Slider
-                    aria-labelledby="scale-slider"
-                    valueLabelDisplay="auto"
-                    marks={true}
-                    step={0.1}
-                    min={0.2}
-                    max={2.0}
-                    defaultValue={useMemo(() => scale, [])}
-                    onChangeCommitted={(event, value) =>
-                        dispatch(cubeActions.setCubeScale(value as number))
-                    }
                 />
             </ListItem>
             <ListItem className="flex flex-col">
