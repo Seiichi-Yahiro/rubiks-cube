@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import RubiksCube from './cube/RubiksCube';
 import Interface from './interface/Interface';
-import './App.scss';
+import './App.css';
 import { useDispatch } from 'react-redux';
 import { cubeActions } from './states/cube/CubeActions';
 
