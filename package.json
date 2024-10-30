@@ -39,7 +39,7 @@
         "eslint-webpack-plugin": "3.1.1",
         "fork-ts-checker-webpack-plugin": "7.2.4",
         "html-webpack-plugin": "5.5.0",
-        "husky": "7.0.4",
+        "husky": "9.1.6",
         "identity-obj-proxy": "3.0.0",
         "jest": "27.5.1",
         "mini-css-extract-plugin": "2.6.0",
@@ -64,6 +64,6 @@
         "build:prod": "rimraf build/* && webpack --config webpack.config.js --mode=production",
         "pretty-quick": "pretty-quick",
         "test": "rimraf build/coverage && jest --coverage",
-        "prepare": "husky install"
+        "prepare": "husky"
     }
 }
