@@ -49,6 +49,7 @@ class Maybe<T> {
         try {
             const value = valueFunction();
             return Maybe.of(value);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
             return Maybe.none();
         }
@@ -191,6 +192,7 @@ class Maybe<T> {
     try<U>(onSome: (value: T) => U | Maybe<U>): Maybe<NonNullable<U>> {
         try {
             return this.map(onSome);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
             return Maybe.none();
         }
