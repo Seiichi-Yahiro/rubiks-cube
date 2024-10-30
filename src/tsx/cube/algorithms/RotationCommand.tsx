@@ -16,7 +16,7 @@ export interface LoopedRotationCommands {
 export type RotationCommand = SingleRotationCommand | LoopedRotationCommands;
 
 export const isLoopedRotationCommands = (
-    rotationCommand: RotationCommand
+    rotationCommand: RotationCommand,
 ): rotationCommand is LoopedRotationCommands =>
     (rotationCommand as LoopedRotationCommands).iterations !== undefined;
 
@@ -84,7 +84,7 @@ export const letterToAxis = (letter: string): RotationAxis => {
 
 export const letterToSlices = (
     letter: string,
-    cubeDimension: number
+    cubeDimension: number,
 ): number[] => {
     switch (letter) {
         case 'F':
@@ -168,40 +168,45 @@ export const letterToRotation = (letter: string): number => {
     }
 };
 
-export const wide = (hasWide: boolean) => (
-    letter: string,
-    slices: number[],
-    cubeDimension: number
-): number[] => {
-    if (hasWide) {
-        switch (letter.toUpperCase()) {
-            case 'B':
-            case 'D':
-            case 'R':
-                return range(cubeDimension - slices[0] + 1, cubeDimension + 1);
-            default:
-                return range(1, slices[0] + 1);
+export const wide =
+    (hasWide: boolean) =>
+    (letter: string, slices: number[], cubeDimension: number): number[] => {
+        if (hasWide) {
+            switch (letter.toUpperCase()) {
+                case 'B':
+                case 'D':
+                case 'R':
+                    return range(
+                        cubeDimension - slices[0] + 1,
+                        cubeDimension + 1,
+                    );
+                default:
+                    return range(1, slices[0] + 1);
+            }
+        } else {
+            switch (letter.toUpperCase()) {
+                case 'B':
+                case 'D':
+                case 'R':
+                    return slices.map((slice) => cubeDimension + 1 - slice);
+                default:
+                    return slices;
+            }
         }
-    } else {
-        switch (letter.toUpperCase()) {
-            case 'B':
-            case 'D':
-            case 'R':
-                return slices.map((slice) => cubeDimension + 1 - slice);
-            default:
-                return slices;
-        }
-    }
-};
+    };
 
-export const prime = (hasPrime: boolean) => (rotation: number): number =>
-    hasPrime ? rotation * -1 : rotation;
-export const double = (hasDouble: boolean) => (rotation: number): number =>
-    hasDouble ? Math.sign(rotation) * 180 : rotation;
+export const prime =
+    (hasPrime: boolean) =>
+    (rotation: number): number =>
+        hasPrime ? rotation * -1 : rotation;
+export const double =
+    (hasDouble: boolean) =>
+    (rotation: number): number =>
+        hasDouble ? Math.sign(rotation) * 180 : rotation;
 
 export const isError = (result: Result<RotationCommand[]>): result is Failure =>
     !result.status;
 
 export const isOk = (
-    result: Result<RotationCommand[]>
+    result: Result<RotationCommand[]>,
 ): result is Success<RotationCommand[]> => result.status;

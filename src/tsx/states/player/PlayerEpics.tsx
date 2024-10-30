@@ -27,18 +27,18 @@ const parseNotation: AppEpic = (action$, state$) =>
     action$.pipe(
         ofType(
             cubeActions.setCubeDimension.type,
-            playerActions.updateNotation.type
+            playerActions.updateNotation.type,
         ),
         withLatestFrom(state$),
         map(([_, state]) => {
             const parser = makeNotationParser(state.cube.dimension);
             return parser.rotationCommands.parse(state.player.notation);
         }),
-        map(playerActions.parsedNotation)
+        map(playerActions.parsedNotation),
     );
 
 function* singleRotationCommandGenerator(
-    rotationCommands: RotationCommand[]
+    rotationCommands: RotationCommand[],
 ): Generator<SingleRotationCommand> {
     for (const rotationCommand of rotationCommands) {
         if (isLoopedRotationCommands(rotationCommand)) {
@@ -66,7 +66,7 @@ const player: AppEpic = (action$, state$) => {
         .pipe(
             filter((_) => rotationCommandGenerator.isNone()),
             map((it) => it.payload),
-            map(singleRotationCommandGenerator)
+            map(singleRotationCommandGenerator),
         )
         .subscribe((it) => {
             rotationCommandGenerator = Maybe.some(it);
@@ -86,28 +86,28 @@ const player: AppEpic = (action$, state$) => {
             rotationCommandGenerator
                 .map((it) => it.next().value)
                 .map<Action>(playerActions.setCurrentRotationCommand)
-                .unwrapOr(playerActions.stop)
-        )
+                .unwrapOr(playerActions.stop),
+        ),
     );
 
     const transitionEnd$ = fromEvent<TransitionEvent>(
         window,
-        'transitionend'
+        'transitionend',
     ).pipe(
         filter(
             (event) =>
                 event.propertyName === 'transform' &&
                 (event.target as HTMLElement).className.includes(
-                    cubicleClassname
-                )
-        )
+                    cubicleClassname,
+                ),
+        ),
     );
 
     const applyRotationCommand$ = action$.pipe(
         filter(playerActions.setCurrentRotationCommand.match),
         map((action) => [action.payload]),
         map(cubeActions.applyRotationCommands),
-        concatMap((action) => transitionEnd$.pipe(first(), mapTo(action)))
+        concatMap((action) => transitionEnd$.pipe(first(), mapTo(action))),
     );
 
     action$

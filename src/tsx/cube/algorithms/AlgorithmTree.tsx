@@ -26,13 +26,13 @@ const joinNames = (a: string, b: string): string =>
 
 export const flattenTree = (
     tree: AlgorithmTree,
-    name = ''
+    name = '',
 ): AlgorithmGroup[] => {
     if (isAlgorithmGroup(tree)) {
         return [{ ...tree, name: joinNames(name, tree.name) }];
     } else {
         return tree.groups.flatMap((group) =>
-            flattenTree(group, joinNames(name, tree.name))
+            flattenTree(group, joinNames(name, tree.name)),
         );
     }
 };

@@ -10,8 +10,8 @@ const Arrow: React.FC<IArrowProps> = ({ style, className = '' }) => (
     <g
         style={style}
         className={createClassName(
-            'stroke-arrow-gray stroke-[4px] [stroke-linecap:round] transition-opacity duration-300',
-            className
+            'stroke-arrow-gray stroke-[4px] transition-opacity duration-300 [stroke-linecap:round]',
+            className,
         )}
     >
         <line x1={0} y1={40} x2={0} y2={-40} />

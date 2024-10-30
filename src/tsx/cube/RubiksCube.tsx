@@ -58,14 +58,14 @@ const RubiksCube: React.FunctionComponent = () => {
     return (
         <div
             ref={container}
-            className="[perspective:1000px] flex-1 p-2 md:mt-10 max-h-[30rem] flex justify-center items-center"
+            className="flex max-h-[30rem] flex-1 items-center justify-center p-2 [perspective:1000px] md:mt-10"
         >
             <div
                 className={createClassName(
                     'relative [transform-style:preserve-3d]',
                     {
                         'group/transitioning is-transitioning': !isStopped,
-                    }
+                    },
                 )}
                 style={style}
             >
@@ -92,10 +92,10 @@ const Cubicles: React.FunctionComponent<CubiclesProps> = React.memo(
     ({ cubicleSize }) => {
         const cubicles = useRedux((state) => state.cube.cubicles);
         const rotationDuration = useRedux(
-            (state) => state.cube.rotationDuration
+            (state) => state.cube.rotationDuration,
         );
         const currentRotationCommand = Maybe.of(
-            useRedux((state) => state.player.currentCommand)
+            useRedux((state) => state.player.currentCommand),
         );
 
         return (
@@ -103,7 +103,7 @@ const Cubicles: React.FunctionComponent<CubiclesProps> = React.memo(
                 {cubicles.map(({ id, faces, transform, axis }) => {
                     const animatedTransform = currentRotationCommand
                         .filter((command) =>
-                            canApplyRotationCommand(axis, command)
+                            canApplyRotationCommand(axis, command),
                         )
                         .map(rotationCommandToCssRotation)
                         .unwrapOr('rotate(0)');
@@ -122,7 +122,7 @@ const Cubicles: React.FunctionComponent<CubiclesProps> = React.memo(
                 })}
             </div>
         );
-    }
+    },
 );
 
 export default RubiksCube;

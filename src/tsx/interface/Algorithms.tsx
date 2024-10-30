@@ -17,7 +17,7 @@ import { useRedux } from '../states/States';
 import { AlgorithmGroup, flattenTree } from '../cube/algorithms/AlgorithmTree';
 
 export const categories = [Look2CFOP, Misc].flatMap((algorithm) =>
-    flattenTree(algorithm)
+    flattenTree(algorithm),
 );
 
 const filterCategories = (searchValue: string): AlgorithmGroup[] =>
@@ -28,7 +28,7 @@ const filterCategories = (searchValue: string): AlgorithmGroup[] =>
             }
 
             const algorithms = group.algorithms.filter((algorithm) =>
-                algorithm.name.toLocaleLowerCase().includes(searchValue)
+                algorithm.name.toLocaleLowerCase().includes(searchValue),
             );
 
             if (algorithms.length === 0) {
@@ -50,14 +50,14 @@ const Algorithms: React.FunctionComponent = () => {
     const [filteredCategories, setFilteredCategories] = useState(categories);
     const filter = (event: React.ChangeEvent<HTMLInputElement>) =>
         setFilteredCategories(
-            filterCategories(event.target.value.toLocaleLowerCase())
+            filterCategories(event.target.value.toLocaleLowerCase()),
         );
 
     return (
         <List
             disablePadding={true}
             dense={true}
-            className="w-full h-60 md:h-80 overflow-auto"
+            className="h-60 w-full overflow-auto md:h-80"
         >
             <ListSubheader className="!sticky !top-0 !z-50 !bg-white">
                 <TextField
@@ -69,7 +69,7 @@ const Algorithms: React.FunctionComponent = () => {
             </ListSubheader>
             {filteredCategories.map((group, index) => (
                 <React.Fragment key={group.name + index}>
-                    <ListSubheader className="!bg-white !sticky !top-12">
+                    <ListSubheader className="!sticky !top-12 !bg-white">
                         <Divider />
                         {group.name}
                         <Divider />
@@ -82,8 +82,8 @@ const Algorithms: React.FunctionComponent = () => {
                             onClick={() =>
                                 dispatch(
                                     playerActions.updateNotation(
-                                        algorithm.notation!
-                                    )
+                                        algorithm.notation!,
+                                    ),
                                 )
                             }
                             disabled={playerStatus !== PlayerStatus.STOPPED}
@@ -92,7 +92,7 @@ const Algorithms: React.FunctionComponent = () => {
                                 <StartConfiguration
                                     configuration={algorithm.startConfiguration.map(
                                         (row) =>
-                                            row.map((color) => colorMap[color])
+                                            row.map((color) => colorMap[color]),
                                     )}
                                     transparentColor={colorMap.transparent}
                                 />

@@ -18,7 +18,7 @@ const Interface: React.FunctionComponent = () => {
         setOpenedMenu((prevMenu) => (prevMenu === menu ? Menu.NONE : menu));
 
     return (
-        <div className="p-2 w-full max-w-96 md:w-96 self-center md:self-start flex flex-row-reverse md:flex-col">
+        <div className="flex w-full max-w-96 flex-row-reverse self-center p-2 md:w-96 md:flex-col md:self-start">
             <Player />
             <List className="flex flex-row-reverse md:block">
                 <Category

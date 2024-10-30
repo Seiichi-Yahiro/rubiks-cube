@@ -8,7 +8,7 @@ export type ClassNameDictionary = {
 };
 
 const isClassNameList = (
-    arg: ClassNameDictionary | IClassNameList
+    arg: ClassNameDictionary | IClassNameList,
 ): arg is IClassNameList => (arg as IClassNameList).classNames !== undefined;
 
 /**

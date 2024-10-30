@@ -110,7 +110,7 @@ class Maybe<T> {
      */
     map<U>(onSome: (value: T) => U | Maybe<U>): Maybe<NonNullable<U>> {
         if (this.isNone()) {
-            return (this as unknown) as Maybe<NonNullable<U>>;
+            return this as unknown as Maybe<NonNullable<U>>;
         }
 
         return Maybe.of(() => onSome(this.value!));
@@ -136,7 +136,7 @@ class Maybe<T> {
     filter(predicate: (value: T) => boolean): Maybe<NonNullable<T>> {
         if (this.isSome()) {
             if (predicate(this.unwrap())) {
-                return (this as unknown) as Maybe<NonNullable<T>>;
+                return this as unknown as Maybe<NonNullable<T>>;
             }
         }
 
@@ -152,7 +152,7 @@ class Maybe<T> {
             return Maybe.of(other);
         }
 
-        return (this as unknown) as Maybe<NonNullable<T | U>>;
+        return this as unknown as Maybe<NonNullable<T | U>>;
     }
 
     /**
@@ -164,7 +164,7 @@ class Maybe<T> {
             return Maybe.of(other);
         }
 
-        return (this as unknown) as Maybe<NonNullable<T | U>>;
+        return this as unknown as Maybe<NonNullable<T | U>>;
     }
 
     /**
@@ -175,7 +175,7 @@ class Maybe<T> {
         const that = Maybe.of(other);
 
         if (this.isSome() && that.isNone()) {
-            return (this as unknown) as Maybe<NonNullable<T | U>>;
+            return this as unknown as Maybe<NonNullable<T | U>>;
         } else if (this.isNone() && that.isSome()) {
             return that;
         } else {

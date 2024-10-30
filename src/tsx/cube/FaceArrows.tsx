@@ -27,7 +27,7 @@ interface IArrowProps {
 
 const FaceArrow: React.FC<IArrowProps> = ({ direction, rotate }) => (
     <g
-        className="group [pointer-events:all] cursor-pointer"
+        className="group cursor-pointer [pointer-events:all]"
         style={{ transform: `rotate(${direction}deg)` }}
         onClick={() => rotate(direction)}
     >
@@ -37,14 +37,14 @@ const FaceArrow: React.FC<IArrowProps> = ({ direction, rotate }) => (
             style={{
                 transform: 'translateX(-50%) scale(0.4) translateY(-50%)',
             }}
-            className="[fill:transparent] [stroke:transparent] w-full h-full origin-center"
+            className="h-full w-full origin-center [fill:transparent] [stroke:transparent]"
         />
         <Arrow
             style={{
                 transform:
                     'translateY(50%) scale(0.4) translateY(-50%) rotate(180deg)',
             }}
-            className="opacity-0 [@media(pointer:coarse)]:opacity-100 group-hover:opacity-100"
+            className="opacity-0 group-hover:opacity-100 [@media(pointer:coarse)]:opacity-100"
         />
     </g>
 );

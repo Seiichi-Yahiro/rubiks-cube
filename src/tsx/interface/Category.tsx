@@ -29,7 +29,7 @@ const Category: React.FunctionComponent<ICategoryProps> = ({
     children,
 }) => {
     const isMdQuery = useMediaQuery(
-        `(min-width: ${tailwindFullConfig.theme.screens.md})`
+        `(min-width: ${tailwindFullConfig.theme.screens.md})`,
     );
 
     return (

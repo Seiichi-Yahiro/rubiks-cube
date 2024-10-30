@@ -40,7 +40,7 @@ export const cubeReducer = createReducer(initialCubeState, (builder) => {
                     cubicle.axis,
                     cubicleSize,
                     state.gapFactor,
-                    state.dimension
+                    state.dimension,
                 )[3];
 
                 for (const face of cubicle.faces) {
@@ -61,7 +61,7 @@ export const cubeReducer = createReducer(initialCubeState, (builder) => {
             state.cubicles = action.payload.reduce(
                 (cubicles, command) =>
                     applyRotationCommand(cubicles, command, state.dimension),
-                state.cubicles
+                state.cubicles,
             );
         })
         .addCase(cubeActions.setColor, (state, action) => {

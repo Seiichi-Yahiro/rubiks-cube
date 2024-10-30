@@ -15,17 +15,17 @@ const updateCubicles: AppEpic = (action$, state$) =>
                 generateCubicles(
                     state.cube.size / state.cube.dimension,
                     state.cube.gapFactor,
-                    state.cube.dimension
-                )
-            )
-        )
+                    state.cube.dimension,
+                ),
+            ),
+        ),
     );
 
 const saveColors: AppEpic = (action$, state$) => {
     action$
         .pipe(
             ofType(cubeActions.setColor.type, cubeActions.resetColors.type),
-            withLatestFrom(state$)
+            withLatestFrom(state$),
         )
         .subscribe(([_, state]) => {
             const colorMap = state.cube.colorMap;

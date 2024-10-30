@@ -10,7 +10,7 @@ const Settings: React.FunctionComponent = () => {
     const dispatch = useDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const rotationAnimationSpeed = useRedux(
-        (state) => state.cube.rotationDuration
+        (state) => state.cube.rotationDuration,
     );
     const playerStatus = useRedux((state) => state.player.status);
 
@@ -48,8 +48,8 @@ const Settings: React.FunctionComponent = () => {
                     onChangeCommitted={(event, value) =>
                         dispatch(
                             cubeActions.setRotationAnimationSpeed(
-                                value as number
-                            )
+                                value as number,
+                            ),
                         )
                     }
                 />

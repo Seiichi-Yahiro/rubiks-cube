@@ -12,12 +12,11 @@ const unPause = createAction('UN_PAUSE');
 
 const updateNotation = createAction<string>('UPDATE_NOTATION');
 
-const parsedNotation = createAction<Result<RotationCommand[]>>(
-    'PARSED_NOTATION'
-);
+const parsedNotation =
+    createAction<Result<RotationCommand[]>>('PARSED_NOTATION');
 
 const setCurrentRotationCommand = createAction<SingleRotationCommand>(
-    'SET_CURRENT_ROTATION_COMMAND'
+    'SET_CURRENT_ROTATION_COMMAND',
 );
 
 const actions = {

@@ -38,23 +38,23 @@ export const sideToTransform = (side: Side, cubicleSize: number): Mat4 => {
         [Side.FRONT]: fromTranslation(0, 0, halfCubicleSize),
         [Side.BACK]: multiply(
             fromTranslation(0, 0, -halfCubicleSize),
-            fromAngleY(180)
+            fromAngleY(180),
         ),
         [Side.LEFT]: multiply(
             fromTranslation(-halfCubicleSize, 0, 0),
-            fromAngleY(-90)
+            fromAngleY(-90),
         ),
         [Side.RIGHT]: multiply(
             fromTranslation(halfCubicleSize, 0, 0),
-            fromAngleY(90)
+            fromAngleY(90),
         ),
         [Side.UP]: multiply(
             fromTranslation(0, -halfCubicleSize, 0),
-            fromAngleX(90)
+            fromAngleX(90),
         ),
         [Side.DOWN]: multiply(
             fromTranslation(0, halfCubicleSize, 0),
-            fromAngleX(-90)
+            fromAngleX(-90),
         ),
     }[side];
 };
@@ -63,25 +63,25 @@ export const axisToTranslation = (
     [x, y, z]: CubeAxis,
     cubicleSize: number,
     cubicleGap: number,
-    cubeDimension: number
+    cubeDimension: number,
 ): Mat4 => {
     const offset = (cubeDimension + 1) * cubicleSize * (cubicleGap / 2);
     const sizeGap = cubicleSize * cubicleGap;
     return fromTranslation(
         x * sizeGap - offset,
         y * sizeGap - offset,
-        -z * sizeGap + offset
+        -z * sizeGap + offset,
     );
 };
 
 export const rotateAxis = (
     axis: CubeAxis,
     rotation: Mat4,
-    cubeDimension: number
+    cubeDimension: number,
 ): CubeAxis => {
     const offset = (cubeDimension + 1) * 0.5;
     const point = axis.map((it, index) =>
-        index === 2 ? -it + offset : it - offset
+        index === 2 ? -it + offset : it - offset,
     );
     const rotatedPoint = apply([...point, 1] as Vec4, rotation).slice(0, 3);
     return rotatedPoint
@@ -100,13 +100,13 @@ const isOuterFace = (side: Side, [x, y, z]: CubeAxis, cubeDimension: number) =>
         [Side.RIGHT]: x === cubeDimension,
         [Side.UP]: y === 1,
         [Side.DOWN]: y === cubeDimension,
-    }[side]);
+    })[side];
 
 const generateFace = (
     side: Side,
     axis: CubeAxis,
     cubicleSize: number,
-    cubeDimension: number
+    cubeDimension: number,
 ): IFace => ({
     id: side,
     color: isOuterFace(side, axis, cubeDimension)
@@ -118,38 +118,38 @@ const generateFace = (
 export const generateCubicles = (
     cubicleSize: number,
     cubicleGap: number,
-    cubeDimension: number
+    cubeDimension: number,
 ): ICubicle[] => {
     const indexes = range(1, cubeDimension + 1);
     return indexes
         .flatMap((z) =>
-            indexes.flatMap((y) => indexes.map<CubeAxis>((x) => [x, y, z]))
+            indexes.flatMap((y) => indexes.map<CubeAxis>((x) => [x, y, z])),
         )
         .filter((axis) => isCubicleVisible(axis, cubeDimension))
         .map<ICubicle>((axis) => ({
             id: axis,
             axis,
             faces: Object.values(Side).map((side) =>
-                generateFace(side, axis, cubicleSize, cubeDimension)
+                generateFace(side, axis, cubicleSize, cubeDimension),
             ),
             transform: axisToTranslation(
                 axis,
                 cubicleSize,
                 cubicleGap,
-                cubeDimension
+                cubeDimension,
             ),
         }));
 };
 
 export const canApplyRotationCommand = (
     cubeAxis: CubeAxis,
-    { slices, axis }: SingleRotationCommand
+    { slices, axis }: SingleRotationCommand,
 ): boolean => slices.includes(cubeAxis[axis]);
 
 export const applyRotationCommand = (
     cubicles: ICubicle[],
     rotationCommand: RotationCommand,
-    cubeDimension: number
+    cubeDimension: number,
 ): ICubicle[] => {
     if (isLoopedRotationCommands(rotationCommand)) {
         return range(0, rotationCommand.iterations).reduce(
@@ -157,9 +157,9 @@ export const applyRotationCommand = (
                 rotationCommand.commands.reduce(
                     (cubicles3, command) =>
                         applyRotationCommand(cubicles3, command, cubeDimension),
-                    cubicles2
+                    cubicles2,
                 ),
-            cubicles
+            cubicles,
         );
     } else {
         return cubicles.map((cubicle) => {
@@ -182,7 +182,7 @@ export const generateFaceArrowCommand = curry(
         cubeAxis: CubeAxis,
         cubicleRotation: Mat4,
         originalSide: Side,
-        faceArrow: FaceArrowDirection
+        faceArrow: FaceArrowDirection,
     ): SingleRotationCommand => {
         // TODO find a way to calculate this from existing matrices
         const [down, right] = {
@@ -224,7 +224,7 @@ export const generateFaceArrowCommand = curry(
             .map(Math.round);
 
         const newCubeAxis = zip(cubeAxis, rotatedPoint).map(
-            ([it, sign]) => it! * sign!
+            ([it, sign]) => it! * sign!,
         );
 
         const axis = newCubeAxis.findIndex((it) => it !== 0);
@@ -235,5 +235,5 @@ export const generateFaceArrowCommand = curry(
             slices: [Math.abs(slice)],
             rotation: 90 * Math.sign(slice),
         };
-    }
+    },
 );

@@ -13,7 +13,7 @@ const App: React.FunctionComponent = () => {
     }, []);
 
     return (
-        <div className="container mx-auto h-full flex flex-col md:flex-row">
+        <div className="container mx-auto flex h-full flex-col md:flex-row">
             <Interface />
             <RubiksCube />
         </div>

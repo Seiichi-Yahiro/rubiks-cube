@@ -63,10 +63,10 @@ export const makeNotationParser = (cubeDimension: number) =>
                     P.alt(
                         r.comma,
                         P.lookahead(r.lParenthesis.or(r.rParenthesis)),
-                        P.eof
-                    )
+                        P.eof,
+                    ),
                 ),
-                P.whitespace.atLeast(1)
+                P.whitespace.atLeast(1),
             ).result(''),
 
         comma: () => P.string(',').desc(','),
@@ -115,10 +115,10 @@ export const makeNotationParser = (cubeDimension: number) =>
                 ([letter, hasPrime, hasDouble]) => ({
                     axis: letterToAxis(letter),
                     rotation: double(hasDouble)(
-                        prime(hasPrime)(letterToRotation(letter))
+                        prime(hasPrime)(letterToRotation(letter)),
                     ),
                     slices: letterToSlices(letter, cubeDimension),
-                })
+                }),
             ),
         slicedCommand: (r) =>
             P.seq(
@@ -126,23 +126,23 @@ export const makeNotationParser = (cubeDimension: number) =>
                     P.seq(
                         r.numberInDimension.map((num) => [num]),
                         r.sliceableLetter,
-                        r.wide
+                        r.wide,
                     ),
-                    P.seq(r.slices, r.sliceableLetter, P.succeed(false))
+                    P.seq(r.slices, r.sliceableLetter, P.succeed(false)),
                 ),
                 r.prime,
-                r.double
+                r.double,
             ).map(([[slices, letter, hasWide], hasPrime, hasDouble]) => ({
                 axis: letterToAxis(letter),
                 rotation: double(hasDouble)(
-                    prime(hasPrime)(letterToRotation(letter))
+                    prime(hasPrime)(letterToRotation(letter)),
                 ),
                 slices: wide(hasWide)(letter, slices, cubeDimension),
             })),
         loop: (r) =>
             P.seq(
                 r.rotationCommands.wrap(r.lParenthesis, r.rParenthesis),
-                r.number.fallback(1)
+                r.number.fallback(1),
             ).map(([commands, iterations]) => ({
                 commands,
                 iterations,
@@ -181,7 +181,7 @@ export const createRandomNotation = (cubeDimension: number): string => {
         const slices = range(2, cubeDimension);
         const length = range(0, slices.length);
         range(loops).forEach(() =>
-            randomLetter(sampleSize(slices, sample(length)))
+            randomLetter(sampleSize(slices, sample(length))),
         );
     } else {
         range(loops).forEach(() => randomLetter([]));

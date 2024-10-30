@@ -17,9 +17,9 @@ describe('CubeUtils', () => {
             const result = applyRotationCommand(
                 cubicles,
                 makeNotationParser(cubeDimension).rotationCommands.tryParse(
-                    notation
+                    notation,
                 )[0] as SingleRotationCommand,
-                cubeDimension
+                cubeDimension,
             );
 
             expect(result.map((cubicle) => cubicle.axis)).toEqual(cube);
@@ -228,9 +228,9 @@ describe('CubeUtils', () => {
             const result = applyRotationCommand(
                 cubicles,
                 makeNotationParser(cubeDimension).rotationCommands.tryParse(
-                    notation
+                    notation,
                 )[0] as SingleRotationCommand,
-                cubeDimension
+                cubeDimension,
             );
 
             expect(result.map((cubicle) => cubicle.axis)).toEqual(cube);

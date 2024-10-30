@@ -16,6 +16,6 @@ window.addEventListener('load', function load() {
     root.render(
         <Provider store={store}>
             <App />
-        </Provider>
+        </Provider>,
     );
 });

@@ -21,7 +21,7 @@ const ColorPicker: React.FunctionComponent = () => {
         () => ({
             selectedColor: undefined,
             pickerColor: '',
-        })
+        }),
     );
 
     const resetColors = () => {
@@ -30,16 +30,16 @@ const ColorPicker: React.FunctionComponent = () => {
 
     const colors = Object.entries(colorMap)
         .filter(
-            ([key, _]) => key !== Color.DEFAULT && key !== Color.TRANSPARENT
+            ([key, _]) => key !== Color.DEFAULT && key !== Color.TRANSPARENT,
         )
         .map(([key, value]: [Color, string]) => (
             <div
                 key={key}
                 className={createClassName(
-                    'border border-cube-gray w-5 h-5 cursor-pointer',
+                    'h-5 w-5 cursor-pointer border border-cube-gray',
                     {
                         'animate-wiggle': selectedColor === key,
-                    }
+                    },
                 )}
                 style={{
                     backgroundColor: value,
@@ -51,7 +51,7 @@ const ColorPicker: React.FunctionComponent = () => {
         ));
 
     return (
-        <div className="flex flex-1 flex-row justify-between items-center">
+        <div className="flex flex-1 flex-row items-center justify-between">
             <ClickAwayListener
                 onClickAway={() => {
                     if (selectedColor) {
@@ -62,7 +62,7 @@ const ColorPicker: React.FunctionComponent = () => {
                 <div>
                     <div className="grid grid-cols-6 gap-1">{colors}</div>
                     {selectedColor && (
-                        <div className="absolute mt-1 z-10">
+                        <div className="absolute z-10 mt-1">
                             <ChromePicker
                                 disableAlpha={true}
                                 color={pickerColor}
@@ -73,8 +73,8 @@ const ColorPicker: React.FunctionComponent = () => {
                                     dispatch(
                                         cubeActions.setColor(
                                             selectedColor,
-                                            color.hex
-                                        )
+                                            color.hex,
+                                        ),
                                     )
                                 }
                             />

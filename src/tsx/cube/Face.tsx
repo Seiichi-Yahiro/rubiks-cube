@@ -11,7 +11,7 @@ interface IFaceProps {
     transform: Mat4;
     color: Color;
     generateArrowCommand: (
-        faceArrow: FaceArrowDirection
+        faceArrow: FaceArrowDirection,
     ) => SingleRotationCommand;
 }
 
@@ -37,7 +37,7 @@ const Face: React.FunctionComponent<IFaceProps> = ({
 
     return (
         <div
-            className="absolute [width:inherit] [height:inherit] [backface-visibility:hidden] border-2 border-cube-gray"
+            className="absolute border-2 border-cube-gray [backface-visibility:hidden] [height:inherit] [width:inherit]"
             style={style}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}

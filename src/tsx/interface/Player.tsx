@@ -27,7 +27,7 @@ const Player: React.FunctionComponent = () => {
     const updateNotation = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) =>
             dispatch(playerActions.updateNotation(event.target.value)),
-        []
+        [],
     );
 
     const hasParseError = isError(rotationCommands);
@@ -52,13 +52,13 @@ const Player: React.FunctionComponent = () => {
 
     const onShuffle = () =>
         dispatch(
-            playerActions.updateNotation(createRandomNotation(cubeDimension))
+            playerActions.updateNotation(createRandomNotation(cubeDimension)),
         );
 
     const onRefresh = () => dispatch(cubeActions.resetCube());
 
     return (
-        <div className="flex-1 md:flex-none flex flex-col md:w-full relative">
+        <div className="relative flex flex-1 flex-col md:w-full md:flex-none">
             <TextField
                 label="Algorithm"
                 variant="standard"
@@ -125,7 +125,7 @@ const NotationError: React.FunctionComponent<NotationErrorProps> = ({
     error,
 }) => (
     <>
-        <Typography className="![display:initial] ![line-height:1.4375em] !absolute top-[20px] pointer-events-none whitespace-pre-wrap">
+        <Typography className="pointer-events-none !absolute top-[20px] whitespace-pre-wrap ![display:initial] ![line-height:1.4375em]">
             <span className="invisible">
                 {notation.substring(0, error.index.offset)}
             </span>
