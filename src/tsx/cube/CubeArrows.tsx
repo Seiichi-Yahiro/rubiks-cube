@@ -31,14 +31,14 @@ const CubeArrows: React.FunctionComponent<ICubeArrowsProps> = ({
             cubicleSize / 2
         }px) rotateZ(${90 * direction}deg) translateY(-${
             cubicleSize * (cubeDimension / 2 - 0.5)
-        }px)`,
+        }px) scale(0.5)`,
     });
 
     const yStyle = (side: Side, direction: Direction): React.CSSProperties => ({
         width: cubicleSize,
         transform: `${side} rotateZ(${90 * direction}deg) translate3d(0, -${
             cubicleSize * (cubeDimension / 2 + 0.5)
-        }px, ${halfSize}px)`,
+        }px, ${halfSize}px) scale(0.5)`,
     });
 
     const arrow = (
