@@ -25,26 +25,20 @@ const CubeArrows: React.FunctionComponent<ICubeArrowsProps> = ({
 
     const halfSize = size / 2;
 
-    const style = (side: Side, direction: Direction): React.CSSProperties => {
-        return {
-            width: cubicleSize,
-            transform: `${side} translate3d(0, ${halfSize}px, ${halfSize}px) rotateX(-90deg) translateY(-${
-                cubicleSize / 2
-            }px) rotateZ(${90 * direction}deg) translateY(-${
-                cubicleSize * (cubeDimension / 2 - 0.5)
-            }px)`,
-            cursor: 'pointer',
-            position: 'absolute',
-        };
-    };
+    const style = (side: Side, direction: Direction): React.CSSProperties => ({
+        width: cubicleSize,
+        transform: `${side} translate3d(0, ${halfSize}px, ${halfSize}px) rotateX(-90deg) translateY(-${
+            cubicleSize / 2
+        }px) rotateZ(${90 * direction}deg) translateY(-${
+            cubicleSize * (cubeDimension / 2 - 0.5)
+        }px)`,
+    });
 
     const yStyle = (side: Side, direction: Direction): React.CSSProperties => ({
         width: cubicleSize,
         transform: `${side} rotateZ(${90 * direction}deg) translate3d(0, -${
             cubicleSize * (cubeDimension / 2 + 0.5)
         }px, ${halfSize}px)`,
-        cursor: 'pointer',
-        position: 'absolute',
     });
 
     const arrow = (
@@ -67,36 +61,42 @@ const CubeArrows: React.FunctionComponent<ICubeArrowsProps> = ({
             <div
                 onClick={() => rotateWithNotation("Z'")}
                 style={style(Side.FRONT, Direction.ANTI_CLOCKWISE)}
+                className="absolute cursor-pointer"
             >
                 {arrow}
             </div>
             <div
                 onClick={() => rotateWithNotation('Z')}
                 style={style(Side.FRONT, Direction.CLOCKWISE)}
+                className="absolute cursor-pointer"
             >
                 {arrow}
             </div>
             <div
                 onClick={() => rotateWithNotation("X'")}
                 style={style(Side.RIGHT, Direction.ANTI_CLOCKWISE)}
+                className="absolute cursor-pointer"
             >
                 {arrow}
             </div>
             <div
                 onClick={() => rotateWithNotation('X')}
                 style={style(Side.RIGHT, Direction.CLOCKWISE)}
+                className="absolute cursor-pointer"
             >
                 {arrow}
             </div>
             <div
                 onClick={() => rotateWithNotation("Y'")}
                 style={yStyle(Side.RIGHT, Direction.CLOCKWISE)}
+                className="absolute cursor-pointer"
             >
                 {arrow}
             </div>
             <div
                 onClick={() => rotateWithNotation('Y')}
                 style={yStyle(Side.FRONT, Direction.ANTI_CLOCKWISE)}
+                className="absolute cursor-pointer"
             >
                 {arrow}
             </div>
