@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Chrome, { ChromeInputType } from '@uiw/react-color-chrome';
 import { useRedux } from '../states/States';
 import { Color } from '../cube/CubeTypes';
 import { useDispatch } from 'react-redux';
 import { cubeActions } from '../states/cube/CubeActions';
 import useComplexState from '../hooks/useComplexState';
-import { Button, ClickAwayListener } from '@mui/material';
+import { Button, Popover, PopoverOrigin } from '@mui/material';
 import createClassName from '../utils/createClassName';
 import { GithubPlacement } from '@uiw/react-color-github';
 import './ColorPicker.css';
@@ -14,6 +14,11 @@ interface State {
     selectedColor?: Color;
     pickerColor: string;
 }
+
+const anchorOrigin: PopoverOrigin = {
+    vertical: 'bottom',
+    horizontal: 'left',
+};
 
 const ColorPicker: React.FunctionComponent = () => {
     const dispatch = useDispatch();
@@ -52,39 +57,39 @@ const ColorPicker: React.FunctionComponent = () => {
             />
         ));
 
+    const colorsRef = useRef<HTMLDivElement>(null);
+
     return (
         <div className="flex flex-1 flex-row items-center justify-between">
-            <ClickAwayListener
-                onClickAway={() => {
-                    if (selectedColor) {
-                        setState({ selectedColor: undefined });
-                    }
-                }}
-            >
-                <div>
-                    <div className="grid grid-cols-6 gap-1">{colors}</div>
-                    {selectedColor && (
-                        <div className="absolute z-10 mt-1">
-                            <Chrome
-                                className="hide-arrow" // special class to hide the GitHub placement arrow, as there doesn't seem to be a way to remove it programmatically
-                                showAlpha={false}
-                                placement={GithubPlacement.Top}
-                                inputType={ChromeInputType.HEXA}
-                                color={pickerColor}
-                                onChange={(color) => {
-                                    setState({ pickerColor: color.hex });
-                                    dispatch(
-                                        cubeActions.setColor(
-                                            selectedColor,
-                                            color.hex,
-                                        ),
-                                    );
-                                }}
-                            />
-                        </div>
-                    )}
+            <div>
+                <div ref={colorsRef} className="grid grid-cols-6 gap-1">
+                    {colors}
                 </div>
-            </ClickAwayListener>
+                <Popover
+                    className="mt-1"
+                    open={selectedColor !== undefined}
+                    anchorEl={colorsRef.current}
+                    anchorOrigin={anchorOrigin}
+                    onClose={() => setState({ selectedColor: undefined })}
+                >
+                    <Chrome
+                        className="hide-arrow" // special class to hide the GitHub placement arrow, as there doesn't seem to be a way to remove it programmatically
+                        showAlpha={false}
+                        placement={GithubPlacement.Top}
+                        inputType={ChromeInputType.HEXA}
+                        color={pickerColor}
+                        onChange={(color) => {
+                            setState({ pickerColor: color.hex });
+                            dispatch(
+                                cubeActions.setColor(
+                                    selectedColor!, // popover is only visible when selectedColor is defined
+                                    color.hex,
+                                ),
+                            );
+                        }}
+                    />
+                </Popover>
+            </div>
             <Button size={'small'} onClick={resetColors}>
                 Reset Colors
             </Button>
