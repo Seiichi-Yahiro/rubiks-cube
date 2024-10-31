@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import {
     List,
     ListItemText,
-    ListItem,
     ListSubheader,
     Divider,
     TextField,
+    ListItemButton,
 } from '@mui/material';
 import Look2CFOP from '../cube/algorithms/CFOP';
 import Misc from '../cube/algorithms/Misc';
@@ -74,10 +74,9 @@ const Algorithms: React.FunctionComponent = () => {
                         <Divider />
                     </ListSubheader>
                     {group.algorithms.map((algorithm) => (
-                        <ListItem
+                        <ListItemButton
                             key={algorithm.name + index}
                             className="cursor-pointer"
-                            button={true}
                             onClick={() =>
                                 dispatch(
                                     playerActions.updateNotation(
@@ -100,7 +99,7 @@ const Algorithms: React.FunctionComponent = () => {
                                 primary={algorithm.name}
                                 secondary={algorithm.notation}
                             />
-                        </ListItem>
+                        </ListItemButton>
                     ))}
                 </React.Fragment>
             ))}
