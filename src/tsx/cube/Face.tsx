@@ -14,7 +14,7 @@ interface IFaceProps {
     ) => SingleRotationCommand;
 }
 
-const Face: React.FunctionComponent<IFaceProps> = ({
+const Face: React.FC<IFaceProps> = ({
     transform,
     color,
     generateArrowCommand,

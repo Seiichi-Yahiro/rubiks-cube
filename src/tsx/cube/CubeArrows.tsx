@@ -16,7 +16,7 @@ interface ICubeArrowsProps {
     cubeDimension: number;
 }
 
-const CubeArrows: React.FunctionComponent<ICubeArrowsProps> = ({
+const CubeArrows: React.FC<ICubeArrowsProps> = ({
     size,
     cubicleSize,
     cubeDimension,

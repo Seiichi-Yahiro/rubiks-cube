@@ -19,7 +19,7 @@ const anchorOrigin: PopoverOrigin = {
     horizontal: 'left',
 };
 
-const ColorPicker: React.FunctionComponent = () => {
+const ColorPicker: React.FC = () => {
     const dispatch = useAppDispatch();
     const colorMap = useRedux((state) => state.cube.colorMap);
 

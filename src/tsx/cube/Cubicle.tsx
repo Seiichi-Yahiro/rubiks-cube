@@ -15,7 +15,7 @@ interface ICubicleProps {
     rotationDuration: number;
 }
 
-const Cubicle: React.FunctionComponent<ICubicleProps> = ({
+const Cubicle: React.FC<ICubicleProps> = ({
     axis,
     faces,
     animatedTransform,

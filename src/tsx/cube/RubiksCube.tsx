@@ -11,7 +11,7 @@ import { PlayerStatus } from '../states/player/PlayerState';
 import { cubeActions } from '../states/cube/CubeActions';
 import { debounce } from 'lodash';
 
-const RubiksCube: React.FunctionComponent = () => {
+const RubiksCube: React.FC = () => {
     const dispatch = useAppDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const cubeSize = useRedux((state) => state.cube.size);
@@ -90,41 +90,35 @@ interface CubiclesProps {
     cubicleSize: number;
 }
 
-const Cubicles: React.FunctionComponent<CubiclesProps> = React.memo(
-    ({ cubicleSize }) => {
-        const cubicles = useRedux((state) => state.cube.cubicles);
-        const rotationDuration = useRedux(
-            (state) => state.cube.rotationDuration,
-        );
-        const currentRotationCommand = Maybe.of(
-            useRedux((state) => state.player.currentCommand),
-        );
+const Cubicles: React.FC<CubiclesProps> = React.memo(({ cubicleSize }) => {
+    const cubicles = useRedux((state) => state.cube.cubicles);
+    const rotationDuration = useRedux((state) => state.cube.rotationDuration);
+    const currentRotationCommand = Maybe.of(
+        useRedux((state) => state.player.currentCommand),
+    );
 
-        return (
-            <div className="contents">
-                {cubicles.map(({ id, faces, transform, axis }) => {
-                    const animatedTransform = currentRotationCommand
-                        .filter((command) =>
-                            canApplyRotationCommand(axis, command),
-                        )
-                        .map(rotationCommandToCssRotation)
-                        .unwrapOr('rotate(0)');
+    return (
+        <div className="contents">
+            {cubicles.map(({ id, faces, transform, axis }) => {
+                const animatedTransform = currentRotationCommand
+                    .filter((command) => canApplyRotationCommand(axis, command))
+                    .map(rotationCommandToCssRotation)
+                    .unwrapOr('rotate(0)');
 
-                    return (
-                        <Cubicle
-                            key={id.join(',')}
-                            axis={axis}
-                            faces={faces}
-                            animatedTransform={animatedTransform}
-                            transform={transform}
-                            size={cubicleSize}
-                            rotationDuration={rotationDuration}
-                        />
-                    );
-                })}
-            </div>
-        );
-    },
-);
+                return (
+                    <Cubicle
+                        key={id.join(',')}
+                        axis={axis}
+                        faces={faces}
+                        animatedTransform={animatedTransform}
+                        transform={transform}
+                        size={cubicleSize}
+                        rotationDuration={rotationDuration}
+                    />
+                );
+            })}
+        </div>
+    );
+});
 
 export default RubiksCube;

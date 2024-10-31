@@ -5,7 +5,7 @@ import { cubeActions } from '../states/cube/CubeActions';
 import { useAppDispatch, useRedux } from '../hooks/redux';
 import ColorPicker from './ColorPicker';
 
-const Settings: React.FunctionComponent = () => {
+const Settings: React.FC = () => {
     const dispatch = useAppDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const rotationAnimationSpeed = useRedux(

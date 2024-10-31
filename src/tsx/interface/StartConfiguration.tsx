@@ -5,7 +5,7 @@ interface IStartConfigurationProps {
     transparentColor: string;
 }
 
-const StartConfiguration: React.FunctionComponent<IStartConfigurationProps> = ({
+const StartConfiguration: React.FC<IStartConfigurationProps> = ({
     configuration,
     transparentColor,
 }) => (

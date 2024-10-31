@@ -41,7 +41,7 @@ const filterCategories = (searchValue: string): AlgorithmGroup[] =>
         })
         .filter((group): group is AlgorithmGroup => group !== undefined);
 
-const Algorithms: React.FunctionComponent = () => {
+const Algorithms: React.FC = () => {
     const dispatch = useAppDispatch();
     const playerStatus = useRedux((state) => state.player.status);
     const colorMap = useRedux((state) => state.cube.colorMap);

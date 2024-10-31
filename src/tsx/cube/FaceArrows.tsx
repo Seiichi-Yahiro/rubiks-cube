@@ -6,7 +6,7 @@ interface IArrowsProps {
     rotate: (faceArrow: FaceArrowDirection) => void;
 }
 
-const FaceArrows: React.FunctionComponent<IArrowsProps> = ({ rotate }) => (
+const FaceArrows: React.FC<IArrowsProps> = ({ rotate }) => (
     <svg
         viewBox="0 0 100 100"
         className="group-[.is-transitioning]/transitioning:hidden"

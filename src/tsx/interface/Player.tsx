@@ -16,7 +16,7 @@ import { cubeActions } from '../states/cube/CubeActions';
 import { createRandomNotation } from '../cube/algorithms/Parser';
 import { Failure } from 'parsimmon';
 
-const Player: React.FunctionComponent = () => {
+const Player: React.FC = () => {
     const dispatch = useAppDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const playerNotation = useRedux((state) => state.player.notation);
@@ -119,10 +119,7 @@ interface NotationErrorProps {
     error: Failure;
 }
 
-const NotationError: React.FunctionComponent<NotationErrorProps> = ({
-    notation,
-    error,
-}) => (
+const NotationError: React.FC<NotationErrorProps> = ({ notation, error }) => (
     <>
         <Typography className="pointer-events-none !absolute top-[20px] whitespace-pre-wrap ![display:initial] ![line-height:1.4375em]">
             <span className="invisible">

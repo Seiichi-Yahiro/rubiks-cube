@@ -21,7 +21,7 @@ interface ICategoryProps {
     children: React.ReactNode;
 }
 
-const Category: React.FunctionComponent<ICategoryProps> = ({
+const Category: React.FC<ICategoryProps> = ({
     title,
     icon,
     isOpen,
@@ -56,7 +56,7 @@ interface IAccordionCategoryProps extends Omit<ICategoryProps, 'icon'> {
     className?: string;
 }
 
-const AccordionCategory: React.FunctionComponent<IAccordionCategoryProps> = ({
+const AccordionCategory: React.FC<IAccordionCategoryProps> = ({
     isOpen,
     title,
     setMenu,
@@ -88,7 +88,7 @@ const anchorOrigin: PopoverOrigin = {
     horizontal: 'left',
 };
 
-const PopoverCategory: React.FunctionComponent<PopoverCategory> = ({
+const PopoverCategory: React.FC<PopoverCategory> = ({
     isOpen,
     icon,
     setMenu,

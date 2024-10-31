@@ -12,7 +12,7 @@ enum Menu {
     NONE = 'NONE',
 }
 
-const Interface: React.FunctionComponent = () => {
+const Interface: React.FC = () => {
     const [openedMenu, setOpenedMenu] = useState(Menu.SETTINGS);
     const setMenu = (menu: Menu) =>
         setOpenedMenu((prevMenu) => (prevMenu === menu ? Menu.NONE : menu));

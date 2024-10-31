@@ -5,7 +5,7 @@ import './App.css';
 import { useAppDispatch } from './hooks/redux';
 import { cubeActions } from './states/cube/CubeActions';
 
-const App: React.FunctionComponent = () => {
+const App: React.FC = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
