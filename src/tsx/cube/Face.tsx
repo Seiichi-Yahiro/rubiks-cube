@@ -3,9 +3,8 @@ import { Color, FaceArrowDirection } from './CubeTypes';
 import { Mat4, toCss } from '../utils/Matrix4';
 import FaceArrows from './FaceArrows';
 import { SingleRotationCommand } from './algorithms/RotationCommand';
-import { useDispatch } from 'react-redux';
 import { playerActions } from '../states/player/PlayerActions';
-import { useRedux } from '../states/States';
+import { useAppDispatch, useRedux } from '../hooks/redux';
 
 interface IFaceProps {
     transform: Mat4;
@@ -21,7 +20,7 @@ const Face: React.FunctionComponent<IFaceProps> = ({
     generateArrowCommand,
 }) => {
     const [isHovered, setHovered] = useState(false);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const colorMap = useRedux((state) => state.cube.colorMap);
 
     const rotate = (faceArrow: FaceArrowDirection) =>

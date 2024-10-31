@@ -12,8 +12,7 @@ import Misc from '../cube/algorithms/Misc';
 import { PlayerStatus } from '../states/player/PlayerState';
 import StartConfiguration from './StartConfiguration';
 import { playerActions } from '../states/player/PlayerActions';
-import { useDispatch } from 'react-redux';
-import { useRedux } from '../states/States';
+import { useAppDispatch, useRedux } from '../hooks/redux';
 import { AlgorithmGroup, flattenTree } from '../cube/algorithms/AlgorithmTree';
 
 export const categories = [Look2CFOP, Misc].flatMap((algorithm) =>
@@ -43,7 +42,7 @@ const filterCategories = (searchValue: string): AlgorithmGroup[] =>
         .filter((group): group is AlgorithmGroup => group !== undefined);
 
 const Algorithms: React.FunctionComponent = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const playerStatus = useRedux((state) => state.player.status);
     const colorMap = useRedux((state) => state.cube.colorMap);
 

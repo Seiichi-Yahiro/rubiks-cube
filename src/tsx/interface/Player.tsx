@@ -10,15 +10,14 @@ import {
     Stop,
 } from '@mui/icons-material';
 import { playerActions } from '../states/player/PlayerActions';
-import { useDispatch } from 'react-redux';
-import { useRedux } from '../states/States';
+import { useAppDispatch, useRedux } from '../hooks/redux';
 import { isError, isOk } from '../cube/algorithms/RotationCommand';
 import { cubeActions } from '../states/cube/CubeActions';
 import { createRandomNotation } from '../cube/algorithms/Parser';
 import { Failure } from 'parsimmon';
 
 const Player: React.FunctionComponent = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const playerNotation = useRedux((state) => state.player.notation);
     const playerStatus = useRedux((state) => state.player.status);

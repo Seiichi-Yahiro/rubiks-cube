@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import RubiksCube from './cube/RubiksCube';
 import Interface from './interface/Interface';
 import './App.css';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from './hooks/redux';
 import { cubeActions } from './states/cube/CubeActions';
 
 const App: React.FunctionComponent = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(cubeActions.resetCube());

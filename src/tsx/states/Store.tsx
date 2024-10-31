@@ -1,11 +1,13 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { epicMiddleWare, setupEpics } from './Epics';
 import { reducer } from './States';
 
-const middleware = [...getDefaultMiddleware({ thunk: false }), epicMiddleWare];
-
 export const setupStore = () => {
-    const store = configureStore({ reducer, middleware });
+    const store = configureStore({
+        reducer,
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware({ thunk: false }).concat(epicMiddleWare),
+    });
     setupEpics();
     return store;
 };

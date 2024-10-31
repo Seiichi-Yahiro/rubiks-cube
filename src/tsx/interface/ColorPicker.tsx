@@ -1,8 +1,7 @@
 import React, { useRef } from 'react';
 import Chrome, { ChromeInputType } from '@uiw/react-color-chrome';
-import { useRedux } from '../states/States';
+import { useAppDispatch, useRedux } from '../hooks/redux';
 import { Color } from '../cube/CubeTypes';
-import { useDispatch } from 'react-redux';
 import { cubeActions } from '../states/cube/CubeActions';
 import useComplexState from '../hooks/useComplexState';
 import { Button, Popover, PopoverOrigin } from '@mui/material';
@@ -21,7 +20,7 @@ const anchorOrigin: PopoverOrigin = {
 };
 
 const ColorPicker: React.FunctionComponent = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const colorMap = useRedux((state) => state.cube.colorMap);
 
     const [{ selectedColor, pickerColor }, setState] = useComplexState<State>(

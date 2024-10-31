@@ -2,12 +2,11 @@ import React, { useMemo } from 'react';
 import { Typography, Slider, List, ListItem } from '@mui/material';
 import { PlayerStatus } from '../states/player/PlayerState';
 import { cubeActions } from '../states/cube/CubeActions';
-import { useDispatch } from 'react-redux';
-import { useRedux } from '../states/States';
+import { useAppDispatch, useRedux } from '../hooks/redux';
 import ColorPicker from './ColorPicker';
 
 const Settings: React.FunctionComponent = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const rotationAnimationSpeed = useRedux(
         (state) => state.cube.rotationDuration,

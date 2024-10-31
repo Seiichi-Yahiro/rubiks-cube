@@ -2,7 +2,7 @@ import React from 'react';
 import Arrow from './Arrow';
 import { Direction } from './CubeTypes';
 import { makeNotationParser } from './algorithms/Parser';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../hooks/redux';
 import { playerActions } from '../states/player/PlayerActions';
 
 enum Side {
@@ -21,7 +21,7 @@ const CubeArrows: React.FunctionComponent<ICubeArrowsProps> = ({
     cubicleSize,
     cubeDimension,
 }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const halfSize = size / 2;
 
