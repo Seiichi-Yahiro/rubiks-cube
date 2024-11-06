@@ -1,5 +1,7 @@
 'use strict';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
@@ -7,7 +9,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    mode: 'development',
     devtool: 'source-map',
     entry: {
         app: path.join(__dirname, 'src/index.tsx'),
@@ -46,7 +47,7 @@ module.exports = {
                     {
                         loader: 'css-loader',
                         options: {
-                            sourceMap: true,
+                            sourceMap: !isProduction,
                         },
                     },
                     {

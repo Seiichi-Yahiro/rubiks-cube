@@ -32,6 +32,7 @@
         "autoprefixer": "10.4.20",
         "core-js": "3.38.1",
         "css-loader": "7.1.2",
+        "cssnano": "7.0.6",
         "eslint": "9.13.0",
         "eslint-config-prettier": "9.1.0",
         "eslint-plugin-react": "7.37.2",
@@ -60,9 +61,9 @@
     },
     "scripts": {
         "preinstall": "npx only-allow pnpm",
-        "start": "webpack-dev-server --config webpack.config.js",
-        "build:dev": "rimraf build/* -g && webpack --config webpack.config.js",
-        "build:prod": "rimraf build/* -g && webpack --config webpack.config.js --mode=production",
+        "start": "webpack-dev-server --config webpack.config.js --define-process-env-node-env development",
+        "build:dev": "rimraf build/* -g && webpack --config webpack.config.js --define-process-env-node-env development",
+        "build:prod": "rimraf build/* -g && webpack --config webpack.config.js --define-process-env-node-env production",
         "pretty-quick": "pretty-quick",
         "test": "rimraf build/coverage && jest --coverage",
         "prepare": "husky"
