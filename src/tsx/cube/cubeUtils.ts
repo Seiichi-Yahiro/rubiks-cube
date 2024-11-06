@@ -1,27 +1,27 @@
-import { range, zip, curry } from 'lodash';
+import { curry, range, zip } from 'lodash';
 import {
-    ICubicle,
-    IFace,
-    CubeAxis,
-    Color,
-    Side,
-    FaceArrowDirection,
-} from './cubeTypes';
-import {
-    Mat4,
-    multiply,
-    fromTranslation,
-    fromAngleY,
-    fromAngleX,
-    apply,
-} from 'src/utils/matrix4';
-import { Vec4 } from 'src/utils/vector4';
-import {
-    RotationCommand,
     isLoopedRotationCommands,
+    RotationCommand,
     rotationCommandToMat4,
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
+import {
+    apply,
+    fromAngleX,
+    fromAngleY,
+    fromTranslation,
+    Mat4,
+    multiply,
+} from 'src/utils/matrix4';
+import { Vec4 } from 'src/utils/vector4';
+import {
+    Color,
+    CubeAxis,
+    FaceArrowDirection,
+    ICubicle,
+    IFace,
+    Side,
+} from './cubeTypes';
 
 const sideToColor = {
     [Side.FRONT]: Color.BLUE,

@@ -1,10 +1,10 @@
+import { ManageSearch, Settings as SettingsIcon } from '@mui/icons-material';
+import { List } from '@mui/material';
 import React, { useCallback, useState } from 'react';
-import Settings from 'src/tsx/interface/Settings';
 import Algorithms from 'src/tsx/interface/Algorithms';
 import Category from 'src/tsx/interface/Category';
 import Player from 'src/tsx/interface/Player';
-import { List } from '@mui/material';
-import { Settings as SettingsIcon, ManageSearch } from '@mui/icons-material';
+import Settings from 'src/tsx/interface/Settings';
 
 enum Menu {
     ALGORITHMS = 'ALGORITHMS',

@@ -1,15 +1,15 @@
-import React, { useEffect, useRef } from 'react';
-import { useAppDispatch, useRedux } from 'src/hooks/redux';
-import { fromTranslation, toCss } from 'src/utils/matrix4';
-import Cubicle from 'src/tsx/cube/Cubicle';
-import Maybe from 'src/utils/maybe';
-import { rotationCommandToCssRotation } from 'src/algorithms/rotationCommand';
-import createClassName from 'src/utils/createClassName';
-import { canApplyRotationCommand } from 'src/tsx/cube/cubeUtils';
-import CubeArrows from 'src/tsx/cube/CubeArrows';
-import { PlayerStatus } from 'src/redux/player/playerState';
-import { cubeActions } from 'src/redux/cube/cubeActions';
 import { debounce } from 'lodash';
+import React, { useEffect, useRef } from 'react';
+import { rotationCommandToCssRotation } from 'src/algorithms/rotationCommand';
+import { useAppDispatch, useRedux } from 'src/hooks/redux';
+import { cubeActions } from 'src/redux/cube/cubeActions';
+import { PlayerStatus } from 'src/redux/player/playerState';
+import CubeArrows from 'src/tsx/cube/CubeArrows';
+import { canApplyRotationCommand } from 'src/tsx/cube/cubeUtils';
+import Cubicle from 'src/tsx/cube/Cubicle';
+import createClassName from 'src/utils/createClassName';
+import { fromTranslation, toCss } from 'src/utils/matrix4';
+import Maybe from 'src/utils/maybe';
 
 const RubiksCube: React.FC = () => {
     const dispatch = useAppDispatch();

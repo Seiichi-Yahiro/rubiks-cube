@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import RubiksCube from 'src/tsx/cube/RubiksCube';
-import Interface from 'src/tsx/interface/Interface';
-import 'src/tsx/App.css';
 import { useAppDispatch } from 'src/hooks/redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
+import 'src/tsx/App.css';
+import RubiksCube from 'src/tsx/cube/RubiksCube';
+import Interface from 'src/tsx/interface/Interface';
 
 const App: React.FC = () => {
     const dispatch = useAppDispatch();

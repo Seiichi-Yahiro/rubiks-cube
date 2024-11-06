@@ -1,8 +1,8 @@
+import { List, ListItem, Slider, Typography } from '@mui/material';
 import React, { useMemo } from 'react';
-import { Typography, Slider, List, ListItem } from '@mui/material';
-import { PlayerStatus } from 'src/redux/player/playerState';
-import { cubeActions } from 'src/redux/cube/cubeActions';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
+import { cubeActions } from 'src/redux/cube/cubeActions';
+import { PlayerStatus } from 'src/redux/player/playerState';
 import ColorPicker from 'src/tsx/interface/ColorPicker';
 
 const Settings: React.FC = () => {

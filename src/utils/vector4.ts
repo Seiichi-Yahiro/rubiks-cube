@@ -1,4 +1,4 @@
-import { zip, add } from 'lodash';
+import { add, zip } from 'lodash';
 
 export type Vec4 = [number, number, number, number];
 

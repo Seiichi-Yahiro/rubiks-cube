@@ -1,11 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { playerActions } from 'src/redux/player/playerActions';
+import { Result } from 'parsimmon';
 import {
     RotationCommand,
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
-import { Result } from 'parsimmon';
 import { cubeActions } from 'src/redux/cube/cubeActions';
+import { playerActions } from 'src/redux/player/playerActions';
 
 export enum PlayerStatus {
     STOPPED = 'STOPPED',

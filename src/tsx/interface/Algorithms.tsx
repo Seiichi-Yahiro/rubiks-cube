@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
 import {
+    Divider,
     List,
+    ListItemButton,
     ListItemText,
     ListSubheader,
-    Divider,
     TextField,
-    ListItemButton,
 } from '@mui/material';
+import React, { useState } from 'react';
+import { AlgorithmGroup, flattenTree } from 'src/algorithms/algorithmTree';
 import Look2CFOP from 'src/algorithms/cfop';
 import Misc from 'src/algorithms/misc';
+import { useAppDispatch, useRedux } from 'src/hooks/redux';
+import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerState';
 import StartConfiguration from 'src/tsx/interface/StartConfiguration';
-import { playerActions } from 'src/redux/player/playerActions';
-import { useAppDispatch, useRedux } from 'src/hooks/redux';
-import { AlgorithmGroup, flattenTree } from 'src/algorithms/algorithmTree';
 
 export const categories = [Look2CFOP, Misc].flatMap((algorithm) =>
     flattenTree(algorithm),

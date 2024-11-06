@@ -1,5 +1,5 @@
-import { Color } from 'src/tsx/cube/cubeTypes';
 import { AlgorithmTree } from 'src/algorithms/algorithmTree';
+import { Color } from 'src/tsx/cube/cubeTypes';
 
 const { YELLOW, ORANGE, RED, GREEN, BLUE, DEFAULT, TRANSPARENT } = Color;
 

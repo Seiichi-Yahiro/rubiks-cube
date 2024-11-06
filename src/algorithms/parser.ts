@@ -1,6 +1,6 @@
+import { range, sample, sampleSize } from 'lodash';
 import P from 'parsimmon';
 import {
-    SingleRotationCommand,
     double,
     letterToAxis,
     letterToRotation,
@@ -8,9 +8,9 @@ import {
     LoopedRotationCommands,
     prime,
     RotationCommand,
+    SingleRotationCommand,
     wide,
 } from 'src/algorithms/rotationCommand';
-import { range, sample, sampleSize } from 'lodash';
 
 /**
  * Creates a cube notation parser that knows about the used cubeDimension

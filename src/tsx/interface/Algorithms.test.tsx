@@ -1,5 +1,5 @@
-import { categories } from 'src/tsx/interface/Algorithms';
 import { makeNotationParser } from 'src/algorithms/parser';
+import { categories } from 'src/tsx/interface/Algorithms';
 
 describe('Algorithm notations', () => {
     it('should parse all notations', () => {

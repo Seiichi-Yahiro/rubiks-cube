@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Color, FaceArrowDirection } from 'src/tsx/cube/cubeTypes';
-import { Mat4, toCss } from 'src/utils/matrix4';
-import FaceArrows from 'src/tsx/cube/FaceArrows';
 import { SingleRotationCommand } from 'src/algorithms/rotationCommand';
-import { playerActions } from 'src/redux/player/playerActions';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
+import { playerActions } from 'src/redux/player/playerActions';
+import { Color, FaceArrowDirection } from 'src/tsx/cube/cubeTypes';
+import FaceArrows from 'src/tsx/cube/FaceArrows';
+import { Mat4, toCss } from 'src/utils/matrix4';
 
 interface IFaceProps {
     transform: Mat4;

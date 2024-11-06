@@ -1,5 +1,6 @@
-import { AppEpic } from 'src/redux/states';
-import { playerActions } from './playerActions';
+import { Action } from 'redux';
+import { ofType } from 'redux-observable';
+import { fromEvent, merge, Subject } from 'rxjs';
 import {
     concatMap,
     delay,
@@ -10,18 +11,17 @@ import {
     withLatestFrom,
 } from 'rxjs/operators';
 import { makeNotationParser } from 'src/algorithms/parser';
-import { cubeActions } from 'src/redux/cube/cubeActions';
-import { fromEvent, merge, Subject } from 'rxjs';
 import {
     isLoopedRotationCommands,
     RotationCommand,
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
-import Maybe from 'src/utils/maybe';
+import { cubeActions } from 'src/redux/cube/cubeActions';
 import { PlayerStatus } from 'src/redux/player/playerState';
-import { Action } from 'redux';
-import { ofType } from 'redux-observable';
+import { AppEpic } from 'src/redux/states';
 import { cubicleClassname } from 'src/tsx/cube/Cubicle';
+import Maybe from 'src/utils/maybe';
+import { playerActions } from './playerActions';
 
 const parseNotation: AppEpic = (action$, state$) =>
     action$.pipe(

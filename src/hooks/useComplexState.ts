@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
 import { isFunction } from 'lodash';
+import { useCallback, useState } from 'react';
 
 function useComplexState<S>(
     initialState: S | (() => S),

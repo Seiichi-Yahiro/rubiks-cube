@@ -1,16 +1,16 @@
-import React, { useCallback, useState } from 'react';
 import { ExpandMore } from '@mui/icons-material';
 import {
     Accordion,
-    AccordionSummary,
     AccordionDetails,
-    Typography,
+    AccordionSummary,
+    IconButton,
     ListItem,
     Popover,
     PopoverOrigin,
-    IconButton,
+    Typography,
     useMediaQuery,
 } from '@mui/material';
+import React, { useCallback, useState } from 'react';
 import tailwindFullConfig from 'src/utils/tailwindConfig';
 
 interface ICategoryProps {
