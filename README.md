@@ -39,8 +39,8 @@ Valid examples:
 
 ## How to build
 
-run `yarn install`
+run `pnpm install`
 
-then `yarn start` and go to localhost:3000
+then `pnpm start` and go to localhost:3000
 
-or `yarn run build:dev` / `yarn run build:prod` and open the `index.html` from the build folder
+or `pnpm run build:dev` / `pnpm run build:prod` and open the `index.html` from the build folder

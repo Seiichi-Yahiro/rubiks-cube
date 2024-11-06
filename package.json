@@ -59,6 +59,7 @@
         "webpack-dev-server": "5.1.0"
     },
     "scripts": {
+        "preinstall": "npx only-allow pnpm",
         "start": "webpack-dev-server --config webpack.config.js",
         "build:dev": "rimraf build/* -g && webpack --config webpack.config.js",
         "build:prod": "rimraf build/* -g && webpack --config webpack.config.js --mode=production",

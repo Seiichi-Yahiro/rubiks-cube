@@ -6,7 +6,6 @@ import { cubeActions } from '../states/cube/cubeActions';
 import useComplexState from '../hooks/useComplexState';
 import { Button, Popover, PopoverOrigin } from '@mui/material';
 import createClassName from '../utils/createClassName';
-import { GithubPlacement } from '@uiw/react-color-github';
 import './ColorPicker.css';
 
 interface State {
@@ -72,9 +71,8 @@ const ColorPicker: React.FC = () => {
                     onClose={() => setState({ selectedColor: undefined })}
                 >
                     <Chrome
-                        className="hide-arrow" // special class to hide the GitHub placement arrow, as there doesn't seem to be a way to remove it programmatically
+                        className="hide-arrow" // special class to hide the placement arrow, as there doesn't seem to be a way to remove it programmatically
                         showAlpha={false}
-                        placement={GithubPlacement.Top}
                         inputType={ChromeInputType.HEXA}
                         color={pickerColor}
                         onChange={(color) => {
