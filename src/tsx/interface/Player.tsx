@@ -6,8 +6,7 @@ import {
     SkipNext,
     Stop,
 } from '@mui/icons-material';
-import { Chip, IconButton, TextField, Typography } from '@mui/material';
-import { Failure } from 'parsimmon';
+import { IconButton } from '@mui/material';
 import React, { useCallback } from 'react';
 import { createRandomNotation } from 'src/algorithms/parser';
 import { isError, isOk } from 'src/algorithms/rotationCommand';
@@ -15,6 +14,8 @@ import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerState';
+import NotationError from 'src/tsx/interface/NotationError';
+import NotationInput from 'src/tsx/interface/NotationInput';
 
 const Player: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -58,16 +59,11 @@ const Player: React.FC = () => {
 
     return (
         <div className="relative flex flex-1 flex-col md:w-full md:flex-none">
-            <TextField
-                label="Algorithm"
-                variant="standard"
-                fullWidth={true}
-                value={playerNotation}
-                onChange={updateNotation}
-                disabled={!isStopped}
-                error={hasParseError}
-                spellCheck={false}
-                multiline={true}
+            <NotationInput
+                playerNotation={playerNotation}
+                updateNotation={updateNotation}
+                isStopped={isStopped}
+                hasParseError={hasParseError}
             />
             {isError(rotationCommands) && (
                 <NotationError
@@ -113,34 +109,5 @@ const Player: React.FC = () => {
         </div>
     );
 };
-
-interface NotationErrorProps {
-    notation: string;
-    error: Failure;
-}
-
-const NotationError: React.FC<NotationErrorProps> = ({ notation, error }) => (
-    <>
-        <Typography className="pointer-events-none !absolute top-[20px] whitespace-pre-wrap ![display:initial] ![line-height:1.4375em]">
-            <span className="invisible">
-                {notation.substring(0, error.index.offset)}
-            </span>
-            <span className="text-error underline decoration-error">
-                {notation.substring(error.index.offset, error.index.offset + 1)}
-            </span>
-        </Typography>
-
-        <div className="my-1 space-x-0.5">
-            {error.expected.map((errorMsg) => (
-                <Chip
-                    key={errorMsg}
-                    color="error"
-                    size="small"
-                    label={errorMsg}
-                />
-            ))}
-        </div>
-    </>
-);
 
 export default React.memo(Player);
