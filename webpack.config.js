@@ -7,8 +7,11 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshTypeScript = require('react-refresh-typescript');
 
 module.exports = {
+    mode: isProduction ? 'production' : 'development',
     devtool: 'source-map',
     entry: {
         app: path.join(__dirname, 'src/index.tsx'),
@@ -31,6 +34,11 @@ module.exports = {
                         loader: 'ts-loader',
                         options: {
                             transpileOnly: true,
+                            getCustomTransformers: () => ({
+                                before: [
+                                    !isProduction && ReactRefreshTypeScript(),
+                                ].filter(Boolean),
+                            }),
                         },
                     },
                 ],
@@ -76,9 +84,11 @@ module.exports = {
             filename: 'css/[name].css',
             chunkFilename: 'css/[name].chunk.css',
         }),
-    ],
+        !isProduction && new ReactRefreshWebpackPlugin(),
+    ].filter(Boolean),
     devServer: {
         port: 3000,
+        hot: true,
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods':

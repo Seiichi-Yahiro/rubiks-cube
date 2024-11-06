@@ -56,6 +56,9 @@ importers:
                 specifier: 7.8.1
                 version: 7.8.1
         devDependencies:
+            '@pmmmwh/react-refresh-webpack-plugin':
+                specifier: 0.5.15
+                version: 0.5.15(react-refresh@0.14.2)(type-fest@0.21.3)(webpack-dev-server@5.1.0)(webpack@5.95.0)
             '@types/jest':
                 specifier: 29.5.14
                 version: 29.5.14
@@ -143,6 +146,12 @@ importers:
             pretty-quick:
                 specifier: 4.0.0
                 version: 4.0.0(prettier@3.3.3)
+            react-refresh:
+                specifier: 0.14.2
+                version: 0.14.2
+            react-refresh-typescript:
+                specifier: 2.0.9
+                version: 2.0.9(react-refresh@0.14.2)(typescript@5.6.3)
             rimraf:
                 specifier: 6.0.1
                 version: 6.0.1
@@ -962,6 +971,35 @@ packages:
             }
         engines: { node: '>=14' }
 
+    '@pmmmwh/react-refresh-webpack-plugin@0.5.15':
+        resolution:
+            {
+                integrity: sha512-LFWllMA55pzB9D34w/wXUCf8+c+IYKuJDgxiZ3qMhl64KRMBHYM1I3VdGaD2BV5FNPV2/S2596bppxHbv2ZydQ==,
+            }
+        engines: { node: '>= 10.13' }
+        peerDependencies:
+            '@types/webpack': 4.x || 5.x
+            react-refresh: '>=0.10.0 <1.0.0'
+            sockjs-client: ^1.4.0
+            type-fest: '>=0.17.0 <5.0.0'
+            webpack: '>=4.43.0 <6.0.0'
+            webpack-dev-server: 3.x || 4.x || 5.x
+            webpack-hot-middleware: 2.x
+            webpack-plugin-serve: 0.x || 1.x
+        peerDependenciesMeta:
+            '@types/webpack':
+                optional: true
+            sockjs-client:
+                optional: true
+            type-fest:
+                optional: true
+            webpack-dev-server:
+                optional: true
+            webpack-hot-middleware:
+                optional: true
+            webpack-plugin-serve:
+                optional: true
+
     '@popperjs/core@2.11.8':
         resolution:
             {
@@ -1733,6 +1771,14 @@ packages:
         engines: { '0': node >= 0.8.0 }
         hasBin: true
 
+    ansi-html@0.0.9:
+        resolution:
+            {
+                integrity: sha512-ozbS3LuenHVxNRh/wdnN16QapUHzauqSomAl1jwwJRRsGwFwtj644lIhxfWu0Fy0acCij2+AEgHvjscq3dlVXg==,
+            }
+        engines: { '0': node >= 0.8.0 }
+        hasBin: true
+
     ansi-regex@5.0.1:
         resolution:
             {
@@ -1933,6 +1979,12 @@ packages:
         resolution:
             {
                 integrity: sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==,
+            }
+
+    big.js@5.2.2:
+        resolution:
+            {
+                integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==,
             }
 
     binary-extensions@2.2.0:
@@ -2293,6 +2345,12 @@ packages:
                 integrity: sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w==,
             }
         engines: { node: '>= 0.6' }
+
+    core-js-pure@3.39.0:
+        resolution:
+            {
+                integrity: sha512-7fEcWwKI4rJinnK+wLTezeg2smbFFdSBP6E2kQZNbnzM2s1rpKQ6aaRteZSSg7FLU3P0HGGVo/gbpfanU36urg==,
+            }
 
     core-js@3.38.1:
         resolution:
@@ -2789,6 +2847,13 @@ packages:
                 integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==,
             }
 
+    emojis-list@3.0.0:
+        resolution:
+            {
+                integrity: sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==,
+            }
+        engines: { node: '>= 4' }
+
     encodeurl@1.0.2:
         resolution:
             {
@@ -2842,6 +2907,12 @@ packages:
         resolution:
             {
                 integrity: sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==,
+            }
+
+    error-stack-parser@2.1.4:
+        resolution:
+            {
+                integrity: sha512-Sk5V6wVazPhq5MhpO+AUxJn5x7XSXGl1R93Vn7i+zS15KDVxQijejNCrz8340/2bgLBjR9GtEG8ZVKONDjcqGQ==,
             }
 
     es-abstract@1.23.3:
@@ -4524,6 +4595,13 @@ packages:
             }
         engines: { node: '>=6.11.5' }
 
+    loader-utils@2.0.4:
+        resolution:
+            {
+                integrity: sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw==,
+            }
+        engines: { node: '>=8.9.0' }
+
     locate-path@5.0.0:
         resolution:
             {
@@ -5750,6 +5828,22 @@ packages:
             redux:
                 optional: true
 
+    react-refresh-typescript@2.0.9:
+        resolution:
+            {
+                integrity: sha512-chAnOO4vpxm/3WkgOVmti+eN8yUtkJzeGkOigV6UA9eDFz12W34e/SsYe2H5+RwYJ3+sfSZkVbiXcG1chEBxlg==,
+            }
+        peerDependencies:
+            react-refresh: 0.10.x || 0.11.x || 0.12.x || 0.13.x || 0.14.x
+            typescript: ^4.8 || ^5.0
+
+    react-refresh@0.14.2:
+        resolution:
+            {
+                integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==,
+            }
+        engines: { node: '>=0.10.0' }
+
     react-transition-group@4.4.5:
         resolution:
             {
@@ -6247,6 +6341,12 @@ packages:
                 integrity: sha512-xrQcmYhOsn/1kX+Vraq+7j4oE2j/6BFscZ0etmYg81xuM8Gq0022Pxb8+IqgOFUIaxHs0KaSb7T1+OegiNrNFA==,
             }
         engines: { node: '>=10' }
+
+    stackframe@1.3.4:
+        resolution:
+            {
+                integrity: sha512-oeVtt7eWQS+Na6F//S4kJ2K2VbRlS9D43mAlMyVpVWovy9o+jfgH8O9agzANzaiLjclA0oYzUXEM4PurhSUChw==,
+            }
 
     statuses@1.5.0:
         resolution:
@@ -7702,6 +7802,21 @@ snapshots:
     '@pkgjs/parseargs@0.11.0':
         optional: true
 
+    '@pmmmwh/react-refresh-webpack-plugin@0.5.15(react-refresh@0.14.2)(type-fest@0.21.3)(webpack-dev-server@5.1.0)(webpack@5.95.0)':
+        dependencies:
+            ansi-html: 0.0.9
+            core-js-pure: 3.39.0
+            error-stack-parser: 2.1.4
+            html-entities: 2.5.2
+            loader-utils: 2.0.4
+            react-refresh: 0.14.2
+            schema-utils: 4.2.0
+            source-map: 0.7.4
+            webpack: 5.95.0(webpack-cli@5.1.4)
+        optionalDependencies:
+            type-fest: 0.21.3
+            webpack-dev-server: 5.1.0(webpack-cli@5.1.4)(webpack@5.95.0)
+
     '@popperjs/core@2.11.8': {}
 
     '@reduxjs/toolkit@2.3.0(react-redux@9.1.2(@types/react@18.3.12)(react@18.3.1)(redux@5.0.1))(react@18.3.1)':
@@ -8233,6 +8348,8 @@ snapshots:
 
     ansi-html-community@0.0.8: {}
 
+    ansi-html@0.0.9: {}
+
     ansi-regex@5.0.1: {}
 
     ansi-regex@6.1.0: {}
@@ -8390,6 +8507,8 @@ snapshots:
     balanced-match@1.0.2: {}
 
     batch@0.6.1: {}
+
+    big.js@5.2.2: {}
 
     binary-extensions@2.2.0: {}
 
@@ -8591,6 +8710,8 @@ snapshots:
     cookie-signature@1.0.6: {}
 
     cookie@0.7.1: {}
+
+    core-js-pure@3.39.0: {}
 
     core-js@3.38.1: {}
 
@@ -8907,6 +9028,8 @@ snapshots:
 
     emoji-regex@9.2.2: {}
 
+    emojis-list@3.0.0: {}
+
     encodeurl@1.0.2: {}
 
     encodeurl@2.0.0: {}
@@ -8927,6 +9050,10 @@ snapshots:
     error-ex@1.3.2:
         dependencies:
             is-arrayish: 0.2.1
+
+    error-stack-parser@2.1.4:
+        dependencies:
+            stackframe: 1.3.4
 
     es-abstract@1.23.3:
         dependencies:
@@ -10242,6 +10369,12 @@ snapshots:
 
     loader-runner@4.2.0: {}
 
+    loader-utils@2.0.4:
+        dependencies:
+            big.js: 5.2.2
+            emojis-list: 3.0.0
+            json5: 2.2.3
+
     locate-path@5.0.0:
         dependencies:
             p-locate: 4.1.0
@@ -10873,6 +11006,13 @@ snapshots:
             '@types/react': 18.3.12
             redux: 5.0.1
 
+    react-refresh-typescript@2.0.9(react-refresh@0.14.2)(typescript@5.6.3):
+        dependencies:
+            react-refresh: 0.14.2
+            typescript: 5.6.3
+
+    react-refresh@0.14.2: {}
+
     react-transition-group@4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
         dependencies:
             '@babel/runtime': 7.26.0
@@ -11202,6 +11342,8 @@ snapshots:
     stack-utils@2.0.5:
         dependencies:
             escape-string-regexp: 2.0.0
+
+    stackframe@1.3.4: {}
 
     statuses@1.5.0: {}
 
