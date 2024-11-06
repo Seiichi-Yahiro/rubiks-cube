@@ -1,8 +1,8 @@
 import React from 'react';
-import { Mat4, toCss } from '../utils/Matrix4';
-import { CubeAxis, IFace } from './CubeTypes';
+import { Mat4, toCss } from '../utils/matrix4';
+import { CubeAxis, IFace } from './cubeTypes';
 import Face from './Face';
-import { generateFaceArrowCommand } from './CubeUtils';
+import { generateFaceArrowCommand } from './cubeUtils';
 
 export const cubicleClassname = 'cubicle';
 

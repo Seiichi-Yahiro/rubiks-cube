@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { epicMiddleWare, setupEpics } from './Epics';
-import { reducer } from './States';
+import { epicMiddleWare, setupEpics } from './epics';
+import { reducer } from './states';
 
 export const setupStore = () => {
     const store = configureStore({

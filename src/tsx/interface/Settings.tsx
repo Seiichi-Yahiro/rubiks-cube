@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Typography, Slider, List, ListItem } from '@mui/material';
-import { PlayerStatus } from '../states/player/PlayerState';
-import { cubeActions } from '../states/cube/CubeActions';
+import { PlayerStatus } from '../states/player/playerState';
+import { cubeActions } from '../states/cube/cubeActions';
 import { useAppDispatch, useRedux } from '../hooks/redux';
 import ColorPicker from './ColorPicker';
 

@@ -9,7 +9,7 @@ import {
     prime,
     RotationCommand,
     wide,
-} from './RotationCommand';
+} from './rotationCommand';
 import { range, sample, sampleSize } from 'lodash';
 
 /**

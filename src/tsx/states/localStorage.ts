@@ -1,4 +1,4 @@
-import { Color, ColorMap } from '../cube/CubeTypes';
+import { Color, ColorMap } from '../cube/cubeTypes';
 
 export const COLOR_MAP = 'colorMap';
 

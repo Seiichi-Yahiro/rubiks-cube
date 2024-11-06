@@ -1,5 +1,5 @@
-import { AppEpic } from '../States';
-import { playerActions } from './PlayerActions';
+import { AppEpic } from '../states';
+import { playerActions } from './playerActions';
 import {
     concatMap,
     delay,
@@ -9,16 +9,16 @@ import {
     mapTo,
     withLatestFrom,
 } from 'rxjs/operators';
-import { makeNotationParser } from '../../cube/algorithms/Parser';
-import { cubeActions } from '../cube/CubeActions';
+import { makeNotationParser } from '../../cube/algorithms/parser';
+import { cubeActions } from '../cube/cubeActions';
 import { fromEvent, merge, Subject } from 'rxjs';
 import {
     isLoopedRotationCommands,
     RotationCommand,
     SingleRotationCommand,
-} from '../../cube/algorithms/RotationCommand';
-import Maybe from '../../utils/Maybe';
-import { PlayerStatus } from './PlayerState';
+} from '../../cube/algorithms/rotationCommand';
+import Maybe from '../../utils/maybe';
+import { PlayerStatus } from './playerState';
 import { Action } from 'redux';
 import { ofType } from 'redux-observable';
 import { cubicleClassname } from '../../cube/Cubicle';

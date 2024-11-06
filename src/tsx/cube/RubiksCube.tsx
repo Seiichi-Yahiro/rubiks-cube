@@ -1,14 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import { useAppDispatch, useRedux } from '../hooks/redux';
-import { fromTranslation, toCss } from '../utils/Matrix4';
+import { fromTranslation, toCss } from '../utils/matrix4';
 import Cubicle from './Cubicle';
-import Maybe from '../utils/Maybe';
-import { rotationCommandToCssRotation } from './algorithms/RotationCommand';
+import Maybe from '../utils/maybe';
+import { rotationCommandToCssRotation } from './algorithms/rotationCommand';
 import createClassName from '../utils/createClassName';
-import { canApplyRotationCommand } from './CubeUtils';
+import { canApplyRotationCommand } from './cubeUtils';
 import CubeArrows from './CubeArrows';
-import { PlayerStatus } from '../states/player/PlayerState';
-import { cubeActions } from '../states/cube/CubeActions';
+import { PlayerStatus } from '../states/player/playerState';
+import { cubeActions } from '../states/cube/cubeActions';
 import { debounce } from 'lodash';
 
 const RubiksCube: React.FC = () => {

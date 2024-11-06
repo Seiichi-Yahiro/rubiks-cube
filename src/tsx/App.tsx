@@ -3,7 +3,7 @@ import RubiksCube from './cube/RubiksCube';
 import Interface from './interface/Interface';
 import './App.css';
 import { useAppDispatch } from './hooks/redux';
-import { cubeActions } from './states/cube/CubeActions';
+import { cubeActions } from './states/cube/cubeActions';
 
 const App: React.FC = () => {
     const dispatch = useAppDispatch();

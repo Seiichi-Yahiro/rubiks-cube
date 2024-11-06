@@ -1,5 +1,5 @@
 import { zip, partial } from 'lodash';
-import { dot, Vec4 } from './Vector4';
+import { dot, Vec4 } from './vector4';
 
 export type Mat4 = [Vec4, Vec4, Vec4, Vec4];
 

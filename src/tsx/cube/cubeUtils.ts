@@ -6,7 +6,7 @@ import {
     Color,
     Side,
     FaceArrowDirection,
-} from './CubeTypes';
+} from './cubeTypes';
 import {
     Mat4,
     multiply,
@@ -14,14 +14,14 @@ import {
     fromAngleY,
     fromAngleX,
     apply,
-} from '../utils/Matrix4';
-import { Vec4 } from '../utils/Vector4';
+} from '../utils/matrix4';
+import { Vec4 } from '../utils/vector4';
 import {
     RotationCommand,
     isLoopedRotationCommands,
     rotationCommandToMat4,
     SingleRotationCommand,
-} from './algorithms/RotationCommand';
+} from './algorithms/rotationCommand';
 
 const sideToColor = {
     [Side.FRONT]: Color.BLUE,

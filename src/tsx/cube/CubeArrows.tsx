@@ -1,9 +1,9 @@
 import React from 'react';
 import Arrow from './Arrow';
-import { Direction } from './CubeTypes';
-import { makeNotationParser } from './algorithms/Parser';
+import { Direction } from './cubeTypes';
+import { makeNotationParser } from './algorithms/parser';
 import { useAppDispatch } from '../hooks/redux';
-import { playerActions } from '../states/player/PlayerActions';
+import { playerActions } from '../states/player/playerActions';
 
 enum Side {
     FRONT = 'rotateY(0deg)',

@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Color, ICubicle } from '../../cube/CubeTypes';
-import { RotationCommand } from '../../cube/algorithms/RotationCommand';
+import { Color, ICubicle } from '../../cube/cubeTypes';
+import { RotationCommand } from '../../cube/algorithms/rotationCommand';
 
 const setCubeSize = createAction<number>('SET_CUBE_SIZE');
 

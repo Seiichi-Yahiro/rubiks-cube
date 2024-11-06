@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import Chrome, { ChromeInputType } from '@uiw/react-color-chrome';
 import { useAppDispatch, useRedux } from '../hooks/redux';
-import { Color } from '../cube/CubeTypes';
-import { cubeActions } from '../states/cube/CubeActions';
+import { Color } from '../cube/cubeTypes';
+import { cubeActions } from '../states/cube/cubeActions';
 import useComplexState from '../hooks/useComplexState';
 import { Button, Popover, PopoverOrigin } from '@mui/material';
 import createClassName from '../utils/createClassName';

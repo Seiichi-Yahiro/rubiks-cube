@@ -1,6 +1,6 @@
 import React from 'react';
 import Arrow from './Arrow';
-import { FaceArrowDirection } from './CubeTypes';
+import { FaceArrowDirection } from './cubeTypes';
 
 interface IArrowsProps {
     rotate: (faceArrow: FaceArrowDirection) => void;

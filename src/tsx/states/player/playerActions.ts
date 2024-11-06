@@ -3,7 +3,7 @@ import { Result } from 'parsimmon';
 import {
     RotationCommand,
     SingleRotationCommand,
-} from '../../cube/algorithms/RotationCommand';
+} from '../../cube/algorithms/rotationCommand';
 
 const play = createAction<RotationCommand[]>('PLAY');
 const stop = createAction('STOP');

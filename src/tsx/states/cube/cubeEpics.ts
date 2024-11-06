@@ -1,10 +1,10 @@
 import { ofType } from 'redux-observable';
-import { cubeActions } from './CubeActions';
+import { cubeActions } from './cubeActions';
 import { map, withLatestFrom } from 'rxjs/operators';
-import { AppEpic } from '../States';
-import { generateCubicles } from '../../cube/CubeUtils';
+import { AppEpic } from '../states';
+import { generateCubicles } from '../../cube/cubeUtils';
 import { EMPTY } from 'rxjs';
-import { COLOR_MAP } from '../LocalStorage';
+import { COLOR_MAP } from '../localStorage';
 
 const updateCubicles: AppEpic = (action$, state$) =>
     action$.pipe(

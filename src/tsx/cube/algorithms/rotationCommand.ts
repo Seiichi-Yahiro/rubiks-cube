@@ -1,6 +1,6 @@
 import { range } from 'lodash';
 import { Failure, Result, Success } from 'parsimmon';
-import { fromAngleX, fromAngleY, fromAngleZ, Mat4 } from '../../utils/Matrix4';
+import { fromAngleX, fromAngleY, fromAngleZ, Mat4 } from '../../utils/matrix4';
 
 export interface SingleRotationCommand {
     readonly axis: RotationAxis;

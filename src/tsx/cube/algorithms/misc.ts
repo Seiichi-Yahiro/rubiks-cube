@@ -1,4 +1,4 @@
-import { AlgorithmTree } from './AlgorithmTree';
+import { AlgorithmTree } from './algorithmTree';
 
 const Misc: AlgorithmTree = {
     name: 'Misc',

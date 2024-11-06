@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Color, FaceArrowDirection } from './CubeTypes';
-import { Mat4, toCss } from '../utils/Matrix4';
+import { Color, FaceArrowDirection } from './cubeTypes';
+import { Mat4, toCss } from '../utils/matrix4';
 import FaceArrows from './FaceArrows';
-import { SingleRotationCommand } from './algorithms/RotationCommand';
-import { playerActions } from '../states/player/PlayerActions';
+import { SingleRotationCommand } from './algorithms/rotationCommand';
+import { playerActions } from '../states/player/playerActions';
 import { useAppDispatch, useRedux } from '../hooks/redux';
 
 interface IFaceProps {

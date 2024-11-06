@@ -1,4 +1,4 @@
-import { makeNotationParser } from './Parser';
+import { makeNotationParser } from './parser';
 
 describe('Parser', () => {
     const parse = (notation: string) =>
