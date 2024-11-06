@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
 import Chrome, { ChromeInputType } from '@uiw/react-color-chrome';
-import { useAppDispatch, useRedux } from '../hooks/redux';
-import { Color } from '../cube/cubeTypes';
-import { cubeActions } from '../states/cube/cubeActions';
-import useComplexState from '../hooks/useComplexState';
+import { useAppDispatch, useRedux } from 'src/hooks/redux';
+import { Color } from 'src/tsx/cube/cubeTypes';
+import { cubeActions } from 'src/redux/cube/cubeActions';
+import useComplexState from 'src/hooks/useComplexState';
 import { Button, Popover, PopoverOrigin } from '@mui/material';
-import createClassName from '../utils/createClassName';
-import './ColorPicker.css';
+import createClassName from 'src/utils/createClassName';
+import 'src/tsx/interface/ColorPicker.css';
 
 interface State {
     selectedColor?: Color;

@@ -1,6 +1,6 @@
-import { applyRotationCommand, generateCubicles } from './cubeUtils';
-import { makeNotationParser } from './algorithms/parser';
-import { SingleRotationCommand } from './algorithms/rotationCommand';
+import { applyRotationCommand, generateCubicles } from 'src/tsx/cube/cubeUtils';
+import { makeNotationParser } from 'src/algorithms/parser';
+import { SingleRotationCommand } from 'src/algorithms/rotationCommand';
 
 /**
  * TESTS SHOW THE NEW AXIS OF A CUBICLE

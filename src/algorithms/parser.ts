@@ -9,7 +9,7 @@ import {
     prime,
     RotationCommand,
     wide,
-} from './rotationCommand';
+} from 'src/algorithms/rotationCommand';
 import { range, sample, sampleSize } from 'lodash';
 
 /**

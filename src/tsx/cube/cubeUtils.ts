@@ -14,14 +14,14 @@ import {
     fromAngleY,
     fromAngleX,
     apply,
-} from '../utils/matrix4';
-import { Vec4 } from '../utils/vector4';
+} from 'src/utils/matrix4';
+import { Vec4 } from 'src/utils/vector4';
 import {
     RotationCommand,
     isLoopedRotationCommands,
     rotationCommandToMat4,
     SingleRotationCommand,
-} from './algorithms/rotationCommand';
+} from 'src/algorithms/rotationCommand';
 
 const sideToColor = {
     [Side.FRONT]: Color.BLUE,

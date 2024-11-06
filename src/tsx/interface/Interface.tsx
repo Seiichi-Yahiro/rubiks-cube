@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import Settings from './Settings';
-import Algorithms from './Algorithms';
-import Category from './Category';
-import Player from './Player';
+import Settings from 'src/tsx/interface/Settings';
+import Algorithms from 'src/tsx/interface/Algorithms';
+import Category from 'src/tsx/interface/Category';
+import Player from 'src/tsx/interface/Player';
 import { List } from '@mui/material';
 import { Settings as SettingsIcon, ManageSearch } from '@mui/icons-material';
 

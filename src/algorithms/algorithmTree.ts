@@ -1,4 +1,4 @@
-import { Color } from '../cubeTypes';
+import { Color } from 'src/tsx/cube/cubeTypes';
 
 export interface AlgorithmGroupGroup {
     name: string;

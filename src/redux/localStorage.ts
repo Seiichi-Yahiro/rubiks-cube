@@ -1,4 +1,4 @@
-import { Color, ColorMap } from '../cube/cubeTypes';
+import { Color, ColorMap } from 'src/tsx/cube/cubeTypes';
 
 export const COLOR_MAP = 'colorMap';
 

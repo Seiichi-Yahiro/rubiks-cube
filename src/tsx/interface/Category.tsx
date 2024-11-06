@@ -11,7 +11,7 @@ import {
     IconButton,
     useMediaQuery,
 } from '@mui/material';
-import tailwindFullConfig from '../utils/tailwindConfig';
+import tailwindFullConfig from 'src/utils/tailwindConfig';
 
 interface ICategoryProps {
     isOpen: boolean;

@@ -1,9 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './tsx/App';
+import App from 'src/tsx/App';
 import { Provider } from 'react-redux';
-import { setupStore } from './tsx/states/store';
-import './tsx/cube/algorithms/parser';
+import { setupStore } from 'src/redux/store';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';

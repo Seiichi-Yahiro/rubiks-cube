@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Chip, IconButton, TextField, Typography } from '@mui/material';
-import { PlayerStatus } from '../states/player/playerState';
+import { PlayerStatus } from 'src/redux/player/playerState';
 import {
     Pause,
     PlayArrow,
@@ -9,11 +9,11 @@ import {
     SkipNext,
     Stop,
 } from '@mui/icons-material';
-import { playerActions } from '../states/player/playerActions';
-import { useAppDispatch, useRedux } from '../hooks/redux';
-import { isError, isOk } from '../cube/algorithms/rotationCommand';
-import { cubeActions } from '../states/cube/cubeActions';
-import { createRandomNotation } from '../cube/algorithms/parser';
+import { playerActions } from 'src/redux/player/playerActions';
+import { useAppDispatch, useRedux } from 'src/hooks/redux';
+import { isError, isOk } from 'src/algorithms/rotationCommand';
+import { cubeActions } from 'src/redux/cube/cubeActions';
+import { createRandomNotation } from 'src/algorithms/parser';
 import { Failure } from 'parsimmon';
 
 const Player: React.FC = () => {

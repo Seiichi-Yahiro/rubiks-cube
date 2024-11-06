@@ -1,13 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { cubeActions } from './cubeActions';
-import { ColorMap, ICubicle } from '../../cube/cubeTypes';
-import { fromAngleX, fromAngleY, Mat4, multiply } from '../../utils/matrix4';
+import { cubeActions } from 'src/redux/cube/cubeActions';
+import { ColorMap, ICubicle } from 'src/tsx/cube/cubeTypes';
+import { fromAngleX, fromAngleY, Mat4, multiply } from 'src/utils/matrix4';
 import {
     applyRotationCommand,
     axisToTranslation,
     sideToTransform,
-} from '../../cube/cubeUtils';
-import { defaultColorMap, loadColorMap } from '../localStorage';
+} from 'src/tsx/cube/cubeUtils';
+import { defaultColorMap, loadColorMap } from 'src/redux/localStorage';
 
 export interface ICubeState {
     dimension: number;

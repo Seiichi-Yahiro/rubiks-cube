@@ -24,6 +24,9 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.ts', '.tsx'],
+        alias: {
+            src: path.resolve(__dirname, 'src'), // webpack won't find src/* paths without this alias
+        },
     },
     module: {
         rules: [

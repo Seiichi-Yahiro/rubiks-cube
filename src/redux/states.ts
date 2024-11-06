@@ -1,7 +1,7 @@
 import { Action, combineReducers } from 'redux';
 import { Epic } from 'redux-observable';
-import { cubeReducer, ICubeState } from './cube/cubeState';
-import { IPlayerState, playerReducer } from './player/playerState';
+import { cubeReducer, ICubeState } from 'src/redux/cube/cubeState';
+import { IPlayerState, playerReducer } from 'src/redux/player/playerState';
 
 export interface AppState {
     cube: ICubeState;

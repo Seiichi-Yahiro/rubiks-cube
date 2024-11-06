@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { Typography, Slider, List, ListItem } from '@mui/material';
-import { PlayerStatus } from '../states/player/playerState';
-import { cubeActions } from '../states/cube/cubeActions';
-import { useAppDispatch, useRedux } from '../hooks/redux';
-import ColorPicker from './ColorPicker';
+import { PlayerStatus } from 'src/redux/player/playerState';
+import { cubeActions } from 'src/redux/cube/cubeActions';
+import { useAppDispatch, useRedux } from 'src/hooks/redux';
+import ColorPicker from 'src/tsx/interface/ColorPicker';
 
 const Settings: React.FC = () => {
     const dispatch = useAppDispatch();

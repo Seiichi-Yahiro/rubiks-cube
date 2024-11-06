@@ -1,4 +1,4 @@
-import { AppEpic } from '../states';
+import { AppEpic } from 'src/redux/states';
 import { playerActions } from './playerActions';
 import {
     concatMap,
@@ -9,19 +9,19 @@ import {
     mapTo,
     withLatestFrom,
 } from 'rxjs/operators';
-import { makeNotationParser } from '../../cube/algorithms/parser';
-import { cubeActions } from '../cube/cubeActions';
+import { makeNotationParser } from 'src/algorithms/parser';
+import { cubeActions } from 'src/redux/cube/cubeActions';
 import { fromEvent, merge, Subject } from 'rxjs';
 import {
     isLoopedRotationCommands,
     RotationCommand,
     SingleRotationCommand,
-} from '../../cube/algorithms/rotationCommand';
-import Maybe from '../../utils/maybe';
-import { PlayerStatus } from './playerState';
+} from 'src/algorithms/rotationCommand';
+import Maybe from 'src/utils/maybe';
+import { PlayerStatus } from 'src/redux/player/playerState';
 import { Action } from 'redux';
 import { ofType } from 'redux-observable';
-import { cubicleClassname } from '../../cube/Cubicle';
+import { cubicleClassname } from 'src/tsx/cube/Cubicle';
 
 const parseNotation: AppEpic = (action$, state$) =>
     action$.pipe(

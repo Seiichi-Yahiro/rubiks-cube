@@ -7,13 +7,13 @@ import {
     TextField,
     ListItemButton,
 } from '@mui/material';
-import Look2CFOP from '../cube/algorithms/cfop';
-import Misc from '../cube/algorithms/misc';
-import { PlayerStatus } from '../states/player/playerState';
-import StartConfiguration from './StartConfiguration';
-import { playerActions } from '../states/player/playerActions';
-import { useAppDispatch, useRedux } from '../hooks/redux';
-import { AlgorithmGroup, flattenTree } from '../cube/algorithms/algorithmTree';
+import Look2CFOP from 'src/algorithms/cfop';
+import Misc from 'src/algorithms/misc';
+import { PlayerStatus } from 'src/redux/player/playerState';
+import StartConfiguration from 'src/tsx/interface/StartConfiguration';
+import { playerActions } from 'src/redux/player/playerActions';
+import { useAppDispatch, useRedux } from 'src/hooks/redux';
+import { AlgorithmGroup, flattenTree } from 'src/algorithms/algorithmTree';
 
 export const categories = [Look2CFOP, Misc].flatMap((algorithm) =>
     flattenTree(algorithm),

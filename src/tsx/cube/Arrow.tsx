@@ -1,5 +1,5 @@
 import React from 'react';
-import createClassName from '../utils/createClassName';
+import createClassName from 'src/utils/createClassName';
 
 interface IArrowProps {
     style?: React.CSSProperties;

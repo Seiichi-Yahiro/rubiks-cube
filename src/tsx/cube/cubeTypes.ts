@@ -1,4 +1,4 @@
-import { Mat4 } from '../utils/matrix4';
+import { Mat4 } from 'src/utils/matrix4';
 
 export type CubeAxis = [number, number, number];
 
