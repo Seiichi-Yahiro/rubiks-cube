@@ -1,7 +1,14 @@
 {
     "player": {
         "input": {
-            "algorithm": "Algorithmus"
+            "algorithm": "Algorithmus",
+            "play": "Abspielen",
+            "pause": "Pause",
+            "stop": "Stop",
+            "skip": "Überspringe Animation",
+            "shuffle": "Zufälliger Algorithmus",
+            "reset": "Würfel Zurücksetzen",
+            "help": "Erklärung der Notation"
         },
         "help": {
             "notation": "Notation",

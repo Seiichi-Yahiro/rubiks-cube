@@ -4,6 +4,7 @@ import {
     Popover,
     PopoverOrigin,
     TextField,
+    Tooltip,
 } from '@mui/material';
 import { debounce } from 'lodash';
 import { Result } from 'parsimmon';
@@ -49,18 +50,20 @@ const NotationInput: React.FC<NotationInputProps> = ({
         return {
             input: {
                 endAdornment: (
-                    <InputAdornment
-                        ref={adornmentRef}
-                        position="end"
-                        className="cursor-pointer"
-                        onClick={() => setHelpOpened(true)}
-                    >
-                        <HelpOutline fontSize="small" />
-                    </InputAdornment>
+                    <Tooltip title={t('player.input.help')}>
+                        <InputAdornment
+                            ref={adornmentRef}
+                            position="end"
+                            className="cursor-pointer"
+                            onClick={() => setHelpOpened(true)}
+                        >
+                            <HelpOutline fontSize="small" />
+                        </InputAdornment>
+                    </Tooltip>
                 ),
             },
         };
-    }, [setHelpOpened]);
+    }, [setHelpOpened, t]);
 
     const [adornmentWidth, setAdornmentWidth] = useState(20);
 

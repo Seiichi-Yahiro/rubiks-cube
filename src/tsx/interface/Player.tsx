@@ -6,8 +6,9 @@ import {
     SkipNext,
     Stop,
 } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { createRandomNotation } from 'src/algorithms/parser';
 import { isError, isOk } from 'src/algorithms/rotationCommand';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
@@ -17,6 +18,7 @@ import { PlayerStatus } from 'src/redux/player/playerState';
 import NotationInput from 'src/tsx/interface/NotationInput';
 
 const Player: React.FC = () => {
+    const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const playerNotation = useRedux((state) => state.player.notation);
@@ -68,36 +70,48 @@ const Player: React.FC = () => {
             <div className="flex flex-row justify-between">
                 <div>
                     {playerStatus === PlayerStatus.PLAYING ? (
-                        <IconButton onClick={onPause}>
-                            <Pause />
-                        </IconButton>
+                        <Tooltip title={t('player.input.pause')}>
+                            <IconButton onClick={onPause}>
+                                <Pause />
+                            </IconButton>
+                        </Tooltip>
                     ) : (
-                        <IconButton
-                            onClick={onPlay}
-                            disabled={isNotationEmpty || hasParseError}
-                        >
-                            <PlayArrow />
-                        </IconButton>
+                        <Tooltip title={t('player.input.play')}>
+                            <IconButton
+                                onClick={onPlay}
+                                disabled={isNotationEmpty || hasParseError}
+                            >
+                                <PlayArrow />
+                            </IconButton>
+                        </Tooltip>
                     )}
-                    <IconButton onClick={onStop} disabled={isStopped}>
-                        <Stop />
-                    </IconButton>
-                    <IconButton
-                        onClick={onJumpToEnd}
-                        disabled={
-                            !isStopped || isNotationEmpty || hasParseError
-                        }
-                    >
-                        <SkipNext />
-                    </IconButton>
+                    <Tooltip title={t('player.input.stop')}>
+                        <IconButton onClick={onStop} disabled={isStopped}>
+                            <Stop />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title={t('player.input.skip')}>
+                        <IconButton
+                            onClick={onJumpToEnd}
+                            disabled={
+                                !isStopped || isNotationEmpty || hasParseError
+                            }
+                        >
+                            <SkipNext />
+                        </IconButton>
+                    </Tooltip>
                 </div>
                 <div>
-                    <IconButton onClick={onShuffle} disabled={!isStopped}>
-                        <Shuffle />
-                    </IconButton>
-                    <IconButton onClick={onRefresh} disabled={!isStopped}>
-                        <Refresh />
-                    </IconButton>
+                    <Tooltip title={t('player.input.shuffle')}>
+                        <IconButton onClick={onShuffle} disabled={!isStopped}>
+                            <Shuffle />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title={t('player.input.reset')}>
+                        <IconButton onClick={onRefresh} disabled={!isStopped}>
+                            <Refresh />
+                        </IconButton>
+                    </Tooltip>
                 </div>
             </div>
         </div>

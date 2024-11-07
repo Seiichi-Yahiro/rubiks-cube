@@ -1,7 +1,14 @@
 {
     "player": {
         "input": {
-            "algorithm": "Algorithm"
+            "algorithm": "Algorithm",
+            "play": "Play",
+            "pause": "Pause",
+            "stop": "Stop",
+            "skip": "Skip animation",
+            "shuffle": "Random algorithm",
+            "reset": "Reset cube",
+            "help": "Notation definitions"
         },
         "help": {
             "notation": "Notation",
