@@ -3,7 +3,7 @@ import { IconButton } from '@mui/material';
 import React from 'react';
 
 const Code: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-    <span className="font-mono bg-gray-200 text-gray-900 p-0.5 rounded">
+    <span className="font-mono bg-gray-200 text-gray-900 p-0.5 rounded select-all">
         {children}
     </span>
 );
