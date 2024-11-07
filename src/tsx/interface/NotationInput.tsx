@@ -68,7 +68,7 @@ const NotationInput: React.FC<NotationInputProps> = ({
                 anchorOrigin={anchorOrigin}
                 onClose={closeHelp}
             >
-                <NotationHelp />
+                <NotationHelp onClose={closeHelp} />
             </Popover>
         </>
     );
