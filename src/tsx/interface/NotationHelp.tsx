@@ -1,5 +1,5 @@
 import { Close } from '@mui/icons-material';
-import { IconButton, Paper } from '@mui/material';
+import { IconButton } from '@mui/material';
 import React from 'react';
 
 const Code: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -14,7 +14,7 @@ interface NotationHelpProps {
 
 const NotationHelp: React.FC<NotationHelpProps> = ({ onClose }) => {
     return (
-        <Paper className="px-2 pb-2 max-w-sm sm:max-w-md md:max-w-xl space-y-2">
+        <div className="px-2 pb-2 max-w-sm sm:max-w-md md:max-w-xl space-y-2">
             <div className="pt-2 flex flex-row space-between items-center sticky top-0 bg-white">
                 <div className="flex-1 text-lg font-bold">Notation</div>
                 <IconButton onClick={onClose}>
@@ -141,7 +141,7 @@ const NotationHelp: React.FC<NotationHelpProps> = ({ onClose }) => {
                     </div>
                 </div>
             </div>
-        </Paper>
+        </div>
     );
 };
 

@@ -67,6 +67,7 @@ const NotationInput: React.FC<NotationInputProps> = ({
                 anchorEl={inputRef.current}
                 anchorOrigin={anchorOrigin}
                 onClose={closeHelp}
+                className="max-h-[30rem]"
             >
                 <NotationHelp onClose={closeHelp} />
             </Popover>
