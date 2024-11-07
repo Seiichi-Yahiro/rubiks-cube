@@ -14,7 +14,7 @@ importers:
                 specifier: 11.13.0
                 version: 11.13.0(@emotion/react@11.13.3(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react@18.3.1)
             '@fontsource/roboto':
-                specifier: ^5.1.0
+                specifier: 5.1.0
                 version: 5.1.0
             '@mui/icons-material':
                 specifier: 6.1.6
@@ -28,6 +28,12 @@ importers:
             '@uiw/react-color-chrome':
                 specifier: 2.3.2
                 version: 2.3.2(@babel/runtime@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+            i18next:
+                specifier: 23.16.4
+                version: 23.16.4
+            i18next-browser-languagedetector:
+                specifier: 8.0.0
+                version: 8.0.0
             lodash:
                 specifier: 4.17.21
                 version: 4.17.21
@@ -40,6 +46,9 @@ importers:
             react-dom:
                 specifier: 18.3.1
                 version: 18.3.1(react@18.3.1)
+            react-i18next:
+                specifier: 15.1.0
+                version: 15.1.0(i18next@23.16.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
             react-redux:
                 specifier: 9.1.2
                 version: 9.1.2(@types/react@18.3.12)(react@18.3.1)(redux@5.0.1)
@@ -3642,6 +3651,12 @@ packages:
         engines: { node: '>=12' }
         hasBin: true
 
+    html-parse-stringify@3.0.1:
+        resolution:
+            {
+                integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==,
+            }
+
     html-webpack-plugin@5.6.3:
         resolution:
             {
@@ -3743,6 +3758,18 @@ packages:
                 integrity: sha512-Y93lCzHYgGWdrJ66yIktxiaGULYc6oGiABxhcO5AufBeOyoIdZF7bIfLaOrbM0iGIOXQQgxxRrFEnb+Y6w1n4A==,
             }
         engines: { node: '>=10.18' }
+
+    i18next-browser-languagedetector@8.0.0:
+        resolution:
+            {
+                integrity: sha512-zhXdJXTTCoG39QsrOCiOabnWj2jecouOqbchu3EfhtSHxIB5Uugnm9JaizenOy39h7ne3+fLikIjeW88+rgszw==,
+            }
+
+    i18next@23.16.4:
+        resolution:
+            {
+                integrity: sha512-9NIYBVy9cs4wIqzurf7nLXPyf3R78xYbxExVqHLK9od3038rjpyOEzW+XB130kZ1N4PZ9inTtJ471CRJ4Ituyg==,
+            }
 
     iconv-lite@0.4.24:
         resolution:
@@ -5817,6 +5844,22 @@ packages:
         peerDependencies:
             react: ^18.3.1
 
+    react-i18next@15.1.0:
+        resolution:
+            {
+                integrity: sha512-zj3nJynMnZsy2gPZiOTC7XctCY5eQGqT3tcKMmfJWC9FMvgd+960w/adq61j8iPzpwmsXejqID9qC3Mqu1Xu2Q==,
+            }
+        peerDependencies:
+            i18next: '>= 23.2.3'
+            react: '>= 16.8.0'
+            react-dom: '*'
+            react-native: '*'
+        peerDependenciesMeta:
+            react-dom:
+                optional: true
+            react-native:
+                optional: true
+
     react-is@16.13.1:
         resolution:
             {
@@ -6880,6 +6923,13 @@ packages:
                 integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==,
             }
         engines: { node: '>= 0.8' }
+
+    void-elements@3.1.0:
+        resolution:
+            {
+                integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==,
+            }
+        engines: { node: '>=0.10.0' }
 
     w3c-xmlserializer@4.0.0:
         resolution:
@@ -9631,6 +9681,10 @@ snapshots:
             relateurl: 0.2.7
             terser: 5.36.0
 
+    html-parse-stringify@3.0.1:
+        dependencies:
+            void-elements: 3.1.0
+
     html-webpack-plugin@5.6.3(webpack@5.95.0):
         dependencies:
             '@types/html-minifier-terser': 6.1.0
@@ -9707,6 +9761,14 @@ snapshots:
     husky@9.1.6: {}
 
     hyperdyperid@1.2.0: {}
+
+    i18next-browser-languagedetector@8.0.0:
+        dependencies:
+            '@babel/runtime': 7.26.0
+
+    i18next@23.16.4:
+        dependencies:
+            '@babel/runtime': 7.26.0
 
     iconv-lite@0.4.24:
         dependencies:
@@ -11016,6 +11078,15 @@ snapshots:
             react: 18.3.1
             scheduler: 0.23.2
 
+    react-i18next@15.1.0(i18next@23.16.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+        dependencies:
+            '@babel/runtime': 7.26.0
+            html-parse-stringify: 3.0.1
+            i18next: 23.16.4
+            react: 18.3.1
+        optionalDependencies:
+            react-dom: 18.3.1(react@18.3.1)
+
     react-is@16.13.1: {}
 
     react-is@18.3.1: {}
@@ -11711,6 +11782,8 @@ snapshots:
             convert-source-map: 2.0.0
 
     vary@1.1.2: {}
+
+    void-elements@3.1.0: {}
 
     w3c-xmlserializer@4.0.0:
         dependencies:

@@ -1,6 +1,7 @@
 import { Button, Popover, PopoverOrigin } from '@mui/material';
 import Chrome, { ChromeInputType } from '@uiw/react-color-chrome';
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import useComplexState from 'src/hooks/useComplexState';
 import { cubeActions } from 'src/redux/cube/cubeActions';
@@ -19,6 +20,7 @@ const anchorOrigin: PopoverOrigin = {
 };
 
 const ColorPicker: React.FC = () => {
+    const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const colorMap = useRedux((state) => state.cube.colorMap);
 
@@ -88,7 +90,7 @@ const ColorPicker: React.FC = () => {
                 </Popover>
             </div>
             <Button size={'small'} onClick={resetColors}>
-                Reset Colors
+                {t('interface.settings.reset-colors')}
             </Button>
         </div>
     );

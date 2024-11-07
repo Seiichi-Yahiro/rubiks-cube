@@ -17,7 +17,8 @@
         "noUnusedLocals": true,
         "esModuleInterop": true,
         "incremental": true,
-        "downlevelIteration": true
+        "downlevelIteration": true,
+        "resolveJsonModule": true
     },
     "exclude": ["node_modules", "build", "webpack.config.js"],
     "include": ["src"]

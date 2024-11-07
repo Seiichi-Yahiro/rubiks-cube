@@ -1,0 +1,44 @@
+{
+    "player": {
+        "input": {
+            "algorithm": "Algorithmus"
+        },
+        "help": {
+            "notation": "Notation",
+            "explanation": "Es gibt zwei Arten von Buchstaben: schneidbare und nicht-schneidbare. Schneidbare Buchstaben können auf jede Ebene des Würfels angewendet werden, während nicht-schneidbare Buchstaben auf eine oder mehrere spezifische Ebenen angewendet werden. Alle Buchstaben können in Groß- oder Kleinbuchstaben verwendet werden, aber ihre Bedeutung kann sich dadurch ändern und hängt zusätzlich von der Dimension des Würfels ab. Drehungen werden immer im Uhrzeigersinn ausgeführt, es sei denn, die Aussage wird durch ein Prime modifiziert. Modifikationen werden immer am Ende einer Notationsaussage angewendet. Notationsaussagen müssen durch Leerzeichen oder Kommas getrennt werden.",
+            "sliceable": "Schneidbar",
+            "left": "Linke Ebene",
+            "right": "Rechte Ebene",
+            "top": "Obere Ebene",
+            "bottom": "Untere Ebene",
+            "front": "Vordere Ebene",
+            "back": "Hintere Ebene",
+            "middle": "Mittlere Ebene wie L/R",
+            "equatorial": "Äquatoriale Ebene wie U/D",
+            "standing": "Stehende Ebene wie F/B",
+            "x": "Ganzer Würfel wie L/R",
+            "y": "Ganzer Würfel wie U/D",
+            "z": "Ganzer Würfel wie F/B",
+            "wide": "Wide, Drehe alle Ebenen",
+            "prime": "Prime, Drehe gegen den Uhrzeigersinn",
+            "double": "Double, Drehe 180°",
+            "non-sliceable": "Nicht-schneidbar",
+            "modifications": "Modifikationen",
+            "slicing": "Schneiden",
+            "slicing-explanation": "Schneidbare Buchstaben können auf spezifische Ebenen des Würfels angewendet werden, indem eine einzelne Zahl vor einer Notationsaussage hinzugefügt wird, die sich auf eine Ebene bezieht, oder indem mehrere durch Kommas getrennte Zahlen in Klammern gesetzt werden, die sich auf mehrere Ebenen beziehen. Die Ebenen-Indexierung beginnt bei 1 und die Richtung hängt vom folgenden Buchstaben ab.",
+            "examples": "Beispiele"
+        }
+    },
+    "interface": {
+        "algorithms": {
+            "title": "Algorithmen",
+            "search": "Suche"
+        },
+        "settings": {
+            "title": "Einstellungen",
+            "cube-dimension": "Würfel-Dimension",
+            "animation-duration": "Animationsdauer",
+            "reset-colors": "Farben zurücksetzen"
+        }
+    }
+}

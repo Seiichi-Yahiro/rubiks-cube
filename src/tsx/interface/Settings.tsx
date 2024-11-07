@@ -1,5 +1,6 @@
 import { List, ListItem, Slider, Typography } from '@mui/material';
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { PlayerStatus } from 'src/redux/player/playerState';
@@ -13,11 +14,13 @@ const Settings: React.FC = () => {
     );
     const playerStatus = useRedux((state) => state.player.status);
 
+    const { t } = useTranslation();
+
     return (
         <List disablePadding={true} dense={true} className="w-full">
             <ListItem className="flex flex-col">
                 <Typography id="cube-dimension-slider">
-                    Cube dimension
+                    {t('interface.settings.cube-dimension')}
                 </Typography>
                 <Slider
                     aria-labelledby="cube-dimension-slider"
@@ -35,7 +38,7 @@ const Settings: React.FC = () => {
             </ListItem>
             <ListItem className="flex flex-col">
                 <Typography id="animation-duration-slider">
-                    Animation duration
+                    {t('interface.settings.animation-duration')}
                 </Typography>
                 <Slider
                     aria-labelledby="animation-duration-slider"

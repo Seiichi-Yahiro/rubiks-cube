@@ -7,6 +7,7 @@ import {
     TextField,
 } from '@mui/material';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AlgorithmGroup, flattenTree } from 'src/algorithms/algorithmTree';
 import Look2CFOP from 'src/algorithms/cfop';
 import Misc from 'src/algorithms/misc';
@@ -42,6 +43,7 @@ const filterCategories = (searchValue: string): AlgorithmGroup[] =>
         .filter((group): group is AlgorithmGroup => group !== undefined);
 
 const Algorithms: React.FC = () => {
+    const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const playerStatus = useRedux((state) => state.player.status);
     const colorMap = useRedux((state) => state.cube.colorMap);
@@ -60,7 +62,7 @@ const Algorithms: React.FC = () => {
         >
             <ListSubheader className="!sticky !top-0 !z-50 !bg-white">
                 <TextField
-                    label="Search"
+                    label={t('interface.algorithms.search')}
                     variant="standard"
                     fullWidth={true}
                     onChange={filter}

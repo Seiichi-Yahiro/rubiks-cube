@@ -1,6 +1,7 @@
 import { ManageSearch, Settings as SettingsIcon } from '@mui/icons-material';
 import { List } from '@mui/material';
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Algorithms from 'src/tsx/interface/Algorithms';
 import Category from 'src/tsx/interface/Category';
 import Player from 'src/tsx/interface/Player';
@@ -13,6 +14,7 @@ enum Menu {
 }
 
 const Interface: React.FC = () => {
+    const { t } = useTranslation();
     const [openedMenu, setOpenedMenu] = useState(Menu.SETTINGS);
     const setMenu = (menu: Menu) =>
         setOpenedMenu((prevMenu) => (prevMenu === menu ? Menu.NONE : menu));
@@ -24,7 +26,7 @@ const Interface: React.FC = () => {
                 <Category
                     isOpen={openedMenu === Menu.ALGORITHMS}
                     setMenu={useCallback(() => setMenu(Menu.ALGORITHMS), [])}
-                    title="Algorithms"
+                    title={t('interface.algorithms.title')}
                     icon={<ManageSearch />}
                 >
                     <Algorithms />
@@ -32,7 +34,7 @@ const Interface: React.FC = () => {
                 <Category
                     isOpen={openedMenu === Menu.SETTINGS}
                     setMenu={useCallback(() => setMenu(Menu.SETTINGS), [])}
-                    title="Settings"
+                    title={t('interface.settings.title')}
                     icon={<SettingsIcon />}
                 >
                     <Settings />

@@ -5,6 +5,7 @@ import '@fontsource/roboto/700.css';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
+import 'src/i18n';
 import { setupStore } from 'src/redux/store';
 import App from 'src/tsx/App';
 

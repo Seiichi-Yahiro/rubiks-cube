@@ -14,6 +14,7 @@ import React, {
     useRef,
     useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { isError, RotationCommand } from 'src/algorithms/rotationCommand';
 import NotationError from 'src/tsx/interface/NotationError';
 import NotationHelp from 'src/tsx/interface/NotationHelp';
@@ -38,6 +39,7 @@ const NotationInput: React.FC<NotationInputProps> = ({
     hasParseError,
     rotationCommands,
 }) => {
+    const { t } = useTranslation();
     const [helpOpened, setHelpOpened] = useState(false);
     const closeHelp = useCallback(() => setHelpOpened(false), [setHelpOpened]);
 
@@ -85,7 +87,7 @@ const NotationInput: React.FC<NotationInputProps> = ({
         <>
             <TextField
                 ref={inputRef}
-                label="Algorithm"
+                label={t('player.input.algorithm')}
                 variant="standard"
                 fullWidth={true}
                 value={playerNotation}

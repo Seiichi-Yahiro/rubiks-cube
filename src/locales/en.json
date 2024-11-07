@@ -1,0 +1,47 @@
+{
+    "player": {
+        "input": {
+            "algorithm": "Algorithm"
+        },
+        "help": {
+            "notation": "Notation",
+            "explanation": "There are two types of letters: sliceable and non-sliceable. Sliceable letters can be applied to any layer of the cube, while non-sliceable letters are applied to one or more specific layers. All letters are available in capital and non-capital variants but their meaning can change and depends additionally on the dimension of the cube. Rotations are always done clockwise unless the statement is modified by a prime. Modifications are always applied at the end of a notation statement. Notation statements need to be separated by spaces or commas.",
+            "sliceable": "Sliceable",
+            "left": "Left layer",
+            "right": "Right layer",
+            "top": "Top layer",
+            "bottom": "Bottom layer",
+            "front": "Front layer",
+            "back": "Back layer",
+            "middle": "Middle layer like L/R",
+            "equatorial": "Equatorial layer like U/D",
+            "standing": "Standing layer like F/B",
+            "x": "Whole cube like L/R",
+            "y": "Whole cube like U/D",
+            "z": "Whole cube like F/B",
+            "wide": "Wide, Rotate all layers",
+            "prime": "Prime, Rotate counter-clockwise",
+            "double": "Double, Rotate 180°",
+            "non-sliceable": "Non-sliceable",
+            "modifications": "Modifications",
+            "slicing": "Slicing",
+            "slicing-explanation": "Sliceable letters can be applied to specific slices / layers of the cube by adding a single number that refers to a layer or by adding multiple comma separated numbers inside brackets referring to multiple layers in front of a notation statement. Layer indexing starts at 1 and the direction depends on the following letter.",
+            "examples": "Examples"
+        }
+    },
+    "interface": {
+        "algorithms": {
+            "title": "Algorithms",
+            "search": "Search"
+        },
+        "settings": {
+            "title": "Settings",
+            "cube-dimension": "Cube dimension",
+            "animation-duration": "Animation duration",
+            "reset-colors": "Reset Colors"
+        }
+    },
+    "algorithms": {
+        "misc": "Misc"
+    }
+}
