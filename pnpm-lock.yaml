@@ -28,6 +28,9 @@ importers:
             '@uiw/react-color-chrome':
                 specifier: 2.3.2
                 version: 2.3.2(@babel/runtime@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+            flag-icons:
+                specifier: 7.2.3
+                version: 7.2.3
             i18next:
                 specifier: 23.16.4
                 version: 23.16.4
@@ -3301,6 +3304,12 @@ packages:
                 integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==,
             }
         engines: { node: '>=10' }
+
+    flag-icons@7.2.3:
+        resolution:
+            {
+                integrity: sha512-X2gUdteNuqdNqob2KKTJTS+ZCvyWeLCtDz9Ty8uJP17Y4o82Y+U/Vd4JNrdwTAjagYsRznOn9DZ+E/Q52qbmqg==,
+            }
 
     flat-cache@4.0.1:
         resolution:
@@ -9478,6 +9487,8 @@ snapshots:
         dependencies:
             locate-path: 6.0.0
             path-exists: 4.0.0
+
+    flag-icons@7.2.3: {}
 
     flat-cache@4.0.1:
         dependencies:

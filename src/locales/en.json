@@ -36,6 +36,7 @@
         },
         "settings": {
             "title": "Settings",
+            "language": "Language",
             "cube-dimension": "Cube dimension",
             "animation-duration": "Animation duration",
             "reset-colors": "Reset Colors"

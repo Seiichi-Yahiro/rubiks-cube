@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import 'src/i18n';
 import { setupStore } from 'src/redux/store';
 import App from 'src/tsx/App';
+import '/node_modules/flag-icons/css/flag-icons.min.css';
 
 window.addEventListener('load', function load() {
     window.removeEventListener('load', load);

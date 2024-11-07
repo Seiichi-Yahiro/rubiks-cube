@@ -14,10 +14,23 @@ const Settings: React.FC = () => {
     );
     const playerStatus = useRedux((state) => state.player.status);
 
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     return (
         <List disablePadding={true} dense={true} className="w-full">
+            <ListItem className="flex flex-col">
+                <Typography>{t('interface.settings.language')}</Typography>
+                <div className="flex flex-row gap-1">
+                    <span
+                        className="fi fi-gb cursor-pointer"
+                        onClick={() => i18n.changeLanguage('en')}
+                    />
+                    <span
+                        className="fi fi-de cursor-pointer"
+                        onClick={() => i18n.changeLanguage('de')}
+                    />
+                </div>
+            </ListItem>
             <ListItem className="flex flex-col">
                 <Typography id="cube-dimension-slider">
                     {t('interface.settings.cube-dimension')}
