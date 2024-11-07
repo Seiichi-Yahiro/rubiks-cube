@@ -14,7 +14,6 @@ import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerState';
-import NotationError from 'src/tsx/interface/NotationError';
 import NotationInput from 'src/tsx/interface/NotationInput';
 
 const Player: React.FC = () => {
@@ -64,13 +63,8 @@ const Player: React.FC = () => {
                 updateNotation={updateNotation}
                 isStopped={isStopped}
                 hasParseError={hasParseError}
+                rotationCommands={rotationCommands}
             />
-            {isError(rotationCommands) && (
-                <NotationError
-                    notation={playerNotation}
-                    error={rotationCommands}
-                />
-            )}
             <div className="flex flex-row justify-between">
                 <div>
                     {playerStatus === PlayerStatus.PLAYING ? (

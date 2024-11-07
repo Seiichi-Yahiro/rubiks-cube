@@ -5,11 +5,19 @@ import React from 'react';
 interface NotationErrorProps {
     notation: string;
     error: Failure;
+    marginRight: number;
 }
 
-const NotationError: React.FC<NotationErrorProps> = ({ notation, error }) => (
+const NotationError: React.FC<NotationErrorProps> = ({
+    notation,
+    error,
+    marginRight,
+}) => (
     <>
-        <Typography className="pointer-events-none !absolute top-[20px] whitespace-pre-wrap ![display:initial] ![line-height:1.4375em]">
+        <Typography
+            className="pointer-events-none !absolute top-[20px] whitespace-pre-wrap ![display:initial] ![line-height:1.4375em]"
+            style={{ marginRight }}
+        >
             <span className="invisible">
                 {notation.substring(0, error.index.offset)}
             </span>

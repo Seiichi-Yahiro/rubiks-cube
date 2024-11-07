@@ -5,7 +5,17 @@ import {
     PopoverOrigin,
     TextField,
 } from '@mui/material';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { debounce } from 'lodash';
+import { Result } from 'parsimmon';
+import React, {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
+import { isError, RotationCommand } from 'src/algorithms/rotationCommand';
+import NotationError from 'src/tsx/interface/NotationError';
 import NotationHelp from 'src/tsx/interface/NotationHelp';
 
 const anchorOrigin: PopoverOrigin = {
@@ -18,6 +28,7 @@ interface NotationInputProps {
     updateNotation: (event: React.ChangeEvent<HTMLInputElement>) => void;
     isStopped: boolean;
     hasParseError: boolean;
+    rotationCommands: Result<RotationCommand[]>;
 }
 
 const NotationInput: React.FC<NotationInputProps> = ({
@@ -25,27 +36,50 @@ const NotationInput: React.FC<NotationInputProps> = ({
     updateNotation,
     isStopped,
     hasParseError,
+    rotationCommands,
 }) => {
     const [helpOpened, setHelpOpened] = useState(false);
     const closeHelp = useCallback(() => setHelpOpened(false), [setHelpOpened]);
 
-    const inputRef = useRef<HTMLDivElement>(null);
+    const adornmentRef = useRef<HTMLDivElement>(null);
 
     const slotProps = useMemo(() => {
         return {
             input: {
                 endAdornment: (
                     <InputAdornment
+                        ref={adornmentRef}
                         position="end"
                         className="cursor-pointer"
                         onClick={() => setHelpOpened(true)}
                     >
-                        <HelpOutline />
+                        <HelpOutline fontSize="small" />
                     </InputAdornment>
                 ),
             },
         };
     }, [setHelpOpened]);
+
+    const [adornmentWidth, setAdornmentWidth] = useState(20);
+
+    useEffect(() => {
+        if (!adornmentRef.current) {
+            return;
+        }
+
+        const resizeObserver = new ResizeObserver(
+            debounce(() => {
+                const width = adornmentRef.current!.offsetWidth;
+                setAdornmentWidth(width);
+            }),
+        );
+
+        resizeObserver.observe(adornmentRef.current);
+
+        return () => resizeObserver.disconnect();
+    }, [setAdornmentWidth]);
+
+    const inputRef = useRef<HTMLDivElement>(null);
 
     return (
         <>
@@ -71,6 +105,13 @@ const NotationInput: React.FC<NotationInputProps> = ({
             >
                 <NotationHelp onClose={closeHelp} />
             </Popover>
+            {isError(rotationCommands) && (
+                <NotationError
+                    notation={playerNotation}
+                    error={rotationCommands}
+                    marginRight={adornmentWidth + 8}
+                />
+            )}
         </>
     );
 };
