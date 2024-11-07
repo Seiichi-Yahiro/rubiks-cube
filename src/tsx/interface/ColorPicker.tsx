@@ -60,9 +60,12 @@ const ColorPicker: React.FC = () => {
     const colorsRef = useRef<HTMLDivElement>(null);
 
     return (
-        <div className="flex flex-1 flex-row items-center justify-between">
+        <div className="flex flex-1 flex-row items-center justify-evenly min-w-56">
             <div>
-                <div ref={colorsRef} className="grid grid-cols-6 gap-1">
+                <div
+                    ref={colorsRef}
+                    className="grid grid-cols-3 sm:grid-cols-6 gap-1"
+                >
                     {colors}
                 </div>
                 <Popover
@@ -89,7 +92,11 @@ const ColorPicker: React.FC = () => {
                     />
                 </Popover>
             </div>
-            <Button size={'small'} onClick={resetColors}>
+            <Button
+                size={'small'}
+                onClick={resetColors}
+                className="whitespace-pre sm:whitespace-normal"
+            >
                 {t('interface.settings.reset-colors')}
             </Button>
         </div>
