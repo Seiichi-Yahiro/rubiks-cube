@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    body {
+        font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    }
+}
+
 html,
 body,
 #root {
-    @apply w-full;
-    @apply h-full;
-    @apply min-w-80;
+    @apply h-full w-full min-w-80;
 }
