@@ -33,6 +33,8 @@
             "modifications": "Modifications",
             "slicing": "Slicing",
             "slicing-explanation": "Sliceable letters can be applied to specific slices / layers of the cube by adding a single number that refers to a layer or by adding multiple comma separated numbers inside brackets referring to multiple layers in front of a notation statement. Layer indexing starts at 1 and the direction depends on the following letter.",
+            "loops": "Loops",
+            "loops-explanation": "Loops can be created by enclosing notation statements with parenthesis and adding the number of repetitions after the closing parenthesis. The number of repetitions should not be set too high. Loops can also be nested.",
             "examples": "Examples"
         }
     },

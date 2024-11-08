@@ -33,6 +33,8 @@
             "modifications": "Modifikationen",
             "slicing": "Schneiden",
             "slicing-explanation": "Schneidbare Buchstaben können auf spezifische Ebenen des Würfels angewendet werden, indem eine einzelne Zahl vor einer Notationsaussage hinzugefügt wird, die sich auf eine Ebene bezieht, oder indem mehrere durch Kommas getrennte Zahlen in Klammern gesetzt werden, die sich auf mehrere Ebenen beziehen. Die Ebenen-Indexierung beginnt bei 1 und die Richtung hängt vom folgenden Buchstaben ab.",
+            "loops": "Schleifen",
+            "loops-explanation": "Schleifen können durch das Umklammern von Notationsaussagen erstellt werden. Die Anzahl der Wiederholungen muss nach der schließenden Klammer angegeben werden. Die Anzahl der Wiederholungen sollte nicht zu groß gesetzt werden. Schleifen können auch verschachtelt werden.",
             "examples": "Beispiele"
         }
     },

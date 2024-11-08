@@ -102,6 +102,12 @@ const NotationHelp: React.FC<NotationHelpProps> = ({ onClose }) => {
                 </div>
             </div>
             <div className="space-y-1">
+                <div className="font-bold">{t('player.help.loops')}</div>
+                <div className="text-sm">
+                    {t('player.help.loops-explanation')}
+                </div>
+            </div>
+            <div className="space-y-1">
                 <div className="font-bold">{t('player.help.examples')}</div>
                 <div className="text-sm space-y-1">
                     <div>
@@ -122,6 +128,9 @@ const NotationHelp: React.FC<NotationHelpProps> = ({ onClose }) => {
                     <div>
                         <Code>[1,2,3]L</Code> / <Code>[1,2,3]L&apos;</Code> /{' '}
                         <Code>[1,2,3]L2</Code> / <Code>[1,2,3]L&apos;2</Code>
+                    </div>
+                    <div>
+                        <Code>(R U F&apos;)3</Code>
                     </div>
                 </div>
             </div>
