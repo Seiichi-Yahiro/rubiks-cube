@@ -7,7 +7,6 @@ import {
     filter,
     first,
     map,
-    mapTo,
     withLatestFrom,
 } from 'rxjs/operators';
 import { makeNotationParser } from 'src/algorithms/parser';
@@ -107,7 +106,12 @@ const player: AppEpic = (action$, state$) => {
         filter(playerActions.setCurrentRotationCommand.match),
         map((action) => [action.payload]),
         map(cubeActions.applyRotationCommands),
-        concatMap((action) => transitionEnd$.pipe(first(), mapTo(action))),
+        concatMap((action) =>
+            transitionEnd$.pipe(
+                first(),
+                map((_) => action),
+            ),
+        ),
     );
 
     action$
