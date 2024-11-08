@@ -12,7 +12,7 @@ const ReactRefreshTypeScript = require('react-refresh-typescript');
 
 module.exports = {
     mode: isProduction ? 'production' : 'development',
-    devtool: 'source-map',
+    devtool: isProduction ? false : 'source-map',
     entry: {
         app: path.join(__dirname, 'src/index.tsx'),
     },
