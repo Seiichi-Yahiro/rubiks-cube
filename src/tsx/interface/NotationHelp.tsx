@@ -96,9 +96,35 @@ const NotationHelp: React.FC<NotationHelpProps> = ({ onClose }) => {
                 </div>
             </div>
             <div className="space-y-1">
+                <div className="font-bold">{t('player.help.examples')}</div>
+                <div className="text-sm space-y-1">
+                    <div>
+                        <Code>L</Code> / <Code>L&apos;</Code> / <Code>L2</Code>{' '}
+                        / <Code>L&apos;2</Code>
+                    </div>
+                </div>
+            </div>
+            <div className="space-y-1">
                 <div className="font-bold">{t('player.help.slicing')}</div>
                 <div className="text-sm">
                     {t('player.help.slicing-explanation')}
+                </div>
+            </div>
+            <div className="space-y-1">
+                <div className="font-bold">{t('player.help.examples')}</div>
+                <div className="text-sm space-y-1">
+                    <div>
+                        <Code>2L</Code> / <Code>2L&apos;</Code> /{' '}
+                        <Code>2L2</Code> / <Code>2L&apos;2</Code>
+                    </div>
+                    <div>
+                        <Code>2Lw</Code> / <Code>2Lw&apos;</Code> /{' '}
+                        <Code>2Lw2</Code> / <Code>2Lw&apos;2</Code>
+                    </div>
+                    <div>
+                        <Code>[1,2,3]L</Code> / <Code>[1,2,3]L&apos;</Code> /{' '}
+                        <Code>[1,2,3]L2</Code> / <Code>[1,2,3]L&apos;2</Code>
+                    </div>
                 </div>
             </div>
             <div className="space-y-1">
@@ -111,26 +137,8 @@ const NotationHelp: React.FC<NotationHelpProps> = ({ onClose }) => {
                 <div className="font-bold">{t('player.help.examples')}</div>
                 <div className="text-sm space-y-1">
                     <div>
-                        <Code>L</Code> / <Code>L&apos;</Code> / <Code>L2</Code>{' '}
-                        / <Code>L&apos;2</Code>
-                    </div>
-                    <div>
-                        <Code>2L</Code>
-                    </div>
-                    <div>
-                        <Code>2L&apos;</Code> / <Code>2L2</Code> /{' '}
-                        <Code>2L&apos;2</Code>
-                    </div>
-                    <div>
-                        <Code>2Lw</Code> / <Code>2Lw&apos;</Code> /{' '}
-                        <Code>2Lw2</Code> / <Code>2Lw&apos;2</Code>
-                    </div>
-                    <div>
-                        <Code>[1,2,3]L</Code> / <Code>[1,2,3]L&apos;</Code> /{' '}
-                        <Code>[1,2,3]L2</Code> / <Code>[1,2,3]L&apos;2</Code>
-                    </div>
-                    <div>
-                        <Code>(R U F&apos;)3</Code>
+                        <Code>(R U F&apos;)3</Code> /{' '}
+                        <Code>(R (U F&apos;)2)3</Code>
                     </div>
                 </div>
             </div>
