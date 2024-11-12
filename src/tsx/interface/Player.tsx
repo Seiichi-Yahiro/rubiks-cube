@@ -14,7 +14,7 @@ import { isError, isOk } from 'src/algorithms/rotationCommand';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
-import { PlayerStatus } from 'src/redux/player/playerState';
+import { PlayerStatus } from 'src/redux/player/playerReducer';
 import NotationInput from 'src/tsx/interface/NotationInput';
 
 const Player: React.FC = () => {

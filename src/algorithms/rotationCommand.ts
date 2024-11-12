@@ -20,6 +20,50 @@ export const isLoopedRotationCommands = (
 ): rotationCommand is LoopedRotationCommands =>
     (rotationCommand as LoopedRotationCommands).iterations !== undefined;
 
+export interface RotationCommandStackFrame {
+    commands: RotationCommand[];
+    index: number;
+    iteration: number;
+}
+
+export type RotationCommandStack = RotationCommandStackFrame[];
+
+export const nextRotationCommand = (
+    stack: RotationCommandStack,
+): SingleRotationCommand | undefined => {
+    while (stack.length > 0) {
+        const frame = stack[stack.length - 1];
+        const currentCommand = frame.commands[frame.index];
+
+        if (isLoopedRotationCommands(currentCommand)) {
+            if (frame.iteration < currentCommand.iterations) {
+                stack.push({
+                    commands: currentCommand.commands,
+                    index: 0,
+                    iteration: 0,
+                });
+
+                frame.iteration += 1;
+            } else {
+                frame.iteration = 0;
+                frame.index += 1;
+
+                if (frame.index >= frame.commands.length) {
+                    stack.pop();
+                }
+            }
+        } else {
+            frame.index += 1;
+
+            if (frame.index >= frame.commands.length) {
+                stack.pop();
+            }
+            return currentCommand;
+        }
+    }
+    return undefined;
+};
+
 export enum RotationAxis {
     X = 0,
     Y = 1,

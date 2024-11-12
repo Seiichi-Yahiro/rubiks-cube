@@ -5,7 +5,7 @@ import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import FlagDe from 'src/locales/flags/FlagDe';
 import FlagGb from 'src/locales/flags/FlagGb';
 import { cubeActions } from 'src/redux/cube/cubeActions';
-import { PlayerStatus } from 'src/redux/player/playerState';
+import { PlayerStatus } from 'src/redux/player/playerReducer';
 import ColorPicker from 'src/tsx/interface/ColorPicker';
 
 const Settings: React.FC = () => {

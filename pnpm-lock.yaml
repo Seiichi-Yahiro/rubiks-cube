@@ -58,12 +58,6 @@ importers:
             redux-logger:
                 specifier: 3.0.6
                 version: 3.0.6
-            redux-observable:
-                specifier: 3.0.0-rc.2
-                version: 3.0.0-rc.2(redux@5.0.1)(rxjs@7.8.1)
-            rxjs:
-                specifier: 7.8.1
-                version: 7.8.1
         devDependencies:
             '@pmmmwh/react-refresh-webpack-plugin':
                 specifier: 0.5.15
@@ -5958,15 +5952,6 @@ packages:
                 integrity: sha512-JoCIok7bg/XpqA1JqCqXFypuqBbQzGQySrhFzewB7ThcnysTO30l4VCst86AuB9T9tuT03MAA56Jw2PNhRSNCg==,
             }
 
-    redux-observable@3.0.0-rc.2:
-        resolution:
-            {
-                integrity: sha512-gG/pWIKgSrcTyyavm2so5tc7tuyCQ47p3VdCAG6wt+CV0WGhDr50cMQHLcYKxFZSGgTm19a8ZmyfJGndmGDpYg==,
-            }
-        peerDependencies:
-            redux: '>=5 <6'
-            rxjs: '>=7 <8'
-
     redux-thunk@3.1.0:
         resolution:
             {
@@ -6121,12 +6106,6 @@ packages:
         resolution:
             {
                 integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==,
-            }
-
-    rxjs@7.8.1:
-        resolution:
-            {
-                integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==,
             }
 
     safe-array-concat@1.1.2:
@@ -11152,11 +11131,6 @@ snapshots:
         dependencies:
             deep-diff: 0.3.8
 
-    redux-observable@3.0.0-rc.2(redux@5.0.1)(rxjs@7.8.1):
-        dependencies:
-            redux: 5.0.1
-            rxjs: 7.8.1
-
     redux-thunk@3.1.0(redux@5.0.1):
         dependencies:
             redux: 5.0.1
@@ -11240,10 +11214,6 @@ snapshots:
     run-parallel@1.2.0:
         dependencies:
             queue-microtask: 1.2.3
-
-    rxjs@7.8.1:
-        dependencies:
-            tslib: 2.8.0
 
     safe-array-concat@1.1.2:
         dependencies:

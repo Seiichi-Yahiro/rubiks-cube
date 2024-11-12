@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { rotationCommandToCssRotation } from 'src/algorithms/rotationCommand';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
-import { PlayerStatus } from 'src/redux/player/playerState';
+import { PlayerStatus } from 'src/redux/player/playerReducer';
 import CubeArrows from 'src/tsx/cube/CubeArrows';
 import { canApplyRotationCommand } from 'src/tsx/cube/cubeUtils';
 import Cubicle from 'src/tsx/cube/Cubicle';

@@ -13,7 +13,7 @@ import Look2CFOP from 'src/algorithms/cfop';
 import Misc from 'src/algorithms/misc';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import { playerActions } from 'src/redux/player/playerActions';
-import { PlayerStatus } from 'src/redux/player/playerState';
+import { PlayerStatus } from 'src/redux/player/playerReducer';
 import StartConfiguration from 'src/tsx/interface/StartConfiguration';
 
 export const categories = [Look2CFOP, Misc].flatMap((algorithm) =>
