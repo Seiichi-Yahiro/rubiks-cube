@@ -85,7 +85,7 @@ export const makeNotationParser = (cubeDimension: number) =>
         number: () => P.regexp(/\d+/).map(Number).desc('number'),
         numberInDimension: () =>
             P((input, i) => {
-                const matched = input.substr(i).match(/^\d+/);
+                const matched = input.substring(i).match(/^\d+/);
                 if (matched) {
                     const numStr = matched[0];
                     const num = Number(numStr);
