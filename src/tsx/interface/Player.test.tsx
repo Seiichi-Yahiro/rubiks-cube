@@ -389,6 +389,93 @@ describe('Player', () => {
         });
     });
 
+    describe('shuffle', () => {
+        let store: AppStore;
+
+        beforeEach(() => {
+            store = setupStore();
+        });
+
+        const expectNotAllowShuffle = () => {
+            render(
+                <Provider store={store}>
+                    <Player />
+                </Provider>,
+            );
+
+            const stateBefore = store.getState();
+
+            const shuffle = screen.getByRole('button', {
+                name: 'player.input.shuffle',
+            });
+
+            expect(shuffle).toHaveAttribute('aria-disabled', 'true');
+
+            fireEvent.click(shuffle);
+
+            const stateAfter = store.getState();
+
+            expect(stateAfter.player.notation).toBe(
+                stateBefore.player.notation,
+            );
+        };
+
+        it('should not allow shuffle when playing', () => {
+            store.dispatch(playerActions.updateNotation('F U R'));
+            store.dispatch(
+                playerActions.play(
+                    (
+                        store.getState().player.rotationCommands as Success<
+                            RotationCommand[]
+                        >
+                    ).value,
+                ),
+            );
+
+            expectNotAllowShuffle();
+        });
+
+        it('should not allow shuffle when paused', () => {
+            store.dispatch(playerActions.updateNotation('F U R'));
+            store.dispatch(
+                playerActions.play(
+                    (
+                        store.getState().player.rotationCommands as Success<
+                            RotationCommand[]
+                        >
+                    ).value,
+                ),
+            );
+            store.dispatch(playerActions.pause());
+
+            expectNotAllowShuffle();
+        });
+
+        it('should shuffle the notation', () => {
+            render(
+                <Provider store={store}>
+                    <Player />
+                </Provider>,
+            );
+
+            const stateBefore = store.getState();
+
+            const shuffle = screen.getByRole('button', {
+                name: 'player.input.shuffle',
+            });
+
+            expect(shuffle).toHaveAttribute('aria-disabled', 'false');
+
+            fireEvent.click(shuffle);
+
+            const stateAfter = store.getState();
+
+            expect(stateAfter.player.notation).not.toBe(
+                stateBefore.player.notation,
+            );
+        });
+    });
+
     describe('reset', () => {
         let store: AppStore;
 
