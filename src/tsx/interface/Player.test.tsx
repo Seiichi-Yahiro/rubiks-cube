@@ -67,9 +67,8 @@ describe('Player', () => {
 
             fireEvent.click(play);
 
-            const stateAfter = store.getState();
-
-            expect(stateAfter.player.status).toBe(PlayerStatus.PLAYING);
+            const state = store.getState();
+            expect(state.player.status).toBe(PlayerStatus.PLAYING);
         };
 
         it('should allow play when notation valid', async () => {
