@@ -16,6 +16,38 @@ import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import NotationInput from 'src/tsx/interface/NotationInput';
+import createClassName from 'src/utils/createClassName';
+
+interface TooltipedIconButtonProps {
+    title: string;
+    disabled?: boolean;
+    onClick: () => void;
+    children: React.ReactNode;
+}
+
+const TooltipedIconButton: React.FC<TooltipedIconButtonProps> = ({
+    title,
+    disabled = false,
+    onClick,
+    children,
+}) => {
+    return (
+        <Tooltip title={title}>
+            <IconButton
+                aria-disabled={disabled}
+                className={createClassName(
+                    {
+                        'Mui-disabled': disabled,
+                    },
+                    '!pointer-events-auto',
+                )}
+                onClick={disabled ? undefined : onClick}
+            >
+                {children}
+            </IconButton>
+        </Tooltip>
+    );
+};
 
 const Player: React.FC = () => {
     const { t } = useTranslation();
@@ -70,48 +102,53 @@ const Player: React.FC = () => {
             <div className="flex flex-row justify-between">
                 <div>
                     {playerStatus === PlayerStatus.PLAYING ? (
-                        <Tooltip title={t('player.input.pause')}>
-                            <IconButton onClick={onPause}>
-                                <Pause />
-                            </IconButton>
-                        </Tooltip>
-                    ) : (
-                        <Tooltip title={t('player.input.play')}>
-                            <IconButton
-                                onClick={onPlay}
-                                disabled={isNotationEmpty || hasParseError}
-                            >
-                                <PlayArrow />
-                            </IconButton>
-                        </Tooltip>
-                    )}
-                    <Tooltip title={t('player.input.stop')}>
-                        <IconButton onClick={onStop} disabled={isStopped}>
-                            <Stop />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title={t('player.input.skip')}>
-                        <IconButton
-                            onClick={onJumpToEnd}
-                            disabled={
-                                !isStopped || isNotationEmpty || hasParseError
-                            }
+                        <TooltipedIconButton
+                            title={t('player.input.pause')}
+                            onClick={onPause}
                         >
-                            <SkipNext />
-                        </IconButton>
-                    </Tooltip>
+                            <Pause />
+                        </TooltipedIconButton>
+                    ) : (
+                        <TooltipedIconButton
+                            title={t('player.input.play')}
+                            disabled={isNotationEmpty || hasParseError}
+                            onClick={onPlay}
+                        >
+                            <PlayArrow />
+                        </TooltipedIconButton>
+                    )}
+                    <TooltipedIconButton
+                        title={t('player.input.stop')}
+                        onClick={onStop}
+                        disabled={isStopped}
+                    >
+                        <Stop />
+                    </TooltipedIconButton>
+                    <TooltipedIconButton
+                        title={t('player.input.skip')}
+                        onClick={onJumpToEnd}
+                        disabled={
+                            !isStopped || isNotationEmpty || hasParseError
+                        }
+                    >
+                        <SkipNext />
+                    </TooltipedIconButton>
                 </div>
                 <div>
-                    <Tooltip title={t('player.input.shuffle')}>
-                        <IconButton onClick={onShuffle} disabled={!isStopped}>
-                            <Shuffle />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title={t('player.input.reset')}>
-                        <IconButton onClick={onRefresh} disabled={!isStopped}>
-                            <Refresh />
-                        </IconButton>
-                    </Tooltip>
+                    <TooltipedIconButton
+                        title={t('player.input.shuffle')}
+                        onClick={onShuffle}
+                        disabled={!isStopped}
+                    >
+                        <Shuffle />
+                    </TooltipedIconButton>
+                    <TooltipedIconButton
+                        title={t('player.input.reset')}
+                        onClick={onRefresh}
+                        disabled={!isStopped}
+                    >
+                        <Refresh />
+                    </TooltipedIconButton>
                 </div>
             </div>
         </div>
