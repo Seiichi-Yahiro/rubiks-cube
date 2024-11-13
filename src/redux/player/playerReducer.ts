@@ -43,18 +43,16 @@ export const createPlayerReducer = (
             .addCase(playerActions.parsedNotation, (state, action) => {
                 state.rotationCommands = action.payload;
             })
-            .addCase(playerActions.play, (state, _action) => {
-                if (state.rotationCommands.status) {
-                    state.status = PlayerStatus.PLAYING;
+            .addCase(playerActions.play, (state, action) => {
+                state.status = PlayerStatus.PLAYING;
 
-                    state.rotationCommandStack = [
-                        {
-                            commands: state.rotationCommands.value,
-                            index: 0,
-                            iteration: 0,
-                        },
-                    ];
-                }
+                state.rotationCommandStack = [
+                    {
+                        commands: action.payload,
+                        index: 0,
+                        iteration: 0,
+                    },
+                ];
             })
             .addCase(playerActions.unPause, (state, _action) => {
                 state.status = PlayerStatus.PLAYING;
