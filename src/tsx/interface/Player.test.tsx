@@ -3,6 +3,7 @@ import { Success } from 'parsimmon';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { RotationCommand } from 'src/algorithms/rotationCommand';
+import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import { AppStore, setupStore } from 'src/redux/store';
@@ -385,6 +386,124 @@ describe('Player', () => {
             store.dispatch(playerActions.pause());
 
             expectNoPauseButton();
+        });
+    });
+
+    describe('reset', () => {
+        let store: AppStore;
+
+        beforeEach(() => {
+            store = setupStore();
+            jest.useFakeTimers();
+        });
+
+        afterEach(() => {
+            jest.runOnlyPendingTimers();
+            jest.useRealTimers();
+        });
+
+        const expectNotAllowReset = () => {
+            render(
+                <Provider store={store}>
+                    <Player />
+                </Provider>,
+            );
+
+            const stateBefore = store.getState();
+
+            const reset = screen.getByRole('button', {
+                name: 'player.input.reset',
+            });
+
+            expect(reset).toHaveAttribute('aria-disabled', 'true');
+
+            fireEvent.click(reset);
+
+            const stateAfter = store.getState();
+
+            expect(stateAfter.cube.cubicles).toBe(stateBefore.cube.cubicles);
+        };
+
+        it('should not allow reset when playing', async () => {
+            store.dispatch(playerActions.updateNotation('F U R'));
+            store.dispatch(
+                playerActions.play(
+                    (
+                        store.getState().player.rotationCommands as Success<
+                            RotationCommand[]
+                        >
+                    ).value,
+                ),
+            );
+
+            await jest.advanceTimersByTimeAsync(1000);
+            store.dispatch(cubeActions.animationFinished());
+
+            await jest.advanceTimersByTimeAsync(50);
+
+            expectNotAllowReset();
+        });
+
+        it('should not allow reset when paused', async () => {
+            store.dispatch(playerActions.updateNotation('F U R'));
+            store.dispatch(
+                playerActions.play(
+                    (
+                        store.getState().player.rotationCommands as Success<
+                            RotationCommand[]
+                        >
+                    ).value,
+                ),
+            );
+
+            await jest.advanceTimersByTimeAsync(1000);
+            store.dispatch(cubeActions.animationFinished());
+
+            await jest.advanceTimersByTimeAsync(50);
+            store.dispatch(playerActions.pause());
+
+            expectNotAllowReset();
+        });
+
+        it('should reset the cube', async () => {
+            store.dispatch(playerActions.updateNotation('F U R'));
+            store.dispatch(
+                playerActions.play(
+                    (
+                        store.getState().player.rotationCommands as Success<
+                            RotationCommand[]
+                        >
+                    ).value,
+                ),
+            );
+
+            await jest.advanceTimersByTimeAsync(1000);
+            store.dispatch(cubeActions.animationFinished());
+
+            await jest.advanceTimersByTimeAsync(50);
+            store.dispatch(playerActions.stop());
+
+            render(
+                <Provider store={store}>
+                    <Player />
+                </Provider>,
+            );
+
+            const stateBefore = store.getState();
+
+            const reset = screen.getByRole('button', {
+                name: 'player.input.reset',
+            });
+
+            expect(reset).toHaveAttribute('aria-disabled', 'false');
+
+            fireEvent.click(reset);
+
+            const stateAfter = store.getState();
+
+            expect(stateAfter.cube.cubicles).not.toBe(
+                stateBefore.cube.cubicles,
+            );
         });
     });
 });
