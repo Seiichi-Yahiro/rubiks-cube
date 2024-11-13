@@ -61,6 +61,7 @@ export const nextRotationCommand = (
             return currentCommand;
         }
     }
+
     return undefined;
 };
 

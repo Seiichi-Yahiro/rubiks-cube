@@ -7,7 +7,7 @@ module.exports = {
     moduleNameMapper: {
         '^src/(.*)$': '<rootDir>/src/$1',
     },
-    setupFilesAfterEnv: ['core-js'],
+    setupFilesAfterEnv: ['core-js', '<rootDir>/src/jest-setup.ts'],
     testEnvironment: 'jsdom',
     coverageReporters: ['html'],
     coverageDirectory: '<rootDir>build/coverage',

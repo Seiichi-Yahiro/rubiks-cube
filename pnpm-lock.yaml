@@ -62,6 +62,15 @@ importers:
             '@pmmmwh/react-refresh-webpack-plugin':
                 specifier: 0.5.15
                 version: 0.5.15(react-refresh@0.14.2)(type-fest@0.21.3)(webpack-dev-server@5.1.0)(webpack@5.95.0)
+            '@testing-library/dom':
+                specifier: 10.4.0
+                version: 10.4.0
+            '@testing-library/jest-dom':
+                specifier: ^6.6.3
+                version: 6.6.3
+            '@testing-library/react':
+                specifier: 16.0.1
+                version: 16.0.1(@testing-library/dom@10.4.0)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
             '@types/jest':
                 specifier: 29.5.14
                 version: 29.5.14
@@ -184,6 +193,12 @@ importers:
                 version: 5.1.0(webpack-cli@5.1.4)(webpack@5.95.0)
 
 packages:
+    '@adobe/css-tools@4.4.0':
+        resolution:
+            {
+                integrity: sha512-Ff9+ksdQQB3rMncgqDK78uLznstjyfIf2Arnh22pW8kBpLs6rpKDwgnZT46hin5Hl1WzazzK64DOrhSwYpS7bQ==,
+            }
+
     '@alloc/quick-lru@5.2.0':
         resolution:
             {
@@ -1044,6 +1059,38 @@ packages:
                 integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==,
             }
 
+    '@testing-library/dom@10.4.0':
+        resolution:
+            {
+                integrity: sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ==,
+            }
+        engines: { node: '>=18' }
+
+    '@testing-library/jest-dom@6.6.3':
+        resolution:
+            {
+                integrity: sha512-IteBhl4XqYNkM54f4ejhLRJiZNqcSCoXUOG2CPK7qbD322KjQozM4kHQOfkG2oln9b9HTYqs+Sae8vBATubxxA==,
+            }
+        engines: { node: '>=14', npm: '>=6', yarn: '>=1' }
+
+    '@testing-library/react@16.0.1':
+        resolution:
+            {
+                integrity: sha512-dSmwJVtJXmku+iocRhWOUFbrERC76TX2Mnf0ATODz8brzAZrMBbzLwQixlBSanZxR6LddK3eiwpSFZgDET1URg==,
+            }
+        engines: { node: '>=18' }
+        peerDependencies:
+            '@testing-library/dom': ^10.0.0
+            '@types/react': ^18.0.0
+            '@types/react-dom': ^18.0.0
+            react: ^18.0.0
+            react-dom: ^18.0.0
+        peerDependenciesMeta:
+            '@types/react':
+                optional: true
+            '@types/react-dom':
+                optional: true
+
     '@tootallnate/once@2.0.0':
         resolution:
             {
@@ -1057,6 +1104,12 @@ packages:
                 integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==,
             }
         engines: { node: '>=10.13.0' }
+
+    '@types/aria-query@5.0.4':
+        resolution:
+            {
+                integrity: sha512-rfT93uj5s0PRL7EzccGMs3brplhcrghnDoV26NqKhCAS1hVo+WdNsPvE/yb6ilfr5hi2MEk6d5EWJTKdxg8jVw==,
+            }
 
     '@types/babel__core@7.1.19':
         resolution:
@@ -1851,6 +1904,12 @@ packages:
                 integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==,
             }
 
+    aria-query@5.3.0:
+        resolution:
+            {
+                integrity: sha512-b0P0sZPKtyu8HkeRAfCq0IfURZK+SuwMjY1UXGBU27wpAiTwQAIlq56IbIO+ytk/JjS1fMR14ee5WBBfKi5J6A==,
+            }
+
     array-buffer-byte-length@1.0.1:
         resolution:
             {
@@ -2138,6 +2197,13 @@ packages:
             {
                 integrity: sha512-WTrjUCSMp3LYX0nE12ECkV0a+e6LC85E0Auz75555/qr78Oc8YWhEPNfDd6SHdtlCMSzqtuXY0uyEMNRcsKpKw==,
             }
+
+    chalk@3.0.0:
+        resolution:
+            {
+                integrity: sha512-4D3B6Wf41KOYRFdszmDqMCGq5VV/uMAB273JILmO+3jAlh8X4qDtdtgCR3fxtbLEMzSx22QdhnDcJvu2u1fVwg==,
+            }
+        engines: { node: '>=8' }
 
     chalk@4.1.2:
         resolution:
@@ -2474,6 +2540,12 @@ packages:
             }
         engines: { node: '>= 6' }
 
+    css.escape@1.5.1:
+        resolution:
+            {
+                integrity: sha512-YUifsXXuknHlUsmlgyY0PKzgPOr7/FjCePfHNt0jxm83wHZi44VDMQ7/fGNkjY3/jV1MC+1CmZbaHzugyeRtpg==,
+            }
+
     cssesc@3.0.0:
         resolution:
             {
@@ -2685,6 +2757,13 @@ packages:
             }
         engines: { node: '>= 0.8' }
 
+    dequal@2.0.3:
+        resolution:
+            {
+                integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==,
+            }
+        engines: { node: '>=6' }
+
     destroy@1.2.0:
         resolution:
             {
@@ -2737,6 +2816,18 @@ packages:
                 integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==,
             }
         engines: { node: '>=0.10.0' }
+
+    dom-accessibility-api@0.5.16:
+        resolution:
+            {
+                integrity: sha512-X7BJ2yElsnOJ30pZF4uIIDfBEVgF4XEBxL9Bxhy6dnrm5hkzqmsWHGTiHqRiITNhMyFLyAiWndIJP7Z1NTteDg==,
+            }
+
+    dom-accessibility-api@0.6.3:
+        resolution:
+            {
+                integrity: sha512-7ZgogeTnjuHbo+ct10G9Ffp0mif17idi0IyWNVA/wcwcm7NPOD/WEHVP3n7n3MhXqxoIYm8d6MuZohYWIZ4T3w==,
+            }
 
     dom-converter@0.2.0:
         resolution:
@@ -3830,6 +3921,13 @@ packages:
             }
         engines: { node: '>=0.8.19' }
 
+    indent-string@4.0.0:
+        resolution:
+            {
+                integrity: sha512-EdDDZu4A2OyIK7Lr/2zG+w5jmbuk1DVBnEwREQvBzspBJkCEbRa8GxU1lghYcaGJCnRWibjDXlq779X1/y5xwg==,
+            }
+        engines: { node: '>=8' }
+
     inflight@1.0.6:
         resolution:
             {
@@ -4696,6 +4794,13 @@ packages:
                 integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==,
             }
 
+    lz-string@1.5.0:
+        resolution:
+            {
+                integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==,
+            }
+        hasBin: true
+
     make-dir@3.1.0:
         resolution:
             {
@@ -4809,6 +4914,13 @@ packages:
                 integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==,
             }
         engines: { node: '>=6' }
+
+    min-indent@1.0.1:
+        resolution:
+            {
+                integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==,
+            }
+        engines: { node: '>=4' }
 
     mini-css-extract-plugin@2.9.1:
         resolution:
@@ -5729,6 +5841,13 @@ packages:
                 integrity: sha512-AoJ5YMAcXKYxKhuJGdcvse+Voc6v1RgnsR3nWcYU7q4t6z0Q6T86sv5Zq8VIRbOWWFpvdGE83LtdSMNd+6Y0xw==,
             }
 
+    pretty-format@27.5.1:
+        resolution:
+            {
+                integrity: sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ==,
+            }
+        engines: { node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0 }
+
     pretty-format@29.7.0:
         resolution:
             {
@@ -5860,6 +5979,12 @@ packages:
                 integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==,
             }
 
+    react-is@17.0.2:
+        resolution:
+            {
+                integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==,
+            }
+
     react-is@18.3.1:
         resolution:
             {
@@ -5945,6 +6070,13 @@ packages:
                 integrity: sha512-/vxpCXddiX8NGfGO/mTafwjq4aFa/71pvamip0++IQk3zG8cbCj0fifNPrjjF1XMXUne91jL9OoxmdykoEtifQ==,
             }
         engines: { node: '>= 10.13.0' }
+
+    redent@3.0.0:
+        resolution:
+            {
+                integrity: sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==,
+            }
+        engines: { node: '>=8' }
 
     redux-logger@3.0.6:
         resolution:
@@ -6493,6 +6625,13 @@ packages:
                 integrity: sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==,
             }
         engines: { node: '>=6' }
+
+    strip-indent@3.0.0:
+        resolution:
+            {
+                integrity: sha512-laJTa3Jb+VQpaC6DseHhF7dXVqHTfJPCRDaEbid/drOhgitgYku/letMUqOXFoWV0zIIUbjpdH2t+tYj4bQMRQ==,
+            }
+        engines: { node: '>=8' }
 
     strip-json-comments@3.1.1:
         resolution:
@@ -7206,6 +7345,8 @@ packages:
         engines: { node: '>=10' }
 
 snapshots:
+    '@adobe/css-tools@4.4.0': {}
+
     '@alloc/quick-lru@5.2.0': {}
 
     '@ampproject/remapping@2.3.0':
@@ -7884,9 +8025,42 @@ snapshots:
         dependencies:
             '@sinonjs/commons': 3.0.1
 
+    '@testing-library/dom@10.4.0':
+        dependencies:
+            '@babel/code-frame': 7.26.0
+            '@babel/runtime': 7.26.0
+            '@types/aria-query': 5.0.4
+            aria-query: 5.3.0
+            chalk: 4.1.2
+            dom-accessibility-api: 0.5.16
+            lz-string: 1.5.0
+            pretty-format: 27.5.1
+
+    '@testing-library/jest-dom@6.6.3':
+        dependencies:
+            '@adobe/css-tools': 4.4.0
+            aria-query: 5.3.0
+            chalk: 3.0.0
+            css.escape: 1.5.1
+            dom-accessibility-api: 0.6.3
+            lodash: 4.17.21
+            redent: 3.0.0
+
+    '@testing-library/react@16.0.1(@testing-library/dom@10.4.0)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+        dependencies:
+            '@babel/runtime': 7.26.0
+            '@testing-library/dom': 10.4.0
+            react: 18.3.1
+            react-dom: 18.3.1(react@18.3.1)
+        optionalDependencies:
+            '@types/react': 18.3.12
+            '@types/react-dom': 18.3.1
+
     '@tootallnate/once@2.0.0': {}
 
     '@trysound/sax@0.2.0': {}
+
+    '@types/aria-query@5.0.4': {}
 
     '@types/babel__core@7.1.19':
         dependencies:
@@ -8422,6 +8596,10 @@ snapshots:
 
     argparse@2.0.1: {}
 
+    aria-query@5.3.0:
+        dependencies:
+            dequal: 2.0.3
+
     array-buffer-byte-length@1.0.1:
         dependencies:
             call-bind: 1.0.7
@@ -8649,6 +8827,11 @@ snapshots:
 
     caniuse-lite@1.0.30001673: {}
 
+    chalk@3.0.0:
+        dependencies:
+            ansi-styles: 4.3.0
+            supports-color: 7.2.0
+
     chalk@4.1.2:
         dependencies:
             ansi-styles: 4.3.0
@@ -8854,6 +9037,8 @@ snapshots:
 
     css-what@6.1.0: {}
 
+    css.escape@1.5.1: {}
+
     cssesc@3.0.0: {}
 
     cssnano-preset-default@7.0.6(postcss@8.4.47):
@@ -8985,6 +9170,8 @@ snapshots:
 
     depd@2.0.0: {}
 
+    dequal@2.0.3: {}
+
     destroy@1.2.0: {}
 
     detect-newline@3.1.0: {}
@@ -9004,6 +9191,10 @@ snapshots:
     doctrine@2.1.0:
         dependencies:
             esutils: 2.0.3
+
+    dom-accessibility-api@0.5.16: {}
+
+    dom-accessibility-api@0.6.3: {}
 
     dom-converter@0.2.0:
         dependencies:
@@ -9781,6 +9972,8 @@ snapshots:
 
     imurmurhash@0.1.4: {}
 
+    indent-string@4.0.0: {}
+
     inflight@1.0.6:
         dependencies:
             once: 1.4.0
@@ -10464,6 +10657,8 @@ snapshots:
         dependencies:
             yallist: 3.1.1
 
+    lz-string@1.5.0: {}
+
     make-dir@3.1.0:
         dependencies:
             semver: 6.3.1
@@ -10513,6 +10708,8 @@ snapshots:
     mime@1.6.0: {}
 
     mimic-fn@2.1.0: {}
+
+    min-indent@1.0.1: {}
 
     mini-css-extract-plugin@2.9.1(webpack@5.95.0):
         dependencies:
@@ -10989,6 +11186,12 @@ snapshots:
             lodash: 4.17.21
             renderkid: 3.0.0
 
+    pretty-format@27.5.1:
+        dependencies:
+            ansi-regex: 5.0.1
+            ansi-styles: 5.2.0
+            react-is: 17.0.2
+
     pretty-format@29.7.0:
         dependencies:
             '@jest/schemas': 29.6.3
@@ -11068,6 +11271,8 @@ snapshots:
 
     react-is@16.13.1: {}
 
+    react-is@17.0.2: {}
+
     react-is@18.3.1: {}
 
     react-redux@9.1.2(@types/react@18.3.12)(react@18.3.1)(redux@5.0.1):
@@ -11126,6 +11331,11 @@ snapshots:
     rechoir@0.8.0:
         dependencies:
             resolve: 1.22.8
+
+    redent@3.0.0:
+        dependencies:
+            indent-string: 4.0.0
+            strip-indent: 3.0.0
 
     redux-logger@3.0.6:
         dependencies:
@@ -11488,6 +11698,10 @@ snapshots:
     strip-bom@4.0.0: {}
 
     strip-final-newline@2.0.0: {}
+
+    strip-indent@3.0.0:
+        dependencies:
+            min-indent: 1.0.1
 
     strip-json-comments@3.1.1: {}
 

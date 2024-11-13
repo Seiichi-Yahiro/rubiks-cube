@@ -12,7 +12,7 @@ export const setupStore = () => {
     });
 };
 
-type Store = ReturnType<typeof setupStore>;
+export type AppStore = ReturnType<typeof setupStore>;
 
-export type AppState = ReturnType<Store['getState']>;
-export type AppDispatch = Store['dispatch']; // TODO type inference doesn't work
+export type AppState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch']; // TODO type inference doesn't work
