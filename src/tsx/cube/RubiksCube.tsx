@@ -1,12 +1,18 @@
 import { debounce } from 'lodash';
-import React, { useEffect, useRef } from 'react';
+import React, {
+    TransitionEvent,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+} from 'react';
 import { rotationCommandToCssRotation } from 'src/algorithms/rotationCommand';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import CubeArrows from 'src/tsx/cube/CubeArrows';
 import { canApplyRotationCommand } from 'src/tsx/cube/cubeUtils';
-import Cubicle from 'src/tsx/cube/Cubicle';
+import Cubicle, { cubicleClassname } from 'src/tsx/cube/Cubicle';
 import createClassName from 'src/utils/createClassName';
 import { fromTranslation, toCss } from 'src/utils/matrix4';
 import Maybe from 'src/utils/maybe';
@@ -91,14 +97,35 @@ interface CubiclesProps {
 }
 
 const Cubicles: React.FC<CubiclesProps> = React.memo(({ cubicleSize }) => {
+    const dispatch = useAppDispatch();
     const cubicles = useRedux((state) => state.cube.cubicles);
     const rotationDuration = useRedux((state) => state.cube.rotationDuration);
     const currentRotationCommand = Maybe.of(
         useRedux((state) => state.player.currentCommand),
     );
 
+    const debouncedAnimationFinishedDispatch = useMemo(
+        () => debounce(() => dispatch(cubeActions.animationFinished()), 50),
+        [dispatch],
+    );
+
+    const sendAnimationFinishedEvents = useCallback(
+        (event: TransitionEvent) => {
+            const isCorrectEvent =
+                event.propertyName === 'transform' &&
+                (event.target as HTMLElement).className.includes(
+                    cubicleClassname,
+                );
+
+            if (isCorrectEvent) {
+                debouncedAnimationFinishedDispatch();
+            }
+        },
+        [dispatch, debouncedAnimationFinishedDispatch],
+    );
+
     return (
-        <div className="contents">
+        <div className="contents" onTransitionEnd={sendAnimationFinishedEvents}>
             {cubicles.map(({ id, faces, transform, axis }) => {
                 const animatedTransform = currentRotationCommand
                     .filter((command) => canApplyRotationCommand(axis, command))

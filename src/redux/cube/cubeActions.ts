@@ -27,6 +27,8 @@ const setColor = createAction('SET_COLOR', (key: Color, value: string) => ({
 
 const resetColors = createAction('RESET_COLORS');
 
+const animationFinished = createAction('ANIMATION_FINISHED');
+
 const actions = {
     setCubeSize,
     setCubeDimension,
@@ -36,6 +38,7 @@ const actions = {
     resetCube,
     setColor,
     resetColors,
+    animationFinished,
 };
 
 export { actions as cubeActions };

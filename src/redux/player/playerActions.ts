@@ -8,7 +8,6 @@ const pause = createAction('PAUSE');
 const unPause = createAction('UN_PAUSE');
 
 const nextCommand = createAction('NEXT_COMMAND');
-const animationFinished = createAction('ANIMATION_FINISHED');
 
 const updateNotation = createAction<string>('UPDATE_NOTATION');
 
@@ -21,7 +20,6 @@ const actions = {
     pause,
     unPause,
     nextCommand,
-    animationFinished,
     updateNotation,
     parsedNotation,
 };
