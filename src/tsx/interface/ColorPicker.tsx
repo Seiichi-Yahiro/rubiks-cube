@@ -40,7 +40,7 @@ const ColorPicker: React.FC = () => {
             ([key, _]) => key !== Color.DEFAULT && key !== Color.TRANSPARENT,
         )
         .map(([key, value]: [Color, string]) => (
-            <div
+            <button
                 key={key}
                 className={createClassName(
                     'h-5 w-5 cursor-pointer border border-cube-gray',
@@ -48,6 +48,7 @@ const ColorPicker: React.FC = () => {
                         'animate-wiggle': selectedColor === key,
                     },
                 )}
+                aria-label={value}
                 style={{
                     backgroundColor: value,
                 }}
