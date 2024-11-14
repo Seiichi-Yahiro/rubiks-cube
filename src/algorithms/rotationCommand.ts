@@ -1,5 +1,9 @@
 import { range } from 'lodash';
 import { Failure, Result, Success } from 'parsimmon';
+import arrayIterator from 'src/utils/iterators/array';
+import flattenIterator from 'src/utils/iterators/flatten';
+import repeatIterator from 'src/utils/iterators/repeat';
+import { type Iterator } from 'src/utils/iterators/types';
 import { fromAngleX, fromAngleY, fromAngleZ, Mat4 } from 'src/utils/matrix4';
 
 export interface SingleRotationCommand {
@@ -20,49 +24,23 @@ export const isLoopedRotationCommands = (
 ): rotationCommand is LoopedRotationCommands =>
     (rotationCommand as LoopedRotationCommands).iterations !== undefined;
 
-export interface RotationCommandStackFrame {
-    commands: RotationCommand[];
-    index: number;
-    iteration: number;
-}
-
-export type RotationCommandStack = RotationCommandStackFrame[];
-
-export const nextRotationCommand = (
-    stack: RotationCommandStack,
-): SingleRotationCommand | undefined => {
-    while (stack.length > 0) {
-        const frame = stack[stack.length - 1];
-        const currentCommand = frame.commands[frame.index];
-
-        if (isLoopedRotationCommands(currentCommand)) {
-            if (frame.iteration < currentCommand.iterations) {
-                stack.push({
-                    commands: currentCommand.commands,
-                    index: 0,
-                    iteration: 0,
-                });
-
-                frame.iteration += 1;
+export const createRotationCommandIterator = (
+    rotationCommands: RotationCommand[],
+): Iterator<SingleRotationCommand> => {
+    const array: Iterator<SingleRotationCommand>[] = rotationCommands.map(
+        (command) => {
+            if (isLoopedRotationCommands(command)) {
+                return repeatIterator.create(
+                    createRotationCommandIterator(command.commands),
+                    command.iterations,
+                );
             } else {
-                frame.iteration = 0;
-                frame.index += 1;
-
-                if (frame.index >= frame.commands.length) {
-                    stack.pop();
-                }
+                return arrayIterator.create([command]);
             }
-        } else {
-            frame.index += 1;
+        },
+    );
 
-            if (frame.index >= frame.commands.length) {
-                stack.pop();
-            }
-            return currentCommand;
-        }
-    }
-
-    return undefined;
+    return flattenIterator.create(arrayIterator.create(array));
 };
 
 export enum RotationAxis {

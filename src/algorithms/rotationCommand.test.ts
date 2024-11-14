@@ -1,22 +1,23 @@
 import {
+    createRotationCommandIterator,
     LoopedRotationCommands,
-    nextRotationCommand,
     RotationAxis,
     RotationCommand,
-    RotationCommandStack,
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
+import iterators from 'src/utils/iterators';
+import { IteratorResult } from 'src/utils/iterators/types';
 
 describe('rotationCommand', () => {
-    describe('nextRotationCommand', () => {
-        const createRotationCommand = (
-            rotation: number,
-        ): SingleRotationCommand => ({
-            axis: RotationAxis.X,
-            slices: [1],
-            rotation,
-        });
+    const createRotationCommand = (
+        rotation: number,
+    ): SingleRotationCommand => ({
+        axis: RotationAxis.X,
+        slices: [1],
+        rotation,
+    });
 
+    describe('nextRotationCommand', () => {
         it('should handle singleRotationCommands', () => {
             const commands: SingleRotationCommand[] = [
                 createRotationCommand(1),
@@ -24,21 +25,19 @@ describe('rotationCommand', () => {
                 createRotationCommand(3),
             ];
 
-            const stack: RotationCommandStack = [
-                { commands, index: 0, iteration: 0 },
-            ];
+            const itr = createRotationCommandIterator(commands);
 
-            const resultCommands: (RotationCommand | undefined)[] = [];
+            const resultCommands: IteratorResult<SingleRotationCommand>[] = [];
 
             for (let i = 0; i < 4; i++) {
-                resultCommands.push(nextRotationCommand(stack));
+                resultCommands.push(iterators.next(itr));
             }
 
-            const expectedCommands: (RotationCommand | undefined)[] = [
-                createRotationCommand(1),
-                createRotationCommand(2),
-                createRotationCommand(3),
-                undefined,
+            const expectedCommands: IteratorResult<SingleRotationCommand>[] = [
+                iterators.resultValue(createRotationCommand(1)),
+                iterators.resultValue(createRotationCommand(2)),
+                iterators.resultValue(createRotationCommand(3)),
+                iterators.resultEnd,
             ];
 
             expect(resultCommands).toEqual(expectedCommands);
@@ -62,26 +61,24 @@ describe('rotationCommand', () => {
                 },
             ];
 
-            const stack: RotationCommandStack = [
-                { commands, index: 0, iteration: 0 },
-            ];
+            const itr = createRotationCommandIterator(commands);
 
-            const resultCommands: (RotationCommand | undefined)[] = [];
+            const resultCommands: IteratorResult<SingleRotationCommand>[] = [];
 
             for (let i = 0; i < 9; i++) {
-                resultCommands.push(nextRotationCommand(stack));
+                resultCommands.push(iterators.next(itr));
             }
 
-            const expectedCommands: (RotationCommand | undefined)[] = [
-                createRotationCommand(1),
-                createRotationCommand(2),
-                createRotationCommand(1),
-                createRotationCommand(2),
-                createRotationCommand(3),
-                createRotationCommand(4),
-                createRotationCommand(3),
-                createRotationCommand(4),
-                undefined,
+            const expectedCommands: IteratorResult<SingleRotationCommand>[] = [
+                iterators.resultValue(createRotationCommand(1)),
+                iterators.resultValue(createRotationCommand(2)),
+                iterators.resultValue(createRotationCommand(1)),
+                iterators.resultValue(createRotationCommand(2)),
+                iterators.resultValue(createRotationCommand(3)),
+                iterators.resultValue(createRotationCommand(4)),
+                iterators.resultValue(createRotationCommand(3)),
+                iterators.resultValue(createRotationCommand(4)),
+                iterators.resultEnd,
             ];
 
             expect(resultCommands).toEqual(expectedCommands);
@@ -103,26 +100,51 @@ describe('rotationCommand', () => {
                 createRotationCommand(4),
             ];
 
-            const stack: RotationCommandStack = [
-                { commands, index: 0, iteration: 0 },
-            ];
+            const itr = createRotationCommandIterator(commands);
 
-            const resultCommands: (RotationCommand | undefined)[] = [];
+            const resultCommands: IteratorResult<SingleRotationCommand>[] = [];
 
             for (let i = 0; i < 9; i++) {
-                resultCommands.push(nextRotationCommand(stack));
+                resultCommands.push(iterators.next(itr));
             }
 
-            const expectedCommands: (RotationCommand | undefined)[] = [
+            const expectedCommands: IteratorResult<SingleRotationCommand>[] = [
+                iterators.resultValue(createRotationCommand(1)),
+                iterators.resultValue(createRotationCommand(2)),
+                iterators.resultValue(createRotationCommand(2)),
+                iterators.resultValue(createRotationCommand(3)),
+                iterators.resultValue(createRotationCommand(2)),
+                iterators.resultValue(createRotationCommand(2)),
+                iterators.resultValue(createRotationCommand(3)),
+                iterators.resultValue(createRotationCommand(4)),
+                iterators.resultEnd,
+            ];
+
+            expect(resultCommands).toEqual(expectedCommands);
+        });
+    });
+
+    describe('previousRotationCommand', () => {
+        it('should handle singleRotationCommands', () => {
+            const commands: SingleRotationCommand[] = [
                 createRotationCommand(1),
                 createRotationCommand(2),
-                createRotationCommand(2),
                 createRotationCommand(3),
-                createRotationCommand(2),
-                createRotationCommand(2),
-                createRotationCommand(3),
-                createRotationCommand(4),
-                undefined,
+            ];
+
+            const itr = createRotationCommandIterator(commands);
+
+            const resultCommands: IteratorResult<SingleRotationCommand>[] = [];
+
+            for (let i = 0; i < 4; i++) {
+                resultCommands.push(iterators.next(itr));
+            }
+
+            const expectedCommands: IteratorResult<SingleRotationCommand>[] = [
+                iterators.resultValue(createRotationCommand(1)),
+                iterators.resultValue(createRotationCommand(2)),
+                iterators.resultValue(createRotationCommand(3)),
+                iterators.resultEnd,
             ];
 
             expect(resultCommands).toEqual(expectedCommands);

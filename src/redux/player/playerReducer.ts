@@ -1,13 +1,14 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Result } from 'parsimmon';
 import {
-    nextRotationCommand,
+    createRotationCommandIterator,
     RotationCommand,
-    RotationCommandStack,
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
+import iterators from 'src/utils/iterators';
+import { type Iterator, IteratorResultType } from 'src/utils/iterators/types';
 
 export enum PlayerStatus {
     STOPPED = 'STOPPED',
@@ -18,7 +19,7 @@ export enum PlayerStatus {
 export interface IPlayerState {
     notation: string;
     rotationCommands: Result<RotationCommand[]>;
-    rotationCommandStack: RotationCommandStack;
+    rotationCommandsIterator?: Iterator<SingleRotationCommand>;
     currentCommand?: SingleRotationCommand;
     status: PlayerStatus;
 }
@@ -26,7 +27,6 @@ export interface IPlayerState {
 const createInitialPlayerState = (): IPlayerState => ({
     notation: '',
     rotationCommands: { status: true, value: [] },
-    rotationCommandStack: [],
     status: PlayerStatus.STOPPED,
 });
 
@@ -45,14 +45,9 @@ export const createPlayerReducer = (
             })
             .addCase(playerActions.play, (state, action) => {
                 state.status = PlayerStatus.PLAYING;
-
-                state.rotationCommandStack = [
-                    {
-                        commands: action.payload,
-                        index: 0,
-                        iteration: 0,
-                    },
-                ];
+                state.rotationCommandsIterator = createRotationCommandIterator(
+                    action.payload,
+                );
             })
             .addCase(playerActions.unPause, (state, _action) => {
                 state.status = PlayerStatus.PLAYING;
@@ -62,12 +57,18 @@ export const createPlayerReducer = (
             })
             .addCase(playerActions.stop, (state, _action) => {
                 state.status = PlayerStatus.STOPPED;
-                state.rotationCommandStack = [];
+                state.rotationCommandsIterator = undefined;
             })
             .addCase(playerActions.nextCommand, (state, _action) => {
-                state.currentCommand = nextRotationCommand(
-                    state.rotationCommandStack,
-                );
+                if (!state.rotationCommandsIterator) {
+                    return;
+                }
+
+                const result = iterators.next(state.rotationCommandsIterator);
+
+                if (result.resultType === IteratorResultType.Value) {
+                    state.currentCommand = result.value;
+                }
             })
             .addCase(cubeActions.applyRotationCommands, (state, _action) => {
                 state.currentCommand = undefined;
