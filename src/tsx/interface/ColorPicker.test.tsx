@@ -13,7 +13,9 @@ describe('ColorPicker', () => {
 
     beforeEach(() => {
         store = setupStore();
-        setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
+        setItemSpy = jest
+            .spyOn(Storage.prototype, 'setItem')
+            .mockImplementation(() => {});
     });
 
     afterEach(() => {
@@ -32,6 +34,36 @@ describe('ColorPicker', () => {
         });
 
         expect(colorButtons).toHaveLength(6);
+    });
+
+    it('should set color', async () => {
+        render(
+            <Provider store={store}>
+                <ColorPicker />
+            </Provider>,
+        );
+
+        const stateBefore = store.getState();
+
+        const colorButton = screen.getByRole('button', { name: Color.BLUE });
+
+        fireEvent.click(colorButton);
+
+        const hexInput = await screen.findByDisplayValue(
+            Color.BLUE.toUpperCase(),
+        );
+
+        fireEvent.change(hexInput, { target: { value: '#000000' } });
+
+        const stateAfter = store.getState();
+
+        expect(stateAfter.cube.colorMap).toEqual({
+            ...stateBefore.cube.colorMap,
+            [Color.BLUE]: '#000000',
+        });
+
+        expect(colorButton).toHaveAttribute('aria-label', '#000000');
+        expect(colorButton).toHaveStyle({ backgroundColor: '#000000' });
     });
 
     it('should save colors in local storage when a color is set', async () => {
@@ -55,6 +87,27 @@ describe('ColorPicker', () => {
             COLOR_MAP,
             JSON.stringify({ ...defaultColorMap, [Color.BLUE]: '#000000' }),
         );
+    });
+
+    it('should reset colors', () => {
+        store.dispatch(cubeActions.setColor(Color.BLUE, '#000000'));
+
+        render(
+            <Provider store={store}>
+                <ColorPicker />
+            </Provider>,
+        );
+
+        const colorButton = screen.getByRole('button', { name: '#000000' });
+        const resetButton = screen.getByText('interface.settings.reset-colors');
+
+        fireEvent.click(resetButton);
+
+        const state = store.getState();
+
+        expect(state.cube.colorMap).toEqual(defaultColorMap);
+        expect(colorButton).toHaveAttribute('aria-label', Color.BLUE);
+        expect(colorButton).toHaveStyle({ backgroundColor: Color.BLUE });
     });
 
     it('should save colors in local storage when colors are reset', () => {
