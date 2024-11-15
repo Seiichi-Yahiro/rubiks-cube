@@ -5,6 +5,10 @@
 
 # testing
 /coverage
+/reports
+
+# stryker temp files
+.stryker-tmp
 
 # production
 /build

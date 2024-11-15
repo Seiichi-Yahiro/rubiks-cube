@@ -11,6 +11,6 @@ module.exports = {
     setupFilesAfterEnv: ['core-js', '<rootDir>/src/jest-setup.ts'],
     testEnvironment: 'jsdom',
     coverageReporters: ['html'],
-    coverageDirectory: '<rootDir>/build/coverage',
+    coverageDirectory: '<rootDir>/reports/coverage',
     collectCoverageFrom: ['src/**/*.{ts,tsx}'],
 };
