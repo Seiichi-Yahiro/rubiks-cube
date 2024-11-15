@@ -1,9 +1,12 @@
 import {
+    ArrowBack,
+    ArrowForward,
     Pause,
     PlayArrow,
     Refresh,
     Shuffle,
     SkipNext,
+    SkipPrevious,
     Stop,
 } from '@mui/icons-material';
 import { IconButton, Tooltip } from '@mui/material';
@@ -42,6 +45,7 @@ const TooltipedIconButton: React.FC<TooltipedIconButtonProps> = ({
                     '!pointer-events-auto',
                 )}
                 onClick={disabled ? undefined : onClick}
+                size="small"
             >
                 {children}
             </IconButton>
@@ -66,6 +70,8 @@ const Player: React.FC = () => {
     const hasParseError = isError(rotationCommands);
     const isNotationEmpty = playerNotation.length === 0;
     const isStopped = playerStatus === PlayerStatus.STOPPED;
+    const isPlaying = playerStatus === PlayerStatus.PLAYING;
+    const isPaused = playerStatus === PlayerStatus.PAUSED;
 
     const onPlay = () => {
         if (playerStatus === PlayerStatus.STOPPED && isOk(rotationCommands)) {
@@ -124,12 +130,33 @@ const Player: React.FC = () => {
                     >
                         <Stop />
                     </TooltipedIconButton>
+                </div>
+                <div>
                     <TooltipedIconButton
-                        title={t('player.input.skip')}
+                        title={t('player.input.skipToStart')}
+                        onClick={() => {}}
+                        disabled={!isPaused || isNotationEmpty || hasParseError}
+                    >
+                        <SkipPrevious />
+                    </TooltipedIconButton>
+                    <TooltipedIconButton
+                        title={t('player.input.stepPrevious')}
+                        onClick={() => {}}
+                        disabled={!isPaused || isNotationEmpty || hasParseError}
+                    >
+                        <ArrowBack />
+                    </TooltipedIconButton>
+                    <TooltipedIconButton
+                        title={t('player.input.stepNext')}
+                        onClick={() => {}}
+                        disabled={isPlaying || isNotationEmpty || hasParseError}
+                    >
+                        <ArrowForward />
+                    </TooltipedIconButton>
+                    <TooltipedIconButton
+                        title={t('player.input.skipToEnd')}
                         onClick={onJumpToEnd}
-                        disabled={
-                            !isStopped || isNotationEmpty || hasParseError
-                        }
+                        disabled={isPlaying || isNotationEmpty || hasParseError}
                     >
                         <SkipNext />
                     </TooltipedIconButton>

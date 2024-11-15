@@ -5,7 +5,10 @@
             "play": "Abspielen",
             "pause": "Pause",
             "stop": "Stopp",
-            "skip": "Überspringe Animation",
+            "skipToStart": "Überspringe Animation an den Anfang",
+            "skipToEnd": "Überspringe Animation ans Ende",
+            "stepPrevious": "Vorheriger Schritt",
+            "stepNext": "Nächster Schritt",
             "shuffle": "Zufälliger Algorithmus",
             "reset": "Würfel Zurücksetzen",
             "help": "Erklärung der Notation"

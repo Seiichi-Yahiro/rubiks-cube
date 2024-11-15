@@ -5,7 +5,10 @@
             "play": "Play",
             "pause": "Pause",
             "stop": "Stop",
-            "skip": "Skip animation",
+            "skipToStart": "Skip animation to start",
+            "skipToEnd": "Skip animation to end",
+            "stepPrevious": "Previous step",
+            "stepNext": "Next step",
             "shuffle": "Random algorithm",
             "reset": "Reset cube",
             "help": "Notation definitions"
