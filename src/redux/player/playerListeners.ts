@@ -1,14 +1,18 @@
 import { isAnyOf } from '@reduxjs/toolkit';
 import { makeNotationParser } from 'src/algorithms/parser';
 import {
+    invertRotationCommands,
     invertSingleRotationCommand,
     isOk,
+    RotationCommand,
+    SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { AppStartListening } from 'src/redux/listener';
 import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import iterators from 'src/utils/iterators';
+import { IteratorResultEdge } from '../../utils/iterators/types';
 
 export const parseListener = (startListening: AppStartListening) =>
     startListening({
@@ -26,54 +30,25 @@ export const parseListener = (startListening: AppStartListening) =>
         },
     });
 
-export const skipToStartListener = (startListening: AppStartListening) =>
+export const skipListener = (startListening: AppStartListening) =>
     startListening({
-        actionCreator: playerActions.skipToStart,
-        effect: (_action, listenerApi) => {
-            const state = listenerApi.getState();
-
-            if (
-                state.player.status === PlayerStatus.PAUSED &&
-                state.player.rotationCommandsIterator
-            ) {
-                const itr = iterators.clone(
-                    state.player.rotationCommandsIterator,
-                );
-
-                const remainingRotationCommands = iterators
-                    .collect(itr, true)
-                    .map(invertSingleRotationCommand);
-
-                listenerApi.dispatch(
-                    playerActions.setRotationCommandIterator({
-                        iterator: itr,
-                        result: iterators.resultStart,
-                    }),
-                );
-
-                listenerApi.dispatch(
-                    cubeActions.applyRotationCommands(
-                        remainingRotationCommands,
-                    ),
-                );
-            }
-        },
-    });
-
-export const skipToEndListener = (startListening: AppStartListening) =>
-    startListening({
-        actionCreator: playerActions.skipToEnd,
-        effect: (_action, listenerApi) => {
+        matcher: isAnyOf(playerActions.skipToStart, playerActions.skipToEnd),
+        effect: (action, listenerApi) => {
             const state = listenerApi.getState();
 
             if (
                 state.player.status === PlayerStatus.STOPPED &&
                 isOk(state.player.rotationCommands)
             ) {
+                let rotationCommands: RotationCommand[] =
+                    state.player.rotationCommands.value;
+
+                if (playerActions.skipToStart.match(action)) {
+                    rotationCommands = invertRotationCommands(rotationCommands);
+                }
+
                 listenerApi.dispatch(
-                    cubeActions.applyRotationCommands(
-                        state.player.rotationCommands.value,
-                    ),
+                    cubeActions.applyRotationCommands(rotationCommands),
                 );
             } else if (
                 state.player.status === PlayerStatus.PAUSED &&
@@ -83,12 +58,24 @@ export const skipToEndListener = (startListening: AppStartListening) =>
                     state.player.rotationCommandsIterator,
                 );
 
-                const remainingRotationCommands = iterators.collect(itr);
+                let remainingRotationCommands: SingleRotationCommand[];
+                let result: IteratorResultEdge;
+
+                if (playerActions.skipToStart.match(action)) {
+                    remainingRotationCommands = iterators
+                        .collect(itr, true)
+                        .map(invertSingleRotationCommand);
+
+                    result = iterators.resultStart;
+                } else {
+                    remainingRotationCommands = iterators.collect(itr);
+                    result = iterators.resultEnd;
+                }
 
                 listenerApi.dispatch(
                     playerActions.setRotationCommandIterator({
                         iterator: itr,
-                        result: iterators.resultEnd,
+                        result,
                     }),
                 );
 

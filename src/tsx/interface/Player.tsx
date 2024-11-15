@@ -145,7 +145,7 @@ const Player: React.FC = () => {
                         disabled={
                             isPlaying ||
                             (isPaused && isFirstRotationCommand) ||
-                            isStopped
+                            (isStopped && isNotationInvalid)
                         }
                     >
                         <SkipPrevious />

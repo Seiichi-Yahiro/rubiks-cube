@@ -50,6 +50,22 @@ export const invertSingleRotationCommand = (
     rotation: -rotationCommand.rotation,
 });
 
+export const invertRotationCommands = (
+    rotationCommands: RotationCommand[],
+): RotationCommand[] =>
+    rotationCommands
+        .map((rotationCommand) => {
+            if (isLoopedRotationCommands(rotationCommand)) {
+                return {
+                    commands: invertRotationCommands(rotationCommand.commands),
+                    iterations: rotationCommand.iterations,
+                } satisfies LoopedRotationCommands;
+            } else {
+                return invertSingleRotationCommand(rotationCommand);
+            }
+        })
+        .reverse();
+
 export enum RotationAxis {
     X = 0,
     Y = 1,

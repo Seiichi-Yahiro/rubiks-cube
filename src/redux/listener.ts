@@ -10,8 +10,7 @@ import {
 import {
     parseListener,
     playAnimationLoopListener,
-    skipToEndListener,
-    skipToStartListener,
+    skipListener,
 } from 'src/redux/player/playerListeners';
 import type { AppDispatch, AppState } from 'src/redux/store';
 
@@ -25,8 +24,7 @@ const setupListenerMiddleware = () => {
     saveColorMapListener(middleware.startListening);
 
     parseListener(middleware.startListening);
-    skipToStartListener(middleware.startListening);
-    skipToEndListener(middleware.startListening);
+    skipListener(middleware.startListening);
     playAnimationLoopListener(middleware.startListening);
 
     return middleware;
