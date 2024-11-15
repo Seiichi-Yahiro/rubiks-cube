@@ -11,6 +11,7 @@ const stop = createAction('STOP');
 const pause = createAction('PAUSE');
 const unPause = createAction('UN_PAUSE');
 
+const skipToStart = createAction('SKIP_TO_START');
 const skipToEnd = createAction('SKIP_TO_END');
 
 const setRotationCommandIterator = createAction<{
@@ -31,6 +32,7 @@ const actions = {
     stop,
     pause,
     unPause,
+    skipToStart,
     skipToEnd,
     setRotationCommandIterator,
     nextCommand,

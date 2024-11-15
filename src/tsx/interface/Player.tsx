@@ -93,6 +93,7 @@ const Player: React.FC = () => {
     const onPause = () => dispatch(playerActions.pause());
     const onStop = () => dispatch(playerActions.stop());
 
+    const onSkipToStart = () => dispatch(playerActions.skipToStart());
     const onSkipToEnd = () => dispatch(playerActions.skipToEnd());
 
     const onShuffle = () =>
@@ -140,7 +141,7 @@ const Player: React.FC = () => {
                 <div>
                     <TooltipedIconButton
                         title={t('player.input.skipToStart')}
-                        onClick={() => {}}
+                        onClick={onSkipToStart}
                         disabled={
                             isPlaying ||
                             (isPaused && isFirstRotationCommand) ||

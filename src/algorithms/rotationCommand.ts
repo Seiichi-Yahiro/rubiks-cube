@@ -43,6 +43,13 @@ export const createRotationCommandIterator = (
     return flattenIterator.create(arrayIterator.create(array));
 };
 
+export const invertSingleRotationCommand = (
+    rotationCommand: SingleRotationCommand,
+): SingleRotationCommand => ({
+    ...rotationCommand,
+    rotation: -rotationCommand.rotation,
+});
+
 export enum RotationAxis {
     X = 0,
     Y = 1,

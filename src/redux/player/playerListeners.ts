@@ -1,6 +1,9 @@
 import { isAnyOf } from '@reduxjs/toolkit';
 import { makeNotationParser } from 'src/algorithms/parser';
-import { isOk } from 'src/algorithms/rotationCommand';
+import {
+    invertSingleRotationCommand,
+    isOk,
+} from 'src/algorithms/rotationCommand';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { AppStartListening } from 'src/redux/listener';
 import { playerActions } from 'src/redux/player/playerActions';
@@ -20,6 +23,40 @@ export const parseListener = (startListening: AppStartListening) =>
                 state.player.notation,
             );
             listenerApi.dispatch(playerActions.parsedNotation(parseResult));
+        },
+    });
+
+export const skipToStartListener = (startListening: AppStartListening) =>
+    startListening({
+        actionCreator: playerActions.skipToStart,
+        effect: (_action, listenerApi) => {
+            const state = listenerApi.getState();
+
+            if (
+                state.player.status === PlayerStatus.PAUSED &&
+                state.player.rotationCommandsIterator
+            ) {
+                const itr = iterators.clone(
+                    state.player.rotationCommandsIterator,
+                );
+
+                const remainingRotationCommands = iterators
+                    .collect(itr, true)
+                    .map(invertSingleRotationCommand);
+
+                listenerApi.dispatch(
+                    playerActions.setRotationCommandIterator({
+                        iterator: itr,
+                        result: iterators.resultStart,
+                    }),
+                );
+
+                listenerApi.dispatch(
+                    cubeActions.applyRotationCommands(
+                        remainingRotationCommands,
+                    ),
+                );
+            }
         },
     });
 
