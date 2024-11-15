@@ -59,6 +59,12 @@ export const createPlayerReducer = (
                 state.status = PlayerStatus.STOPPED;
                 state.rotationCommandsIterator = undefined;
             })
+            .addCase(
+                playerActions.setRotationCommandIterator,
+                (state, action) => {
+                    state.rotationCommandsIterator = action.payload;
+                },
+            )
             .addCase(playerActions.nextCommand, (state, _action) => {
                 if (!state.rotationCommandsIterator) {
                     return;

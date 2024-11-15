@@ -2,7 +2,11 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Success } from 'parsimmon';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { RotationCommand } from 'src/algorithms/rotationCommand';
+import {
+    RotationAxis,
+    RotationCommand,
+    SingleRotationCommand,
+} from 'src/algorithms/rotationCommand';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
@@ -121,9 +125,18 @@ describe('Player', () => {
 
     describe('skip', () => {
         let store: AppStore;
+        let applyRotationCommandsSpy: jest.SpyInstance;
 
         beforeEach(() => {
             store = setupStore();
+            applyRotationCommandsSpy = jest.spyOn(
+                cubeActions,
+                'applyRotationCommands',
+            );
+        });
+
+        afterEach(() => {
+            applyRotationCommandsSpy.mockRestore();
         });
 
         const expectNotAllowSkip = async () => {
@@ -136,14 +149,14 @@ describe('Player', () => {
             const stateBefore = store.getState();
 
             let skip = screen.getByRole('button', {
-                name: 'player.input.skip',
+                name: 'player.input.skipToEnd',
             });
             expect(skip).toHaveAttribute('aria-disabled', 'true');
 
             fireEvent.click(skip);
 
             skip = await screen.findByRole('button', {
-                name: 'player.input.skip',
+                name: 'player.input.skipToEnd',
             });
             expect(skip).toHaveAttribute('aria-disabled', 'true');
 
@@ -178,7 +191,7 @@ describe('Player', () => {
             await expectNotAllowSkip();
         });
 
-        it('should not allow skip when paused', async () => {
+        it('should skip remaining steps when paused', async () => {
             store.dispatch(playerActions.updateNotation('F U R'));
             store.dispatch(
                 playerActions.play(
@@ -191,7 +204,48 @@ describe('Player', () => {
             );
             store.dispatch(playerActions.pause());
 
-            await expectNotAllowSkip();
+            render(
+                <Provider store={store}>
+                    <Player />
+                </Provider>,
+            );
+
+            const stateBefore = store.getState();
+
+            let skip: HTMLElement | null = screen.getByRole('button', {
+                name: 'player.input.skipToEnd',
+            });
+            expect(skip).toHaveAttribute('aria-disabled', 'false');
+
+            fireEvent.click(skip);
+
+            skip = await screen.findByRole('button', {
+                name: 'player.input.skipToEnd',
+            });
+            expect(skip).toHaveAttribute('aria-disabled', 'false');
+
+            const stateAfter = store.getState();
+
+            expect(stateAfter.player.status).toBe(PlayerStatus.PAUSED);
+            expect(stateAfter.cube.cubicles).not.toBe(
+                stateBefore.cube.cubicles,
+            );
+
+            const remainingRotationCommands: SingleRotationCommand[] = [
+                {
+                    axis: RotationAxis.Y,
+                    rotation: -90,
+                    slices: [1],
+                },
+                {
+                    axis: RotationAxis.X,
+                    rotation: 90,
+                    slices: [3],
+                },
+            ];
+            expect(applyRotationCommandsSpy).toHaveBeenCalledWith(
+                remainingRotationCommands,
+            );
         });
 
         it('should skip when valid notation', async () => {
@@ -206,14 +260,14 @@ describe('Player', () => {
             const stateBefore = store.getState();
 
             let skip: HTMLElement | null = screen.getByRole('button', {
-                name: 'player.input.skip',
+                name: 'player.input.skipToEnd',
             });
             expect(skip).toHaveAttribute('aria-disabled', 'false');
 
             fireEvent.click(skip);
 
             skip = await screen.findByRole('button', {
-                name: 'player.input.skip',
+                name: 'player.input.skipToEnd',
             });
             expect(skip).toHaveAttribute('aria-disabled', 'false');
 
@@ -222,6 +276,27 @@ describe('Player', () => {
             expect(stateAfter.player.status).toBe(PlayerStatus.STOPPED);
             expect(stateAfter.cube.cubicles).not.toBe(
                 stateBefore.cube.cubicles,
+            );
+
+            const remainingRotationCommands: SingleRotationCommand[] = [
+                {
+                    axis: RotationAxis.Z,
+                    rotation: 90,
+                    slices: [1],
+                },
+                {
+                    axis: RotationAxis.Y,
+                    rotation: -90,
+                    slices: [1],
+                },
+                {
+                    axis: RotationAxis.X,
+                    rotation: 90,
+                    slices: [3],
+                },
+            ];
+            expect(applyRotationCommandsSpy).toHaveBeenCalledWith(
+                remainingRotationCommands,
             );
         });
     });

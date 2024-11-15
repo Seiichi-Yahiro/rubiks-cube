@@ -83,11 +83,7 @@ const Player: React.FC = () => {
     const onPause = () => dispatch(playerActions.pause());
     const onStop = () => dispatch(playerActions.stop());
 
-    const onJumpToEnd = () => {
-        if (isOk(rotationCommands)) {
-            dispatch(cubeActions.applyRotationCommands(rotationCommands.value));
-        }
-    };
+    const onSkipToEnd = () => dispatch(playerActions.skipToEnd());
 
     const onShuffle = () =>
         dispatch(
@@ -155,7 +151,7 @@ const Player: React.FC = () => {
                     </TooltipedIconButton>
                     <TooltipedIconButton
                         title={t('player.input.skipToEnd')}
-                        onClick={onJumpToEnd}
+                        onClick={onSkipToEnd}
                         disabled={isPlaying || isNotationEmpty || hasParseError}
                     >
                         <SkipNext />

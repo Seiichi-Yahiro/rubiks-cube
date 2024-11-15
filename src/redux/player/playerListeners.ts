@@ -1,9 +1,11 @@
 import { isAnyOf } from '@reduxjs/toolkit';
 import { makeNotationParser } from 'src/algorithms/parser';
+import { isOk } from 'src/algorithms/rotationCommand';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { AppStartListening } from 'src/redux/listener';
 import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
+import iterators from 'src/utils/iterators';
 
 export const parseListener = (startListening: AppStartListening) =>
     startListening({
@@ -18,6 +20,44 @@ export const parseListener = (startListening: AppStartListening) =>
                 state.player.notation,
             );
             listenerApi.dispatch(playerActions.parsedNotation(parseResult));
+        },
+    });
+
+export const skipToEndListener = (startListening: AppStartListening) =>
+    startListening({
+        actionCreator: playerActions.skipToEnd,
+        effect: (_action, listenerApi) => {
+            const state = listenerApi.getState();
+
+            if (
+                state.player.status === PlayerStatus.STOPPED &&
+                isOk(state.player.rotationCommands)
+            ) {
+                listenerApi.dispatch(
+                    cubeActions.applyRotationCommands(
+                        state.player.rotationCommands.value,
+                    ),
+                );
+            } else if (
+                state.player.status === PlayerStatus.PAUSED &&
+                state.player.rotationCommandsIterator
+            ) {
+                const itr = iterators.clone(
+                    state.player.rotationCommandsIterator,
+                );
+
+                const remainingRotationCommands = iterators.collect(itr);
+
+                listenerApi.dispatch(
+                    playerActions.setRotationCommandIterator(itr),
+                );
+
+                listenerApi.dispatch(
+                    cubeActions.applyRotationCommands(
+                        remainingRotationCommands,
+                    ),
+                );
+            }
         },
     });
 
