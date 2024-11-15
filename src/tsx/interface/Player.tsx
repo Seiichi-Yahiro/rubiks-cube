@@ -22,14 +22,14 @@ import NotationInput from 'src/tsx/interface/NotationInput';
 import createClassName from 'src/utils/createClassName';
 import { IteratorResultType } from 'src/utils/iterators/types';
 
-interface TooltipedIconButtonProps {
+interface TooltipIconButtonProps {
     title: string;
     disabled?: boolean;
     onClick: () => void;
     children: React.ReactNode;
 }
 
-const TooltipedIconButton: React.FC<TooltipedIconButtonProps> = ({
+const TooltipIconButton: React.FC<TooltipIconButtonProps> = ({
     title,
     disabled = false,
     onClick,
@@ -115,31 +115,31 @@ const Player: React.FC = () => {
             <div className="flex flex-row justify-between">
                 <div>
                     {playerStatus === PlayerStatus.PLAYING ? (
-                        <TooltipedIconButton
+                        <TooltipIconButton
                             title={t('player.input.pause')}
                             onClick={onPause}
                         >
                             <Pause />
-                        </TooltipedIconButton>
+                        </TooltipIconButton>
                     ) : (
-                        <TooltipedIconButton
+                        <TooltipIconButton
                             title={t('player.input.play')}
                             disabled={isNotationInvalid}
                             onClick={onPlay}
                         >
                             <PlayArrow />
-                        </TooltipedIconButton>
+                        </TooltipIconButton>
                     )}
-                    <TooltipedIconButton
+                    <TooltipIconButton
                         title={t('player.input.stop')}
                         onClick={onStop}
                         disabled={isStopped}
                     >
                         <Stop />
-                    </TooltipedIconButton>
+                    </TooltipIconButton>
                 </div>
                 <div>
-                    <TooltipedIconButton
+                    <TooltipIconButton
                         title={t('player.input.skipToStart')}
                         onClick={onSkipToStart}
                         disabled={
@@ -149,8 +149,8 @@ const Player: React.FC = () => {
                         }
                     >
                         <SkipPrevious />
-                    </TooltipedIconButton>
-                    <TooltipedIconButton
+                    </TooltipIconButton>
+                    <TooltipIconButton
                         title={t('player.input.stepPrevious')}
                         onClick={() => {}}
                         disabled={
@@ -160,8 +160,8 @@ const Player: React.FC = () => {
                         }
                     >
                         <ArrowBack />
-                    </TooltipedIconButton>
-                    <TooltipedIconButton
+                    </TooltipIconButton>
+                    <TooltipIconButton
                         title={t('player.input.stepNext')}
                         onClick={() => {}}
                         disabled={
@@ -171,8 +171,8 @@ const Player: React.FC = () => {
                         }
                     >
                         <ArrowForward />
-                    </TooltipedIconButton>
-                    <TooltipedIconButton
+                    </TooltipIconButton>
+                    <TooltipIconButton
                         title={t('player.input.skipToEnd')}
                         onClick={onSkipToEnd}
                         disabled={
@@ -182,23 +182,23 @@ const Player: React.FC = () => {
                         }
                     >
                         <SkipNext />
-                    </TooltipedIconButton>
+                    </TooltipIconButton>
                 </div>
                 <div>
-                    <TooltipedIconButton
+                    <TooltipIconButton
                         title={t('player.input.shuffle')}
                         onClick={onShuffle}
                         disabled={!isStopped}
                     >
                         <Shuffle />
-                    </TooltipedIconButton>
-                    <TooltipedIconButton
+                    </TooltipIconButton>
+                    <TooltipIconButton
                         title={t('player.input.reset')}
                         onClick={onRefresh}
                         disabled={!isStopped}
                     >
                         <Refresh />
-                    </TooltipedIconButton>
+                    </TooltipIconButton>
                 </div>
             </div>
         </div>
