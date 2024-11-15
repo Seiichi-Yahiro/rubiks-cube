@@ -42,6 +42,29 @@ const next = <Item, I extends Iterator<Iterator<Item>>>(
     }
 };
 
-const flattenIterator = { create, next };
+const nextBack = <Item, I extends Iterator<Iterator<Item>>>(
+    self: FlattenIterator<I>,
+): IteratorResult<Item> => {
+    if (self.innerIterator) {
+        const innerResult = iterator.nextBack(
+            self.innerIterator as Iterator<Item>,
+        );
+
+        if (innerResult.resultType === IteratorResultType.Value) {
+            return innerResult;
+        }
+    }
+
+    const outerResult = iterator.nextBack(self.outerIterator);
+
+    if (outerResult.resultType === IteratorResultType.Value) {
+        self.innerIterator = outerResult.value;
+        return nextBack(self);
+    } else {
+        return outerResult;
+    }
+};
+
+const flattenIterator = { create, next, nextBack };
 
 export default flattenIterator;

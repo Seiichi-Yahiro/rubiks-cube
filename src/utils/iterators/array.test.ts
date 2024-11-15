@@ -21,4 +21,28 @@ describe('ArrayIterator', () => {
 
         expect(result).toEqual(expected);
     });
+
+    it('should give the previous element', () => {
+        const itr = arrayIterator.create([1, 2, 3]);
+
+        const result: IteratorResult<number>[] = [];
+
+        result.push(iterators.nextBack(itr));
+        result.push(iterators.next(itr));
+        result.push(iterators.next(itr));
+        result.push(iterators.nextBack(itr));
+        result.push(iterators.nextBack(itr));
+        result.push(iterators.nextBack(itr));
+
+        const expected: IteratorResult<number>[] = [
+            iterators.resultStart,
+            iterators.resultValue(1),
+            iterators.resultValue(2),
+            iterators.resultValue(2),
+            iterators.resultValue(1),
+            iterators.resultStart,
+        ];
+
+        expect(result).toEqual(expected);
+    });
 });

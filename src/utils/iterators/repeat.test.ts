@@ -52,4 +52,79 @@ describe('RepeatIterator', () => {
 
         expect(result).toEqual(expected);
     });
+
+    it('should give the previous element', () => {
+        const arrayItr = arrayIterator.create([1, 2, 3]);
+        const itr = repeatIterator.create(arrayItr, 2);
+
+        const result: IteratorResult<number>[] = [];
+
+        result.push(iterators.nextBack(itr));
+        result.push(iterators.next(itr));
+        result.push(iterators.next(itr));
+        result.push(iterators.next(itr));
+        result.push(iterators.next(itr));
+        result.push(iterators.nextBack(itr));
+        result.push(iterators.nextBack(itr));
+        result.push(iterators.nextBack(itr));
+        result.push(iterators.nextBack(itr));
+        result.push(iterators.nextBack(itr));
+
+        const expected: IteratorResult<number>[] = [
+            iterators.resultStart,
+            iterators.resultValue(1),
+            iterators.resultValue(2),
+            iterators.resultValue(3),
+            iterators.resultValue(1),
+            iterators.resultValue(1),
+            iterators.resultValue(3),
+            iterators.resultValue(2),
+            iterators.resultValue(1),
+            iterators.resultStart,
+        ];
+
+        expect(result).toEqual(expected);
+    });
+
+    it('should give previous with nested repeats', () => {
+        const arrayItr = arrayIterator.create([1, 2]);
+        const innerRepeatItr = repeatIterator.create(arrayItr, 2);
+        const itr = repeatIterator.create(innerRepeatItr, 2);
+
+        const result: IteratorResult<number>[] = [];
+
+        result.push(iterators.nextBack(itr));
+
+        for (let i = 0; i < 9; i++) {
+            result.push(iterators.next(itr));
+        }
+
+        for (let i = 0; i < 9; i++) {
+            result.push(iterators.nextBack(itr));
+        }
+
+        const expected: IteratorResult<number>[] = [
+            iterators.resultStart,
+            iterators.resultValue(1),
+            iterators.resultValue(2),
+            iterators.resultValue(1),
+            iterators.resultValue(2),
+            iterators.resultValue(1),
+            iterators.resultValue(2),
+            iterators.resultValue(1),
+            iterators.resultValue(2),
+            iterators.resultEnd,
+            iterators.resultValue(2),
+            iterators.resultValue(1),
+            iterators.resultValue(2),
+            iterators.resultValue(1),
+            iterators.resultValue(2),
+            iterators.resultValue(1),
+            iterators.resultValue(2),
+            iterators.resultValue(1),
+            iterators.resultStart,
+        ];
+
+        expect(result).toEqual(expected);
+    });
 });

@@ -21,13 +21,22 @@ const next = <Item>(self: ArrayIterator<Item>): IteratorResult<Item> => {
     if (self.index < self.array.length) {
         const value = self.array[self.index];
         self.index += 1;
-
         return iterators.resultValue(value);
     } else {
         return iterators.resultEnd;
     }
 };
 
-const arrayIterator = { create, next };
+const nextBack = <Item>(self: ArrayIterator<Item>): IteratorResult<Item> => {
+    if (self.index > 0) {
+        self.index -= 1;
+        const value = self.array[self.index];
+        return iterators.resultValue(value);
+    } else {
+        return iterators.resultStart;
+    }
+};
+
+const arrayIterator = { create, next, nextBack };
 
 export default arrayIterator;

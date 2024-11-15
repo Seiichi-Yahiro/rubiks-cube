@@ -14,6 +14,7 @@ export interface RepeatIterator<I extends Iterator<unknown>>
     repetitions: number;
     iterator: I;
     originalIterator: I;
+    finalIterator?: I;
 }
 
 const create = <I extends Iterator<unknown>>(
@@ -36,6 +37,10 @@ const next = <Item, I extends Iterator<Item>>(
         return result;
     }
 
+    if (!self.finalIterator) {
+        self.finalIterator = iterators.clone(self.iterator);
+    }
+
     self.iterationIndex += 1;
 
     if (self.iterationIndex < self.repetitions) {
@@ -46,6 +51,28 @@ const next = <Item, I extends Iterator<Item>>(
     }
 };
 
-const repeatIterator = { create, next };
+const nextBack = <Item, I extends Iterator<Item>>(
+    self: RepeatIterator<I>,
+): IteratorResult<Item> => {
+    if (self.iterationIndex === self.repetitions) {
+        self.iterationIndex -= 1;
+    }
+
+    const result = iterators.nextBack(self.iterator);
+
+    if (result.resultType === IteratorResultType.Value) {
+        return result;
+    }
+
+    if (self.iterationIndex > 0) {
+        self.iterationIndex -= 1;
+        self.iterator = iterators.clone(self.finalIterator!); // finalIterator should exist when iterationIndex has been greater than 0 before
+        return nextBack(self);
+    } else {
+        return iterators.resultStart;
+    }
+};
+
+const repeatIterator = { create, next, nextBack };
 
 export default repeatIterator;

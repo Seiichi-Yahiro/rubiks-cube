@@ -27,6 +27,20 @@ const next = <Item>(self: Iterator<Item>): IteratorResult<Item> => {
     }
 };
 
+const nextBack = <Item>(self: Iterator<Item>): IteratorResult<Item> => {
+    switch (self.iteratorType) {
+        case IteratorType.Array: {
+            return arrayIterator.nextBack(self);
+        }
+        case IteratorType.Repeat: {
+            return repeatIterator.nextBack(self);
+        }
+        case IteratorType.Flatten: {
+            return flattenIterator.nextBack(self);
+        }
+    }
+};
+
 const resultStart: IteratorResultEdge = {
     resultType: IteratorResultType.Start,
 };
@@ -38,6 +52,6 @@ const resultValue = <Item>(item: Item): IteratorResultValue<Item> => ({
     value: item,
 });
 
-const iterator = { next, clone, resultStart, resultEnd, resultValue };
+const iterator = { clone, next, nextBack, resultStart, resultEnd, resultValue };
 
 export default iterator;
