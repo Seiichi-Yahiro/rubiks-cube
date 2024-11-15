@@ -11,6 +11,7 @@ import {
     parseListener,
     playAnimationLoopListener,
     skipListener,
+    skipRemainingListener,
 } from 'src/redux/player/playerListeners';
 import type { AppDispatch, AppState } from 'src/redux/store';
 
@@ -25,6 +26,7 @@ const setupListenerMiddleware = () => {
 
     parseListener(middleware.startListening);
     skipListener(middleware.startListening);
+    skipRemainingListener(middleware.startListening);
     playAnimationLoopListener(middleware.startListening);
 
     return middleware;

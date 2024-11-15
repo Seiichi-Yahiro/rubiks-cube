@@ -84,17 +84,30 @@ const Player: React.FC = () => {
         rotationCommandIteratorResult?.resultType === IteratorResultType.Start;
 
     const onPlay = () => {
-        if (playerStatus === PlayerStatus.STOPPED && isOk(rotationCommands)) {
+        if (isStopped && isOk(rotationCommands)) {
             dispatch(playerActions.play(rotationCommands.value));
-        } else if (playerStatus === PlayerStatus.PAUSED) {
+        } else if (isPaused) {
             dispatch(playerActions.unPause());
         }
     };
     const onPause = () => dispatch(playerActions.pause());
     const onStop = () => dispatch(playerActions.stop());
 
-    const onSkipToStart = () => dispatch(playerActions.skipToStart());
-    const onSkipToEnd = () => dispatch(playerActions.skipToEnd());
+    const onSkipToStart = () => {
+        if (isStopped) {
+            dispatch(playerActions.skipToStart());
+        } else if (isPaused) {
+            dispatch(playerActions.skipRemainingToStart());
+        }
+    };
+
+    const onSkipToEnd = () => {
+        if (isStopped) {
+            dispatch(playerActions.skipToEnd());
+        } else if (isPaused) {
+            dispatch(playerActions.skipRemainingToEnd());
+        }
+    };
 
     const onShuffle = () =>
         dispatch(

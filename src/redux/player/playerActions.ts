@@ -14,6 +14,9 @@ const unPause = createAction('UN_PAUSE');
 const skipToStart = createAction('SKIP_TO_START');
 const skipToEnd = createAction('SKIP_TO_END');
 
+const skipRemainingToStart = createAction('SKIP_REMAINING_TO_START');
+const skipRemainingToEnd = createAction('SKIP_REMAINING_TO_END');
+
 const setRotationCommandIterator = createAction<{
     iterator: Iterator<SingleRotationCommand>;
     result: IteratorResult<SingleRotationCommand>;
@@ -34,6 +37,8 @@ const actions = {
     unPause,
     skipToStart,
     skipToEnd,
+    skipRemainingToStart,
+    skipRemainingToEnd,
     setRotationCommandIterator,
     nextCommand,
     previousCommand,
