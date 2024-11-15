@@ -41,6 +41,20 @@ const nextBack = <Item>(self: Iterator<Item>): IteratorResult<Item> => {
     }
 };
 
+const collect = <Item>(self: Iterator<Item>, backwards = false): Item[] => {
+    const values: Item[] = [];
+
+    const produce = backwards ? nextBack : next;
+    let result = produce(self);
+
+    while (result.resultType === IteratorResultType.Value) {
+        values.push(result.value);
+        result = produce(self);
+    }
+
+    return values;
+};
+
 const resultStart: IteratorResultEdge = {
     resultType: IteratorResultType.Start,
 };
@@ -52,6 +66,14 @@ const resultValue = <Item>(item: Item): IteratorResultValue<Item> => ({
     value: item,
 });
 
-const iterator = { clone, next, nextBack, resultStart, resultEnd, resultValue };
+const iterator = {
+    clone,
+    next,
+    nextBack,
+    collect,
+    resultStart,
+    resultEnd,
+    resultValue,
+};
 
 export default iterator;
