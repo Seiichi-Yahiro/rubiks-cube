@@ -8,7 +8,11 @@ import {
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
 import iterators from 'src/utils/iterators';
-import { type Iterator, IteratorResultType } from 'src/utils/iterators/types';
+import {
+    type Iterator,
+    IteratorResult,
+    IteratorResultType,
+} from 'src/utils/iterators/types';
 
 export enum PlayerStatus {
     STOPPED = 'STOPPED',
@@ -20,6 +24,7 @@ export interface IPlayerState {
     notation: string;
     rotationCommands: Result<RotationCommand[]>;
     rotationCommandsIterator?: Iterator<SingleRotationCommand>;
+    rotationCommandsIteratorResult?: IteratorResult<SingleRotationCommand>;
     currentCommand?: SingleRotationCommand;
     status: PlayerStatus;
 }
@@ -48,6 +53,7 @@ export const createPlayerReducer = (
                 state.rotationCommandsIterator = createRotationCommandIterator(
                     action.payload,
                 );
+                state.rotationCommandsIteratorResult = iterators.resultStart;
             })
             .addCase(playerActions.unPause, (state, _action) => {
                 state.status = PlayerStatus.PLAYING;
@@ -62,7 +68,9 @@ export const createPlayerReducer = (
             .addCase(
                 playerActions.setRotationCommandIterator,
                 (state, action) => {
-                    state.rotationCommandsIterator = action.payload;
+                    state.rotationCommandsIterator = action.payload.iterator;
+                    state.rotationCommandsIteratorResult =
+                        action.payload.result;
                 },
             )
             .addCase(playerActions.nextCommand, (state, _action) => {
@@ -71,6 +79,8 @@ export const createPlayerReducer = (
                 }
 
                 const result = iterators.next(state.rotationCommandsIterator);
+
+                state.rotationCommandsIteratorResult = result;
 
                 if (result.resultType === IteratorResultType.Value) {
                     state.currentCommand = result.value;

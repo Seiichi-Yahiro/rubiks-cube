@@ -222,7 +222,7 @@ describe('Player', () => {
             skip = await screen.findByRole('button', {
                 name: 'player.input.skipToEnd',
             });
-            expect(skip).toHaveAttribute('aria-disabled', 'false');
+            expect(skip).toHaveAttribute('aria-disabled', 'true');
 
             const stateAfter = store.getState();
 

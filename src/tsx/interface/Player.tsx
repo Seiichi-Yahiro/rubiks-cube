@@ -20,6 +20,7 @@ import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import NotationInput from 'src/tsx/interface/NotationInput';
 import createClassName from 'src/utils/createClassName';
+import { IteratorResultType } from 'src/utils/iterators/types';
 
 interface TooltipedIconButtonProps {
     title: string;
@@ -60,6 +61,9 @@ const Player: React.FC = () => {
     const playerNotation = useRedux((state) => state.player.notation);
     const playerStatus = useRedux((state) => state.player.status);
     const rotationCommands = useRedux((state) => state.player.rotationCommands);
+    const rotationCommandIteratorResult = useRedux(
+        (state) => state.player.rotationCommandsIteratorResult,
+    );
 
     const updateNotation = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -68,10 +72,16 @@ const Player: React.FC = () => {
     );
 
     const hasParseError = isError(rotationCommands);
-    const isNotationEmpty = playerNotation.length === 0;
+    const isNotationInvalid = playerNotation.length === 0 || hasParseError;
+
     const isStopped = playerStatus === PlayerStatus.STOPPED;
     const isPlaying = playerStatus === PlayerStatus.PLAYING;
     const isPaused = playerStatus === PlayerStatus.PAUSED;
+
+    const isLastRotationCommand =
+        rotationCommandIteratorResult?.resultType === IteratorResultType.End;
+    const isFirstRotationCommand =
+        rotationCommandIteratorResult?.resultType === IteratorResultType.Start;
 
     const onPlay = () => {
         if (playerStatus === PlayerStatus.STOPPED && isOk(rotationCommands)) {
@@ -113,7 +123,7 @@ const Player: React.FC = () => {
                     ) : (
                         <TooltipedIconButton
                             title={t('player.input.play')}
-                            disabled={isNotationEmpty || hasParseError}
+                            disabled={isNotationInvalid}
                             onClick={onPlay}
                         >
                             <PlayArrow />
@@ -131,28 +141,44 @@ const Player: React.FC = () => {
                     <TooltipedIconButton
                         title={t('player.input.skipToStart')}
                         onClick={() => {}}
-                        disabled={!isPaused || isNotationEmpty || hasParseError}
+                        disabled={
+                            isPlaying ||
+                            (isPaused && isFirstRotationCommand) ||
+                            isStopped
+                        }
                     >
                         <SkipPrevious />
                     </TooltipedIconButton>
                     <TooltipedIconButton
                         title={t('player.input.stepPrevious')}
                         onClick={() => {}}
-                        disabled={!isPaused || isNotationEmpty || hasParseError}
+                        disabled={
+                            isPlaying ||
+                            (isPaused && isFirstRotationCommand) ||
+                            isStopped
+                        }
                     >
                         <ArrowBack />
                     </TooltipedIconButton>
                     <TooltipedIconButton
                         title={t('player.input.stepNext')}
                         onClick={() => {}}
-                        disabled={isPlaying || isNotationEmpty || hasParseError}
+                        disabled={
+                            isPlaying ||
+                            (isPaused && isLastRotationCommand) ||
+                            (isStopped && isNotationInvalid)
+                        }
                     >
                         <ArrowForward />
                     </TooltipedIconButton>
                     <TooltipedIconButton
                         title={t('player.input.skipToEnd')}
                         onClick={onSkipToEnd}
-                        disabled={isPlaying || isNotationEmpty || hasParseError}
+                        disabled={
+                            isPlaying ||
+                            (isPaused && isLastRotationCommand) ||
+                            (isStopped && isNotationInvalid)
+                        }
                     >
                         <SkipNext />
                     </TooltipedIconButton>

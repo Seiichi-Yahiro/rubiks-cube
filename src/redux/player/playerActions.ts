@@ -4,7 +4,7 @@ import {
     RotationCommand,
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
-import type { Iterator } from 'src/utils/iterators/types';
+import type { Iterator, IteratorResult } from 'src/utils/iterators/types';
 
 const play = createAction<RotationCommand[]>('PLAY');
 const stop = createAction('STOP');
@@ -13,9 +13,10 @@ const unPause = createAction('UN_PAUSE');
 
 const skipToEnd = createAction('SKIP_TO_END');
 
-const setRotationCommandIterator = createAction<
-    Iterator<SingleRotationCommand>
->('SET_ROTATION_COMMAND_ITERATOR');
+const setRotationCommandIterator = createAction<{
+    iterator: Iterator<SingleRotationCommand>;
+    result: IteratorResult<SingleRotationCommand>;
+}>('SET_ROTATION_COMMAND_ITERATOR');
 
 const nextCommand = createAction('NEXT_COMMAND');
 const previousCommand = createAction('PREVIOUS_COMMAND');

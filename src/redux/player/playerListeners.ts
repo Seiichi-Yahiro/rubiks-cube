@@ -49,7 +49,10 @@ export const skipToEndListener = (startListening: AppStartListening) =>
                 const remainingRotationCommands = iterators.collect(itr);
 
                 listenerApi.dispatch(
-                    playerActions.setRotationCommandIterator(itr),
+                    playerActions.setRotationCommandIterator({
+                        iterator: itr,
+                        result: iterators.resultEnd,
+                    }),
                 );
 
                 listenerApi.dispatch(
