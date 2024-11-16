@@ -1,5 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
-import { RotationCommand } from 'src/algorithms/rotationCommand';
+import {
+    RotationCommand,
+    SingleRotationCommand,
+} from 'src/algorithms/rotationCommand';
 import { Color, ICubicle } from 'src/tsx/cube/cubeTypes';
 
 const setCubeSize = createAction<number>('SET_CUBE_SIZE');
@@ -27,6 +30,9 @@ const setColor = createAction('SET_COLOR', (key: Color, value: string) => ({
 
 const resetColors = createAction('RESET_COLORS');
 
+const animateSingleRotationCommand =
+    createAction<SingleRotationCommand>('PLAY_ANIMATION');
+
 const animationFinished = createAction('ANIMATION_FINISHED');
 
 const actions = {
@@ -38,6 +44,7 @@ const actions = {
     resetCube,
     setColor,
     resetColors,
+    animateSingleRotationCommand,
     animationFinished,
 };
 

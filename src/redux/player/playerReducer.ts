@@ -5,14 +5,9 @@ import {
     RotationCommand,
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
-import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
 import iterators from 'src/utils/iterators';
-import {
-    type Iterator,
-    IteratorResult,
-    IteratorResultType,
-} from 'src/utils/iterators/types';
+import { type Iterator, IteratorResult } from 'src/utils/iterators/types';
 
 export enum PlayerStatus {
     STOPPED = 'STOPPED',
@@ -25,7 +20,6 @@ export interface IPlayerState {
     rotationCommands: Result<RotationCommand[]>;
     rotationCommandsIterator?: Iterator<SingleRotationCommand>;
     rotationCommandsIteratorResult?: IteratorResult<SingleRotationCommand>;
-    currentCommand?: SingleRotationCommand;
     status: PlayerStatus;
 }
 
@@ -78,15 +72,8 @@ export const createPlayerReducer = (
                     return;
                 }
 
-                const result = iterators.next(state.rotationCommandsIterator);
-
-                state.rotationCommandsIteratorResult = result;
-
-                if (result.resultType === IteratorResultType.Value) {
-                    state.currentCommand = result.value;
-                }
-            })
-            .addCase(cubeActions.applyRotationCommands, (state, _action) => {
-                state.currentCommand = undefined;
+                state.rotationCommandsIteratorResult = iterators.next(
+                    state.rotationCommandsIterator,
+                );
             });
     });

@@ -8,6 +8,7 @@ import {
     sideToTransform,
 } from 'src/tsx/cube/cubeUtils';
 import { fromAngleX, fromAngleY, Mat4, multiply } from 'src/utils/matrix4';
+import { SingleRotationCommand } from '../../algorithms/rotationCommand';
 
 export interface ICubeState {
     dimension: number;
@@ -17,6 +18,7 @@ export interface ICubeState {
     cubicles: ICubicle[];
     rotation: Mat4;
     colorMap: ColorMap;
+    animation?: SingleRotationCommand;
 }
 
 const createInitialCubeState = (): ICubeState => ({
@@ -59,6 +61,15 @@ export const createCubeReducer = (
             })
             .addCase(cubeActions.updateCubicles, (state, action) => {
                 state.cubicles = action.payload;
+            })
+            .addCase(
+                cubeActions.animateSingleRotationCommand,
+                (state, action) => {
+                    state.animation = action.payload;
+                },
+            )
+            .addCase(cubeActions.animationFinished, (state, _action) => {
+                state.animation = undefined;
             })
             .addCase(cubeActions.applyRotationCommands, (state, action) => {
                 state.cubicles = action.payload.reduce(

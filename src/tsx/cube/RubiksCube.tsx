@@ -101,7 +101,7 @@ const Cubicles: React.FC<CubiclesProps> = React.memo(({ cubicleSize }) => {
     const cubicles = useRedux((state) => state.cube.cubicles);
     const rotationDuration = useRedux((state) => state.cube.rotationDuration);
     const currentRotationCommand = Maybe.of(
-        useRedux((state) => state.player.currentCommand),
+        useRedux((state) => state.cube.animation),
     );
 
     const debouncedAnimationFinishedDispatch = useMemo(

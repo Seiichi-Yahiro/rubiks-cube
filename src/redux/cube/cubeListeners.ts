@@ -22,6 +22,24 @@ export const createCubiclesListener = (startListening: AppStartListening) =>
         },
     });
 
+export const animationFinishedListener = (startListening: AppStartListening) =>
+    startListening({
+        actionCreator: cubeActions.animateSingleRotationCommand,
+        effect: async (action, listenerApi) => {
+            listenerApi.unsubscribe();
+
+            await listenerApi.condition((action) =>
+                cubeActions.animationFinished.match(action),
+            );
+
+            listenerApi.dispatch(
+                cubeActions.applyRotationCommands([action.payload]),
+            );
+
+            listenerApi.subscribe();
+        },
+    });
+
 export const saveColorMapListener = (startListening: AppStartListening) =>
     startListening({
         matcher: isAnyOf(cubeActions.setColor, cubeActions.resetColors),

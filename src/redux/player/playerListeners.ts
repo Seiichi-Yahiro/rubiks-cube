@@ -12,7 +12,10 @@ import { AppStartListening } from 'src/redux/listener';
 import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import iterators from 'src/utils/iterators';
-import { IteratorResultEdge } from '../../utils/iterators/types';
+import {
+    IteratorResultEdge,
+    IteratorResultType,
+} from '../../utils/iterators/types';
 
 export const parseListener = (startListening: AppStartListening) =>
     startListening({
@@ -116,19 +119,23 @@ export const playAnimationLoopListener = (startListening: AppStartListening) =>
 
                 let state = listenerApi.getState();
 
-                if (!state.player.currentCommand) {
+                if (
+                    !state.player.rotationCommandsIteratorResult ||
+                    state.player.rotationCommandsIteratorResult.resultType !==
+                        IteratorResultType.Value
+                ) {
                     listenerApi.dispatch(playerActions.stop());
                     break;
                 }
 
-                await listenerApi.condition((action) =>
-                    cubeActions.animationFinished.match(action),
+                listenerApi.dispatch(
+                    cubeActions.animateSingleRotationCommand(
+                        state.player.rotationCommandsIteratorResult.value,
+                    ),
                 );
 
-                listenerApi.dispatch(
-                    cubeActions.applyRotationCommands([
-                        state.player.currentCommand,
-                    ]),
+                await listenerApi.condition((action) =>
+                    cubeActions.animationFinished.match(action),
                 );
 
                 state = listenerApi.getState();

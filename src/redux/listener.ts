@@ -4,6 +4,7 @@ import {
     TypedStartListening,
 } from '@reduxjs/toolkit';
 import {
+    animationFinishedListener,
     createCubiclesListener,
     saveColorMapListener,
 } from 'src/redux/cube/cubeListeners';
@@ -22,6 +23,7 @@ const setupListenerMiddleware = () => {
     const middleware = createListenerMiddleware();
 
     createCubiclesListener(middleware.startListening);
+    animationFinishedListener(middleware.startListening);
     saveColorMapListener(middleware.startListening);
 
     parseListener(middleware.startListening);
