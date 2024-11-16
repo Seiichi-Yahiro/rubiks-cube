@@ -79,7 +79,9 @@ export const skipRemainingListener = (startListening: AppStartListening) =>
                 return;
             }
 
-            const itr = iterators.clone(state.player.rotationCommandsIterator);
+            const itr = iterators.clone(
+                state.player.rotationCommandsIterator.itr,
+            );
 
             let remainingRotationCommands: SingleRotationCommand[];
             let result: IteratorResultEdge;
@@ -97,7 +99,7 @@ export const skipRemainingListener = (startListening: AppStartListening) =>
 
             listenerApi.dispatch(
                 playerActions.setRotationCommandIterator({
-                    iterator: itr,
+                    itr,
                     result,
                 }),
             );
@@ -120,8 +122,8 @@ export const playAnimationLoopListener = (startListening: AppStartListening) =>
                 let state = listenerApi.getState();
 
                 if (
-                    !state.player.rotationCommandsIteratorResult ||
-                    state.player.rotationCommandsIteratorResult.resultType !==
+                    !state.player.rotationCommandsIterator ||
+                    state.player.rotationCommandsIterator.result.resultType !==
                         IteratorResultType.Value
                 ) {
                     listenerApi.dispatch(playerActions.stop());
@@ -130,7 +132,7 @@ export const playAnimationLoopListener = (startListening: AppStartListening) =>
 
                 listenerApi.dispatch(
                     cubeActions.animateSingleRotationCommand(
-                        state.player.rotationCommandsIteratorResult.value,
+                        state.player.rotationCommandsIterator.result.value,
                     ),
                 );
 

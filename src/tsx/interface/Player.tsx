@@ -62,7 +62,7 @@ const Player: React.FC = () => {
     const playerStatus = useRedux((state) => state.player.status);
     const rotationCommands = useRedux((state) => state.player.rotationCommands);
     const rotationCommandIteratorResult = useRedux(
-        (state) => state.player.rotationCommandsIteratorResult,
+        (state) => state.player.rotationCommandsIterator?.result,
     );
 
     const updateNotation = useCallback(

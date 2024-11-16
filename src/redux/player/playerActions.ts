@@ -1,10 +1,9 @@
 import { createAction } from '@reduxjs/toolkit';
 import { Result } from 'parsimmon';
-import {
+import type {
     RotationCommand,
-    SingleRotationCommand,
+    RotationCommandsIterator,
 } from 'src/algorithms/rotationCommand';
-import type { Iterator, IteratorResult } from 'src/utils/iterators/types';
 
 const play = createAction<RotationCommand[]>('PLAY');
 const stop = createAction('STOP');
@@ -17,10 +16,9 @@ const skipToEnd = createAction('SKIP_TO_END');
 const skipRemainingToStart = createAction('SKIP_REMAINING_TO_START');
 const skipRemainingToEnd = createAction('SKIP_REMAINING_TO_END');
 
-const setRotationCommandIterator = createAction<{
-    iterator: Iterator<SingleRotationCommand>;
-    result: IteratorResult<SingleRotationCommand>;
-}>('SET_ROTATION_COMMAND_ITERATOR');
+const setRotationCommandIterator = createAction<RotationCommandsIterator>(
+    'SET_ROTATION_COMMAND_ITERATOR',
+);
 
 const nextCommand = createAction('NEXT_COMMAND');
 const previousCommand = createAction('PREVIOUS_COMMAND');

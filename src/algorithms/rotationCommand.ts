@@ -3,7 +3,7 @@ import { Failure, Result, Success } from 'parsimmon';
 import arrayIterator from 'src/utils/iterators/array';
 import flattenIterator from 'src/utils/iterators/flatten';
 import repeatIterator from 'src/utils/iterators/repeat';
-import { type Iterator } from 'src/utils/iterators/types';
+import { type Iterator, IteratorResult } from 'src/utils/iterators/types';
 import { fromAngleX, fromAngleY, fromAngleZ, Mat4 } from 'src/utils/matrix4';
 
 export interface SingleRotationCommand {
@@ -23,6 +23,11 @@ export const isLoopedRotationCommands = (
     rotationCommand: RotationCommand,
 ): rotationCommand is LoopedRotationCommands =>
     (rotationCommand as LoopedRotationCommands).iterations !== undefined;
+
+export interface RotationCommandsIterator {
+    itr: Iterator<SingleRotationCommand>;
+    result: IteratorResult<SingleRotationCommand>;
+}
 
 export const createRotationCommandIterator = (
     rotationCommands: RotationCommand[],

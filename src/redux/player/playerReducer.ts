@@ -3,11 +3,10 @@ import { Result } from 'parsimmon';
 import {
     createRotationCommandIterator,
     RotationCommand,
-    SingleRotationCommand,
+    RotationCommandsIterator,
 } from 'src/algorithms/rotationCommand';
 import { playerActions } from 'src/redux/player/playerActions';
 import iterators from 'src/utils/iterators';
-import { type Iterator, IteratorResult } from 'src/utils/iterators/types';
 
 export enum PlayerStatus {
     STOPPED = 'STOPPED',
@@ -18,8 +17,7 @@ export enum PlayerStatus {
 export interface IPlayerState {
     notation: string;
     rotationCommands: Result<RotationCommand[]>;
-    rotationCommandsIterator?: Iterator<SingleRotationCommand>;
-    rotationCommandsIteratorResult?: IteratorResult<SingleRotationCommand>;
+    rotationCommandsIterator?: RotationCommandsIterator;
     status: PlayerStatus;
 }
 
@@ -44,10 +42,13 @@ export const createPlayerReducer = (
             })
             .addCase(playerActions.play, (state, action) => {
                 state.status = PlayerStatus.PLAYING;
-                state.rotationCommandsIterator = createRotationCommandIterator(
-                    action.payload,
-                );
-                state.rotationCommandsIteratorResult = iterators.resultStart;
+
+                const itr = createRotationCommandIterator(action.payload);
+
+                state.rotationCommandsIterator = {
+                    itr,
+                    result: iterators.resultStart,
+                };
             })
             .addCase(playerActions.unPause, (state, _action) => {
                 state.status = PlayerStatus.PLAYING;
@@ -62,9 +63,7 @@ export const createPlayerReducer = (
             .addCase(
                 playerActions.setRotationCommandIterator,
                 (state, action) => {
-                    state.rotationCommandsIterator = action.payload.iterator;
-                    state.rotationCommandsIteratorResult =
-                        action.payload.result;
+                    state.rotationCommandsIterator = action.payload;
                 },
             )
             .addCase(playerActions.nextCommand, (state, _action) => {
@@ -72,8 +71,8 @@ export const createPlayerReducer = (
                     return;
                 }
 
-                state.rotationCommandsIteratorResult = iterators.next(
-                    state.rotationCommandsIterator,
+                state.rotationCommandsIterator.result = iterators.next(
+                    state.rotationCommandsIterator.itr,
                 );
             });
     });
