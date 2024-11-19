@@ -9,7 +9,7 @@ import {
 } from 'src/algorithms/rotationCommand';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { AppStartListening } from 'src/redux/listener';
-import { playerActions } from 'src/redux/player/playerActions';
+import { Direction, playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import iterators from 'src/utils/iterators';
 import {
@@ -35,7 +35,7 @@ export const parseListener = (startListening: AppStartListening) =>
 
 export const skipListener = (startListening: AppStartListening) =>
     startListening({
-        matcher: isAnyOf(playerActions.skipToStart, playerActions.skipToEnd),
+        actionCreator: playerActions.skip,
         effect: (action, listenerApi) => {
             const state = listenerApi.getState();
 
@@ -51,7 +51,7 @@ export const skipListener = (startListening: AppStartListening) =>
             let rotationCommands: RotationCommand[] =
                 state.player.rotationCommands.value;
 
-            if (playerActions.skipToStart.match(action)) {
+            if (action.payload === Direction.Backwards) {
                 rotationCommands = invertRotationCommands(rotationCommands);
             }
 
@@ -63,10 +63,7 @@ export const skipListener = (startListening: AppStartListening) =>
 
 export const skipRemainingListener = (startListening: AppStartListening) =>
     startListening({
-        matcher: isAnyOf(
-            playerActions.skipRemainingToStart,
-            playerActions.skipRemainingToEnd,
-        ),
+        actionCreator: playerActions.skipRemaining,
         effect: (action, listenerApi) => {
             const state = listenerApi.getState();
 
@@ -86,7 +83,7 @@ export const skipRemainingListener = (startListening: AppStartListening) =>
             let remainingRotationCommands: SingleRotationCommand[];
             let result: IteratorResultEdge;
 
-            if (playerActions.skipRemainingToStart.match(action)) {
+            if (action.payload === Direction.Backwards) {
                 remainingRotationCommands = iterators
                     .collect(itr, true)
                     .map(invertSingleRotationCommand);

@@ -10,18 +10,19 @@ const stop = createAction('STOP');
 const pause = createAction('PAUSE');
 const unPause = createAction('UN_PAUSE');
 
-const skipToStart = createAction('SKIP_TO_START');
-const skipToEnd = createAction('SKIP_TO_END');
+export enum Direction {
+    Forwards = 'Forwards',
+    Backwards = 'Backwards',
+}
 
-const skipRemainingToStart = createAction('SKIP_REMAINING_TO_START');
-const skipRemainingToEnd = createAction('SKIP_REMAINING_TO_END');
+const skip = createAction<Direction>('SKIP');
+const skipRemaining = createAction<Direction>('SKIP_REMAINING');
 
 const setRotationCommandIterator = createAction<RotationCommandsIterator>(
     'SET_ROTATION_COMMAND_ITERATOR',
 );
 
 const nextCommand = createAction('NEXT_COMMAND');
-const previousCommand = createAction('PREVIOUS_COMMAND');
 
 const updateNotation = createAction<string>('UPDATE_NOTATION');
 
@@ -33,13 +34,10 @@ const actions = {
     stop,
     pause,
     unPause,
-    skipToStart,
-    skipToEnd,
-    skipRemainingToStart,
-    skipRemainingToEnd,
+    skip,
+    skipRemaining,
     setRotationCommandIterator,
     nextCommand,
-    previousCommand,
     updateNotation,
     parsedNotation,
 };

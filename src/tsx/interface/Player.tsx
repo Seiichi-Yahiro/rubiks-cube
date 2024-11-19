@@ -16,7 +16,7 @@ import { createRandomNotation } from 'src/algorithms/parser';
 import { isError, isOk } from 'src/algorithms/rotationCommand';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
-import { playerActions } from 'src/redux/player/playerActions';
+import { Direction, playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import NotationInput from 'src/tsx/interface/NotationInput';
 import createClassName from 'src/utils/createClassName';
@@ -95,17 +95,17 @@ const Player: React.FC = () => {
 
     const onSkipToStart = () => {
         if (isStopped) {
-            dispatch(playerActions.skipToStart());
+            dispatch(playerActions.skip(Direction.Backwards));
         } else if (isPaused) {
-            dispatch(playerActions.skipRemainingToStart());
+            dispatch(playerActions.skipRemaining(Direction.Backwards));
         }
     };
 
     const onSkipToEnd = () => {
         if (isStopped) {
-            dispatch(playerActions.skipToEnd());
+            dispatch(playerActions.skip(Direction.Forwards));
         } else if (isPaused) {
-            dispatch(playerActions.skipRemainingToEnd());
+            dispatch(playerActions.skipRemaining(Direction.Forwards));
         }
     };
 
