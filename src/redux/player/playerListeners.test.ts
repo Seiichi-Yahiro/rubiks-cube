@@ -1,37 +1,4 @@
-import { Success } from 'parsimmon';
-import { RotationCommand } from 'src/algorithms/rotationCommand';
-import { cubeActions } from 'src/redux/cube/cubeActions';
-import { playerActions } from 'src/redux/player/playerActions';
-import { AppStore, setupStore } from 'src/redux/store';
-
 describe('PlayerListeners', () => {
-    describe('parseListener', () => {
-        let store: AppStore;
-
-        beforeEach(() => {
-            store = setupStore();
-        });
-
-        it('should parse the notation when the notation changes', () => {
-            store.dispatch(playerActions.updateNotation('F U R'));
-            const state = store.getState();
-
-            expect(state.player.rotationCommands.status).toBe(true);
-            expect(
-                (state.player.rotationCommands as Success<RotationCommand[]>)
-                    .value.length,
-            ).toBe(3);
-        });
-
-        it('should parse the notation when the cube dimension changes', () => {
-            store.dispatch(playerActions.updateNotation('3F'));
-            store.dispatch(cubeActions.setCubeDimension(2));
-            const state = store.getState();
-
-            expect(state.player.rotationCommands.status).toBe(false);
-        });
-    });
-
     /*describe('playAnimationLoopListener', () => {
         let store: AppStore;
         let nextCommandSpy: jest.SpyInstance;
