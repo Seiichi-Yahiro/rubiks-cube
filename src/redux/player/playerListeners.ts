@@ -1,6 +1,12 @@
-import { isAnyOf } from '@reduxjs/toolkit';
+import {
+    ForkedTaskAPI,
+    isAnyOf,
+    ListenerEffectAPI,
+    TaskAbortError,
+} from '@reduxjs/toolkit';
 import { makeNotationParser } from 'src/algorithms/parser';
 import {
+    createRotationCommandIterator,
     invertRotationCommands,
     invertSingleRotationCommand,
     isOk,
@@ -12,10 +18,8 @@ import { AppStartListening } from 'src/redux/listener';
 import { Direction, playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import iterators from 'src/utils/iterators';
-import {
-    IteratorResultEdge,
-    IteratorResultType,
-} from '../../utils/iterators/types';
+import { IteratorResultType } from '../../utils/iterators/types';
+import { AppDispatch, AppState } from '../store';
 
 export const parseListener = (startListening: AppStartListening) =>
     startListening({
@@ -32,6 +36,193 @@ export const parseListener = (startListening: AppStartListening) =>
             listenerApi.dispatch(playerActions.parsedNotation(parseResult));
         },
     });
+
+export const setupPlayAnimationLoopListener = (
+    startListening: AppStartListening,
+) =>
+    startListening({
+        actionCreator: playerActions.play,
+        effect: async (action, listenerApi) => {
+            listenerApi.dispatch(
+                playerActions.createRotationCommandIterator(action.payload),
+            );
+
+            listenerApi.dispatch(playerActions.resume());
+        },
+    });
+
+export const startPlayAnimationLoopListener = (
+    startListening: AppStartListening,
+) =>
+    startListening({
+        actionCreator: playerActions.resume,
+        effect: async (_action, listenerApi) => {
+            listenerApi.unsubscribe();
+
+            const playLoopTask = listenerApi.fork((forkApi) =>
+                createPlayLoopTask(forkApi, listenerApi),
+            );
+
+            await listenerApi.condition(
+                isAnyOf(playerActions.stop, playerActions.pause),
+            );
+            playLoopTask.cancel();
+
+            listenerApi.subscribe();
+        },
+    });
+
+const createPlayLoopTask = async (
+    forkApi: ForkedTaskAPI,
+    listenerApi: ListenerEffectAPI<AppState, AppDispatch>,
+) => {
+    try {
+        while (true) {
+            listenerApi.dispatch(
+                playerActions.generateRotationCommands({
+                    direction: Direction.Forwards,
+                    amount: 1,
+                }),
+            );
+
+            const [{ payload: generatedCommands }] = await forkApi.pause(
+                listenerApi.take(playerActions.generatedRotationCommands.match),
+            );
+
+            if (generatedCommands.length === 0) {
+                listenerApi.dispatch(playerActions.stop());
+                break;
+            } else if (generatedCommands.length > 1) {
+                throw new Error(
+                    `Expected one command but got ${generatedCommands.length}`,
+                );
+            }
+
+            listenerApi.dispatch(
+                cubeActions.animateSingleRotationCommand(generatedCommands[0]),
+            );
+
+            await forkApi.pause(
+                listenerApi.condition(cubeActions.animationFinished.match),
+            );
+
+            const state = listenerApi.getState();
+
+            if (state.player.status === PlayerStatus.PAUSED) {
+                await forkApi.pause(
+                    listenerApi.condition(playerActions.resume.match),
+                );
+            } else if (state.player.status === PlayerStatus.PLAYING) {
+                await forkApi.delay(50);
+            }
+        }
+    } catch (err) {
+        if (err instanceof TaskAbortError) {
+            return;
+        } else {
+            throw err;
+        }
+    }
+};
+
+export const setupStepListener = (startListening: AppStartListening) =>
+    startListening({
+        predicate: (action, currentState) =>
+            currentState.player.status === PlayerStatus.STOPPED &&
+            playerActions.nextStep.match(action) &&
+            action.payload === Direction.Forwards,
+        effect: async (
+            action: ReturnType<typeof playerActions.nextStep>,
+            listenerApi,
+        ) => {
+            const state = listenerApi.getState();
+
+            if (!isOk(state.player.rotationCommands)) {
+                return;
+            }
+
+            listenerApi.dispatch(
+                playerActions.createRotationCommandIterator(
+                    state.player.rotationCommands.value,
+                ),
+            );
+
+            listenerApi.dispatch(playerActions.pause());
+
+            // delay next dispatch otherwise step loop fork will miss it
+            await listenerApi.delay(50);
+            listenerApi.dispatch(action);
+        },
+    });
+
+export const startStepLoopListener = (startListening: AppStartListening) =>
+    startListening({
+        actionCreator: playerActions.pause,
+        effect: async (_action, listenerApi) => {
+            listenerApi.unsubscribe();
+            const stepLoopTask = listenerApi.fork((forkApi) =>
+                createStepLoopTask(forkApi, listenerApi),
+            );
+
+            await listenerApi.condition(
+                isAnyOf(playerActions.stop, playerActions.resume),
+            );
+
+            stepLoopTask.cancel();
+            listenerApi.subscribe();
+        },
+    });
+
+const createStepLoopTask = async (
+    forkApi: ForkedTaskAPI,
+    listenerApi: ListenerEffectAPI<AppState, AppDispatch>,
+) => {
+    try {
+        while (true) {
+            const [{ payload: direction }] = await forkApi.pause(
+                listenerApi.take(playerActions.nextStep.match),
+            );
+
+            listenerApi.dispatch(
+                playerActions.generateRotationCommands({
+                    direction,
+                    amount: 1,
+                }),
+            );
+
+            const [{ payload: generatedCommands }] = await forkApi.pause(
+                listenerApi.take(playerActions.generatedRotationCommands.match),
+            );
+
+            if (generatedCommands.length === 1) {
+                let rotationCommand = generatedCommands[0];
+
+                if (direction === Direction.Backwards) {
+                    rotationCommand =
+                        invertSingleRotationCommand(rotationCommand);
+                }
+
+                listenerApi.dispatch(
+                    cubeActions.animateSingleRotationCommand(rotationCommand),
+                );
+
+                await forkApi.pause(
+                    listenerApi.condition(cubeActions.animationFinished.match),
+                );
+            } else if (generatedCommands.length > 1) {
+                throw new Error(
+                    `Expected one command but got ${generatedCommands.length}`,
+                );
+            }
+        }
+    } catch (err) {
+        if (err instanceof TaskAbortError) {
+            return;
+        } else {
+            throw err;
+        }
+    }
+};
 
 export const skipListener = (startListening: AppStartListening) =>
     startListening({
@@ -64,98 +255,102 @@ export const skipListener = (startListening: AppStartListening) =>
 export const skipRemainingListener = (startListening: AppStartListening) =>
     startListening({
         actionCreator: playerActions.skipRemaining,
-        effect: (action, listenerApi) => {
+        effect: async (action, listenerApi) => {
+            listenerApi.unsubscribe();
+
             const state = listenerApi.getState();
 
-            if (
-                !(
-                    state.player.status === PlayerStatus.PAUSED &&
-                    state.player.rotationCommandsIterator
-                )
-            ) {
+            if (state.player.status !== PlayerStatus.PAUSED) {
                 return;
             }
 
-            const itr = iterators.clone(
-                state.player.rotationCommandsIterator.itr,
-            );
-
-            let remainingRotationCommands: SingleRotationCommand[];
-            let result: IteratorResultEdge;
-
-            if (action.payload === Direction.Backwards) {
-                remainingRotationCommands = iterators
-                    .collect(itr, true)
-                    .map(invertSingleRotationCommand);
-
-                result = iterators.resultStart;
-            } else {
-                remainingRotationCommands = iterators.collect(itr);
-                result = iterators.resultEnd;
-            }
-
             listenerApi.dispatch(
-                playerActions.setRotationCommandIterator({
-                    itr,
-                    result,
+                playerActions.generateRotationCommands({
+                    direction: action.payload,
+                    amount: Infinity,
                 }),
             );
+
+            const [{ payload: generatedCommands }] = await listenerApi.take(
+                playerActions.generatedRotationCommands.match,
+            );
+
+            let remainingRotationCommands = generatedCommands;
+
+            if (action.payload === Direction.Backwards) {
+                remainingRotationCommands = generatedCommands.map(
+                    invertSingleRotationCommand,
+                );
+            }
 
             listenerApi.dispatch(
                 cubeActions.applyRotationCommands(remainingRotationCommands),
             );
-        },
-    });
-
-export const playAnimationLoopListener = (startListening: AppStartListening) =>
-    startListening({
-        actionCreator: playerActions.play,
-        effect: async (_action, listenerApi) => {
-            listenerApi.unsubscribe();
-
-            while (true) {
-                listenerApi.dispatch(playerActions.nextCommand());
-
-                let state = listenerApi.getState();
-
-                if (
-                    !state.player.rotationCommandsIterator ||
-                    state.player.rotationCommandsIterator.result.resultType !==
-                        IteratorResultType.Value
-                ) {
-                    listenerApi.dispatch(playerActions.stop());
-                    break;
-                }
-
-                listenerApi.dispatch(
-                    cubeActions.animateSingleRotationCommand(
-                        state.player.rotationCommandsIterator.result.value,
-                    ),
-                );
-
-                await listenerApi.condition((action) =>
-                    cubeActions.animationFinished.match(action),
-                );
-
-                state = listenerApi.getState();
-
-                if (state.player.status === PlayerStatus.STOPPED) {
-                    break;
-                } else if (state.player.status === PlayerStatus.PAUSED) {
-                    const [action] = await listenerApi.take(
-                        (action) =>
-                            playerActions.stop.match(action) ||
-                            playerActions.unPause.match(action),
-                    );
-
-                    if (playerActions.stop.match(action)) {
-                        break;
-                    }
-                } else if (state.player.status === PlayerStatus.PLAYING) {
-                    await listenerApi.delay(50);
-                }
-            }
 
             listenerApi.subscribe();
         },
     });
+
+export const iteratorListener = (startListening: AppStartListening) =>
+    startListening({
+        actionCreator: playerActions.createRotationCommandIterator,
+        effect: async (action, listenerApi) => {
+            listenerApi.unsubscribe();
+
+            const iteratorLoopTask = listenerApi.fork((forkApi) =>
+                createIteratorLoopTask(forkApi, listenerApi, action.payload),
+            );
+
+            await listenerApi.condition(playerActions.stop.match);
+            iteratorLoopTask.cancel();
+
+            listenerApi.subscribe();
+        },
+    });
+
+const createIteratorLoopTask = async (
+    forkApi: ForkedTaskAPI,
+    listenerApi: ListenerEffectAPI<AppState, AppDispatch>,
+    rotationCommands: RotationCommand[],
+) => {
+    const itr = createRotationCommandIterator(rotationCommands);
+
+    try {
+        while (true) {
+            const [
+                {
+                    payload: { direction, amount },
+                },
+            ] = await forkApi.pause(
+                listenerApi.take(playerActions.generateRotationCommands.match),
+            );
+
+            const generate = {
+                [Direction.Forwards]: iterators.next,
+                [Direction.Backwards]: iterators.nextBack,
+            }[direction];
+
+            const commands: SingleRotationCommand[] = [];
+
+            for (let i = 0; i < amount; i++) {
+                const result = generate(itr);
+
+                if (result.resultType === IteratorResultType.Value) {
+                    commands.push(result.value);
+                } else {
+                    break;
+                }
+            }
+
+            listenerApi.dispatch(
+                playerActions.generatedRotationCommands(commands),
+            );
+        }
+    } catch (err) {
+        if (err instanceof TaskAbortError) {
+            return;
+        } else {
+            throw err;
+        }
+    }
+};

@@ -20,7 +20,6 @@ import { Direction, playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import NotationInput from 'src/tsx/interface/NotationInput';
 import createClassName from 'src/utils/createClassName';
-import { IteratorResultType } from 'src/utils/iterators/types';
 
 interface TooltipIconButtonProps {
     title: string;
@@ -61,9 +60,6 @@ const Player: React.FC = () => {
     const playerNotation = useRedux((state) => state.player.notation);
     const playerStatus = useRedux((state) => state.player.status);
     const rotationCommands = useRedux((state) => state.player.rotationCommands);
-    const rotationCommandIteratorResult = useRedux(
-        (state) => state.player.rotationCommandsIterator?.result,
-    );
 
     const updateNotation = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -78,16 +74,11 @@ const Player: React.FC = () => {
     const isPlaying = playerStatus === PlayerStatus.PLAYING;
     const isPaused = playerStatus === PlayerStatus.PAUSED;
 
-    const isLastRotationCommand =
-        rotationCommandIteratorResult?.resultType === IteratorResultType.End;
-    const isFirstRotationCommand =
-        rotationCommandIteratorResult?.resultType === IteratorResultType.Start;
-
     const onPlay = () => {
         if (isStopped && isOk(rotationCommands)) {
             dispatch(playerActions.play(rotationCommands.value));
         } else if (isPaused) {
-            dispatch(playerActions.unPause());
+            dispatch(playerActions.resume());
         }
     };
     const onPause = () => dispatch(playerActions.pause());
@@ -108,6 +99,11 @@ const Player: React.FC = () => {
             dispatch(playerActions.skipRemaining(Direction.Forwards));
         }
     };
+
+    const onNextStep = () =>
+        dispatch(playerActions.nextStep(Direction.Forwards));
+    const onNextStepBack = () =>
+        dispatch(playerActions.nextStep(Direction.Backwards));
 
     const onShuffle = () =>
         dispatch(
@@ -155,44 +151,28 @@ const Player: React.FC = () => {
                     <TooltipIconButton
                         title={t('player.input.skipToStart')}
                         onClick={onSkipToStart}
-                        disabled={
-                            isPlaying ||
-                            (isPaused && isFirstRotationCommand) ||
-                            (isStopped && isNotationInvalid)
-                        }
+                        disabled={isPlaying || (isStopped && isNotationInvalid)}
                     >
                         <SkipPrevious />
                     </TooltipIconButton>
                     <TooltipIconButton
                         title={t('player.input.stepPrevious')}
-                        onClick={() => {}}
-                        disabled={
-                            isPlaying ||
-                            (isPaused && isFirstRotationCommand) ||
-                            isStopped
-                        }
+                        onClick={onNextStepBack}
+                        disabled={isPlaying || isStopped}
                     >
                         <ArrowBack />
                     </TooltipIconButton>
                     <TooltipIconButton
                         title={t('player.input.stepNext')}
-                        onClick={() => {}}
-                        disabled={
-                            isPlaying ||
-                            (isPaused && isLastRotationCommand) ||
-                            (isStopped && isNotationInvalid)
-                        }
+                        onClick={onNextStep}
+                        disabled={isPlaying || (isStopped && isNotationInvalid)}
                     >
                         <ArrowForward />
                     </TooltipIconButton>
                     <TooltipIconButton
                         title={t('player.input.skipToEnd')}
                         onClick={onSkipToEnd}
-                        disabled={
-                            isPlaying ||
-                            (isPaused && isLastRotationCommand) ||
-                            (isStopped && isNotationInvalid)
-                        }
+                        disabled={isPlaying || (isStopped && isNotationInvalid)}
                     >
                         <SkipNext />
                     </TooltipIconButton>

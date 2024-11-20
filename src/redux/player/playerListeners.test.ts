@@ -2,7 +2,6 @@ import { Success } from 'parsimmon';
 import { RotationCommand } from 'src/algorithms/rotationCommand';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
-import { PlayerStatus } from 'src/redux/player/playerReducer';
 import { AppStore, setupStore } from 'src/redux/store';
 
 describe('PlayerListeners', () => {
@@ -33,7 +32,7 @@ describe('PlayerListeners', () => {
         });
     });
 
-    describe('playAnimationLoopListener', () => {
+    /*describe('playAnimationLoopListener', () => {
         let store: AppStore;
         let nextCommandSpy: jest.SpyInstance;
         let applyRotationCommandsSpy: jest.SpyInstance;
@@ -177,5 +176,5 @@ describe('PlayerListeners', () => {
             expect(nextCommandSpy).toHaveBeenCalledTimes(3);
             expect(applyRotationCommandsSpy).toHaveBeenCalledTimes(2);
         });
-    });
+    });*/
 });

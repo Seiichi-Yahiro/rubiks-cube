@@ -9,10 +9,14 @@ import {
     saveColorMapListener,
 } from 'src/redux/cube/cubeListeners';
 import {
+    iteratorListener,
     parseListener,
-    playAnimationLoopListener,
+    setupPlayAnimationLoopListener,
+    setupStepListener,
     skipListener,
     skipRemainingListener,
+    startPlayAnimationLoopListener,
+    startStepLoopListener,
 } from 'src/redux/player/playerListeners';
 import type { AppDispatch, AppState } from 'src/redux/store';
 
@@ -27,9 +31,17 @@ const setupListenerMiddleware = () => {
     saveColorMapListener(middleware.startListening);
 
     parseListener(middleware.startListening);
+
     skipListener(middleware.startListening);
     skipRemainingListener(middleware.startListening);
-    playAnimationLoopListener(middleware.startListening);
+
+    setupStepListener(middleware.startListening);
+    startStepLoopListener(middleware.startListening);
+
+    setupPlayAnimationLoopListener(middleware.startListening);
+    startPlayAnimationLoopListener(middleware.startListening);
+
+    iteratorListener(middleware.startListening);
 
     return middleware;
 };

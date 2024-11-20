@@ -2,13 +2,13 @@ import { createAction } from '@reduxjs/toolkit';
 import { Result } from 'parsimmon';
 import type {
     RotationCommand,
-    RotationCommandsIterator,
+    SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
 
 const play = createAction<RotationCommand[]>('PLAY');
 const stop = createAction('STOP');
 const pause = createAction('PAUSE');
-const unPause = createAction('UN_PAUSE');
+const resume = createAction('RESUME');
 
 export enum Direction {
     Forwards = 'Forwards',
@@ -18,11 +18,20 @@ export enum Direction {
 const skip = createAction<Direction>('SKIP');
 const skipRemaining = createAction<Direction>('SKIP_REMAINING');
 
-const setRotationCommandIterator = createAction<RotationCommandsIterator>(
-    'SET_ROTATION_COMMAND_ITERATOR',
+const nextStep = createAction<Direction>('NEXT_STEP');
+
+const createRotationCommandIterator = createAction<RotationCommand[]>(
+    'CREATE_ROTATION_COMMAND_ITERATOR',
 );
 
-const nextCommand = createAction('NEXT_COMMAND');
+const generateRotationCommands = createAction<{
+    direction: Direction;
+    amount: number;
+}>('GENERATE_ROTATION_COMMANDS');
+
+const generatedRotationCommands = createAction<SingleRotationCommand[]>(
+    'GENERATED_ROTATION_COMMANDS',
+);
 
 const updateNotation = createAction<string>('UPDATE_NOTATION');
 
@@ -33,11 +42,13 @@ const actions = {
     play,
     stop,
     pause,
-    unPause,
+    resume,
     skip,
     skipRemaining,
-    setRotationCommandIterator,
-    nextCommand,
+    nextStep,
+    createRotationCommandIterator,
+    generateRotationCommands,
+    generatedRotationCommands,
     updateNotation,
     parsedNotation,
 };
