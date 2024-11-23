@@ -28,9 +28,7 @@ export const animationFinishedListener = (startListening: AppStartListening) =>
         effect: async (action, listenerApi) => {
             listenerApi.unsubscribe();
 
-            await listenerApi.condition((action) =>
-                cubeActions.animationFinished.match(action),
-            );
+            await listenerApi.condition(cubeActions.animationFinished.match);
 
             listenerApi.dispatch(
                 cubeActions.applyRotationCommands([action.payload]),

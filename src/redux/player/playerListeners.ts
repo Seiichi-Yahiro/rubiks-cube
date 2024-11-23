@@ -113,7 +113,7 @@ const createPlayLoopTask = async (
                     listenerApi.condition(playerActions.resume.match),
                 );
             } else if (state.player.status === PlayerStatus.PLAYING) {
-                await forkApi.delay(50);
+                await forkApi.delay(state.player.animationLoopDelay);
             }
         }
     } catch (err) {
@@ -150,7 +150,7 @@ export const setupStepListener = (startListening: AppStartListening) =>
             listenerApi.dispatch(playerActions.pause());
 
             // delay next dispatch otherwise step loop fork will miss it
-            await listenerApi.delay(50);
+            await listenerApi.delay(state.player.animationLoopDelay);
             listenerApi.dispatch(action);
         },
     });

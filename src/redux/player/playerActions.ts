@@ -38,6 +38,8 @@ const updateNotation = createAction<string>('UPDATE_NOTATION');
 const parsedNotation =
     createAction<Result<RotationCommand[]>>('PARSED_NOTATION');
 
+const setAnimationLoopDelay = createAction<number>('SET_ANIMATION_LOOP_DELAY');
+
 const actions = {
     play,
     stop,
@@ -51,6 +53,7 @@ const actions = {
     generatedRotationCommands,
     updateNotation,
     parsedNotation,
+    setAnimationLoopDelay,
 };
 
 export { actions as playerActions };

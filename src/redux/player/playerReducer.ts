@@ -13,12 +13,14 @@ export interface IPlayerState {
     notation: string;
     rotationCommands: Result<RotationCommand[]>;
     status: PlayerStatus;
+    animationLoopDelay: number;
 }
 
 const createInitialPlayerState = (): IPlayerState => ({
     notation: '',
     rotationCommands: { status: true, value: [] },
     status: PlayerStatus.STOPPED,
+    animationLoopDelay: 50,
 });
 
 export const createPlayerReducer = (
@@ -45,5 +47,8 @@ export const createPlayerReducer = (
             })
             .addCase(playerActions.stop, (state, _action) => {
                 state.status = PlayerStatus.STOPPED;
+            })
+            .addCase(playerActions.setAnimationLoopDelay, (state, action) => {
+                state.animationLoopDelay = action.payload;
             });
     });
