@@ -178,14 +178,14 @@ describe('Player', () => {
             const stateBefore = store.getState();
 
             let skip = screen.getByRole('button', {
-                name: 'player.input.skipToEnd',
+                name: /player\.input\.skip(?:Remaining)?ToEnd/,
             });
             expect(skip).toHaveAttribute('aria-disabled', 'true');
 
             fireEvent.click(skip);
 
             skip = await screen.findByRole('button', {
-                name: 'player.input.skipToEnd',
+                name: /player\.input\.skip(?:Remaining)?ToEnd/,
             });
             expect(skip).toHaveAttribute('aria-disabled', 'true');
 
@@ -258,14 +258,14 @@ describe('Player', () => {
             const stateBefore = store.getState();
 
             let skip: HTMLElement | null = screen.getByRole('button', {
-                name: 'player.input.skipToEnd',
+                name: 'player.input.skipRemainingToEnd',
             });
             expect(skip).toHaveAttribute('aria-disabled', 'false');
 
             fireEvent.click(skip);
 
             skip = await screen.findByRole('button', {
-                name: 'player.input.skipToEnd',
+                name: 'player.input.skipRemainingToEnd',
             });
             //expect(skip).toHaveAttribute('aria-disabled', 'true'); // TODO enable again when properly implemented
 

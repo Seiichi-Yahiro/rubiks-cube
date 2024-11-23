@@ -149,7 +149,11 @@ const Player: React.FC = () => {
                 </div>
                 <div>
                     <TooltipIconButton
-                        title={t('player.input.skipToStart')}
+                        title={
+                            isStopped
+                                ? t('player.input.skipToStart')
+                                : t('player.input.skipRemainingToStart')
+                        }
                         onClick={onSkipToStart}
                         disabled={isPlaying || (isStopped && isNotationInvalid)}
                     >
@@ -170,7 +174,11 @@ const Player: React.FC = () => {
                         <ArrowForward />
                     </TooltipIconButton>
                     <TooltipIconButton
-                        title={t('player.input.skipToEnd')}
+                        title={
+                            isStopped
+                                ? t('player.input.skipToEnd')
+                                : t('player.input.skipRemainingToEnd')
+                        }
                         onClick={onSkipToEnd}
                         disabled={isPlaying || (isStopped && isNotationInvalid)}
                     >
