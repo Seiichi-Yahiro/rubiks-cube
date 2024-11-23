@@ -449,56 +449,94 @@ describe('Player', () => {
             expect(animationSingleRotationCommandSpy).toHaveBeenCalledTimes(0);
         });
 
-        it('should skip when valid notation', async () => {
-            store.dispatch(playerActions.updateNotation('F U R'));
+        describe('skip to start / end', () => {
+            const testSkip = async (
+                buttonName: string,
+                remainingRotationCommands: RotationCommand[],
+            ) => {
+                store.dispatch(playerActions.updateNotation('F U R'));
 
-            render(
-                <Provider store={store}>
-                    <Player />
-                </Provider>,
-            );
+                render(
+                    <Provider store={store}>
+                        <Player />
+                    </Provider>,
+                );
 
-            const stateBefore = store.getState();
+                const stateBefore = store.getState();
 
-            let skip: HTMLElement | null = screen.getByRole('button', {
-                name: 'player.input.skipToEnd',
+                let skip: HTMLElement | null = screen.getByRole('button', {
+                    name: buttonName,
+                });
+                expect(skip).toHaveAttribute('aria-disabled', 'false');
+
+                fireEvent.click(skip);
+
+                skip = await screen.findByRole('button', {
+                    name: buttonName,
+                });
+                expect(skip).toHaveAttribute('aria-disabled', 'false');
+
+                const stateAfter = store.getState();
+
+                expect(stateAfter.player.status).toBe(PlayerStatus.STOPPED);
+                expect(stateAfter.cube.cubicles).not.toBe(
+                    stateBefore.cube.cubicles,
+                );
+
+                expect(applyRotationCommandsSpy).toHaveBeenCalledWith(
+                    remainingRotationCommands,
+                );
+            };
+
+            it('should skip to end when valid notation', async () => {
+                const remainingRotationCommands: SingleRotationCommand[] = [
+                    {
+                        axis: RotationAxis.Z,
+                        rotation: 90,
+                        slices: [1],
+                    },
+                    {
+                        axis: RotationAxis.Y,
+                        rotation: -90,
+                        slices: [1],
+                    },
+                    {
+                        axis: RotationAxis.X,
+                        rotation: 90,
+                        slices: [3],
+                    },
+                ];
+
+                await testSkip(
+                    'player.input.skipToEnd',
+                    remainingRotationCommands,
+                );
             });
-            expect(skip).toHaveAttribute('aria-disabled', 'false');
 
-            fireEvent.click(skip);
+            it('should skip to start when valid notation', async () => {
+                const remainingRotationCommands: SingleRotationCommand[] = [
+                    {
+                        axis: RotationAxis.X,
+                        rotation: -90,
+                        slices: [3],
+                    },
+                    {
+                        axis: RotationAxis.Y,
+                        rotation: 90,
+                        slices: [1],
+                    },
+                    {
+                        axis: RotationAxis.Z,
+                        rotation: -90,
+                        slices: [1],
+                    },
+                ];
 
-            skip = await screen.findByRole('button', {
-                name: 'player.input.skipToEnd',
+                await testSkip(
+                    'player.input.skipToStart',
+                    remainingRotationCommands,
+                );
             });
-            expect(skip).toHaveAttribute('aria-disabled', 'false');
-
-            const stateAfter = store.getState();
-
-            expect(stateAfter.player.status).toBe(PlayerStatus.STOPPED);
-            expect(stateAfter.cube.cubicles).not.toBe(
-                stateBefore.cube.cubicles,
-            );
-
-            const remainingRotationCommands: SingleRotationCommand[] = [
-                {
-                    axis: RotationAxis.Z,
-                    rotation: 90,
-                    slices: [1],
-                },
-                {
-                    axis: RotationAxis.Y,
-                    rotation: -90,
-                    slices: [1],
-                },
-                {
-                    axis: RotationAxis.X,
-                    rotation: 90,
-                    slices: [3],
-                },
-            ];
-            expect(applyRotationCommandsSpy).toHaveBeenCalledWith(
-                remainingRotationCommands,
-            );
         });
     });
 
