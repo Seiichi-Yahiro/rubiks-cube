@@ -77,7 +77,7 @@
         "build:prod": "rimraf build/* -g && webpack --config webpack.config.js --define-process-env-node-env production",
         "pretty-quick": "pretty-quick",
         "test": "jest",
-        "test:converage": "rimraf reports/coverage && jest --coverage",
+        "test:coverage": "rimraf reports/coverage && jest --coverage",
         "test:mutation": "rimraf reports/mutation && npx stryker run",
         "prepare": "husky"
     }

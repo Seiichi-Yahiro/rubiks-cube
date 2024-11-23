@@ -107,14 +107,7 @@ const createPlayLoopTask = async (
             );
 
             const state = listenerApi.getState();
-
-            if (state.player.status === PlayerStatus.PAUSED) {
-                await forkApi.pause(
-                    listenerApi.condition(playerActions.resume.match),
-                );
-            } else if (state.player.status === PlayerStatus.PLAYING) {
-                await forkApi.delay(state.player.animationLoopDelay);
-            }
+            await forkApi.delay(state.player.animationLoopDelay);
         }
     } catch (err) {
         if (err instanceof TaskAbortError) {

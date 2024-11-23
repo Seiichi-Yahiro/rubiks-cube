@@ -17,6 +17,30 @@ import Player from 'src/tsx/interface/Player';
 import { makeNotationParser } from '../../algorithms/parser';
 
 describe('Player', () => {
+    const spyOnPlayerAction = (
+        actions: typeof playerActions,
+        action: keyof typeof playerActions,
+    ) => {
+        const t = actions[action].type;
+        const match = actions[action].match;
+        const spy = jest.spyOn(actions, action);
+        actions[action].type = t;
+        actions[action].match = match;
+        return spy;
+    };
+
+    const spyOnCubeAction = (
+        actions: typeof cubeActions,
+        action: keyof typeof cubeActions,
+    ) => {
+        const t = actions[action].type;
+        const match = actions[action].match;
+        const spy = jest.spyOn(actions, action);
+        actions[action].type = t;
+        actions[action].match = match;
+        return spy;
+    };
+
     describe('NotationInput', () => {
         it('should parse the notation when the notation changes', () => {
             const store = setupStore();
@@ -154,17 +178,37 @@ describe('Player', () => {
 
     describe('skip', () => {
         let store: AppStore;
+        let animationSingleRotationCommandSpy: jest.SpyInstance;
         let applyRotationCommandsSpy: jest.SpyInstance;
 
         beforeEach(() => {
             store = setupStore();
-            applyRotationCommandsSpy = jest.spyOn(
+
+            store.dispatch(playerActions.setAnimationLoopDelay(0));
+
+            store.dispatch(
+                addListener({
+                    actionCreator: cubeActions.animateSingleRotationCommand,
+                    effect: async (_action, listenerApi) => {
+                        await listenerApi.delay(0);
+                        listenerApi.dispatch(cubeActions.animationFinished());
+                    },
+                }),
+            );
+
+            animationSingleRotationCommandSpy = spyOnCubeAction(
+                cubeActions,
+                'animateSingleRotationCommand',
+            );
+
+            applyRotationCommandsSpy = spyOnCubeAction(
                 cubeActions,
                 'applyRotationCommands',
             );
         });
 
         afterEach(() => {
+            animationSingleRotationCommandSpy.mockRestore();
             applyRotationCommandsSpy.mockRestore();
         });
 
@@ -220,7 +264,7 @@ describe('Player', () => {
             await expectNotAllowSkip();
         });
 
-        it('should skip remaining steps when paused', async () => {
+        it('should skip remaining steps forwards when paused', async () => {
             store.dispatch(playerActions.updateNotation('F U R'));
 
             const pauseWhenAnimationStarts = new Promise((resolve) => {
@@ -249,6 +293,8 @@ describe('Player', () => {
 
             await pauseWhenAnimationStarts;
 
+            animationSingleRotationCommandSpy.mockClear();
+
             render(
                 <Provider store={store}>
                     <Player />
@@ -257,16 +303,26 @@ describe('Player', () => {
 
             const stateBefore = store.getState();
 
-            let skip: HTMLElement | null = screen.getByRole('button', {
+            const skip: HTMLElement | null = screen.getByRole('button', {
                 name: 'player.input.skipRemainingToEnd',
             });
             expect(skip).toHaveAttribute('aria-disabled', 'false');
 
             fireEvent.click(skip);
 
-            skip = await screen.findByRole('button', {
-                name: 'player.input.skipRemainingToEnd',
+            await new Promise((resolve) => {
+                store.dispatch(
+                    addListener({
+                        actionCreator: cubeActions.applyRotationCommands,
+                        effect: async (_action, listenerApi) => {
+                            listenerApi.unsubscribe();
+                            await listenerApi.delay(50);
+                            resolve(true);
+                        },
+                    }),
+                );
             });
+
             //expect(skip).toHaveAttribute('aria-disabled', 'true'); // TODO enable again when properly implemented
 
             const stateAfter = store.getState();
@@ -291,6 +347,106 @@ describe('Player', () => {
             expect(applyRotationCommandsSpy).toHaveBeenCalledWith(
                 remainingRotationCommands,
             );
+
+            expect(animationSingleRotationCommandSpy).toHaveBeenCalledTimes(0);
+        });
+
+        it('should skip remaining steps backwards when paused', async () => {
+            store.dispatch(playerActions.updateNotation('F U R'));
+
+            const originalState = store.getState();
+
+            const pauseAfterTwoCommands = new Promise((resolve) => {
+                let counter = 0;
+
+                store.dispatch(
+                    addListener({
+                        actionCreator: cubeActions.animateSingleRotationCommand,
+                        effect: async (_action, listenerApi) => {
+                            counter += 1;
+
+                            if (counter === 2) {
+                                listenerApi.unsubscribe();
+                                store.dispatch(playerActions.pause());
+                                await listenerApi.delay(50);
+                                resolve(true);
+                            }
+                        },
+                    }),
+                );
+            });
+
+            store.dispatch(
+                playerActions.play(
+                    (
+                        store.getState().player.rotationCommands as Success<
+                            RotationCommand[]
+                        >
+                    ).value,
+                ),
+            );
+
+            await pauseAfterTwoCommands;
+
+            animationSingleRotationCommandSpy.mockClear();
+
+            render(
+                <Provider store={store}>
+                    <Player />
+                </Provider>,
+            );
+
+            const stateBefore = store.getState();
+
+            const skip: HTMLElement | null = screen.getByRole('button', {
+                name: 'player.input.skipRemainingToStart',
+            });
+            expect(skip).toHaveAttribute('aria-disabled', 'false');
+
+            fireEvent.click(skip);
+
+            await new Promise((resolve) => {
+                store.dispatch(
+                    addListener({
+                        actionCreator: cubeActions.applyRotationCommands,
+                        effect: async (_action, listenerApi) => {
+                            listenerApi.unsubscribe();
+                            await listenerApi.delay(50);
+                            resolve(true);
+                        },
+                    }),
+                );
+            });
+
+            //expect(skip).toHaveAttribute('aria-disabled', 'true'); // TODO enable again when properly implemented
+
+            const stateAfter = store.getState();
+
+            expect(stateAfter.player.status).toBe(PlayerStatus.PAUSED);
+            expect(stateAfter.cube.cubicles).not.toBe(
+                stateBefore.cube.cubicles,
+            );
+            expect(stateAfter.cube.cubicles).toStrictEqual(
+                originalState.cube.cubicles,
+            );
+
+            const remainingRotationCommands: SingleRotationCommand[] = [
+                {
+                    axis: RotationAxis.Y,
+                    rotation: 90,
+                    slices: [1],
+                },
+                {
+                    axis: RotationAxis.Z,
+                    rotation: -90,
+                    slices: [1],
+                },
+            ];
+            expect(applyRotationCommandsSpy).toHaveBeenCalledWith(
+                remainingRotationCommands,
+            );
+
+            expect(animationSingleRotationCommandSpy).toHaveBeenCalledTimes(0);
         });
 
         it('should skip when valid notation', async () => {
@@ -715,30 +871,6 @@ describe('Player', () => {
     });
 
     describe('user flows', () => {
-        const spyOnPlayerAction = (
-            actions: typeof playerActions,
-            action: keyof typeof playerActions,
-        ) => {
-            const t = actions[action].type;
-            const match = actions[action].match;
-            const spy = jest.spyOn(actions, action);
-            actions[action].type = t;
-            actions[action].match = match;
-            return spy;
-        };
-
-        const spyOnCubeAction = (
-            actions: typeof cubeActions,
-            action: keyof typeof cubeActions,
-        ) => {
-            const t = actions[action].type;
-            const match = actions[action].match;
-            const spy = jest.spyOn(actions, action);
-            actions[action].type = t;
-            actions[action].match = match;
-            return spy;
-        };
-
         const expectCommands = (
             makeNotationParser(3).rotationCommands.parse('F U R') as Success<
                 SingleRotationCommand[]
