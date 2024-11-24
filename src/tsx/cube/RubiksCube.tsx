@@ -22,8 +22,9 @@ const RubiksCube: React.FC = () => {
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const cubeSize = useRedux((state) => state.cube.size);
     const rotation = useRedux((state) => state.cube.rotation);
-    const isStopped =
-        useRedux((state) => state.player.status) === PlayerStatus.STOPPED;
+    const isStopped = useRedux(
+        (state) => state.player.status === PlayerStatus.STOPPED,
+    );
 
     const container = useRef<HTMLDivElement>(null);
 

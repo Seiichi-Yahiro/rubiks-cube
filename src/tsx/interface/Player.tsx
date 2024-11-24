@@ -60,6 +60,9 @@ const Player: React.FC = () => {
     const playerNotation = useRedux((state) => state.player.notation);
     const playerStatus = useRedux((state) => state.player.status);
     const rotationCommands = useRedux((state) => state.player.rotationCommands);
+    const isAnimatingRotationCommand = useRedux(
+        (state) => state.cube.animation !== undefined,
+    );
 
     const updateNotation = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -155,21 +158,33 @@ const Player: React.FC = () => {
                                 : t('player.input.skipRemainingToStart')
                         }
                         onClick={onSkipToStart}
-                        disabled={isPlaying || (isStopped && isNotationInvalid)}
+                        disabled={
+                            isPlaying ||
+                            (isPaused && isAnimatingRotationCommand) ||
+                            (isStopped && isNotationInvalid)
+                        }
                     >
                         <SkipPrevious />
                     </TooltipIconButton>
                     <TooltipIconButton
                         title={t('player.input.stepPrevious')}
                         onClick={onNextStepBack}
-                        disabled={isPlaying || isStopped}
+                        disabled={
+                            isPlaying ||
+                            (isPaused && isAnimatingRotationCommand) ||
+                            isStopped
+                        }
                     >
                         <ArrowBack />
                     </TooltipIconButton>
                     <TooltipIconButton
                         title={t('player.input.stepNext')}
                         onClick={onNextStep}
-                        disabled={isPlaying || (isStopped && isNotationInvalid)}
+                        disabled={
+                            isPlaying ||
+                            (isPaused && isAnimatingRotationCommand) ||
+                            (isStopped && isNotationInvalid)
+                        }
                     >
                         <ArrowForward />
                     </TooltipIconButton>
@@ -180,7 +195,11 @@ const Player: React.FC = () => {
                                 : t('player.input.skipRemainingToEnd')
                         }
                         onClick={onSkipToEnd}
-                        disabled={isPlaying || (isStopped && isNotationInvalid)}
+                        disabled={
+                            isPlaying ||
+                            (isPaused && isAnimatingRotationCommand) ||
+                            (isStopped && isNotationInvalid)
+                        }
                     >
                         <SkipNext />
                     </TooltipIconButton>
