@@ -260,7 +260,7 @@ export const skipRemainingListener = (startListening: AppStartListening) =>
             listenerApi.dispatch(
                 playerActions.generateRotationCommands({
                     direction: action.payload,
-                    amount: Infinity,
+                    amount: 'Remaining',
                 }),
             );
 
@@ -325,7 +325,9 @@ const createIteratorLoopTask = async (
 
             const commands: SingleRotationCommand[] = [];
 
-            for (let i = 0; i < amount; i++) {
+            const commandsToCreate = amount === 'Remaining' ? Infinity : amount;
+
+            for (let i = 0; i < commandsToCreate; i++) {
                 const result = generate(itr);
 
                 if (result.resultType === IteratorResultType.Value) {

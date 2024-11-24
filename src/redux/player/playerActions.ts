@@ -26,7 +26,7 @@ const createRotationCommandIterator = createAction<RotationCommand[]>(
 
 const generateRotationCommands = createAction<{
     direction: Direction;
-    amount: number;
+    amount: number | 'Remaining';
 }>('GENERATE_ROTATION_COMMANDS');
 
 const generatedRotationCommands = createAction<SingleRotationCommand[]>(
