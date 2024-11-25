@@ -1,70 +1,82 @@
-import iterator from 'src/utils/iterators';
-import {
-    type Iterator,
-    type IteratorBase,
-    type IteratorResult,
-    IteratorResultType,
-    IteratorType,
-} from 'src/utils/iterators/types';
+import type { SteppableIterator } from 'src/utils/iterators/types';
 
-export interface FlattenIterator<I extends Iterator<Iterator<unknown>>>
-    extends IteratorBase {
-    iteratorType: IteratorType.Flatten;
-    outerIterator: I;
-    innerIterator?: Iterator<unknown>;
+export interface FlattenIterator<Item> extends SteppableIterator<Item> {
+    outerIterator: SteppableIterator<SteppableIterator<Item>>;
+    innerIterator?: SteppableIterator<Item>;
 }
 
-const create = <I extends Iterator<Iterator<unknown>>>(
-    iterator: I,
-): FlattenIterator<I> => ({
-    iteratorType: IteratorType.Flatten,
-    outerIterator: iterator,
-});
+export const createFlattenIterator = <Item>(
+    iterator: SteppableIterator<SteppableIterator<Item>>,
+): FlattenIterator<Item> => {
+    const outerIterator = iterator;
+    let innerIterator: SteppableIterator<Item> | undefined;
 
-const next = <Item, I extends Iterator<Iterator<Item>>>(
-    self: FlattenIterator<I>,
-): IteratorResult<Item> => {
-    if (self.innerIterator) {
-        const innerResult = iterator.next(self.innerIterator as Iterator<Item>);
+    const next = (): Item | null => {
+        if (innerIterator) {
+            const innerResult = innerIterator.next();
 
-        if (innerResult.resultType === IteratorResultType.Value) {
-            return innerResult;
+            if (innerResult) {
+                return innerResult;
+            }
         }
-    }
 
-    const outerResult = iterator.next(self.outerIterator);
+        const outerResult = outerIterator.next();
 
-    if (outerResult.resultType === IteratorResultType.Value) {
-        self.innerIterator = outerResult.value;
-        return next(self);
-    } else {
-        return outerResult;
-    }
-};
-
-const nextBack = <Item, I extends Iterator<Iterator<Item>>>(
-    self: FlattenIterator<I>,
-): IteratorResult<Item> => {
-    if (self.innerIterator) {
-        const innerResult = iterator.nextBack(
-            self.innerIterator as Iterator<Item>,
-        );
-
-        if (innerResult.resultType === IteratorResultType.Value) {
-            return innerResult;
+        if (outerResult) {
+            innerIterator = outerResult;
+            return next();
+        } else {
+            return null;
         }
-    }
+    };
 
-    const outerResult = iterator.nextBack(self.outerIterator);
+    const nextBack = (): Item | null => {
+        if (innerIterator) {
+            const innerResult = innerIterator.nextBack();
 
-    if (outerResult.resultType === IteratorResultType.Value) {
-        self.innerIterator = outerResult.value;
-        return nextBack(self);
-    } else {
-        return outerResult;
-    }
+            if (innerResult) {
+                return innerResult;
+            }
+        }
+
+        const outerResult = outerIterator.nextBack();
+
+        if (outerResult) {
+            innerIterator = outerResult;
+            return nextBack();
+        } else {
+            return null;
+        }
+    };
+
+    return {
+        outerIterator,
+        innerIterator,
+        next,
+        nextBack,
+        toStart: () => {
+            innerIterator?.toStart();
+
+            let innerItr = outerIterator.nextBack();
+
+            while (innerItr) {
+                innerItr.toStart();
+                innerItr = outerIterator.nextBack();
+            }
+
+            innerIterator = undefined;
+        },
+        toEnd: () => {
+            innerIterator?.toEnd();
+
+            let innerItr = outerIterator.next();
+
+            while (innerItr) {
+                innerItr.toEnd();
+                innerItr = outerIterator.next();
+            }
+
+            innerIterator = undefined;
+        },
+    };
 };
-
-const flattenIterator = { create, next, nextBack };
-
-export default flattenIterator;

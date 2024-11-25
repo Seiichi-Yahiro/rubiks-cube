@@ -5,8 +5,6 @@ import {
     RotationCommand,
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
-import iterators from 'src/utils/iterators';
-import { IteratorResult } from 'src/utils/iterators/types';
 
 describe('rotationCommand', () => {
     const createRotationCommand = (
@@ -27,17 +25,17 @@ describe('rotationCommand', () => {
 
             const itr = createRotationCommandIterator(commands);
 
-            const resultCommands: IteratorResult<SingleRotationCommand>[] = [];
+            const resultCommands: (SingleRotationCommand | null)[] = [];
 
             for (let i = 0; i < 4; i++) {
-                resultCommands.push(iterators.next(itr));
+                resultCommands.push(itr.next());
             }
 
-            const expectedCommands: IteratorResult<SingleRotationCommand>[] = [
-                iterators.resultValue(createRotationCommand(1)),
-                iterators.resultValue(createRotationCommand(2)),
-                iterators.resultValue(createRotationCommand(3)),
-                iterators.resultEnd,
+            const expectedCommands: (SingleRotationCommand | null)[] = [
+                createRotationCommand(1),
+                createRotationCommand(2),
+                createRotationCommand(3),
+                null,
             ];
 
             expect(resultCommands).toEqual(expectedCommands);
@@ -63,22 +61,22 @@ describe('rotationCommand', () => {
 
             const itr = createRotationCommandIterator(commands);
 
-            const resultCommands: IteratorResult<SingleRotationCommand>[] = [];
+            const resultCommands: (SingleRotationCommand | null)[] = [];
 
             for (let i = 0; i < 9; i++) {
-                resultCommands.push(iterators.next(itr));
+                resultCommands.push(itr.next());
             }
 
-            const expectedCommands: IteratorResult<SingleRotationCommand>[] = [
-                iterators.resultValue(createRotationCommand(1)),
-                iterators.resultValue(createRotationCommand(2)),
-                iterators.resultValue(createRotationCommand(1)),
-                iterators.resultValue(createRotationCommand(2)),
-                iterators.resultValue(createRotationCommand(3)),
-                iterators.resultValue(createRotationCommand(4)),
-                iterators.resultValue(createRotationCommand(3)),
-                iterators.resultValue(createRotationCommand(4)),
-                iterators.resultEnd,
+            const expectedCommands: (SingleRotationCommand | null)[] = [
+                createRotationCommand(1),
+                createRotationCommand(2),
+                createRotationCommand(1),
+                createRotationCommand(2),
+                createRotationCommand(3),
+                createRotationCommand(4),
+                createRotationCommand(3),
+                createRotationCommand(4),
+                null,
             ];
 
             expect(resultCommands).toEqual(expectedCommands);
@@ -102,22 +100,22 @@ describe('rotationCommand', () => {
 
             const itr = createRotationCommandIterator(commands);
 
-            const resultCommands: IteratorResult<SingleRotationCommand>[] = [];
+            const resultCommands: (SingleRotationCommand | null)[] = [];
 
             for (let i = 0; i < 9; i++) {
-                resultCommands.push(iterators.next(itr));
+                resultCommands.push(itr.next());
             }
 
-            const expectedCommands: IteratorResult<SingleRotationCommand>[] = [
-                iterators.resultValue(createRotationCommand(1)),
-                iterators.resultValue(createRotationCommand(2)),
-                iterators.resultValue(createRotationCommand(2)),
-                iterators.resultValue(createRotationCommand(3)),
-                iterators.resultValue(createRotationCommand(2)),
-                iterators.resultValue(createRotationCommand(2)),
-                iterators.resultValue(createRotationCommand(3)),
-                iterators.resultValue(createRotationCommand(4)),
-                iterators.resultEnd,
+            const expectedCommands: (SingleRotationCommand | null)[] = [
+                createRotationCommand(1),
+                createRotationCommand(2),
+                createRotationCommand(2),
+                createRotationCommand(3),
+                createRotationCommand(2),
+                createRotationCommand(2),
+                createRotationCommand(3),
+                createRotationCommand(4),
+                null,
             ];
 
             expect(resultCommands).toEqual(expectedCommands);
@@ -134,17 +132,17 @@ describe('rotationCommand', () => {
 
             const itr = createRotationCommandIterator(commands);
 
-            const resultCommands: IteratorResult<SingleRotationCommand>[] = [];
+            const resultCommands: (SingleRotationCommand | null)[] = [];
 
             for (let i = 0; i < 4; i++) {
-                resultCommands.push(iterators.next(itr));
+                resultCommands.push(itr.next());
             }
 
-            const expectedCommands: IteratorResult<SingleRotationCommand>[] = [
-                iterators.resultValue(createRotationCommand(1)),
-                iterators.resultValue(createRotationCommand(2)),
-                iterators.resultValue(createRotationCommand(3)),
-                iterators.resultEnd,
+            const expectedCommands: (SingleRotationCommand | null)[] = [
+                createRotationCommand(1),
+                createRotationCommand(2),
+                createRotationCommand(3),
+                null,
             ];
 
             expect(resultCommands).toEqual(expectedCommands);

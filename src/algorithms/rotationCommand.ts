@@ -1,9 +1,11 @@
 import { range } from 'lodash';
 import { Failure, Result, Success } from 'parsimmon';
-import arrayIterator from 'src/utils/iterators/array';
-import flattenIterator from 'src/utils/iterators/flatten';
-import repeatIterator from 'src/utils/iterators/repeat';
-import { type Iterator } from 'src/utils/iterators/types';
+import {
+    createArrayIterator,
+    createFlattenIterator,
+    createRepeatIterator,
+} from 'src/utils/iterators';
+import type { SteppableIterator } from 'src/utils/iterators/types';
 import { fromAngleX, fromAngleY, fromAngleZ, Mat4 } from 'src/utils/matrix4';
 
 export interface SingleRotationCommand {
@@ -26,21 +28,20 @@ export const isLoopedRotationCommands = (
 
 export const createRotationCommandIterator = (
     rotationCommands: RotationCommand[],
-): Iterator<SingleRotationCommand> => {
-    const array: Iterator<SingleRotationCommand>[] = rotationCommands.map(
-        (command) => {
+): SteppableIterator<SingleRotationCommand> => {
+    const array: SteppableIterator<SingleRotationCommand>[] =
+        rotationCommands.map((command) => {
             if (isLoopedRotationCommands(command)) {
-                return repeatIterator.create(
+                return createRepeatIterator(
                     createRotationCommandIterator(command.commands),
                     command.iterations,
                 );
             } else {
-                return arrayIterator.create([command]);
+                return createArrayIterator([command]);
             }
-        },
-    );
+        });
 
-    return flattenIterator.create(arrayIterator.create(array));
+    return createFlattenIterator(createArrayIterator(array));
 };
 
 export const invertSingleRotationCommand = (

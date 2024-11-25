@@ -1,63 +1,102 @@
-import iterators from 'src/utils/iterators';
-import arrayIterator from 'src/utils/iterators/array';
-import flattenIterator from 'src/utils/iterators/flatten';
-import { IteratorResult } from 'src/utils/iterators/types';
+import {
+    createArrayIterator,
+    createFlattenIterator,
+} from 'src/utils/iterators';
 
 describe('FlattenIterator', () => {
     it('should give the next element', () => {
-        const arrayItr = arrayIterator.create([
-            arrayIterator.create([1, 2]),
-            arrayIterator.create([3]),
+        const arrayItr = createArrayIterator([
+            createArrayIterator([1, 2]),
+            createArrayIterator([3]),
         ]);
-        const itr = flattenIterator.create(arrayItr);
+        const itr = createFlattenIterator(arrayItr);
 
-        const result: IteratorResult<number>[] = [];
+        const result: (number | null)[] = [];
 
         for (let i = 0; i < 4; i++) {
-            result.push(iterators.next(itr));
+            result.push(itr.next());
         }
 
-        const expected: IteratorResult<number>[] = [
-            iterators.resultValue(1),
-            iterators.resultValue(2),
-            iterators.resultValue(3),
-            iterators.resultEnd,
-        ];
+        const expected: (number | null)[] = [1, 2, 3, null];
 
-        expect(result).toEqual(expected);
+        expect(result).toStrictEqual(expected);
     });
 
     it('should give the previous element', () => {
-        const arrayItr = arrayIterator.create([
-            arrayIterator.create([1, 2]),
-            arrayIterator.create([3]),
+        const arrayItr = createArrayIterator([
+            createArrayIterator([1, 2]),
+            createArrayIterator([3]),
         ]);
-        const itr = flattenIterator.create(arrayItr);
+        const itr = createFlattenIterator(arrayItr);
 
-        const result: IteratorResult<number>[] = [];
+        const result: (number | null)[] = [];
 
-        result.push(iterators.nextBack(itr));
+        result.push(itr.nextBack());
 
         for (let i = 0; i < 4; i++) {
-            result.push(iterators.next(itr));
+            result.push(itr.next());
         }
 
         for (let i = 0; i < 4; i++) {
-            result.push(iterators.nextBack(itr));
+            result.push(itr.nextBack());
         }
 
-        const expected: IteratorResult<number>[] = [
-            iterators.resultStart,
-            iterators.resultValue(1),
-            iterators.resultValue(2),
-            iterators.resultValue(3),
-            iterators.resultEnd,
-            iterators.resultValue(3),
-            iterators.resultValue(2),
-            iterators.resultValue(1),
-            iterators.resultStart,
+        const expected: (number | null)[] = [
+            null,
+            1,
+            2,
+            3,
+            null,
+            3,
+            2,
+            1,
+            null,
         ];
 
-        expect(result).toEqual(expected);
+        expect(result).toStrictEqual(expected);
+    });
+
+    it('should reset to the start', () => {
+        const arrayItr = createArrayIterator([
+            createArrayIterator([1, 2]),
+            createArrayIterator([3]),
+        ]);
+        const itr = createFlattenIterator(arrayItr);
+
+        const result: (number | null)[] = [];
+
+        itr.next();
+        itr.next();
+        itr.next();
+        itr.toStart();
+
+        for (let i = 0; i < 4; i++) {
+            result.push(itr.next());
+        }
+
+        const expected: (number | null)[] = [1, 2, 3, null];
+
+        expect(result).toStrictEqual(expected);
+    });
+
+    it('should reset to the end', () => {
+        const arrayItr = createArrayIterator([
+            createArrayIterator([1, 2]),
+            createArrayIterator([3]),
+        ]);
+        const itr = createFlattenIterator(arrayItr);
+
+        const result: (number | null)[] = [];
+
+        itr.next();
+        itr.toEnd();
+
+        for (let i = 0; i < 4; i++) {
+            result.push(itr.nextBack());
+        }
+
+        const expected: (number | null)[] = [3, 2, 1, null];
+
+        expect(result).toStrictEqual(expected);
     });
 });

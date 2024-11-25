@@ -1,78 +1,67 @@
-import iterators from 'src/utils/iterators';
-import {
-    type Iterator,
-    type IteratorBase,
-    type IteratorResult,
-    IteratorResultType,
-    IteratorType,
-} from 'src/utils/iterators/types';
+import type { SteppableIterator } from 'src/utils/iterators/types';
 
-export interface RepeatIterator<I extends Iterator<unknown>>
-    extends IteratorBase {
-    iteratorType: IteratorType.Repeat;
+export interface RepeatIterator<Item> extends SteppableIterator<Item> {
     iterationIndex: number;
     repetitions: number;
-    iterator: I;
-    originalIterator: I;
-    finalIterator?: I;
+    iterator: SteppableIterator<Item>;
 }
 
-const create = <I extends Iterator<unknown>>(
-    itr: I,
+export const createRepeatIterator = <Item>(
+    iterator: SteppableIterator<Item>,
     repetitions: number,
-): RepeatIterator<I> => ({
-    iteratorType: IteratorType.Repeat,
-    iterationIndex: 0,
-    repetitions,
-    iterator: itr,
-    originalIterator: iterators.clone(itr),
-});
+): RepeatIterator<Item> => {
+    let iterationIndex = 0;
 
-const next = <Item, I extends Iterator<Item>>(
-    self: RepeatIterator<I>,
-): IteratorResult<Item> => {
-    const result = iterators.next(self.iterator);
+    const next = (): Item | null => {
+        const result = iterator.next();
 
-    if (result.resultType === IteratorResultType.Value) {
-        return result;
-    }
+        if (result) {
+            return result;
+        }
 
-    if (!self.finalIterator) {
-        self.finalIterator = iterators.clone(self.iterator);
-    }
+        iterationIndex += 1;
 
-    self.iterationIndex += 1;
+        if (iterationIndex < repetitions) {
+            iterator.toStart();
+            return next();
+        } else {
+            return null;
+        }
+    };
 
-    if (self.iterationIndex < self.repetitions) {
-        self.iterator = iterators.clone(self.originalIterator);
-        return next(self);
-    } else {
-        return iterators.resultEnd;
-    }
+    const nextBack = (): Item | null => {
+        if (iterationIndex === repetitions) {
+            iterationIndex -= 1;
+        }
+
+        const result = iterator.nextBack();
+
+        if (result) {
+            return result;
+        }
+
+        if (iterationIndex > 0) {
+            iterationIndex -= 1;
+            iterator.toEnd();
+            return nextBack();
+        } else {
+            return null;
+        }
+    };
+
+    return {
+        iterationIndex,
+        repetitions,
+        iterator,
+        next,
+        nextBack,
+        toStart: () => {
+            iterationIndex = 0;
+            iterator.toStart();
+        },
+        toEnd: () => {
+            iterationIndex = repetitions;
+            iterator.toEnd();
+        },
+    };
 };
-
-const nextBack = <Item, I extends Iterator<Item>>(
-    self: RepeatIterator<I>,
-): IteratorResult<Item> => {
-    if (self.iterationIndex === self.repetitions) {
-        self.iterationIndex -= 1;
-    }
-
-    const result = iterators.nextBack(self.iterator);
-
-    if (result.resultType === IteratorResultType.Value) {
-        return result;
-    }
-
-    if (self.iterationIndex > 0) {
-        self.iterationIndex -= 1;
-        self.iterator = iterators.clone(self.finalIterator!); // finalIterator should exist when iterationIndex has been greater than 0 before
-        return nextBack(self);
-    } else {
-        return iterators.resultStart;
-    }
-};
-
-const repeatIterator = { create, next, nextBack };
-
-export default repeatIterator;

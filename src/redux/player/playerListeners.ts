@@ -17,9 +17,8 @@ import { cubeActions } from 'src/redux/cube/cubeActions';
 import { AppStartListening } from 'src/redux/listener';
 import { Direction, playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
-import iterators from 'src/utils/iterators';
-import { IteratorResultType } from '../../utils/iterators/types';
-import { AppDispatch, AppState } from '../store';
+import type { AppDispatch, AppState } from 'src/redux/store';
+import {} from 'src/utils/iterators';
 
 export const parseListener = (startListening: AppStartListening) =>
     startListening({
@@ -319,8 +318,8 @@ const createIteratorLoopTask = async (
             );
 
             const generate = {
-                [Direction.Forwards]: iterators.next,
-                [Direction.Backwards]: iterators.nextBack,
+                [Direction.Forwards]: itr.next,
+                [Direction.Backwards]: itr.nextBack,
             }[direction];
 
             const commands: SingleRotationCommand[] = [];
@@ -328,10 +327,10 @@ const createIteratorLoopTask = async (
             const commandsToCreate = amount === 'Remaining' ? Infinity : amount;
 
             for (let i = 0; i < commandsToCreate; i++) {
-                const result = generate(itr);
+                const result = generate();
 
-                if (result.resultType === IteratorResultType.Value) {
-                    commands.push(result.value);
+                if (result) {
+                    commands.push(result);
                 } else {
                     break;
                 }

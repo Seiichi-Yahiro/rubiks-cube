@@ -1,42 +1,40 @@
-import iterators from 'src/utils/iterators';
-import {
-    type IteratorBase,
-    type IteratorResult,
-    IteratorType,
-} from 'src/utils/iterators/types';
+import type { SteppableIterator } from 'src/utils/iterators/types';
 
-export interface ArrayIterator<Item> extends IteratorBase {
-    iteratorType: IteratorType.Array;
+export interface ArrayIterator<Item> extends SteppableIterator<Item> {
     index: number;
     array: Item[];
 }
 
-const create = <Item>(array: Item[]): ArrayIterator<Item> => ({
-    iteratorType: IteratorType.Array,
-    index: 0,
-    array,
-});
+export const createArrayIterator = <Item>(
+    array: Item[],
+): ArrayIterator<Item> => {
+    let index = 0;
 
-const next = <Item>(self: ArrayIterator<Item>): IteratorResult<Item> => {
-    if (self.index < self.array.length) {
-        const value = self.array[self.index];
-        self.index += 1;
-        return iterators.resultValue(value);
-    } else {
-        return iterators.resultEnd;
-    }
+    return {
+        index,
+        array,
+        next: () => {
+            if (index < array.length) {
+                const value = array[index];
+                index += 1;
+                return value;
+            } else {
+                return null;
+            }
+        },
+        nextBack: () => {
+            if (index > 0) {
+                index -= 1;
+                return array[index];
+            } else {
+                return null;
+            }
+        },
+        toStart: () => {
+            index = 0;
+        },
+        toEnd: () => {
+            index = array.length;
+        },
+    };
 };
-
-const nextBack = <Item>(self: ArrayIterator<Item>): IteratorResult<Item> => {
-    if (self.index > 0) {
-        self.index -= 1;
-        const value = self.array[self.index];
-        return iterators.resultValue(value);
-    } else {
-        return iterators.resultStart;
-    }
-};
-
-const arrayIterator = { create, next, nextBack };
-
-export default arrayIterator;
