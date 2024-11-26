@@ -1,11 +1,9 @@
 import HelpOutline from '@mui/icons-material/HelpOutline';
-import {
-    InputAdornment,
-    Popover,
-    PopoverOrigin,
-    TextField,
-    Tooltip,
-} from '@mui/material';
+import InputAdornment from '@mui/material/InputAdornment';
+import type { PopoverOrigin } from '@mui/material/Popover';
+import Popover from '@mui/material/Popover';
+import TextField from '@mui/material/TextField';
+import Tooltip from '@mui/material/Tooltip';
 import { debounce } from 'lodash';
 import { Result } from 'parsimmon';
 import React, {

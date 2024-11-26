@@ -1,4 +1,6 @@
-import { Button, Popover, PopoverOrigin } from '@mui/material';
+import Button from '@mui/material/Button';
+import type { PopoverOrigin } from '@mui/material/Popover';
+import Popover from '@mui/material/Popover';
 import Chrome, { ChromeInputType } from '@uiw/react-color-chrome';
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';

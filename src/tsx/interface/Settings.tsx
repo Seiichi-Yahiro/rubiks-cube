@@ -1,4 +1,7 @@
-import { List, ListItem, Slider, Typography } from '@mui/material';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Slider from '@mui/material/Slider';
+import Typography from '@mui/material/Typography';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
