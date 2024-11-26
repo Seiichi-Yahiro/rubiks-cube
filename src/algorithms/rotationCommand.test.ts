@@ -6,6 +6,7 @@ import {
     RotationCommandStack,
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
+import { describe, expect, it } from 'vitest';
 
 describe('rotationCommand', () => {
     describe('nextRotationCommand', () => {

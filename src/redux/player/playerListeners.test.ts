@@ -4,15 +4,16 @@ import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import { AppStore, setupStore } from 'src/redux/store';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('PlayerListeners', () => {
+    let store: AppStore;
+
+    beforeEach(() => {
+        store = setupStore();
+    });
+
     describe('parseListener', () => {
-        let store: AppStore;
-
-        beforeEach(() => {
-            store = setupStore();
-        });
-
         it('should parse the notation when the notation changes', () => {
             store.dispatch(playerActions.updateNotation('F U R'));
             const state = store.getState();
@@ -34,28 +35,23 @@ describe('PlayerListeners', () => {
     });
 
     describe('playAnimationLoopListener', () => {
-        let store: AppStore;
-        let nextCommandSpy: jest.SpyInstance;
-        let applyRotationCommandsSpy: jest.SpyInstance;
-
         beforeEach(() => {
-            store = setupStore();
-            jest.useFakeTimers();
-            nextCommandSpy = jest.spyOn(playerActions, 'nextCommand');
-            applyRotationCommandsSpy = jest.spyOn(
-                cubeActions,
-                'applyRotationCommands',
-            );
+            vi.useFakeTimers();
         });
 
         afterEach(() => {
-            jest.runOnlyPendingTimers();
-            jest.useRealTimers();
-            nextCommandSpy.mockRestore();
-            applyRotationCommandsSpy.mockRestore();
+            vi.runOnlyPendingTimers();
+            vi.useRealTimers();
+            vi.restoreAllMocks();
         });
 
         it('should stop when all commands are run', async () => {
+            const nextCommandSpy = vi.spyOn(playerActions, 'nextCommand');
+            const applyRotationCommandsSpy = vi.spyOn(
+                cubeActions,
+                'applyRotationCommands',
+            );
+
             store.dispatch(playerActions.updateNotation('F U'));
             store.dispatch(
                 playerActions.play(
@@ -71,10 +67,10 @@ describe('PlayerListeners', () => {
             expect(state.player.status).toBe(PlayerStatus.PLAYING);
 
             for (let i = 0; i < 2; i++) {
-                await jest.advanceTimersByTimeAsync(1000);
+                await vi.advanceTimersByTimeAsync(1000);
                 store.dispatch(cubeActions.animationFinished());
 
-                await jest.advanceTimersByTimeAsync(50);
+                await vi.advanceTimersByTimeAsync(50);
             }
 
             state = store.getState();
@@ -85,6 +81,12 @@ describe('PlayerListeners', () => {
         });
 
         it('should stop when stop is pressed', async () => {
+            const nextCommandSpy = vi.spyOn(playerActions, 'nextCommand');
+            const applyRotationCommandsSpy = vi.spyOn(
+                cubeActions,
+                'applyRotationCommands',
+            );
+
             store.dispatch(playerActions.updateNotation('F U'));
             store.dispatch(
                 playerActions.play(
@@ -101,10 +103,10 @@ describe('PlayerListeners', () => {
 
             store.dispatch(playerActions.stop());
 
-            await jest.advanceTimersByTimeAsync(1000);
+            await vi.advanceTimersByTimeAsync(1000);
             store.dispatch(cubeActions.animationFinished());
 
-            await jest.advanceTimersByTimeAsync(50);
+            await vi.advanceTimersByTimeAsync(50);
 
             state = store.getState();
             expect(state.player.status).toBe(PlayerStatus.STOPPED);
@@ -114,6 +116,12 @@ describe('PlayerListeners', () => {
         });
 
         it('should stop when stop is pressed after pause', async () => {
+            const nextCommandSpy = vi.spyOn(playerActions, 'nextCommand');
+            const applyRotationCommandsSpy = vi.spyOn(
+                cubeActions,
+                'applyRotationCommands',
+            );
+
             store.dispatch(playerActions.updateNotation('F U'));
             store.dispatch(
                 playerActions.play(
@@ -130,10 +138,10 @@ describe('PlayerListeners', () => {
 
             store.dispatch(playerActions.pause());
 
-            await jest.advanceTimersByTimeAsync(1000);
+            await vi.advanceTimersByTimeAsync(1000);
             store.dispatch(cubeActions.animationFinished());
 
-            await jest.advanceTimersByTimeAsync(50);
+            await vi.advanceTimersByTimeAsync(50);
             store.dispatch(playerActions.stop());
 
             state = store.getState();
@@ -144,6 +152,12 @@ describe('PlayerListeners', () => {
         });
 
         it('should resume after unpause', async () => {
+            const nextCommandSpy = vi.spyOn(playerActions, 'nextCommand');
+            const applyRotationCommandsSpy = vi.spyOn(
+                cubeActions,
+                'applyRotationCommands',
+            );
+
             store.dispatch(playerActions.updateNotation('F U'));
             store.dispatch(
                 playerActions.play(
@@ -160,16 +174,16 @@ describe('PlayerListeners', () => {
 
             store.dispatch(playerActions.pause());
 
-            await jest.advanceTimersByTimeAsync(1000);
+            await vi.advanceTimersByTimeAsync(1000);
             store.dispatch(cubeActions.animationFinished());
 
-            await jest.advanceTimersByTimeAsync(50);
+            await vi.advanceTimersByTimeAsync(50);
             store.dispatch(playerActions.unPause());
 
-            await jest.advanceTimersByTimeAsync(1000);
+            await vi.advanceTimersByTimeAsync(1000);
             store.dispatch(cubeActions.animationFinished());
 
-            await jest.advanceTimersByTimeAsync(50);
+            await vi.advanceTimersByTimeAsync(50);
 
             state = store.getState();
             expect(state.player.status).toBe(PlayerStatus.STOPPED);

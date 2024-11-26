@@ -1,12 +1,15 @@
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
+import { vi } from 'vitest';
 
-window.ResizeObserver = jest.fn().mockImplementation(() => ({
-    observe: jest.fn(),
-    unobserve: jest.fn(),
-    disconnect: jest.fn(),
+const ResizeObserverMock = vi.fn(() => ({
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn(),
 }));
 
-jest.mock('react-i18next', () => ({
+vi.stubGlobal('ResizeObserver', ResizeObserverMock);
+
+vi.mock('react-i18next', () => ({
     useTranslation: () => {
         return {
             t: (key: string) => key,

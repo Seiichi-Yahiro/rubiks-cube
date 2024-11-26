@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { Success } from 'parsimmon';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -8,15 +8,20 @@ import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import { AppStore, setupStore } from 'src/redux/store';
 import Player from 'src/tsx/interface/Player';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('Player', () => {
+    let store: AppStore;
+
+    beforeEach(() => {
+        store = setupStore();
+    });
+
+    afterEach(() => {
+        cleanup();
+    });
+
     describe('play', () => {
-        let store: AppStore;
-
-        beforeEach(() => {
-            store = setupStore();
-        });
-
         const expectDisabledPlay = async () => {
             render(
                 <Provider store={store}>
@@ -120,12 +125,6 @@ describe('Player', () => {
     });
 
     describe('skip', () => {
-        let store: AppStore;
-
-        beforeEach(() => {
-            store = setupStore();
-        });
-
         const expectNotAllowSkip = async () => {
             render(
                 <Provider store={store}>
@@ -227,12 +226,6 @@ describe('Player', () => {
     });
 
     describe('stop', () => {
-        let store: AppStore;
-
-        beforeEach(() => {
-            store = setupStore();
-        });
-
         const expectStop = () => {
             render(
                 <Provider store={store}>
@@ -314,12 +307,6 @@ describe('Player', () => {
     });
 
     describe('pause', () => {
-        let store: AppStore;
-
-        beforeEach(() => {
-            store = setupStore();
-        });
-
         const expectNoPauseButton = () => {
             render(
                 <Provider store={store}>
@@ -390,12 +377,6 @@ describe('Player', () => {
     });
 
     describe('shuffle', () => {
-        let store: AppStore;
-
-        beforeEach(() => {
-            store = setupStore();
-        });
-
         const expectNotAllowShuffle = () => {
             render(
                 <Provider store={store}>
@@ -477,16 +458,13 @@ describe('Player', () => {
     });
 
     describe('reset', () => {
-        let store: AppStore;
-
         beforeEach(() => {
-            store = setupStore();
-            jest.useFakeTimers();
+            vi.useFakeTimers();
         });
 
         afterEach(() => {
-            jest.runOnlyPendingTimers();
-            jest.useRealTimers();
+            vi.runOnlyPendingTimers();
+            vi.useRealTimers();
         });
 
         const expectNotAllowReset = () => {
@@ -523,10 +501,10 @@ describe('Player', () => {
                 ),
             );
 
-            await jest.advanceTimersByTimeAsync(1000);
+            await vi.advanceTimersByTimeAsync(1000);
             store.dispatch(cubeActions.animationFinished());
 
-            await jest.advanceTimersByTimeAsync(50);
+            await vi.advanceTimersByTimeAsync(50);
 
             expectNotAllowReset();
         });
@@ -543,10 +521,10 @@ describe('Player', () => {
                 ),
             );
 
-            await jest.advanceTimersByTimeAsync(1000);
+            await vi.advanceTimersByTimeAsync(1000);
             store.dispatch(cubeActions.animationFinished());
 
-            await jest.advanceTimersByTimeAsync(50);
+            await vi.advanceTimersByTimeAsync(50);
             store.dispatch(playerActions.pause());
 
             expectNotAllowReset();
@@ -564,10 +542,10 @@ describe('Player', () => {
                 ),
             );
 
-            await jest.advanceTimersByTimeAsync(1000);
+            await vi.advanceTimersByTimeAsync(1000);
             store.dispatch(cubeActions.animationFinished());
 
-            await jest.advanceTimersByTimeAsync(50);
+            await vi.advanceTimersByTimeAsync(50);
             store.dispatch(playerActions.stop());
 
             render(

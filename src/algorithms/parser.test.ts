@@ -1,4 +1,5 @@
 import { makeNotationParser } from 'src/algorithms/parser';
+import { describe, expect, it } from 'vitest';
 
 describe('Parser', () => {
     const parse = (notation: string) =>
