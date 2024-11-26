@@ -1,4 +1,5 @@
-import { ManageSearch, Settings as SettingsIcon } from '@mui/icons-material';
+import ManageSearch from '@mui/icons-material/ManageSearch';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { List } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';

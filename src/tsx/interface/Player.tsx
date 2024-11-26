@@ -1,11 +1,9 @@
-import {
-    Pause,
-    PlayArrow,
-    Refresh,
-    Shuffle,
-    SkipNext,
-    Stop,
-} from '@mui/icons-material';
+import Pause from '@mui/icons-material/Pause';
+import PlayArrow from '@mui/icons-material/PlayArrow';
+import Refresh from '@mui/icons-material/Refresh';
+import Shuffle from '@mui/icons-material/Shuffle';
+import SkipNext from '@mui/icons-material/SkipNext';
+import Stop from '@mui/icons-material/Stop';
 import { IconButton, Tooltip } from '@mui/material';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
