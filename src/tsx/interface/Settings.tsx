@@ -47,8 +47,8 @@ const Settings: React.FC = () => {
                     step={1}
                     min={1}
                     max={5}
-                    defaultValue={useMemo(() => cubeDimension, [])}
-                    onChangeCommitted={(event, value) =>
+                    defaultValue={useMemo(() => cubeDimension, [])} // eslint-disable-line react-hooks/exhaustive-deps
+                    onChangeCommitted={(_event, value) =>
                         dispatch(cubeActions.setCubeDimension(value as number))
                     }
                     disabled={playerStatus !== PlayerStatus.STOPPED}
@@ -64,8 +64,8 @@ const Settings: React.FC = () => {
                     min={100}
                     max={2000}
                     step={50}
-                    defaultValue={useMemo(() => rotationAnimationSpeed, [])}
-                    onChangeCommitted={(event, value) =>
+                    defaultValue={useMemo(() => rotationAnimationSpeed, [])} // eslint-disable-line react-hooks/exhaustive-deps
+                    onChangeCommitted={(_event, value) =>
                         dispatch(
                             cubeActions.setRotationAnimationSpeed(
                                 value as number,

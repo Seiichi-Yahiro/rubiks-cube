@@ -59,7 +59,7 @@ const Player: React.FC = () => {
     const updateNotation = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) =>
             dispatch(playerActions.updateNotation(event.target.value)),
-        [],
+        [dispatch],
     );
 
     const hasParseError = isError(rotationCommands);
