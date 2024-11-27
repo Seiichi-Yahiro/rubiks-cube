@@ -41,6 +41,6 @@ Valid examples:
 
 run `pnpm install`
 
-then `pnpm start` and go to localhost:3000
+then `pnpm serve` and go to http://localhost:3000
 
-or `pnpm run build:dev` / `pnpm run build:prod` and open the `index.html` from the build folder
+or `pnpm run build` and then serve the build folder.
