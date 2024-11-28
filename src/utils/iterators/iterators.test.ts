@@ -3,6 +3,7 @@ import {
     createArrayIterator,
     createRepeatIterator,
 } from 'src/utils/iterators';
+import { describe, expect, it } from 'vitest';
 
 describe('iterators', () => {
     describe('collect', () => {

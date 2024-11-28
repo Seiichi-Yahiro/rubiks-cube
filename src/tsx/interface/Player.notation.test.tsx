@@ -1,12 +1,17 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import type { Success } from 'parsimmon';
 import React from 'react';
 import { Provider } from 'react-redux';
 import type { RotationCommand } from 'src/algorithms/rotationCommand';
 import { setupStore } from 'src/redux/store';
 import Player from 'src/tsx/interface/Player';
+import { afterEach, describe, expect, it } from 'vitest';
 
 describe('NotationInput', () => {
+    afterEach(() => {
+        cleanup();
+    });
+
     it('should parse the notation when the notation changes', () => {
         const store = setupStore();
 

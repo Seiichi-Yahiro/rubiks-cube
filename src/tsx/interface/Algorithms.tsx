@@ -1,11 +1,9 @@
-import {
-    Divider,
-    List,
-    ListItemButton,
-    ListItemText,
-    ListSubheader,
-    TextField,
-} from '@mui/material';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import TextField from '@mui/material/TextField';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlgorithmGroup, flattenTree } from 'src/algorithms/algorithmTree';

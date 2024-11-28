@@ -1,14 +1,14 @@
 {
     "compilerOptions": {
         "baseUrl": ".",
-        "outDir": "build/dist",
-        "module": "esnext",
-        "target": "es5",
-        "lib": ["esnext", "dom"],
+        "module": "ESNext",
+        "target": "ES2020", // ignored by vite
+        "lib": ["ESNext", "DOM", "DOM.Iterable"],
+        "skipLibCheck": true,
         "sourceMap": true,
         "allowJs": true,
         "jsx": "react",
-        "moduleResolution": "node",
+        "moduleResolution": "Bundler",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
@@ -16,10 +16,9 @@
         "strictNullChecks": true,
         "noUnusedLocals": true,
         "esModuleInterop": true,
-        "incremental": true,
         "downlevelIteration": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "isolatedModules": true
     },
-    "exclude": ["node_modules", "build", "webpack.config.js"],
     "include": ["src"]
 }

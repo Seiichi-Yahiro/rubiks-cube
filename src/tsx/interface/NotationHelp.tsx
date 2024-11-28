@@ -1,5 +1,5 @@
-import { Close } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import Close from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

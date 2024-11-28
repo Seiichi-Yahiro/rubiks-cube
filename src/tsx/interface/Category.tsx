@@ -1,15 +1,13 @@
-import { ExpandMore } from '@mui/icons-material';
-import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    IconButton,
-    ListItem,
-    Popover,
-    PopoverOrigin,
-    Typography,
-    useMediaQuery,
-} from '@mui/material';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import IconButton from '@mui/material/IconButton';
+import ListItem from '@mui/material/ListItem';
+import type { PopoverOrigin } from '@mui/material/Popover';
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import React, { useCallback, useState } from 'react';
 import tailwindFullConfig from 'src/utils/tailwindConfig';
 

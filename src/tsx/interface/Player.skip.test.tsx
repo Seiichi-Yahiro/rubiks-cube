@@ -1,5 +1,5 @@
 import { addListener } from '@reduxjs/toolkit';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { Success } from 'parsimmon';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -8,17 +8,25 @@ import {
     RotationCommand,
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
-import { spyOnAction } from 'src/jest-helper';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import { AppStore, setupStore } from 'src/redux/store';
+import { spyOnAction } from 'src/test-helper';
 import Player from 'src/tsx/interface/Player';
+import {
+    afterEach,
+    beforeEach,
+    describe,
+    expect,
+    it,
+    type MockInstance,
+} from 'vitest';
 
 describe('Player skip', () => {
     let store: AppStore;
-    let animateSingleRotationCommandSpy: jest.SpyInstance;
-    let applyRotationCommandsSpy: jest.SpyInstance;
+    let animateSingleRotationCommandSpy: MockInstance;
+    let applyRotationCommandsSpy: MockInstance;
 
     beforeEach(() => {
         store = setupStore();
@@ -47,6 +55,7 @@ describe('Player skip', () => {
     });
 
     afterEach(() => {
+        cleanup();
         animateSingleRotationCommandSpy.mockRestore();
         applyRotationCommandsSpy.mockRestore();
     });

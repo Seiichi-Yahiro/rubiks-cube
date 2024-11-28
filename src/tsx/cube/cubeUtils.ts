@@ -6,6 +6,14 @@ import {
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
 import {
+    Color,
+    CubeAxis,
+    FaceArrowDirection,
+    ICubicle,
+    IFace,
+    Side,
+} from 'src/tsx/cube/cubeTypes';
+import {
     apply,
     fromAngleX,
     fromAngleY,
@@ -14,14 +22,6 @@ import {
     multiply,
 } from 'src/utils/matrix4';
 import { Vec4 } from 'src/utils/vector4';
-import {
-    Color,
-    CubeAxis,
-    FaceArrowDirection,
-    ICubicle,
-    IFace,
-    Side,
-} from './cubeTypes';
 
 const sideToColor = {
     [Side.FRONT]: Color.BLUE,

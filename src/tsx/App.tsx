@@ -10,7 +10,7 @@ const App: React.FC = () => {
 
     useEffect(() => {
         dispatch(cubeActions.resetCube());
-    }, []);
+    }, [dispatch]);
 
     return (
         <div className="container mx-auto flex h-full flex-col md:flex-row">

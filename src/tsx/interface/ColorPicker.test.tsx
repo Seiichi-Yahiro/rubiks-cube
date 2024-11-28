@@ -1,28 +1,23 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { COLOR_MAP, defaultColorMap } from 'src/redux/localStorage';
-import { AppStore, setupStore } from 'src/redux/store';
+import { setupStore } from 'src/redux/store';
 import { Color } from 'src/tsx/cube/cubeTypes';
 import ColorPicker from 'src/tsx/interface/ColorPicker';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 describe('ColorPicker', () => {
-    let store: AppStore;
-    let setItemSpy: jest.SpyInstance;
-
-    beforeEach(() => {
-        store = setupStore();
-        setItemSpy = jest
-            .spyOn(Storage.prototype, 'setItem')
-            .mockImplementation(() => {});
-    });
-
     afterEach(() => {
-        setItemSpy.mockRestore();
+        cleanup();
+        vi.restoreAllMocks();
+        localStorage.clear();
     });
 
     it('should have 6 color buttons', () => {
+        const store = setupStore();
+
         render(
             <Provider store={store}>
                 <ColorPicker />
@@ -37,6 +32,8 @@ describe('ColorPicker', () => {
     });
 
     it('should set color', async () => {
+        const store = setupStore();
+
         render(
             <Provider store={store}>
                 <ColorPicker />
@@ -67,6 +64,9 @@ describe('ColorPicker', () => {
     });
 
     it('should save colors in local storage when a color is set', async () => {
+        const store = setupStore();
+        const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
+
         render(
             <Provider store={store}>
                 <ColorPicker />
@@ -90,6 +90,8 @@ describe('ColorPicker', () => {
     });
 
     it('should reset colors', () => {
+        const store = setupStore();
+
         store.dispatch(cubeActions.setColor(Color.BLUE, '#000000'));
 
         render(
@@ -111,6 +113,9 @@ describe('ColorPicker', () => {
     });
 
     it('should save colors in local storage when colors are reset', () => {
+        const store = setupStore();
+        const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
+
         store.dispatch(cubeActions.setColor(Color.BLUE, '#000000'));
 
         render(

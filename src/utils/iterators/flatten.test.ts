@@ -2,6 +2,7 @@ import {
     createArrayIterator,
     createFlattenIterator,
 } from 'src/utils/iterators';
+import { describe, expect, it } from 'vitest';
 
 describe('FlattenIterator', () => {
     it('should give the next element', () => {

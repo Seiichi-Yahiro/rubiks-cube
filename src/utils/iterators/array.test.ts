@@ -1,4 +1,5 @@
 import { createArrayIterator } from 'src/utils/iterators';
+import { describe, expect, it } from 'vitest';
 
 describe('ArrayIterator', () => {
     it('should give the next element', () => {

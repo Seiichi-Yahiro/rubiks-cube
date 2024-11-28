@@ -1,5 +1,5 @@
 import { addListener } from '@reduxjs/toolkit';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import type { Success } from 'parsimmon';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -8,6 +8,7 @@ import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
 import { AppStore, setupStore } from 'src/redux/store';
 import Player from 'src/tsx/interface/Player';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe('Player shuffle', () => {
     let store: AppStore;
@@ -26,6 +27,10 @@ describe('Player shuffle', () => {
                 },
             }),
         );
+    });
+
+    afterEach(() => {
+        cleanup();
     });
 
     const expectNotAllowShuffle = () => {

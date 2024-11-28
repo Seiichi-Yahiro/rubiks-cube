@@ -1,12 +1,17 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { cubeActions } from '../../redux/cube/cubeActions';
-import { playerActions } from '../../redux/player/playerActions';
-import { setupStore } from '../../redux/store';
-import Settings from './Settings';
+import { cubeActions } from 'src/redux/cube/cubeActions';
+import { playerActions } from 'src/redux/player/playerActions';
+import { setupStore } from 'src/redux/store';
+import Settings from 'src/tsx/interface/Settings';
+import { afterEach, describe, expect, it } from 'vitest';
 
 describe('Settings', () => {
+    afterEach(() => {
+        cleanup();
+    });
+
     it('should parse the notation when the cube dimension changes', () => {
         const store = setupStore();
         store.dispatch(playerActions.updateNotation('3F'));

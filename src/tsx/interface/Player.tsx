@@ -1,15 +1,14 @@
-import {
-    ArrowBack,
-    ArrowForward,
-    Pause,
-    PlayArrow,
-    Refresh,
-    Shuffle,
-    SkipNext,
-    SkipPrevious,
-    Stop,
-} from '@mui/icons-material';
-import { IconButton, Tooltip } from '@mui/material';
+import ArrowBack from '@mui/icons-material/ArrowBack';
+import ArrowForward from '@mui/icons-material/ArrowForward';
+import Pause from '@mui/icons-material/Pause';
+import PlayArrow from '@mui/icons-material/PlayArrow';
+import Refresh from '@mui/icons-material/Refresh';
+import Shuffle from '@mui/icons-material/Shuffle';
+import SkipNext from '@mui/icons-material/SkipNext';
+import SkipPrevious from '@mui/icons-material/SkipPrevious';
+import Stop from '@mui/icons-material/Stop';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createRandomNotation } from 'src/algorithms/parser';
@@ -67,7 +66,7 @@ const Player: React.FC = () => {
     const updateNotation = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) =>
             dispatch(playerActions.updateNotation(event.target.value)),
-        [],
+        [dispatch],
     );
 
     const hasParseError = isError(rotationCommands);

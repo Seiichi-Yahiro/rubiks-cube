@@ -18,7 +18,6 @@ import { AppStartListening } from 'src/redux/listener';
 import { Direction, playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import type { AppDispatch, AppState } from 'src/redux/store';
-import {} from 'src/utils/iterators';
 
 export const parseListener = (startListening: AppStartListening) =>
     startListening({

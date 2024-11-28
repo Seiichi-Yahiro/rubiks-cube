@@ -1,3 +1,5 @@
+import { vi } from 'vitest';
+
 export const spyOnAction = <
     T extends {
         [key in keyof T]: { type: string; match: (action: unknown) => boolean };
@@ -8,8 +10,8 @@ export const spyOnAction = <
 ) => {
     const t = actions[action].type;
     const match = actions[action].match;
-    // @ts-expect-error jest doesn't like the type of action i don't know why
-    const spy = jest.spyOn(actions, action);
+    // @ts-expect-error vitest doesn't like the type of action I don't know why
+    const spy = vi.spyOn(actions, action);
     actions[action].type = t;
     actions[action].match = match;
     return spy;

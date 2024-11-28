@@ -1,4 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { SingleRotationCommand } from 'src/algorithms/rotationCommand';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { defaultColorMap, loadColorMap } from 'src/redux/localStorage';
 import { ColorMap, ICubicle } from 'src/tsx/cube/cubeTypes';
@@ -8,7 +9,6 @@ import {
     sideToTransform,
 } from 'src/tsx/cube/cubeUtils';
 import { fromAngleX, fromAngleY, Mat4, multiply } from 'src/utils/matrix4';
-import { SingleRotationCommand } from '../../algorithms/rotationCommand';
 
 export interface ICubeState {
     dimension: number;
