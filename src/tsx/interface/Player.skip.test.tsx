@@ -9,10 +9,10 @@ import {
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
 import { cubeActions } from 'src/redux/cube/cubeActions';
-import { playerActions } from 'src/redux/player/playerActions';
+import { Direction, playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import { AppStore, setupStore } from 'src/redux/store';
-import { spyOnAction } from 'src/test-helper';
+import { delay, spyOnAction } from 'src/test-helper';
 import Player from 'src/tsx/interface/Player';
 import {
     afterEach,
@@ -25,6 +25,7 @@ import {
 
 describe('Player skip', () => {
     let store: AppStore;
+    let skipRemainingSpy: MockInstance;
     let animateSingleRotationCommandSpy: MockInstance;
     let applyRotationCommandsSpy: MockInstance;
 
@@ -37,11 +38,13 @@ describe('Player skip', () => {
             addListener({
                 actionCreator: cubeActions.animateSingleRotationCommand,
                 effect: async (_action, listenerApi) => {
-                    await listenerApi.delay(0);
+                    await listenerApi.delay(50);
                     listenerApi.dispatch(cubeActions.animationFinished());
                 },
             }),
         );
+
+        skipRemainingSpy = spyOnAction(playerActions, 'skipRemaining');
 
         animateSingleRotationCommandSpy = spyOnAction(
             cubeActions,
@@ -56,6 +59,7 @@ describe('Player skip', () => {
 
     afterEach(() => {
         cleanup();
+        skipRemainingSpy.mockRestore();
         animateSingleRotationCommandSpy.mockRestore();
         applyRotationCommandsSpy.mockRestore();
     });
@@ -110,6 +114,65 @@ describe('Player skip', () => {
         );
 
         await expectNotAllowSkip();
+    });
+
+    it('should not allow skip remaining steps forwards when step forward is being animated', async () => {
+        store.dispatch(playerActions.updateNotation('F U R'));
+
+        render(
+            <Provider store={store}>
+                <Player />
+            </Provider>,
+        );
+
+        const nextStep = screen.getByRole('button', {
+            name: 'player.input.stepNext',
+        });
+
+        fireEvent.click(nextStep);
+        await delay(25);
+
+        const skip = await screen.findByRole('button', {
+            name: 'player.input.skipRemainingToEnd',
+        });
+
+        expect(skip).toHaveAttribute('aria-disabled', 'true');
+
+        fireEvent.click(skip);
+        await delay(25);
+
+        expect(skipRemainingSpy).toHaveBeenCalledTimes(0);
+        expect(skip).toHaveAttribute('aria-disabled', 'false');
+    });
+
+    it('should not allow skip remaining steps forwards when step backward is being animated', async () => {
+        store.dispatch(playerActions.updateNotation('F U R'));
+        store.dispatch(playerActions.nextStep(Direction.Forwards));
+
+        render(
+            <Provider store={store}>
+                <Player />
+            </Provider>,
+        );
+
+        const nextStepBack = screen.getByRole('button', {
+            name: 'player.input.stepPrevious',
+        });
+
+        fireEvent.click(nextStepBack);
+        await delay(25);
+
+        const skip = await screen.findByRole('button', {
+            name: 'player.input.skipRemainingToEnd',
+        });
+
+        expect(skip).toHaveAttribute('aria-disabled', 'true');
+
+        fireEvent.click(skip);
+        await delay(25);
+
+        expect(skipRemainingSpy).toHaveBeenCalledTimes(0);
+        expect(skip).toHaveAttribute('aria-disabled', 'false');
     });
 
     it('should skip remaining steps forwards when paused', async () => {
@@ -195,6 +258,74 @@ describe('Player skip', () => {
         );
 
         expect(animateSingleRotationCommandSpy).toHaveBeenCalledTimes(0);
+    });
+
+    it('should not allow skip remaining steps backwards when step forward is being animated', async () => {
+        store.dispatch(playerActions.updateNotation('F U R'));
+        store.dispatch(playerActions.nextStep(Direction.Forwards));
+        await delay(75);
+
+        skipRemainingSpy.mockClear();
+
+        render(
+            <Provider store={store}>
+                <Player />
+            </Provider>,
+        );
+
+        const nextStep = screen.getByRole('button', {
+            name: 'player.input.stepNext',
+        });
+
+        fireEvent.click(nextStep);
+        await delay(25);
+
+        const skip = await screen.findByRole('button', {
+            name: 'player.input.skipRemainingToStart',
+        });
+
+        expect(skip).toHaveAttribute('aria-disabled', 'true');
+
+        fireEvent.click(skip);
+        await delay(25);
+
+        expect(skipRemainingSpy).toHaveBeenCalledTimes(0);
+        expect(skip).toHaveAttribute('aria-disabled', 'false');
+    });
+
+    it('should not allow skip remaining steps backwards when step backward is being animated', async () => {
+        store.dispatch(playerActions.updateNotation('F U R'));
+
+        store.dispatch(playerActions.nextStep(Direction.Forwards));
+        await delay(75);
+
+        store.dispatch(playerActions.nextStep(Direction.Forwards));
+        await delay(75);
+
+        render(
+            <Provider store={store}>
+                <Player />
+            </Provider>,
+        );
+
+        const nextStepBack = screen.getByRole('button', {
+            name: 'player.input.stepPrevious',
+        });
+
+        fireEvent.click(nextStepBack);
+        await delay(25);
+
+        const skip = await screen.findByRole('button', {
+            name: 'player.input.skipRemainingToStart',
+        });
+
+        expect(skip).toHaveAttribute('aria-disabled', 'true');
+
+        fireEvent.click(skip);
+        await delay(25);
+
+        expect(skipRemainingSpy).toHaveBeenCalledTimes(0);
+        expect(skip).toHaveAttribute('aria-disabled', 'false');
     });
 
     it('should skip remaining steps backwards when paused', async () => {

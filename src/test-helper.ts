@@ -16,3 +16,6 @@ export const spyOnAction = <
     actions[action].match = match;
     return spy;
 };
+
+export const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
