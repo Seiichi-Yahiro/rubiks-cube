@@ -124,7 +124,7 @@ const Player: React.FC = () => {
                 rotationCommands={rotationCommands}
             />
             <div className="flex flex-row justify-between">
-                <div>
+                <div className="flex flex-row flex-nowrap">
                     {playerStatus === PlayerStatus.PLAYING ? (
                         <TooltipIconButton
                             title={t('player.input.pause')}
@@ -149,7 +149,7 @@ const Player: React.FC = () => {
                         <Stop />
                     </TooltipIconButton>
                 </div>
-                <div>
+                <div className="flex flex-row flex-nowrap">
                     <TooltipIconButton
                         title={
                             isStopped
@@ -203,7 +203,7 @@ const Player: React.FC = () => {
                         <SkipNext />
                     </TooltipIconButton>
                 </div>
-                <div>
+                <div className="flex flex-row flex-nowrap">
                     <TooltipIconButton
                         title={t('player.input.shuffle')}
                         onClick={onShuffle}
