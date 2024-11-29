@@ -1,11 +1,5 @@
 import { addListener } from '@reduxjs/toolkit';
-import {
-    act,
-    cleanup,
-    fireEvent,
-    render,
-    screen,
-} from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { Success } from 'parsimmon';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -253,9 +247,7 @@ describe('Player play', () => {
                     actionCreator: cubeActions.animateSingleRotationCommand,
                     effect: async (_action, listenerApi) => {
                         listenerApi.unsubscribe();
-                        await act(() =>
-                            listenerApi.dispatch(playerActions.pause()),
-                        );
+                        listenerApi.dispatch(playerActions.pause());
                         await listenerApi.delay(50);
                         fireEvent.click(resume);
                         await listenerApi.delay(50);
