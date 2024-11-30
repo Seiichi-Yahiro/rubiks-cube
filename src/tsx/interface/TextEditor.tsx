@@ -14,7 +14,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ label }) => {
         setValue(event.target.value);
 
     return (
-        <div className="relative overflow-hidden after:absolute after:bottom-0 after:left-0 after:right-0 after:border-b after:border-cube-gray focus-within:after:border-b-2 focus-within:after:border-cube-blue hover:after:border-b-2 hover:after:border-black hover:focus-within:after:border-cube-blue">
+        <div className="relative overflow-hidden before:absolute before:bottom-0 before:w-full before:border-b before:border-cube-gray after:absolute after:bottom-0 after:w-full after:scale-x-0 after:border-b-2 after:border-cube-blue after:transition-transform after:duration-200 after:ease-out focus-within:before:border-b-2 focus-within:after:scale-x-100 hover:before:border-b-2 hover:before:border-black">
             <textarea
                 id={id}
                 value={value}
