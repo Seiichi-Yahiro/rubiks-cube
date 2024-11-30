@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-    content: ['./src/**/*.tsx'],
+    content: ['./src/**/*.{html,tsx}'],
     theme: {
         extend: {
             keyframes: {
@@ -14,8 +14,13 @@ export default {
             },
             colors: {
                 white: '#ffffff',
-                'cube-gray': '#333333',
                 'arrow-gray': '#383838',
+                'cube-gray': '#333333',
+                'cube-blue': '#3D81F6',
+                'cube-green': '#009D54',
+                'cube-red': '#DC422F',
+                'cube-orange': '#FF6C00',
+                'cube-yellow': '#FDCC09',
                 error: '#F44336',
             },
         },

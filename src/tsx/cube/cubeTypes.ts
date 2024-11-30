@@ -3,12 +3,12 @@ import { Mat4 } from 'src/utils/matrix4';
 export type CubeAxis = [number, number, number];
 
 export enum Color {
-    BLUE = '#3d81f6',
-    GREEN = '#009d54',
-    RED = '#dc422f',
-    ORANGE = '#ff6c00',
-    WHITE = '#ffffff',
-    YELLOW = '#fdcc09',
+    BLUE = '#3D81F6',
+    GREEN = '#009D54',
+    RED = '#dC422F',
+    ORANGE = '#FF6C00',
+    WHITE = '#FFFFFF',
+    YELLOW = '#FDCC09',
     DEFAULT = '#383838',
     TRANSPARENT = 'transparent',
 }
