@@ -57,7 +57,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
                 className={cn(
                     'absolute top-0 text-xs text-cube-gray transition-all duration-200 ease-out',
 
-                    'peer-empty:top-3 peer-empty:text-base peer-focus:top-0 peer-focus:text-xs peer-focus:text-cube-blue',
+                    'underline peer-empty:top-3 peer-empty:text-base peer-empty:no-underline peer-focus:top-0 peer-focus:text-xs peer-focus:text-cube-blue peer-focus:underline',
 
                     {
                         'text-disabled': disabled,
