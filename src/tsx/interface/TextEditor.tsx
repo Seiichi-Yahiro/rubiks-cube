@@ -50,7 +50,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
                 autoCapitalize="off"
                 autoComplete="off"
                 autoCorrect="off"
-                className="peer absolute top-0 z-10 mt-3 h-full min-h-6 w-full resize-none whitespace-pre-wrap bg-transparent text-base text-transparent caret-black outline-none"
+                className="peer absolute top-0 z-10 mb-1 mt-4 h-full min-h-6 w-full resize-none whitespace-pre-wrap bg-transparent text-base text-transparent caret-black outline-none"
             />
             <label
                 htmlFor={id}
@@ -74,7 +74,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
                 ref={divRef}
                 aria-hidden={true}
                 className={cn(
-                    'relative mt-3 h-full min-h-6 w-full select-none whitespace-pre-wrap text-base text-black',
+                    'relative mb-1 mt-4 h-full min-h-6 w-full select-none whitespace-pre-wrap text-base text-black',
                     {
                         'text-disabled': disabled,
                     },
