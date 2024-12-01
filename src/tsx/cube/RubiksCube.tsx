@@ -5,7 +5,7 @@ import { cubeActions } from 'src/redux/cube/cubeActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import CubeArrows from 'src/tsx/cube/CubeArrows';
 import Cubicles from 'src/tsx/cube/Cubicles';
-import createClassName from 'src/utils/createClassName';
+import cn from 'src/utils/cn';
 import { fromTranslation, toCss } from 'src/utils/matrix4';
 
 const RubiksCube: React.FC = () => {
@@ -61,12 +61,9 @@ const RubiksCube: React.FC = () => {
             className="flex max-h-[30rem] flex-1 items-center justify-center p-2 [perspective:1000px] md:mt-10"
         >
             <div
-                className={createClassName(
-                    'relative [transform-style:preserve-3d]',
-                    {
-                        'group/transitioning is-transitioning': !isStopped,
-                    },
-                )}
+                className={cn('relative [transform-style:preserve-3d]', {
+                    'group/transitioning is-transitioning': !isStopped,
+                })}
                 style={style}
             >
                 <div style={positionCorrectionStyle()}>

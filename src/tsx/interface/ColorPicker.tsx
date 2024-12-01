@@ -9,7 +9,7 @@ import useComplexState from 'src/hooks/useComplexState';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { Color } from 'src/tsx/cube/cubeTypes';
 import 'src/tsx/interface/ColorPicker.css';
-import createClassName from 'src/utils/createClassName';
+import cn from 'src/utils/cn';
 
 interface State {
     selectedColor?: Color;
@@ -44,7 +44,7 @@ const ColorPicker: React.FC = () => {
         .map(([key, value]: [Color, string]) => (
             <button
                 key={key}
-                className={createClassName(
+                className={cn(
                     'h-5 w-5 cursor-pointer border border-cube-gray',
                     {
                         'animate-wiggle': selectedColor === key,
@@ -63,11 +63,11 @@ const ColorPicker: React.FC = () => {
     const colorsRef = useRef<HTMLDivElement>(null);
 
     return (
-        <div className="flex flex-1 flex-row items-center justify-evenly min-w-56">
+        <div className="flex min-w-56 flex-1 flex-row items-center justify-evenly">
             <div>
                 <div
                     ref={colorsRef}
-                    className="grid grid-cols-3 sm:grid-cols-6 gap-1"
+                    className="grid grid-cols-3 gap-1 sm:grid-cols-6"
                 >
                     {colors}
                 </div>

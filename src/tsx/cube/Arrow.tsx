@@ -1,5 +1,5 @@
 import React from 'react';
-import createClassName from 'src/utils/createClassName';
+import cn from 'src/utils/cn';
 
 interface IArrowProps {
     style?: React.CSSProperties;
@@ -9,7 +9,7 @@ interface IArrowProps {
 const Arrow: React.FC<IArrowProps> = ({ style, className = '' }) => (
     <g
         style={style}
-        className={createClassName(
+        className={cn(
             'stroke-arrow-gray stroke-[4px] transition-opacity duration-300 [stroke-linecap:round]',
             className,
         )}

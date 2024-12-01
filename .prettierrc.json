@@ -2,6 +2,7 @@
     "tabWidth": 4,
     "singleQuote": true,
     "printWidth": 80,
+    "tailwindFunctions": ["cn"],
     "plugins": [
         "prettier-plugin-organize-imports",
         "prettier-plugin-tailwindcss"

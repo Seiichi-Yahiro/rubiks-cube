@@ -18,7 +18,7 @@ import { cubeActions } from 'src/redux/cube/cubeActions';
 import { Direction, playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import NotationInput from 'src/tsx/interface/NotationInput';
-import createClassName from 'src/utils/createClassName';
+import cn from 'src/utils/cn';
 
 interface TooltipIconButtonProps {
     title: string;
@@ -37,7 +37,7 @@ const TooltipIconButton: React.FC<TooltipIconButtonProps> = ({
         <Tooltip title={title}>
             <IconButton
                 aria-disabled={disabled}
-                className={createClassName(
+                className={cn(
                     {
                         'Mui-disabled': disabled,
                     },
