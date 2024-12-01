@@ -14,6 +14,7 @@ export default {
             },
             colors: {
                 white: '#ffffff',
+                disabled: '#7A7A7A',
                 'arrow-gray': '#383838',
                 'cube-gray': '#333333',
                 'cube-blue': '#3D81F6',
