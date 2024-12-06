@@ -4,13 +4,25 @@ import React, {
     useCallback,
     useMemo,
 } from 'react';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from 'src/tsx/components/Tooltip';
 import cn from 'src/utils/cn';
 
-const IconButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
+interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    tooltip: string;
+    tooltipSide?: 'top' | 'right' | 'bottom' | 'left';
+}
+
+const IconButton: React.FC<IconButtonProps> = ({
     className,
     children,
     disabled,
     onClick,
+    tooltip,
+    tooltipSide,
     ...props
 }) => {
     const click = useCallback(
@@ -29,7 +41,7 @@ const IconButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
 
                 'before:absolute before:size-full before:rounded-full hover:before:bg-cube-gray/10 focus-visible:before:bg-cube-gray/10 active:before:bg-cube-gray/20 focus-visible:motion-safe:before:animate-breath',
 
-                'after:absolute after:size-full after:scale-110 after:rounded-full after:bg-transparent after:transition-all after:duration-[400ms] after:ease-out',
+                'after:absolute after:size-full after:scale-110 after:rounded-full after:bg-transparent after:transition-all after:duration-500 after:ease-out',
 
                 'active:after:scale-0 active:after:bg-cube-gray/50 active:after:transition-none',
 
@@ -44,14 +56,19 @@ const IconButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
     );
 
     return (
-        <button
-            className={classNames}
-            aria-disabled={disabled}
-            onClick={click}
-            {...props}
-        >
-            {children}
-        </button>
+        <Tooltip>
+            <TooltipTrigger asChild={true}>
+                <button
+                    className={classNames}
+                    aria-disabled={disabled}
+                    onClick={click}
+                    {...props}
+                >
+                    {children}
+                </button>
+            </TooltipTrigger>
+            <TooltipContent side={tooltipSide}>{tooltip}</TooltipContent>
+        </Tooltip>
     );
 };
 
