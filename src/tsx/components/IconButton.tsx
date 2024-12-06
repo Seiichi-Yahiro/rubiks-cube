@@ -34,7 +34,7 @@ const IconButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
                 'active:after:scale-0 active:after:bg-cube-gray/50 active:after:transition-none',
 
                 {
-                    '*:opacity-50 hover:before:bg-transparent active:before:bg-transparent':
+                    '*:fill-disabled *:stroke-disabled hover:before:bg-transparent active:before:bg-transparent':
                         disabled,
                 },
 
