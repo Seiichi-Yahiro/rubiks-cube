@@ -37,7 +37,7 @@ const IconButton: React.FC<IconButtonProps> = ({
     const classNames = useMemo(
         () =>
             cn(
-                'relative inline-flex size-8 items-center justify-center p-1 outline-none *:fill-cube-gray *:stroke-cube-gray',
+                'relative inline-flex size-8 cursor-pointer items-center justify-center p-1 *:fill-cube-gray *:stroke-cube-gray focus-visible:outline-none',
 
                 'before:absolute before:size-full before:rounded-full hover:before:bg-cube-gray/10 focus-visible:before:bg-cube-gray/10 active:before:bg-cube-gray/20 focus-visible:motion-safe:before:animate-breath',
 
@@ -46,7 +46,7 @@ const IconButton: React.FC<IconButtonProps> = ({
                 'active:after:scale-0 active:after:bg-cube-gray/50 active:after:transition-none',
 
                 {
-                    '*:fill-disabled *:stroke-disabled hover:before:bg-transparent active:before:bg-transparent':
+                    'cursor-default *:fill-disabled *:stroke-disabled hover:before:bg-transparent active:before:bg-transparent':
                         disabled,
                 },
 
