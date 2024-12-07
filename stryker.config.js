@@ -5,7 +5,7 @@ const config = {
     reporters: ['html', 'progress'],
     testRunner: 'vitest',
     vitest: {
-        configFile: 'vite.config.ts',
+        configFile: 'vitest.config.ts',
         dir: 'src',
     },
     checkers: ['typescript'],
