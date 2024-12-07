@@ -1,12 +1,12 @@
 import * as SliderPrimitive from '@radix-ui/react-slider';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { type PointerEvent, useCallback, useRef, useState } from 'react';
 import cn from 'src/utils/cn';
 import './Slider.css';
 
 const Slider = React.forwardRef<
     React.ElementRef<typeof SliderPrimitive.Root>,
     React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
->(({ className, ...props }, ref) => {
+>(({ className, onPointerUp, ...props }, ref) => {
     const [active, setActive] = useState(false);
     const setActiveTimeoutId = useRef<NodeJS.Timeout | null>(null);
 
@@ -26,14 +26,19 @@ const Slider = React.forwardRef<
         }
     }, []);
 
-    const pointerUp = useCallback(() => {
-        if (setActiveTimeoutId.current) {
-            clearTimeout(setActiveTimeoutId.current);
-            setActiveTimeoutId.current = null;
-        }
+    const pointerUp = useCallback(
+        (event: PointerEvent<HTMLDivElement>) => {
+            if (setActiveTimeoutId.current) {
+                clearTimeout(setActiveTimeoutId.current);
+                setActiveTimeoutId.current = null;
+            }
 
-        setActive(false);
-    }, []);
+            setActive(false);
+
+            onPointerUp?.(event);
+        },
+        [onPointerUp],
+    );
 
     return (
         <SliderPrimitive.Root
@@ -45,8 +50,8 @@ const Slider = React.forwardRef<
                 },
                 className,
             )}
-            {...props}
             onPointerUp={pointerUp}
+            {...props}
         >
             <SliderPrimitive.Track
                 onPointerDown={pointerDownOnTrack}
@@ -72,4 +77,4 @@ const Slider = React.forwardRef<
 });
 Slider.displayName = SliderPrimitive.Root.displayName;
 
-export { Slider };
+export default Slider;
