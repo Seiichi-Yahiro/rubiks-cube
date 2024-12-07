@@ -41,7 +41,7 @@ const IconButton: React.FC<IconButtonProps> = ({
 
                 'before:absolute before:size-full before:rounded-full hover:before:bg-cube-gray/10 focus-visible:before:bg-cube-gray/10 active:before:bg-cube-gray/20 focus-visible:motion-safe:before:animate-breath',
 
-                'after:absolute after:size-full after:scale-110 after:rounded-full after:bg-transparent after:transition-all after:duration-500 after:ease-out',
+                'after:absolute after:size-full after:scale-110 after:rounded-full after:bg-transparent after:transition-all after:duration-500 after:ease-out after:motion-reduce:scale-0',
 
                 'active:after:scale-0 active:after:bg-cube-gray/50 active:after:transition-none',
 
