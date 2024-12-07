@@ -1,0 +1,6 @@
+.slider-animated span:nth-child(2),
+.slider-animated span:nth-child(1) span {
+    transition-property: left, right;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
