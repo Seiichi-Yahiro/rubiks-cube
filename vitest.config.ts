@@ -6,8 +6,9 @@ export default defineConfig((configEnv) =>
         viteConfig(configEnv),
         defineConfig({
             test: {
-                setupFiles: ['./src/test-setup.ts'],
+                setupFiles: ['src/test-setup.ts'],
                 environment: 'jsdom',
+                dir: 'src/',
                 coverage: {
                     provider: 'v8',
                     reporter: ['html'],
