@@ -153,15 +153,6 @@ describe('Player pause', () => {
 
     it('should pause when playing', () => {
         store.dispatch(playerActions.updateNotation('F U R'));
-        /*store.dispatch(
-            playerActions.play(
-                (
-                    store.getState().player.rotationCommands as Success<
-                        RotationCommand[]
-                    >
-                ).value,
-            ),
-        );*/
 
         render(
             <Provider store={store}>
