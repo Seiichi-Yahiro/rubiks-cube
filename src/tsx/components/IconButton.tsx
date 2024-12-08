@@ -16,60 +16,70 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     tooltipSide?: 'top' | 'right' | 'bottom' | 'left';
 }
 
-const IconButton: React.FC<IconButtonProps> = ({
-    className,
-    children,
-    disabled,
-    onClick,
-    tooltip,
-    tooltipSide,
-    ...props
-}) => {
-    const click = useCallback(
-        (event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
-            if (!disabled) {
-                onClick?.(event);
-            }
+const IconButton: React.FC<IconButtonProps> = React.forwardRef<
+    HTMLButtonElement,
+    IconButtonProps
+>(
+    (
+        {
+            className,
+            children,
+            disabled,
+            onClick,
+            tooltip,
+            tooltipSide,
+            ...props
         },
-        [onClick, disabled],
-    );
+        ref,
+    ) => {
+        const click = useCallback(
+            (event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
+                if (!disabled) {
+                    onClick?.(event);
+                }
+            },
+            [onClick, disabled],
+        );
 
-    const classNames = useMemo(
-        () =>
-            cn(
-                'relative inline-flex size-8 cursor-pointer items-center justify-center p-1 *:fill-cube-gray *:stroke-cube-gray focus-visible:outline-none',
+        const classNames = useMemo(
+            () =>
+                cn(
+                    'relative inline-flex size-8 cursor-pointer items-center justify-center p-1 *:fill-cube-gray *:stroke-cube-gray focus-visible:outline-none',
 
-                'before:absolute before:size-full before:rounded-full hover:before:bg-cube-gray/10 focus-visible:before:bg-cube-gray/10 active:before:bg-cube-gray/20 focus-visible:motion-safe:before:animate-breath',
+                    'before:absolute before:size-full before:rounded-full hover:before:bg-cube-gray/10 focus-visible:before:bg-cube-gray/10 active:before:bg-cube-gray/20 focus-visible:motion-safe:before:animate-breath',
 
-                'after:absolute after:size-full after:scale-110 after:rounded-full after:bg-transparent after:transition-all after:duration-500 after:ease-out after:motion-reduce:scale-0',
+                    'after:absolute after:size-full after:scale-110 after:rounded-full after:bg-transparent after:transition-all after:duration-500 after:ease-out after:motion-reduce:scale-0',
 
-                'active:after:scale-0 active:after:bg-cube-gray/50 active:after:transition-none',
+                    'active:after:scale-0 active:after:bg-cube-gray/50 active:after:transition-none',
 
-                {
-                    'cursor-default *:fill-disabled *:stroke-disabled hover:before:bg-transparent active:before:bg-transparent':
-                        disabled,
-                },
+                    {
+                        'cursor-default *:fill-disabled *:stroke-disabled hover:before:bg-transparent active:before:bg-transparent':
+                            disabled,
+                    },
 
-                className,
-            ),
-        [disabled, className],
-    );
+                    className,
+                ),
+            [disabled, className],
+        );
 
-    return (
-        <Tooltip>
-            <TooltipTrigger asChild={true}>
-                <button
-                    className={classNames}
-                    aria-disabled={disabled}
-                    onClick={click}
-                    {...props}
-                >
-                    {children}
-                </button>
-            </TooltipTrigger>
-            <TooltipContent side={tooltipSide}>{tooltip}</TooltipContent>
-        </Tooltip>
-    );
-};
+        return (
+            <Tooltip>
+                <TooltipTrigger asChild={true}>
+                    <button
+                        ref={ref}
+                        className={classNames}
+                        aria-disabled={disabled}
+                        onClick={click}
+                        {...props}
+                    >
+                        {children}
+                    </button>
+                </TooltipTrigger>
+                <TooltipContent side={tooltipSide}>{tooltip}</TooltipContent>
+            </Tooltip>
+        );
+    },
+);
+IconButton.displayName = 'IconButton';
 
 export default React.memo(IconButton);
