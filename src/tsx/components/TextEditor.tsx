@@ -30,7 +30,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
                 'after:absolute after:bottom-0 after:w-full after:scale-x-0 after:border-b-2 after:border-cube-blue after:transition-transform after:duration-200 after:ease-out focus-within:after:scale-x-100',
 
                 {
-                    'before:border-b before:border-dotted before:border-disabled':
+                    'before:border-b before:border-dotted before:border-disabled hover:before:border-b':
                         disabled,
                 },
 
