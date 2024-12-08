@@ -25,7 +25,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
             className={cn(
                 'relative overflow-hidden',
 
-                'before:absolute before:bottom-0 before:w-full before:border-b before:border-cube-gray focus-within:before:border-b-2 hover:before:border-b-2 hover:before:border-black',
+                'before:absolute before:bottom-0 before:w-full before:border-b before:border-cube-gray focus-within:before:border-b-2 hover:before:border-b-2 hover:before:border-cube-gray',
 
                 'after:absolute after:bottom-0 after:w-full after:scale-x-0 after:border-b-2 after:border-cube-blue after:transition-transform after:duration-200 after:ease-out focus-within:after:scale-x-100',
 
@@ -50,7 +50,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
                 autoCapitalize="off"
                 autoComplete="off"
                 autoCorrect="off"
-                className="peer absolute top-0 z-10 mb-1 mt-4 h-full min-h-6 w-full resize-none whitespace-pre-wrap bg-transparent text-base text-transparent caret-black outline-none"
+                className="peer absolute top-0 z-10 mb-1 mt-4 h-full min-h-6 w-full resize-none whitespace-pre-wrap bg-transparent text-base text-transparent caret-cube-gray outline-none"
             />
             <label
                 htmlFor={id}
@@ -74,7 +74,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
                 ref={divRef}
                 aria-hidden={true}
                 className={cn(
-                    'relative mb-1 mt-4 h-full min-h-6 w-full select-none whitespace-pre-wrap text-base text-black',
+                    'relative mb-1 mt-4 h-full min-h-6 w-full select-none whitespace-pre-wrap text-base text-cube-gray',
                     {
                         'text-disabled': disabled,
                     },
