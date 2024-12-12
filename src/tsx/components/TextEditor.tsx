@@ -1,24 +1,49 @@
 import { uniqueId } from 'lodash';
-import React, { type ChangeEvent, useMemo, useRef, useState } from 'react';
+import React, { type CSSProperties, useMemo, useRef } from 'react';
 import cn from 'src/utils/cn';
+
+export interface StyledValue {
+    value: string;
+    color?: CSSProperties['color'];
+}
 
 interface TextEditorProps {
     label: string;
+    value: StyledValue[] | string;
+    onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
     disabled?: boolean;
     error?: boolean;
 }
 
 const TextEditor: React.FC<TextEditorProps> = ({
     label,
+    value,
+    onChange,
     disabled = false,
     error = false,
 }) => {
-    const [value, setValue] = useState('');
     const divRef = useRef<HTMLDivElement>(null);
     const id = useMemo(() => uniqueId(`${label}-textarea-`), [label]);
 
-    const onChange = (event: ChangeEvent<HTMLTextAreaElement>) =>
-        setValue(event.target.value);
+    const textValue: string = useMemo(() => {
+        if (typeof value === 'string') {
+            return value;
+        } else {
+            return value.map((it) => it.value).join('');
+        }
+    }, [value]);
+
+    const styledValue = useMemo(() => {
+        if (typeof value === 'string') {
+            return value;
+        } else {
+            return value.map((it, index) => (
+                <span key={index} style={{ color: it.color }}>
+                    {it.value}
+                </span>
+            ));
+        }
+    }, [value]);
 
     return (
         <div
@@ -42,7 +67,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
         >
             <textarea
                 id={id}
-                value={value}
+                value={textValue}
                 onChange={onChange}
                 disabled={disabled}
                 aria-invalid={error}
@@ -80,7 +105,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
                     },
                 )}
             >
-                {value}
+                {styledValue}
                 <br />
             </div>
         </div>
