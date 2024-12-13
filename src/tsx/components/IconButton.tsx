@@ -12,7 +12,7 @@ import {
 import cn from 'src/utils/cn';
 
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    tooltip: string;
+    tooltip?: string;
     tooltipSide?: 'top' | 'right' | 'bottom' | 'left';
     disableFill?: boolean;
 }
@@ -66,21 +66,25 @@ const IconButton: React.FC<IconButtonProps> = React.forwardRef<
             [disabled, disableFill, className],
         );
 
-        return (
+        const button = (
+            <button
+                ref={ref}
+                className={classNames}
+                aria-disabled={disabled}
+                onClick={click}
+                {...props}
+            >
+                {children}
+            </button>
+        );
+
+        return tooltip ? (
             <Tooltip>
-                <TooltipTrigger asChild={true}>
-                    <button
-                        ref={ref}
-                        className={classNames}
-                        aria-disabled={disabled}
-                        onClick={click}
-                        {...props}
-                    >
-                        {children}
-                    </button>
-                </TooltipTrigger>
+                <TooltipTrigger asChild={true}>{button}</TooltipTrigger>
                 <TooltipContent side={tooltipSide}>{tooltip}</TooltipContent>
             </Tooltip>
+        ) : (
+            button
         );
     },
 );
