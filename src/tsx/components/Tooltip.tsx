@@ -8,6 +8,21 @@ const Tooltip = TooltipPrimitive.Root;
 
 const TooltipTrigger = TooltipPrimitive.Trigger;
 
+const ToolTipArrow = React.forwardRef<
+    React.ElementRef<typeof TooltipPrimitive.Arrow>,
+    React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Arrow>
+>(({ className, ...props }, ref) => (
+    <TooltipPrimitive.Arrow
+        ref={ref}
+        className={cn(
+            'fill-disabled stroke-cube-gray/20 opacity-90',
+            className,
+        )}
+        {...props}
+    />
+));
+ToolTipArrow.displayName = TooltipPrimitive.Arrow.displayName;
+
 const TooltipContent = React.forwardRef<
     React.ElementRef<typeof TooltipPrimitive.Content>,
     React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
@@ -29,4 +44,10 @@ const TooltipContent = React.forwardRef<
 ));
 TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
-export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger };
+export {
+    ToolTipArrow,
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+};
