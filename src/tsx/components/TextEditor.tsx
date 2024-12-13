@@ -47,15 +47,17 @@ const TextEditor: React.FC<TextEditorProps> = ({
 
     return (
         <div
+            ref={divRef}
+            aria-hidden={true}
             className={cn(
-                'relative overflow-hidden',
+                'relative mb-1 mt-4 min-h-6 w-full select-none whitespace-pre-wrap text-base text-cube-gray',
 
                 'before:absolute before:bottom-0 before:w-full before:border-b before:border-cube-gray focus-within:before:border-b-2 hover:before:border-b-2 hover:before:border-cube-gray',
 
                 'after:absolute after:bottom-0 after:w-full after:scale-x-0 after:border-b-2 after:border-cube-blue after:transition-transform after:duration-200 after:ease-out focus-within:after:scale-x-100',
 
                 {
-                    'before:border-b before:border-dotted before:border-disabled hover:before:border-b':
+                    'text-disabled before:border-b before:border-dotted before:border-disabled hover:before:border-b':
                         disabled,
                 },
 
@@ -75,14 +77,14 @@ const TextEditor: React.FC<TextEditorProps> = ({
                 autoCapitalize="off"
                 autoComplete="off"
                 autoCorrect="off"
-                className="peer absolute top-0 z-10 mb-1 mt-4 h-full min-h-6 w-full resize-none whitespace-pre-wrap bg-transparent text-base text-transparent caret-cube-gray outline-none"
+                className="peer absolute top-0 size-full resize-none overflow-hidden whitespace-pre-wrap bg-transparent text-base text-transparent caret-cube-gray outline-none"
             />
             <label
                 htmlFor={id}
                 className={cn(
-                    'absolute top-0 text-xs text-cube-gray transition-all duration-200 ease-out',
+                    'absolute -top-4 text-xs text-cube-gray transition-all duration-200 ease-out',
 
-                    'underline peer-empty:top-3 peer-empty:text-base peer-empty:no-underline peer-focus:top-0 peer-focus:text-xs peer-focus:text-cube-blue peer-focus:underline',
+                    'underline peer-empty:top-0 peer-empty:text-base peer-empty:no-underline peer-focus:-top-4 peer-focus:text-xs peer-focus:text-cube-blue peer-focus:underline',
 
                     {
                         'text-disabled': disabled,
@@ -95,19 +97,8 @@ const TextEditor: React.FC<TextEditorProps> = ({
             >
                 {label}
             </label>
-            <div
-                ref={divRef}
-                aria-hidden={true}
-                className={cn(
-                    'relative mb-1 mt-4 h-full min-h-6 w-full select-none whitespace-pre-wrap text-base text-cube-gray',
-                    {
-                        'text-disabled': disabled,
-                    },
-                )}
-            >
-                {styledValue}
-                <br />
-            </div>
+            {styledValue}
+            <br />
         </div>
     );
 };
