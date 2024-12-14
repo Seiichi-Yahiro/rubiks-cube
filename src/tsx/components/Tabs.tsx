@@ -32,7 +32,7 @@ const TabsTrigger = React.forwardRef<
 
             'before:absolute before:size-full before:scale-95 before:rounded-md before:px-2 hover:before:bg-cube-gray/10 focus-visible:before:bg-cube-gray/10 focus-visible:motion-safe:before:animate-breath',
 
-            'after:absolute after:size-full after:scale-110 after:rounded-full after:bg-transparent after:transition-all after:duration-500 after:ease-out after:motion-reduce:scale-0',
+            'after:absolute after:size-full after:scale-110 after:rounded-md after:bg-transparent after:transition-all after:duration-500 after:ease-out after:motion-reduce:scale-0',
 
             'active:after:scale-0 active:after:bg-cube-gray/50 active:after:transition-none',
 
