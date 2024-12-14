@@ -17,7 +17,7 @@ import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { Direction, playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
-import NotationInput from 'src/tsx/interface/NotationInput';
+import NotationInput from 'src/tsx/player/notation/NotationInput';
 import cn from 'src/utils/cn';
 
 interface TooltipIconButtonProps {
@@ -64,7 +64,7 @@ const Player: React.FC = () => {
     );
 
     const updateNotation = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) =>
+        (event: React.ChangeEvent<HTMLTextAreaElement>) =>
             dispatch(playerActions.updateNotation(event.target.value)),
         [dispatch],
     );

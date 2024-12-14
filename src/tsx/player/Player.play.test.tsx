@@ -13,7 +13,8 @@ import { playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import { AppStore, setupStore } from 'src/redux/store';
 import { spyOnAction } from 'src/test-helper';
-import Player from 'src/tsx/interface/Player';
+import { TooltipProvider } from 'src/tsx/components/Tooltip';
+import Player from 'src/tsx/player/Player';
 import {
     afterEach,
     beforeEach,
@@ -70,7 +71,9 @@ describe('Player play', () => {
     const expectDisabledPlay = async () => {
         render(
             <Provider store={store}>
-                <Player />
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
             </Provider>,
         );
 
@@ -107,7 +110,9 @@ describe('Player play', () => {
     const expectAllowPlay = () => {
         render(
             <Provider store={store}>
-                <Player />
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
             </Provider>,
         );
 
@@ -163,7 +168,9 @@ describe('Player play', () => {
 
         render(
             <Provider store={store}>
-                <Player />
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
             </Provider>,
         );
 
@@ -233,7 +240,9 @@ describe('Player play', () => {
 
         render(
             <Provider store={store}>
-                <Player />
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
             </Provider>,
         );
 

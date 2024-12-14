@@ -16,31 +16,77 @@
             "help": "Notation definitions"
         },
         "help": {
-            "notation": "Notation",
-            "explanation": "There are two types of letters: sliceable and non-sliceable. Sliceable letters can be applied to any layer of the cube, while non-sliceable letters are applied to one or more specific layers. All letters are available in capital and non-capital variants but their meaning can change and depends additionally on the dimension of the cube. Rotations are always done clockwise unless the statement is modified by a prime. Modifications are always applied at the end of a notation statement. Notation statements need to be separated by spaces or commas.",
-            "sliceable": "Sliceable",
-            "left": "Left layer",
-            "right": "Right layer",
-            "top": "Top layer",
-            "bottom": "Bottom layer",
-            "front": "Front layer",
-            "back": "Back layer",
-            "middle": "Middle layer like L/R",
-            "equatorial": "Equatorial layer like U/D",
-            "standing": "Standing layer like F/B",
-            "x": "Whole cube like L/R",
-            "y": "Whole cube like U/D",
-            "z": "Whole cube like F/B",
-            "wide": "Wide, Rotate all layers",
-            "prime": "Prime, Rotate counter-clockwise",
-            "double": "Double, Rotate 180°",
-            "non-sliceable": "Non-sliceable",
-            "modifications": "Modifications",
-            "slicing": "Slicing",
-            "slicing-explanation": "Sliceable letters can be applied to specific slices / layers of the cube by adding a single number that refers to a layer or by adding multiple comma separated numbers inside brackets referring to multiple layers in front of a notation statement. Layer indexing starts at 1 and the direction depends on the following letter.",
-            "loops": "Loops",
-            "loops-explanation": "Loops can be created by enclosing notation statements with parenthesis and adding the number of repetitions after the closing parenthesis. The number of repetitions should not be set too high. Loops can also be nested.",
-            "examples": "Examples"
+            "commands": {
+                "introduction": "You can control how the cube rotates using commands.",
+                "parts": "Every command can be divided into three parts: layer reference, layer letter, and a modification. The layer letter is the only required part.",
+                "separation": "Commands must be separated by spaces or commas."
+            },
+            "defaultRotation": "Layer letters will rotate clockwise unless modified by a",
+            "layerLetterGroups": "Layer letters can be grouped into two categories: dynamic and fixed letters.",
+            "dynamicLetter": {
+                "title": "Dynamic Letters",
+                "introduction": "A dynamic letter refers to a specific layer unless modified by a layer reference.",
+                "left": "Left layer",
+                "right": "Right layer",
+                "top": "Top layer",
+                "bottom": "Bottom layer",
+                "front": "Front layer",
+                "back": "Back layer",
+                "case": {
+                    "introduction": "Dynamic letters are usually written in uppercase. Their meaning can change when written in lowercase.",
+                    "uppercase": "Uppercase dynamic letters rotate a single layer.",
+                    "lowercase": "Lowercase dynamic letters rotate the first two layers on a 3x3x3 cube, the second layer on larger cubes, and the first layer on a 2x2x2 cube."
+                },
+                "layerReference": {
+                    "introduction": "The rotated layer can be overwritten by a layer reference, which must always come before a dynamic letter.",
+                    "categories": {
+                        "introduction": "The layer can be defined in two ways.",
+                        "single": {
+                            "title": "Single",
+                            "same": "Same as",
+                            "example2": "Second layer starting from",
+                            "example3": "Third layer starting from",
+                            "wide": {
+                                "explanationStart": "An optional",
+                                "explanationEnd": "can be added at the end to rotate the first x layers.",
+                                "example": "Rotate the first four layers starting from"
+                            }
+                        },
+                        "multiple": {
+                            "title": "Multiple",
+                            "same": "Same as",
+                            "example2": "First and third layers starting from",
+                            "example3": "First three layers starting from"
+                        }
+                    }
+                }
+            },
+            "fixedLetter": {
+                "title": "Fixed Letters",
+                "introduction": "A fixed letter always refers to a specific layer and cannot be modified by a layer reference.",
+                "middle": "Middle layer",
+                "equatorial": "Equatorial layer",
+                "standing": "Standing layer",
+                "x": "Whole cube",
+                "y": "Whole cube",
+                "z": "Whole cube",
+                "case": {
+                    "introduction": "Fixed letters are usually written in uppercase. Their meaning can change when written in lowercase.",
+                    "uppercase": "Uppercase fixed letters rotate the middle layer of an odd-sized cube and the two middle layers of an even-sized cube.",
+                    "lowercase": "Lowercase fixed letters rotate every layer except the two outermost layers, and the whole cube on a 2x2x2 cube."
+                }
+            },
+            "modification": {
+                "introduction": "Every command can be modified by one or two optional characters that must come after the layer letter.",
+                "prime": "Rotate counterclockwise",
+                "2": "Rotate by 180°"
+            },
+            "loops": {
+                "introduction": "Loops can be defined by wrapping commands in parentheses and adding the number of repetitions after the closing parenthesis. Nesting loops is also possible.",
+                "repeat": "Repeat",
+                "3times": "3 times",
+                "same": "Same as"
+            }
         }
     },
     "interface": {

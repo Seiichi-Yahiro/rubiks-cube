@@ -5,8 +5,8 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Algorithms from 'src/tsx/interface/Algorithms';
 import Category from 'src/tsx/interface/Category';
-import Player from 'src/tsx/interface/Player';
 import Settings from 'src/tsx/interface/Settings';
+import Player from 'src/tsx/player/Player';
 
 enum Menu {
     ALGORITHMS = 'ALGORITHMS',

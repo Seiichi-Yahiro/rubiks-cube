@@ -4,7 +4,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import type { RotationCommand } from 'src/algorithms/rotationCommand';
 import { setupStore } from 'src/redux/store';
-import Player from 'src/tsx/interface/Player';
+import { TooltipProvider } from 'src/tsx/components/Tooltip';
+import Player from 'src/tsx/player/Player';
 import { afterEach, describe, expect, it } from 'vitest';
 
 describe('NotationInput', () => {
@@ -17,7 +18,9 @@ describe('NotationInput', () => {
 
         render(
             <Provider store={store}>
-                <Player />
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
             </Provider>,
         );
 

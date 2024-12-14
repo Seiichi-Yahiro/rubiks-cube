@@ -7,10 +7,11 @@ import type { RotationCommand } from 'src/algorithms/rotationCommand';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
 import { AppStore, setupStore } from 'src/redux/store';
-import Player from 'src/tsx/interface/Player';
+import { TooltipProvider } from 'src/tsx/components/Tooltip';
+import Player from 'src/tsx/player/Player';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-describe('Player reset', () => {
+describe('Player shuffle', () => {
     let store: AppStore;
 
     beforeEach(() => {
@@ -33,29 +34,31 @@ describe('Player reset', () => {
         cleanup();
     });
 
-    const expectNotAllowReset = () => {
+    const expectNotAllowShuffle = () => {
         render(
             <Provider store={store}>
-                <Player />
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
             </Provider>,
         );
 
         const stateBefore = store.getState();
 
-        const reset = screen.getByRole('button', {
-            name: 'player.input.reset',
+        const shuffle = screen.getByRole('button', {
+            name: 'player.input.shuffle',
         });
 
-        expect(reset).toHaveAttribute('aria-disabled', 'true');
+        expect(shuffle).toHaveAttribute('aria-disabled', 'true');
 
-        fireEvent.click(reset);
+        fireEvent.click(shuffle);
 
         const stateAfter = store.getState();
 
-        expect(stateAfter.cube.cubicles).toBe(stateBefore.cube.cubicles);
+        expect(stateAfter.player.notation).toBe(stateBefore.player.notation);
     };
 
-    it('should not allow reset when playing', async () => {
+    it('should not allow shuffle when playing', () => {
         store.dispatch(playerActions.updateNotation('F U R'));
         store.dispatch(
             playerActions.play(
@@ -67,10 +70,10 @@ describe('Player reset', () => {
             ),
         );
 
-        expectNotAllowReset();
+        expectNotAllowShuffle();
     });
 
-    it('should not allow reset when paused', async () => {
+    it('should not allow shuffle when paused', () => {
         store.dispatch(playerActions.updateNotation('F U R'));
         store.dispatch(
             playerActions.play(
@@ -83,53 +86,32 @@ describe('Player reset', () => {
         );
         store.dispatch(playerActions.pause());
 
-        expectNotAllowReset();
+        expectNotAllowShuffle();
     });
 
-    it('should reset the cube', async () => {
-        store.dispatch(playerActions.updateNotation('F U R'));
-        store.dispatch(
-            playerActions.play(
-                (
-                    store.getState().player.rotationCommands as Success<
-                        RotationCommand[]
-                    >
-                ).value,
-            ),
-        );
-
-        await new Promise((resolve) => {
-            store.dispatch(
-                addListener({
-                    actionCreator: cubeActions.applyRotationCommands,
-                    effect: (_action, listenerApi) => {
-                        listenerApi.unsubscribe();
-                        resolve(true);
-                    },
-                }),
-            );
-        });
-
-        store.dispatch(playerActions.stop());
-
+    it('should shuffle the notation', () => {
         render(
             <Provider store={store}>
-                <Player />
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
             </Provider>,
         );
 
         const stateBefore = store.getState();
 
-        const reset = screen.getByRole('button', {
-            name: 'player.input.reset',
+        const shuffle = screen.getByRole('button', {
+            name: 'player.input.shuffle',
         });
 
-        expect(reset).toHaveAttribute('aria-disabled', 'false');
+        expect(shuffle).toHaveAttribute('aria-disabled', 'false');
 
-        fireEvent.click(reset);
+        fireEvent.click(shuffle);
 
         const stateAfter = store.getState();
 
-        expect(stateAfter.cube.cubicles).not.toBe(stateBefore.cube.cubicles);
+        expect(stateAfter.player.notation).not.toBe(
+            stateBefore.player.notation,
+        );
     });
 });

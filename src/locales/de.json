@@ -16,31 +16,77 @@
             "help": "Erklärung der Notation"
         },
         "help": {
-            "notation": "Notation",
-            "explanation": "Es gibt zwei Arten von Buchstaben: schneidbare und nicht-schneidbare. Schneidbare Buchstaben können auf jede Ebene des Würfels angewendet werden, während nicht-schneidbare Buchstaben auf eine oder mehrere spezifische Ebenen angewendet werden. Alle Buchstaben können in Groß- oder Kleinbuchstaben verwendet werden, aber ihre Bedeutung kann sich dadurch ändern und hängt zusätzlich von der Dimension des Würfels ab. Drehungen werden immer im Uhrzeigersinn ausgeführt, es sei denn, die Aussage wird durch ein Prime modifiziert. Modifikationen werden immer am Ende einer Notationsaussage angewendet. Notationsaussagen müssen durch Leerzeichen oder Kommas getrennt werden.",
-            "sliceable": "Schneidbar",
-            "left": "Linke Ebene",
-            "right": "Rechte Ebene",
-            "top": "Obere Ebene",
-            "bottom": "Untere Ebene",
-            "front": "Vordere Ebene",
-            "back": "Hintere Ebene",
-            "middle": "Mittlere Ebene wie L/R",
-            "equatorial": "Äquatoriale Ebene wie U/D",
-            "standing": "Stehende Ebene wie F/B",
-            "x": "Ganzer Würfel wie L/R",
-            "y": "Ganzer Würfel wie U/D",
-            "z": "Ganzer Würfel wie F/B",
-            "wide": "Wide, Drehe alle Ebenen",
-            "prime": "Prime, Drehe gegen den Uhrzeigersinn",
-            "double": "Double, Drehe 180°",
-            "non-sliceable": "Nicht-schneidbar",
-            "modifications": "Modifikationen",
-            "slicing": "Schneiden",
-            "slicing-explanation": "Schneidbare Buchstaben können auf spezifische Ebenen des Würfels angewendet werden, indem eine einzelne Zahl vor einer Notationsaussage hinzugefügt wird, die sich auf eine Ebene bezieht, oder indem mehrere durch Kommas getrennte Zahlen in Klammern gesetzt werden, die sich auf mehrere Ebenen beziehen. Die Ebenen-Indexierung beginnt bei 1 und die Richtung hängt vom folgenden Buchstaben ab.",
-            "loops": "Schleifen",
-            "loops-explanation": "Schleifen können durch das Umklammern von Notationsaussagen erstellt werden. Die Anzahl der Wiederholungen muss nach der schließenden Klammer angegeben werden. Die Anzahl der Wiederholungen sollte nicht zu groß gesetzt werden. Schleifen können auch verschachtelt werden.",
-            "examples": "Beispiele"
+            "commands": {
+                "introduction": "Du kannst steuern, wie sich der Würfel dreht, indem du Befehle verwendest.",
+                "parts": "Jeder Befehl kann in drei Teile unterteilt werden: Ebenenreferenz, Ebenenbuchstabe und eine Modifikation. Der Ebenenbuchstabe ist der einzige erforderliche Teil.",
+                "separation": "Befehle müssen durch Leerzeichen oder Kommas getrennt werden."
+            },
+            "defaultRotation": "Ebenenbuchstaben drehen sich im Uhrzeigersinn, es sei denn, sie werden durch ein Apostroph geändert",
+            "layerLetterGroups": "Ebenenbuchstaben können in zwei Kategorien unterteilt werden: dynamische und feste Buchstaben.",
+            "dynamicLetter": {
+                "title": "Dynamische Buchstaben",
+                "introduction": "Ein dynamischer Buchstabe bezieht sich auf eine bestimmte Ebene, es sei denn, er wird durch eine Ebenenreferenz geändert.",
+                "left": "Linke Ebene",
+                "right": "Rechte Ebene",
+                "top": "Obere Ebene",
+                "bottom": "Untere Ebene",
+                "front": "Vordere Ebene",
+                "back": "Hintere Ebene",
+                "case": {
+                    "introduction": "Dynamische Buchstaben werden normalerweise in Großbuchstaben geschrieben. Ihre Bedeutung kann sich ändern, wenn sie in Kleinbuchstaben geschrieben werden.",
+                    "uppercase": "Großgeschriebene dynamische Buchstaben drehen nur eine Ebene.",
+                    "lowercase": "Kleingeschriebene dynamische Buchstaben drehen die ersten zwei Ebenen eines 3x3x3-Würfels, die zweite Ebene bei größeren Würfeln und die erste Ebene eines 2x2x2-Würfels."
+                },
+                "layerReference": {
+                    "introduction": "Die gedrehte Ebene kann mithilfe einer Ebenenreferenz angegeben werden, die immer vor einem dynamischen Buchstaben stehen muss.",
+                    "categories": {
+                        "introduction": "Die Ebene kann auf zwei Arten definiert werden.",
+                        "single": {
+                            "title": "Einzeln",
+                            "same": "Gleich wie",
+                            "example2": "Zweite Ebene, beginnend von",
+                            "example3": "Dritte Ebene, beginnend von",
+                            "wide": {
+                                "explanationStart": "Ein optionales",
+                                "explanationEnd": "kann am Ende hinzugefügt werden, um die ersten x Ebenen zu drehen.",
+                                "example": "Drehe die ersten vier Ebenen, beginnend von"
+                            }
+                        },
+                        "multiple": {
+                            "title": "Mehrere",
+                            "same": "Gleich wie",
+                            "example2": "Erste und dritte Ebene, beginnend von",
+                            "example3": "Erste drei Ebenen, beginnend von"
+                        }
+                    }
+                }
+            },
+            "fixedLetter": {
+                "title": "Feste Buchstaben",
+                "introduction": "Ein fester Buchstabe bezieht sich immer auf eine bestimmte Ebene und kann nicht durch eine Ebenenreferenz geändert werden.",
+                "middle": "Mittlere Ebene",
+                "equatorial": "Äquatoriale Ebene",
+                "standing": "Stehende Ebene",
+                "x": "Ganzer Würfel",
+                "y": "Ganzer Würfel",
+                "z": "Ganzer Würfel",
+                "case": {
+                    "introduction": "Feste Buchstaben werden normalerweise in Großbuchstaben geschrieben. Ihre Bedeutung kann sich ändern, wenn sie in Kleinbuchstaben geschrieben werden.",
+                    "uppercase": "Großgeschriebene feste Buchstaben drehen die mittlere Ebene eines ungeradzahligen Würfels und die zwei mittleren Ebenen eines geradzahligen Würfels.",
+                    "lowercase": "Kleingeschriebene feste Buchstaben drehen alle Ebenen außer den zwei äußeren und den ganzen Würfel bei einem 2x2x2-Würfel."
+                }
+            },
+            "modification": {
+                "introduction": "Jeder Befehl kann durch ein oder zwei optionale Zeichen geändert werden, die nach dem Ebenenbuchstaben stehen müssen.",
+                "prime": "Drehe gegen den Uhrzeigersinn",
+                "2": "Drehe um 180°"
+            },
+            "loops": {
+                "introduction": "Schleifen können definiert werden, indem Befehle in Klammern gesetzt und die Anzahl der Wiederholungen hinter die schließende Klammer geschrieben werden. Verschachtelte Schleifen sind ebenfalls möglich.",
+                "repeat": "Wiederhole",
+                "3times": "3 Mal",
+                "same": "Gleich wie"
+            }
         }
     },
     "interface": {

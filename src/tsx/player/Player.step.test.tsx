@@ -6,7 +6,8 @@ import { cubeActions } from 'src/redux/cube/cubeActions';
 import { Direction, playerActions } from 'src/redux/player/playerActions';
 import { type AppStore, setupStore } from 'src/redux/store';
 import { delay, spyOnAction } from 'src/test-helper';
-import Player from 'src/tsx/interface/Player';
+import { TooltipProvider } from 'src/tsx/components/Tooltip';
+import Player from 'src/tsx/player/Player';
 import {
     afterEach,
     beforeEach,
@@ -62,7 +63,9 @@ describe('Player step', () => {
 
         render(
             <Provider store={store}>
-                <Player />
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
             </Provider>,
         );
 
@@ -92,7 +95,9 @@ describe('Player step', () => {
 
         render(
             <Provider store={store}>
-                <Player />
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
             </Provider>,
         );
 
@@ -127,7 +132,9 @@ describe('Player step', () => {
 
         render(
             <Provider store={store}>
-                <Player />
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
             </Provider>,
         );
 
@@ -165,7 +172,9 @@ describe('Player step', () => {
 
         render(
             <Provider store={store}>
-                <Player />
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
             </Provider>,
         );
 
