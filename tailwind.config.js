@@ -32,7 +32,9 @@ export default {
                 error: '#F44336',
             },
             screens: {
+                'pointer-fine': { raw: '(pointer: fine)' },
                 'pointer-coarse': { raw: '(pointer: coarse)' },
+                'hover-hover': { raw: '(hover: hover)' },
             },
         },
     },
