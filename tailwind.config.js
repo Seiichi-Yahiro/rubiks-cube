@@ -31,6 +31,9 @@ export default {
                 'cube-yellow': '#FDCC09',
                 error: '#F44336',
             },
+            screens: {
+                'pointer-coarse': { raw: '(pointer: coarse)' },
+            },
         },
     },
     plugins: [tailwindcssAnimate],

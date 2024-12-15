@@ -44,7 +44,7 @@ const FaceArrow: React.FC<IArrowProps> = ({ direction, rotate }) => (
                 transform:
                     'translateY(50%) scale(0.4) translateY(-50%) rotate(180deg)',
             }}
-            className="opacity-0 group-hover:opacity-100 [@media(pointer:coarse)]:opacity-100"
+            className="opacity-0 group-hover:opacity-100 pointer-coarse:opacity-100"
         />
     </g>
 );
