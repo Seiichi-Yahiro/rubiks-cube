@@ -67,6 +67,7 @@ const IconButton: React.FC<IconButtonProps> = React.forwardRef<
             <button
                 ref={ref}
                 className={classNames}
+                aria-label={tooltip}
                 aria-disabled={disabled}
                 onClick={click}
                 {...props}
