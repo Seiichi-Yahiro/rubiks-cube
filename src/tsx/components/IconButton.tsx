@@ -15,7 +15,6 @@ import cn from 'src/utils/cn';
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     tooltip?: string;
     tooltipSide?: 'top' | 'right' | 'bottom' | 'left';
-    disableFill?: boolean;
 }
 
 const IconButton: React.FC<IconButtonProps> = React.forwardRef<
@@ -30,7 +29,6 @@ const IconButton: React.FC<IconButtonProps> = React.forwardRef<
             onClick,
             tooltip,
             tooltipSide,
-            disableFill = false,
             ...props
         },
         ref,
@@ -47,7 +45,7 @@ const IconButton: React.FC<IconButtonProps> = React.forwardRef<
         const classNames = useMemo(
             () =>
                 cn(
-                    'relative inline-flex size-8 cursor-pointer items-center justify-center p-1 *:stroke-cube-gray focus-visible:outline-none',
+                    'relative inline-flex size-8 cursor-pointer items-center justify-center p-1 *:stroke-cube-gray *:stroke-[1.5] focus-visible:outline-none',
 
                     'before:absolute before:size-full before:rounded-full hover:before:bg-cube-gray/10 focus-visible:before:bg-cube-gray/10 active:before:bg-cube-gray/20 focus-visible:motion-safe:before:animate-breath',
 
@@ -56,15 +54,13 @@ const IconButton: React.FC<IconButtonProps> = React.forwardRef<
                     'active:after:scale-0 active:after:bg-cube-gray/50 active:after:transition-none',
 
                     {
-                        '*:fill-cube-gray': !disableFill,
-                        '*:fill-disabled': disabled && !disableFill,
                         'cursor-default *:stroke-disabled hover:before:bg-transparent active:before:bg-transparent':
                             disabled,
                     },
 
                     className,
                 ),
-            [disabled, disableFill, className],
+            [disabled, className],
         );
 
         const button = (

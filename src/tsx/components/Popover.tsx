@@ -36,10 +36,7 @@ const PopoverContent = React.forwardRef<
             >
                 {children}
                 <PopoverPrimitive.Close asChild={true}>
-                    <IconButton
-                        disableFill={true}
-                        className="absolute right-0 top-0 mr-1 mt-1 size-6"
-                    >
+                    <IconButton className="absolute right-0 top-0 mr-1 mt-1 size-6">
                         <X />
                     </IconButton>
                 </PopoverPrimitive.Close>

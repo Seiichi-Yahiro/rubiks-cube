@@ -91,10 +91,7 @@ const NotationInput: React.FC<NotationInputProps> = ({
                 />
                 <Popover>
                     <PopoverTrigger asChild={true}>
-                        <IconButton
-                            tooltip={t('player.input.help')}
-                            disableFill={true}
-                        >
+                        <IconButton tooltip={t('player.input.help')}>
                             <CircleHelp />
                         </IconButton>
                     </PopoverTrigger>
