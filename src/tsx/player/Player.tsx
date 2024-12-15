@@ -1,14 +1,14 @@
-import ArrowBack from '@mui/icons-material/ArrowBack';
-import ArrowForward from '@mui/icons-material/ArrowForward';
-import Pause from '@mui/icons-material/Pause';
-import PlayArrow from '@mui/icons-material/PlayArrow';
-import Refresh from '@mui/icons-material/Refresh';
-import Shuffle from '@mui/icons-material/Shuffle';
-import SkipNext from '@mui/icons-material/SkipNext';
-import SkipPrevious from '@mui/icons-material/SkipPrevious';
-import Stop from '@mui/icons-material/Stop';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+import {
+    CirclePause,
+    CirclePlay,
+    CircleStop,
+    RefreshCcw,
+    Shuffle,
+    SkipBack,
+    SkipForward,
+    StepBack,
+    StepForward,
+} from 'lucide-react';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createRandomNotation } from 'src/algorithms/parser';
@@ -17,40 +17,8 @@ import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { Direction, playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
+import IconButton from 'src/tsx/components/IconButton';
 import NotationInput from 'src/tsx/player/notation/NotationInput';
-import cn from 'src/utils/cn';
-
-interface TooltipIconButtonProps {
-    title: string;
-    disabled?: boolean;
-    onClick: () => void;
-    children: React.ReactNode;
-}
-
-const TooltipIconButton: React.FC<TooltipIconButtonProps> = ({
-    title,
-    disabled = false,
-    onClick,
-    children,
-}) => {
-    return (
-        <Tooltip title={title}>
-            <IconButton
-                aria-disabled={disabled}
-                className={cn(
-                    {
-                        'Mui-disabled': disabled,
-                    },
-                    '!pointer-events-auto',
-                )}
-                onClick={disabled ? undefined : onClick}
-                size="small"
-            >
-                {children}
-            </IconButton>
-        </Tooltip>
-    );
-};
 
 const Player: React.FC = () => {
     const { t } = useTranslation();
@@ -126,32 +94,32 @@ const Player: React.FC = () => {
             <div className="flex flex-row justify-between">
                 <div className="flex flex-row flex-nowrap">
                     {playerStatus === PlayerStatus.PLAYING ? (
-                        <TooltipIconButton
-                            title={t('player.input.pause')}
+                        <IconButton
+                            tooltip={t('player.input.pause')}
                             onClick={onPause}
                         >
-                            <Pause />
-                        </TooltipIconButton>
+                            <CirclePause />
+                        </IconButton>
                     ) : (
-                        <TooltipIconButton
-                            title={t('player.input.play')}
+                        <IconButton
+                            tooltip={t('player.input.play')}
                             disabled={isNotationInvalid}
                             onClick={onPlay}
                         >
-                            <PlayArrow />
-                        </TooltipIconButton>
+                            <CirclePlay />
+                        </IconButton>
                     )}
-                    <TooltipIconButton
-                        title={t('player.input.stop')}
+                    <IconButton
+                        tooltip={t('player.input.stop')}
                         onClick={onStop}
                         disabled={isStopped}
                     >
-                        <Stop />
-                    </TooltipIconButton>
+                        <CircleStop />
+                    </IconButton>
                 </div>
                 <div className="flex flex-row flex-nowrap">
-                    <TooltipIconButton
-                        title={
+                    <IconButton
+                        tooltip={
                             isStopped
                                 ? t('player.input.skipToStart')
                                 : t('player.input.skipRemainingToStart')
@@ -163,10 +131,10 @@ const Player: React.FC = () => {
                             (isStopped && isNotationInvalid)
                         }
                     >
-                        <SkipPrevious />
-                    </TooltipIconButton>
-                    <TooltipIconButton
-                        title={t('player.input.stepPrevious')}
+                        <SkipBack />
+                    </IconButton>
+                    <IconButton
+                        tooltip={t('player.input.stepPrevious')}
                         onClick={onNextStepBack}
                         disabled={
                             isPlaying ||
@@ -174,10 +142,10 @@ const Player: React.FC = () => {
                             isStopped
                         }
                     >
-                        <ArrowBack />
-                    </TooltipIconButton>
-                    <TooltipIconButton
-                        title={t('player.input.stepNext')}
+                        <StepBack />
+                    </IconButton>
+                    <IconButton
+                        tooltip={t('player.input.stepNext')}
                         onClick={onNextStep}
                         disabled={
                             isPlaying ||
@@ -185,10 +153,10 @@ const Player: React.FC = () => {
                             (isStopped && isNotationInvalid)
                         }
                     >
-                        <ArrowForward />
-                    </TooltipIconButton>
-                    <TooltipIconButton
-                        title={
+                        <StepForward />
+                    </IconButton>
+                    <IconButton
+                        tooltip={
                             isStopped
                                 ? t('player.input.skipToEnd')
                                 : t('player.input.skipRemainingToEnd')
@@ -200,24 +168,24 @@ const Player: React.FC = () => {
                             (isStopped && isNotationInvalid)
                         }
                     >
-                        <SkipNext />
-                    </TooltipIconButton>
+                        <SkipForward />
+                    </IconButton>
                 </div>
                 <div className="flex flex-row flex-nowrap">
-                    <TooltipIconButton
-                        title={t('player.input.shuffle')}
+                    <IconButton
+                        tooltip={t('player.input.shuffle')}
                         onClick={onShuffle}
                         disabled={!isStopped}
                     >
                         <Shuffle />
-                    </TooltipIconButton>
-                    <TooltipIconButton
-                        title={t('player.input.reset')}
+                    </IconButton>
+                    <IconButton
+                        tooltip={t('player.input.reset')}
                         onClick={onRefresh}
                         disabled={!isStopped}
                     >
-                        <Refresh />
-                    </TooltipIconButton>
+                        <RefreshCcw />
+                    </IconButton>
                 </div>
             </div>
         </div>

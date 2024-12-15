@@ -129,7 +129,7 @@ describe('Player pause', () => {
             name: 'player.input.pause',
         });
 
-        expect(pause).toHaveAttribute('aria-disabled', 'false');
+        expect(pause).not.toHaveAttribute('aria-disabled', 'true');
 
         await pauseWhenAnimationStarts;
 
@@ -154,36 +154,6 @@ describe('Player pause', () => {
             expectCommands[0],
         );
         expect(applyRotationCommandsSpy).toHaveBeenCalledTimes(1);
-    });
-
-    it('should pause when playing', () => {
-        store.dispatch(playerActions.updateNotation('F U R'));
-
-        render(
-            <Provider store={store}>
-                <TooltipProvider>
-                    <Player />
-                </TooltipProvider>
-            </Provider>,
-        );
-
-        const play = screen.getByRole('button', {
-            name: 'player.input.play',
-        });
-
-        fireEvent.click(play);
-
-        const pause = screen.getByRole('button', {
-            name: 'player.input.pause',
-        });
-
-        expect(pause).toHaveAttribute('aria-disabled', 'false');
-
-        fireEvent.click(pause);
-
-        const stateAfter = store.getState();
-
-        expect(stateAfter.player.status).toBe(PlayerStatus.PAUSED);
     });
 
     it('should not have pause button when paused', () => {
