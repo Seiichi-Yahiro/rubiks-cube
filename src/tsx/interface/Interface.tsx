@@ -1,12 +1,11 @@
-import ManageSearch from '@mui/icons-material/ManageSearch';
-import SettingsIcon from '@mui/icons-material/Settings';
 import List from '@mui/material/List';
+import { SettingsIcon } from 'lucide-react';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Algorithms from 'src/tsx/interface/Algorithms';
-import Category from 'src/tsx/interface/Category';
+import Algorithms from 'src/tsx/algorithms/Algorithms';
 import Settings from 'src/tsx/interface/Settings';
 import Player from 'src/tsx/player/Player';
+import Category from './Category';
 
 enum Menu {
     ALGORITHMS = 'ALGORITHMS',
@@ -23,15 +22,8 @@ const Interface: React.FC = () => {
     return (
         <div className="flex w-full max-w-96 flex-row-reverse self-center p-2 md:w-96 md:flex-col md:self-start">
             <Player />
+            <Algorithms />
             <List className="flex flex-row-reverse md:block">
-                <Category
-                    isOpen={openedMenu === Menu.ALGORITHMS}
-                    setMenu={useCallback(() => setMenu(Menu.ALGORITHMS), [])}
-                    title={t('interface.algorithms.title')}
-                    icon={<ManageSearch />}
-                >
-                    <Algorithms />
-                </Category>
                 <Category
                     isOpen={openedMenu === Menu.SETTINGS}
                     setMenu={useCallback(() => setMenu(Menu.SETTINGS), [])}

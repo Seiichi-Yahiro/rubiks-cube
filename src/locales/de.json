@@ -89,6 +89,71 @@
             }
         }
     },
+    "algorithm": {
+        "3d-switch": "3D",
+        "3x3x3": {
+            "title": "3x3x3",
+            "oll": {
+                "step-1": "OLL: 1",
+                "step-2": "OLL: 2",
+                "edges": {
+                    "title": "Keine Kante gelöst",
+                    "dot": "Punkt",
+                    "l": "L",
+                    "line": "Linie"
+                },
+                "corners": {
+                    "zero": {
+                        "title": "Keine Ecke gelöst",
+                        "h": "H",
+                        "pi": "Pi"
+                    },
+                    "one": {
+                        "title": "Eine Ecke gelöst",
+                        "sune": "Sune",
+                        "anti-sune": "Anti-Sune"
+                    },
+                    "two": {
+                        "title": "Zwei Ecken gelöst",
+                        "l": "L",
+                        "t": "T",
+                        "u": "U"
+                    }
+                }
+            },
+            "pll": {
+                "step-1": "PLL: 1",
+                "step-2": "PLL: 2",
+                "corners": {
+                    "two": {
+                        "title": "Zwei Ecken gelöst",
+                        "diagonal": "Diagonal",
+                        "adjacent": "Adjazent"
+                    }
+                },
+                "edges": {
+                    "zero": {
+                        "title": "Keine Kante gelöst",
+                        "cross": "Überkreuz",
+                        "diagonal": "Diagonal"
+                    },
+                    "one": {
+                        "title": "Eine Kante gelöst",
+                        "counterclockwise": "Gegen den Uhrzeigersinn",
+                        "clockwise": "Im Uhrzeigersinn"
+                    }
+                }
+            }
+        },
+        "4x4x4": {
+            "title": "4x4x4",
+            "parity": {
+                "title": "Parität",
+                "edge-flipped": "Kante verdreht",
+                "corners-edges-swapped": "Zwei Kanten vertauscht"
+            }
+        }
+    },
     "interface": {
         "algorithms": {
             "title": "Algorithmen",

@@ -89,6 +89,71 @@
             }
         }
     },
+    "algorithm": {
+        "3d-switch": "3D",
+        "3x3x3": {
+            "title": "3x3x3",
+            "oll": {
+                "step-1": "OLL: 1",
+                "step-2": "OLL: 2",
+                "edges": {
+                    "title": "No edges solved",
+                    "dot": "Dot",
+                    "l": "L",
+                    "line": "Line"
+                },
+                "corners": {
+                    "zero": {
+                        "title": "Zero corners solved",
+                        "h": "H",
+                        "pi": "Pi"
+                    },
+                    "one": {
+                        "title": "One corner solved",
+                        "sune": "Sune",
+                        "anti-sune": "Anti-Sune"
+                    },
+                    "two": {
+                        "title": "Two corners solved",
+                        "l": "L",
+                        "t": "T",
+                        "u": "U"
+                    }
+                }
+            },
+            "pll": {
+                "step-1": "PLL: 1",
+                "step-2": "PLL: 2",
+                "corners": {
+                    "two": {
+                        "title": "Two corners solved",
+                        "diagonal": "Diagonal",
+                        "adjacent": "Adjacent"
+                    }
+                },
+                "edges": {
+                    "zero": {
+                        "title": "No edge solved",
+                        "cross": "Cross",
+                        "diagonal": "Diagonal"
+                    },
+                    "one": {
+                        "title": "One edge solved",
+                        "counterclockwise": "Counterclockwise",
+                        "clockwise": "Clockwise"
+                    }
+                }
+            }
+        },
+        "4x4x4": {
+            "title": "4x4x4",
+            "parity": {
+                "title": "Parity",
+                "edge-flipped": "Edge flipped",
+                "corners-edges-swapped": "Two edges swapped"
+            }
+        }
+    },
     "interface": {
         "algorithms": {
             "title": "Algorithms",

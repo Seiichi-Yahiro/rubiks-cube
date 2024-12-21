@@ -14,10 +14,15 @@ export default {
                     '0%, 100%': { transform: 'scale(1)' },
                     '50%': { transform: 'scale(0.95)' },
                 },
+                rotate3d: {
+                    '0%': { transform: 'rotateX(-45deg) rotateY(-45deg)' },
+                    '100%': { transform: 'rotateX(-45deg) rotateY(315deg)' },
+                },
             },
             animation: {
                 wiggle: 'wiggle 1s ease-in-out infinite',
                 breath: 'breath 1.5s ease-in-out infinite',
+                rotate3d: 'rotate3d 5s linear infinite',
             },
             colors: {
                 white: '#ffffff',
