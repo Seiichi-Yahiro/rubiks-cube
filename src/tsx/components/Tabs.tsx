@@ -40,19 +40,35 @@ const TabsTrigger = React.forwardRef<
 ));
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
+interface SubTabsContentProps {
+    hasSubTabs?: boolean;
+    isSubTabsContent?: boolean;
+}
+
 const TabsContent = React.forwardRef<
     React.ElementRef<typeof TabsPrimitive.Content>,
-    React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ className, ...props }, ref) => (
-    <TabsPrimitive.Content
-        ref={ref}
-        className={cn(
-            'rounded-md border border-cube-gray/20 bg-white p-2 text-cube-gray outline-none focus-visible:border-cube-blue',
-            className,
-        )}
-        {...props}
-    />
-));
+    React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content> &
+        SubTabsContentProps
+>(
+    (
+        { className, hasSubTabs = false, isSubTabsContent = false, ...props },
+        ref,
+    ) => (
+        <TabsPrimitive.Content
+            ref={ref}
+            className={cn(
+                'rounded-md border border-cube-gray/20 bg-white p-2 text-cube-gray outline-none focus-visible:border-cube-blue',
+                {
+                    'p-0 pt-1': hasSubTabs,
+                    'relative rounded-none border-0 border-t bg-transparent focus-visible:before:absolute focus-visible:before:left-0 focus-visible:before:top-0 focus-visible:before:size-full focus-visible:before:border focus-visible:before:border-t-0 focus-visible:before:border-cube-blue':
+                        isSubTabsContent,
+                },
+                className,
+            )}
+            {...props}
+        />
+    ),
+);
 TabsContent.displayName = TabsPrimitive.Content.displayName;
 
 export { Tabs, TabsContent, TabsList, TabsTrigger };
