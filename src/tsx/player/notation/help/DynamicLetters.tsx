@@ -59,11 +59,8 @@ const DynamicLetters: React.FC = () => {
                     'player.help.dynamicLetter.layerReference.categories.introduction',
                 )}
             </div>
-            <Tabs
-                defaultValue="single"
-                className="rounded-md border border-cube-gray/20 p-1"
-            >
-                <TabsList className="sticky top-10 bg-white">
+            <Tabs defaultValue="single">
+                <TabsList>
                     <TabsTrigger value="single">
                         {t(
                             'player.help.dynamicLetter.layerReference.categories.single.title',

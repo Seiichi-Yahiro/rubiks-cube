@@ -15,11 +15,8 @@ const LayerLetterGroups: React.FC = () => {
     return (
         <div>
             <div>{t('player.help.layerLetterGroups')}</div>
-            <Tabs
-                defaultValue="dynamic"
-                className="rounded-md border border-cube-gray/20 p-1"
-            >
-                <TabsList className="sticky top-0 bg-white">
+            <Tabs defaultValue="dynamic">
+                <TabsList>
                     <TabsTrigger value="dynamic">
                         {t('player.help.dynamicLetter.title')}
                     </TabsTrigger>

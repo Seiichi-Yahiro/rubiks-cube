@@ -10,10 +10,7 @@ const TabsList = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <TabsPrimitive.List
         ref={ref}
-        className={cn(
-            'flex h-10 items-center justify-center divide-x divide-cube-gray/20 border-b border-cube-gray/20 text-cube-gray',
-            className,
-        )}
+        className={cn('flex flex-row gap-0.5 px-2 text-cube-gray', className)}
         {...props}
     />
 ));
@@ -26,13 +23,13 @@ const TabsTrigger = React.forwardRef<
     <TabsPrimitive.Trigger
         ref={ref}
         className={cn(
-            'relative flex items-center justify-center whitespace-nowrap px-2 py-1 text-sm font-medium outline-none transition-all disabled:pointer-events-none disabled:opacity-50',
+            'relative flex items-center justify-center whitespace-nowrap rounded-t-md border border-b-0 border-cube-gray/20 bg-white px-2 py-1 text-sm font-medium outline-none transition-all disabled:pointer-events-none disabled:opacity-50',
 
-            'data-[state=active]:text-cube-blue',
+            'data-[state=active]:text-cube-blue data-[state=active]:before:border-b-2 data-[state=active]:before:border-b-cube-blue',
 
-            'before:absolute before:size-full before:scale-95 before:rounded-md before:px-2 hover:before:bg-cube-gray/10 focus-visible:before:bg-cube-gray/10 focus-visible:motion-safe:before:animate-breath',
+            'before:absolute before:size-full before:rounded-t-md before:px-2 hover:before:bg-cube-gray/10 focus-visible:before:bg-cube-gray/10',
 
-            'after:absolute after:size-full after:scale-110 after:rounded-md after:bg-transparent after:transition-all after:duration-500 after:ease-out after:motion-reduce:scale-0',
+            'after:absolute after:size-full after:scale-110 after:rounded-t-md after:bg-transparent after:transition-all after:duration-500 after:ease-out after:motion-reduce:scale-0',
 
             'active:after:scale-0 active:after:bg-cube-gray/50 active:after:transition-none',
 
@@ -49,7 +46,10 @@ const TabsContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <TabsPrimitive.Content
         ref={ref}
-        className={cn('mt-2 text-cube-gray outline-none', className)}
+        className={cn(
+            'rounded-md border border-cube-gray/20 bg-white p-2 text-cube-gray outline-none focus-visible:border-cube-blue',
+            className,
+        )}
         {...props}
     />
 ));
