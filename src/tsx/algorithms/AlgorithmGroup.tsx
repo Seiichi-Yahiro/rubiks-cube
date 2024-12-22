@@ -4,6 +4,7 @@ import type { AlgorithmGroup as AlgorithmGroupI } from 'src/algorithms/algorithm
 import { useAppDispatch } from 'src/hooks/redux';
 import { playerActions } from 'src/redux/player/playerActions';
 import CubeConfig, { ViewMode } from 'src/tsx/algorithms/CubeConfig';
+import Code from 'src/tsx/components/Code';
 
 interface AlgorithmGroupProps {
     group: AlgorithmGroupI;
@@ -36,12 +37,12 @@ const AlgorithmGroup: React.FC<AlgorithmGroupProps> = ({ group, viewMode }) => {
                                 />
                             </div>
                         )}
-                        <div className="flex flex-col">
-                            <div className="text-cube-gray">
+                        <div className="flex flex-col text-sm">
+                            <div className="font-semibold text-cube-gray">
                                 {t(algorithm.name)}
                             </div>
                             <div
-                                className="cursor-pointer text-disabled"
+                                className="cursor-pointer"
                                 onClick={() => {
                                     dispatch(
                                         playerActions.updateNotation(
@@ -50,7 +51,7 @@ const AlgorithmGroup: React.FC<AlgorithmGroupProps> = ({ group, viewMode }) => {
                                     );
                                 }}
                             >
-                                {algorithm.notation}
+                                <Code>{algorithm.notation}</Code>
                             </div>
                         </div>
                     </div>
