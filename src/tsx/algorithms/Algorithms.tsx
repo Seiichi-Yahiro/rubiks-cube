@@ -50,7 +50,7 @@ const Algorithms: React.FC = () => {
                         {t('algorithm.4x4x4.title')}
                     </TabsTrigger>
                 </div>
-                <div className="flex scale-90 items-center justify-center rounded-md border border-cube-gray/20 bg-white px-2 py-1">
+                <div className="flex scale-90 items-center justify-center rounded-md border border-cube-gray/20 bg-app-bg px-2 py-1">
                     <div className="text-sm">{t('algorithm.3d-switch')}</div>
                     <Switch
                         defaultChecked={false}

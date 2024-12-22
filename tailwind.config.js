@@ -25,9 +25,7 @@ export default {
                 rotate3d: 'rotate3d 5s linear infinite',
             },
             colors: {
-                white: '#ffffff',
                 disabled: '#7A7A7A',
-                error: 'rgb(var(--error) / <alpha-value>)',
                 'arrow-gray': '#383838',
                 'cube-gray': '#333333',
                 'cube-blue': '#3D81F6',
@@ -41,6 +39,18 @@ export default {
                 'app-text-highlighted': 'var(--color-app-text-highlighted)',
                 'app-text-error': 'var(--color-app-text-error)',
                 'app-text-disabled': 'var(--color-app-text-disabled)',
+
+                'app-bg': 'var(--color-app-bg)',
+                'app-bg-highlighted': 'var(--color-app-bg-highlighted)',
+                'app-bg-error': 'var(--color-app-bg-error)',
+                'app-bg-code': 'var(--color-app-bg-code)',
+                'app-bg-hover': 'var(--color-app-bg-hover)',
+                'app-bg-hover-highlighted':
+                    'var(--color-app-bg-hover-highlighted)',
+                'app-bg-active': 'var(--color-app-bg-active)',
+                'app-bg-ripple': 'var(--color-app-bg-ripple)',
+                'app-bg-disabled': 'var(--color-app-bg-disabled)',
+                'app-bg-inactive': 'var(--color-app-bg-inactive)',
             },
             screens: {
                 'pointer-fine': { raw: '(pointer: fine)' },

@@ -47,11 +47,11 @@ const IconButton: React.FC<IconButtonProps> = React.forwardRef<
                 cn(
                     'relative inline-flex size-8 cursor-pointer items-center justify-center p-1 *:stroke-cube-gray *:stroke-[1.5] focus-visible:outline-none',
 
-                    'before:absolute before:size-full before:rounded-full hover:before:bg-cube-gray/10 focus-visible:before:bg-cube-gray/10 active:before:bg-cube-gray/20 focus-visible:motion-safe:before:animate-breath',
+                    'before:absolute before:size-full before:rounded-full hover:before:bg-app-bg-hover focus-visible:before:bg-app-bg-hover active:before:bg-app-bg-active focus-visible:motion-safe:before:animate-breath',
 
                     'after:absolute after:size-full after:scale-110 after:rounded-full after:bg-transparent after:transition-all after:duration-500 after:ease-out after:motion-reduce:scale-0',
 
-                    'active:after:scale-0 active:after:bg-cube-gray/50 active:after:transition-none',
+                    'active:after:scale-0 active:after:bg-app-bg-ripple active:after:transition-none',
 
                     {
                         'cursor-default *:stroke-disabled hover:before:bg-transparent active:before:bg-transparent':

@@ -56,19 +56,19 @@ const Slider = React.forwardRef<
             <SliderPrimitive.Track
                 onPointerDown={pointerDownOnTrack}
                 onPointerMove={pointerTrackMove}
-                className="relative h-2 w-full grow cursor-pointer overflow-hidden rounded-full bg-cube-blue/50 group-aria-disabled:cursor-default group-aria-disabled:bg-disabled/50"
+                className="relative h-2 w-full grow cursor-pointer overflow-hidden rounded-full bg-app-bg-hover-highlighted group-aria-disabled:cursor-default group-aria-disabled:bg-app-bg-inactive"
             >
-                <SliderPrimitive.Range className="absolute h-full bg-cube-blue group-aria-disabled:bg-disabled" />
+                <SliderPrimitive.Range className="absolute h-full bg-app-bg-highlighted group-aria-disabled:bg-app-bg-disabled" />
             </SliderPrimitive.Track>
             <SliderPrimitive.Thumb
                 onPointerDown={pointerDownOnThumb}
                 className={cn(
-                    'block h-5 w-5 cursor-grab rounded-full bg-cube-blue drop-shadow focus-visible:outline-none active:cursor-grabbing group-aria-disabled:cursor-default group-aria-disabled:bg-disabled',
+                    'block h-5 w-5 cursor-grab rounded-full bg-app-bg-highlighted drop-shadow focus-visible:outline-none active:cursor-grabbing group-aria-disabled:cursor-default group-aria-disabled:bg-app-bg-disabled',
 
-                    'before:absolute before:-left-1.5 before:-top-1.5 before:h-8 before:w-8 before:rounded-full hover:before:bg-cube-gray/10 focus-visible:before:bg-cube-gray/10 active:before:bg-cube-gray/20 group-aria-disabled:hover:before:bg-transparent focus-visible:motion-safe:before:animate-breath',
+                    'before:absolute before:-left-1.5 before:-top-1.5 before:h-8 before:w-8 before:rounded-full hover:before:bg-app-bg-hover focus-visible:before:bg-app-bg-hover active:before:bg-app-bg-active group-aria-disabled:hover:before:bg-transparent focus-visible:motion-safe:before:animate-breath',
 
                     {
-                        'before:bg-cube-gray/20': active,
+                        'before:bg-app-bg-active': active,
                     },
                 )}
             />

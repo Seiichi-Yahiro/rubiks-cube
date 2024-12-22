@@ -31,7 +31,7 @@ const Category: React.FC<ICategoryProps> = ({
     );
 
     return (
-        <ListItem className="!bg-white !px-0">
+        <ListItem className="!bg-app-bg !px-0">
             {isMdQuery ? (
                 <AccordionCategory
                     className="w-full"

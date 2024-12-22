@@ -11,15 +11,34 @@
 :root {
     --color-app-red: #dc422f;
     --color-app-white: #ffffff;
+
     --color-app-dark-gray: #333333;
-    --color-app-light-gray: #7a7a7a;
+    --color-app-dark-gray-10: #3333331a;
+    --color-app-dark-gray-20: #33333333;
+    --color-app-dark-gray-50: #33333380;
+
+    --color-app-medium-gray: #7a7a7a;
+    --color-app-medium-gray-50: #7a7a7a80;
+
     --color-app-blue: #3d81f6;
+    --color-app-blue-50: #3d81f680;
 
     --color-app-text: var(--color-app-dark-gray);
     --color-app-text-inverted: var(--color-app-white);
     --color-app-text-highlighted: var(--color-app-blue);
     --color-app-text-error: var(--color-app-red);
-    --color-app-text-disabled: var(--color-app-light-gray);
+    --color-app-text-disabled: var(--color-app-medium-gray);
+
+    --color-app-bg: var(--color-app-white);
+    --color-app-bg-highlighted: var(--color-app-blue);
+    --color-app-bg-error: var(--color-app-red);
+    --color-app-bg-code: var(--color-app-dark-gray-10);
+    --color-app-bg-hover: var(--color-app-dark-gray-10);
+    --color-app-bg-hover-highlighted: var(--color-app-blue-50);
+    --color-app-bg-active: var(--color-app-dark-gray-20);
+    --color-app-bg-ripple: var(--color-app-dark-gray-50);
+    --color-app-bg-disabled: var(--color-app-medium-gray);
+    --color-app-bg-inactive: var(--color-app-medium-gray-50);
 }
 
 html,
