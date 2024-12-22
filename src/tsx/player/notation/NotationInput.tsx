@@ -47,7 +47,7 @@ const NotationInput: React.FC<NotationInputProps> = ({
                         rotationCommands.index.offset,
                         rotationCommands.index.offset + 1,
                     ),
-                    color: 'var(--error)',
+                    color: 'var(--color-text-error)',
                 },
                 {
                     value: playerNotation.substring(

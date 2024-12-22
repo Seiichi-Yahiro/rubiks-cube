@@ -9,7 +9,17 @@
 }
 
 :root {
-    --error: #dc422f;
+    --color-red: #dc422f;
+    --color-white: #ffffff;
+    --color-dark-gray: #333333;
+    --color-light-gray: #7a7a7a;
+    --color-blue: #3d81f6;
+
+    --color-text: var(--color-dark-gray);
+    --color-text-inverted: var(--color-white);
+    --color-text-highlighted: var(--color-blue);
+    --color-text-error: var(--color-red);
+    --color-text-disabled: var(--color-light-gray);
 }
 
 html,

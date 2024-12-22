@@ -31,7 +31,7 @@ const TooltipContent = React.forwardRef<
         ref={ref}
         sideOffset={sideOffset}
         className={cn(
-            'z-50 overflow-hidden rounded-md border border-cube-gray/20 bg-white px-2 py-1 text-sm text-cube-gray opacity-90 shadow-md',
+            'z-50 overflow-hidden rounded-md border border-cube-gray/20 bg-white px-2 py-1 text-sm text-text opacity-90 shadow-md',
 
             'hover-hover:pointer-fine:animate-in hover-hover:pointer-fine:fade-in-0 hover-hover:pointer-fine:zoom-in-95 hover-hover:pointer-fine:data-[state=closed]:animate-out hover-hover:pointer-fine:data-[state=closed]:fade-out-0 hover-hover:pointer-fine:data-[state=closed]:zoom-out-95',
 

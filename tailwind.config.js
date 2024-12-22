@@ -35,6 +35,12 @@ export default {
                 'cube-red': '#DC422F',
                 'cube-orange': '#FF6C00',
                 'cube-yellow': '#FDCC09',
+
+                text: 'var(--color-text)',
+                'text-inverted': 'var(--color-text-inverted)',
+                'text-highlighted': 'var(--color-text-highlighted)',
+                'text-error': 'var(--color-text-error)',
+                'text-disabled': 'var(--color-text-disabled)',
             },
             screens: {
                 'pointer-fine': { raw: '(pointer: fine)' },

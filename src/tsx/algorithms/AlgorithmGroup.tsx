@@ -38,7 +38,7 @@ const AlgorithmGroup: React.FC<AlgorithmGroupProps> = ({ group, viewMode }) => {
                             </div>
                         )}
                         <div className="flex flex-col text-sm">
-                            <div className="font-semibold text-cube-gray">
+                            <div className="font-semibold text-text">
                                 {t(algorithm.name)}
                             </div>
                             <div
