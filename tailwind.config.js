@@ -36,11 +36,11 @@ export default {
                 'cube-orange': '#FF6C00',
                 'cube-yellow': '#FDCC09',
 
-                text: 'var(--color-text)',
-                'text-inverted': 'var(--color-text-inverted)',
-                'text-highlighted': 'var(--color-text-highlighted)',
-                'text-error': 'var(--color-text-error)',
-                'text-disabled': 'var(--color-text-disabled)',
+                'app-text': 'var(--color-app-text)',
+                'app-text-inverted': 'var(--color-app-text-inverted)',
+                'app-text-highlighted': 'var(--color-app-text-highlighted)',
+                'app-text-error': 'var(--color-app-text-error)',
+                'app-text-disabled': 'var(--color-app-text-disabled)',
             },
             screens: {
                 'pointer-fine': { raw: '(pointer: fine)' },

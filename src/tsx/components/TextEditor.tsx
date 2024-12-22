@@ -45,14 +45,14 @@ const TextEditor = React.forwardRef<HTMLTextAreaElement, TextEditorProps>(
                 ref={divRef}
                 aria-hidden={true}
                 className={cn(
-                    'relative mb-1 mt-4 min-h-6 w-full select-none whitespace-pre-wrap text-base text-text',
+                    'relative mb-1 mt-4 min-h-6 w-full select-none whitespace-pre-wrap text-base text-app-text',
 
                     'before:absolute before:bottom-0 before:w-full before:border-b before:border-cube-gray focus-within:before:border-b-2 hover:before:border-b-2 hover:before:border-cube-gray',
 
                     'after:absolute after:bottom-0 after:w-full after:scale-x-0 after:border-b-2 after:border-cube-blue after:transition-transform after:duration-200 after:ease-out focus-within:after:scale-x-100',
 
                     {
-                        'text-text-disabled before:border-b before:border-dotted before:border-disabled hover:before:border-b':
+                        'text-app-text-disabled before:border-b before:border-dotted before:border-disabled hover:before:border-b':
                             disabled,
                     },
 
@@ -78,16 +78,17 @@ const TextEditor = React.forwardRef<HTMLTextAreaElement, TextEditorProps>(
                 <label
                     htmlFor={id}
                     className={cn(
-                        'absolute -top-4 text-xs text-text transition-all duration-200 ease-out',
+                        'absolute -top-4 text-xs text-app-text transition-all duration-200 ease-out',
 
-                        'underline peer-empty:top-0 peer-empty:text-base peer-empty:no-underline peer-focus:-top-4 peer-focus:text-xs peer-focus:text-text-highlighted peer-focus:underline',
+                        'underline peer-empty:top-0 peer-empty:text-base peer-empty:no-underline peer-focus:-top-4 peer-focus:text-xs peer-focus:text-app-text-highlighted peer-focus:underline',
 
                         {
-                            'text-text-disabled': disabled,
+                            'text-app-text-disabled': disabled,
                         },
 
                         {
-                            'text-text-error peer-focus:text-text-error': error,
+                            'text-app-text-error peer-focus:text-app-text-error':
+                                error,
                         },
                     )}
                 >
