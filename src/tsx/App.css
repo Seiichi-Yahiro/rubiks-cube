@@ -39,6 +39,11 @@
     --color-app-bg-ripple: var(--color-app-dark-gray-50);
     --color-app-bg-disabled: var(--color-app-medium-gray);
     --color-app-bg-inactive: var(--color-app-medium-gray-50);
+
+    --color-app-border: var(--color-app-dark-gray-20);
+    --color-app-border-highlighted: var(--color-app-blue);
+    --color-app-border-error: var(--color-app-red);
+    --color-app-border-disabled: var(--color-app-medium-gray);
 }
 
 html,

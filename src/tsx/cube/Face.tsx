@@ -35,7 +35,7 @@ const Face: React.FC<IFaceProps> = ({
 
     return (
         <div
-            className="absolute border-2 border-cube-gray [backface-visibility:hidden] [height:inherit] [width:inherit]"
+            className="absolute border-2 border-[--cube-face-inside] [backface-visibility:hidden] [height:inherit] [width:inherit]"
             style={style}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}

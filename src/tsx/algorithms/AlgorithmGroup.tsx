@@ -22,10 +22,10 @@ const AlgorithmGroup: React.FC<AlgorithmGroupProps> = ({ group, viewMode }) => {
                 {group.algorithms.map((algorithm) => (
                     <div
                         key={algorithm.name}
-                        className="flex flex-row items-center gap-1 rounded-md border border-cube-gray/20"
+                        className="flex flex-row items-center gap-1 rounded-md border border-app-border"
                     >
                         {algorithm.startConfiguration && (
-                            <div className="border-r border-cube-gray/20 p-0.5">
+                            <div className="border-r border-app-border p-0.5">
                                 <CubeConfig
                                     viewMode={viewMode}
                                     front={algorithm.startConfiguration.front}

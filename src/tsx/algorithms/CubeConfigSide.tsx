@@ -22,7 +22,7 @@ const CubeConfigSide: React.FC<CubeConfigSideProps> = ({
     className,
     style,
 }) => {
-    const faceClassName = 'border border-cube-gray';
+    const faceClassName = 'border border-[--cube-face-inside]';
 
     const createFaceStyle = (colorKey: CubeColorKey) => ({
         backgroundColor: `var(${colorKey})`,

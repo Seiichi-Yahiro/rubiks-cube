@@ -45,7 +45,7 @@ const ColorPicker: React.FC = () => {
             <button
                 key={key}
                 className={cn(
-                    'h-5 w-5 cursor-pointer border border-cube-gray',
+                    'h-5 w-5 cursor-pointer border border-app-border',
                     {
                         'animate-wiggle': selectedColor === key,
                     },

@@ -51,6 +51,11 @@ export default {
                 'app-bg-ripple': 'var(--color-app-bg-ripple)',
                 'app-bg-disabled': 'var(--color-app-bg-disabled)',
                 'app-bg-inactive': 'var(--color-app-bg-inactive)',
+
+                'app-border': 'var(--color-app-border)',
+                'app-border-highlighted': 'var(--color-app-border-highlighted)',
+                'app-border-error': 'var(--color-app-border-error)',
+                'app-border-disabled': 'var(--color-app-border-disabled)',
             },
             screens: {
                 'pointer-fine': { raw: '(pointer: fine)' },

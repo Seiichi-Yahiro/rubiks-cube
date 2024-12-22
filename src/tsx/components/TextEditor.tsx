@@ -47,17 +47,17 @@ const TextEditor = React.forwardRef<HTMLTextAreaElement, TextEditorProps>(
                 className={cn(
                     'relative mb-1 mt-4 min-h-6 w-full select-none whitespace-pre-wrap text-base text-app-text',
 
-                    'before:absolute before:bottom-0 before:w-full before:border-b before:border-cube-gray focus-within:before:border-b-2 hover:before:border-b-2 hover:before:border-cube-gray',
+                    'before:absolute before:bottom-0 before:w-full before:border-b before:border-app-text focus-within:before:border-b-2 hover:before:border-b-2 hover:before:border-app-text',
 
-                    'after:absolute after:bottom-0 after:w-full after:scale-x-0 after:border-b-2 after:border-cube-blue after:transition-transform after:duration-200 after:ease-out focus-within:after:scale-x-100',
+                    'after:absolute after:bottom-0 after:w-full after:scale-x-0 after:border-b-2 after:border-app-border-highlighted after:transition-transform after:duration-200 after:ease-out focus-within:after:scale-x-100',
 
                     {
-                        'text-app-text-disabled before:border-b before:border-dotted before:border-disabled hover:before:border-b':
+                        'text-app-text-disabled before:border-b before:border-dotted before:border-app-border-disabled hover:before:border-b':
                             disabled,
                     },
 
                     {
-                        'before:border-cube-red after:border-cube-red hover:before:border-b hover:before:border-cube-red':
+                        'before:border-app-border-error after:border-app-border-error hover:before:border-b hover:before:border-app-border-error':
                             error,
                     },
                 )}
