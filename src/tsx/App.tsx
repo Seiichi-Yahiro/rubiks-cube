@@ -1,25 +1,34 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch } from 'src/hooks/redux';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import React, { useRef } from 'react';
+import { Provider } from 'react-redux';
+import 'src/i18n';
 import { cubeActions } from 'src/redux/cube/cubeActions';
+import { type AppStore, setupStore } from 'src/redux/store';
 import 'src/tsx/App.css';
 import { TooltipProvider } from 'src/tsx/components/Tooltip';
 import RubiksCube from 'src/tsx/cube/RubiksCube';
 import Interface from 'src/tsx/interface/Interface';
 
 const App: React.FC = () => {
-    const dispatch = useAppDispatch();
+    const storeRef = useRef<AppStore>();
 
-    useEffect(() => {
-        dispatch(cubeActions.resetCube());
-    }, [dispatch]);
+    if (!storeRef.current) {
+        storeRef.current = setupStore();
+        storeRef.current.dispatch(cubeActions.resetCube());
+    }
 
     return (
-        <TooltipProvider delayDuration={500}>
-            <div className="container mx-auto flex h-full flex-col md:flex-row">
-                <Interface />
-                <RubiksCube />
-            </div>
-        </TooltipProvider>
+        <Provider store={storeRef.current}>
+            <TooltipProvider delayDuration={500}>
+                <div className="container mx-auto flex h-full flex-col md:flex-row">
+                    <Interface />
+                    <RubiksCube />
+                </div>
+            </TooltipProvider>
+        </Provider>
     );
 };
 
