@@ -1,7 +1,7 @@
 import { isAnyOf } from '@reduxjs/toolkit';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import type { AppStartListening } from 'src/redux/listener';
-import { COLOR_MAP } from 'src/redux/localStorage';
+import { CUBE_COLORS } from 'src/redux/localStorage';
 import { generateCubicles } from 'src/tsx/cube/cubeUtils';
 
 export const createCubiclesListener = (startListening: AppStartListening) =>
@@ -43,7 +43,7 @@ export const saveColorMapListener = (startListening: AppStartListening) =>
         matcher: isAnyOf(cubeActions.setColor, cubeActions.resetColors),
         effect: (_action, listenerApi) => {
             const state = listenerApi.getState();
-            const colorMap = state.cube.colorMap;
-            localStorage.setItem(COLOR_MAP, JSON.stringify(colorMap));
+            const colors = state.cube.colors;
+            localStorage.setItem(CUBE_COLORS, JSON.stringify(colors));
         },
     });

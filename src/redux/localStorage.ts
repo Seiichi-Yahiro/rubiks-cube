@@ -1,22 +1,21 @@
-import { Color, ColorMap } from 'src/tsx/cube/cubeTypes';
+import { CubeColorKey, CubeColorVariables } from 'src/tsx/cube/cubeTypes';
 
-export const COLOR_MAP = 'colorMap';
+export const CUBE_COLORS = 'cubeColors';
 
-export const defaultColorMap: ColorMap = {
-    [Color.BLUE]: Color.BLUE,
-    [Color.GREEN]: Color.GREEN,
-    [Color.RED]: Color.RED,
-    [Color.ORANGE]: Color.ORANGE,
-    [Color.WHITE]: Color.WHITE,
-    [Color.YELLOW]: Color.YELLOW,
-    [Color.DEFAULT]: Color.DEFAULT,
-    [Color.TRANSPARENT]: Color.TRANSPARENT,
-};
+export const defaultColorMap = {
+    [CubeColorKey.FRONT]: '#3d81f6',
+    [CubeColorKey.BACK]: '#009d54',
+    [CubeColorKey.LEFT]: '#ff6c00',
+    [CubeColorKey.RIGHT]: '#dc422f',
+    [CubeColorKey.UP]: '#fdcc09',
+    [CubeColorKey.DOWN]: '#ffffff',
+    [CubeColorKey.INSIDE]: '#333333',
+} satisfies CubeColorVariables;
 
-export const loadColorMap = (): ColorMap => {
-    const loadedColorMap = localStorage.getItem(COLOR_MAP);
+export const loadColorMap = (): CubeColorVariables => {
+    const loadedColorMap = localStorage.getItem(CUBE_COLORS);
     if (loadedColorMap) {
-        return JSON.parse(loadedColorMap) as ColorMap;
+        return JSON.parse(loadedColorMap) as CubeColorVariables;
     } else {
         return defaultColorMap;
     }

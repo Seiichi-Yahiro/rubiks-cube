@@ -1,4 +1,4 @@
-import { Color } from 'src/tsx/cube/cubeTypes';
+import { CubeColorKey } from 'src/tsx/cube/cubeTypes';
 
 export interface AlgorithmGroup {
     name: string;
@@ -12,10 +12,10 @@ export interface Algorithm {
 }
 
 export interface StartConfiguration {
-    front: Color[][];
-    back: Color[][];
-    left: Color[][];
-    right: Color[][];
-    top: Color[][];
-    bottom: Color[][];
+    front: CubeColorKey[][];
+    back: CubeColorKey[][];
+    left: CubeColorKey[][];
+    right: CubeColorKey[][];
+    up: CubeColorKey[][];
+    down: CubeColorKey[][];
 }

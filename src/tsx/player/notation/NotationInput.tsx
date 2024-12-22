@@ -11,7 +11,6 @@ import {
 } from 'src/tsx/components/Popover';
 import { ScrollArea } from 'src/tsx/components/ScrollArea';
 import TextEditor, { type StyledValue } from 'src/tsx/components/TextEditor';
-import { Color } from 'src/tsx/cube/cubeTypes';
 import NotationError from 'src/tsx/player/notation/NotationError';
 import NotationHelp from 'src/tsx/player/notation/NotationHelp';
 
@@ -48,7 +47,7 @@ const NotationInput: React.FC<NotationInputProps> = ({
                         rotationCommands.index.offset,
                         rotationCommands.index.offset + 1,
                     ),
-                    color: Color.RED,
+                    color: 'var(--error)',
                 },
                 {
                     value: playerNotation.substring(

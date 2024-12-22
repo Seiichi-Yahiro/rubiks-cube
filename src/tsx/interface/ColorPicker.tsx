@@ -2,17 +2,17 @@ import Button from '@mui/material/Button';
 import type { PopoverOrigin } from '@mui/material/Popover';
 import Popover from '@mui/material/Popover';
 import Chrome, { ChromeInputType } from '@uiw/react-color-chrome';
-import React, { useRef } from 'react';
+import React, { type CSSProperties, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import useComplexState from 'src/hooks/useComplexState';
 import { cubeActions } from 'src/redux/cube/cubeActions';
-import { Color } from 'src/tsx/cube/cubeTypes';
+import { CubeColorKey } from 'src/tsx/cube/cubeTypes';
 import 'src/tsx/interface/ColorPicker.css';
 import cn from 'src/utils/cn';
 
 interface State {
-    selectedColor?: Color;
+    selectedColor?: CubeColorKey;
     pickerColor: string;
 }
 
@@ -24,7 +24,7 @@ const anchorOrigin: PopoverOrigin = {
 const ColorPicker: React.FC = () => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
-    const colorMap = useRedux((state) => state.cube.colorMap);
+    const cubeColors = useRedux((state) => state.cube.colors);
 
     const [{ selectedColor, pickerColor }, setState] = useComplexState<State>(
         () => ({
@@ -37,11 +37,11 @@ const ColorPicker: React.FC = () => {
         dispatch(cubeActions.resetColors());
     };
 
-    const colors = Object.entries(colorMap)
-        .filter(
-            ([key, _]) => key !== Color.DEFAULT && key !== Color.TRANSPARENT,
-        )
-        .map(([key, value]: [Color, string]) => (
+    const colors = (
+        Object.entries(cubeColors) as [CubeColorKey, CSSProperties['color']][]
+    )
+        .filter(([key, _]) => key !== CubeColorKey.INSIDE)
+        .map(([key, value]) => (
             <button
                 key={key}
                 className={cn(

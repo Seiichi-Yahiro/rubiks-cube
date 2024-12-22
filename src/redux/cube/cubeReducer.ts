@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { SingleRotationCommand } from 'src/algorithms/rotationCommand';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { defaultColorMap, loadColorMap } from 'src/redux/localStorage';
-import { ColorMap, ICubicle } from 'src/tsx/cube/cubeTypes';
+import { CubeColorVariables, ICubicle } from 'src/tsx/cube/cubeTypes';
 import {
     applyRotationCommand,
     axisToTranslation,
@@ -17,7 +17,7 @@ export interface ICubeState {
     rotationDuration: number;
     cubicles: ICubicle[];
     rotation: Mat4;
-    colorMap: ColorMap;
+    colors: CubeColorVariables;
     animation?: SingleRotationCommand;
 }
 
@@ -28,7 +28,7 @@ const createInitialCubeState = (): ICubeState => ({
     rotationDuration: 750,
     cubicles: [],
     rotation: multiply(fromAngleX(-45), fromAngleY(-45)),
-    colorMap: loadColorMap(),
+    colors: loadColorMap(),
 });
 
 export const createCubeReducer = (
@@ -83,9 +83,9 @@ export const createCubeReducer = (
                 );
             })
             .addCase(cubeActions.setColor, (state, action) => {
-                state.colorMap[action.payload.key] = action.payload.value;
+                state.colors[action.payload.key] = action.payload.value;
             })
             .addCase(cubeActions.resetColors, (state, _action) => {
-                state.colorMap = defaultColorMap;
+                state.colors = defaultColorMap;
             });
     });

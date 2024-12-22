@@ -31,8 +31,8 @@ const AlgorithmGroup: React.FC<AlgorithmGroupProps> = ({ group, viewMode }) => {
                                     back={algorithm.startConfiguration.back}
                                     left={algorithm.startConfiguration.left}
                                     right={algorithm.startConfiguration.right}
-                                    top={algorithm.startConfiguration.top}
-                                    bottom={algorithm.startConfiguration.bottom}
+                                    up={algorithm.startConfiguration.up}
+                                    down={algorithm.startConfiguration.down}
                                 />
                             </div>
                         )}

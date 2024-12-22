@@ -1,6 +1,5 @@
 import React, { type CSSProperties } from 'react';
-import { useRedux } from 'src/hooks/redux';
-import type { Color } from 'src/tsx/cube/cubeTypes';
+import type { CubeColorKey } from 'src/tsx/cube/cubeTypes';
 import cn from 'src/utils/cn';
 
 export enum ViewMode {
@@ -9,7 +8,7 @@ export enum ViewMode {
 }
 
 interface CubeConfigSideProps {
-    faces: Color[][];
+    faces: CubeColorKey[][];
     faceSize: number;
     viewMode: ViewMode;
     style?: CSSProperties;
@@ -23,12 +22,10 @@ const CubeConfigSide: React.FC<CubeConfigSideProps> = ({
     className,
     style,
 }) => {
-    const colorMap = useRedux((state) => state.cube.colorMap);
-
     const faceClassName = 'border border-cube-gray';
 
-    const createFaceStyle = (color: Color) => ({
-        backgroundColor: colorMap[color],
+    const createFaceStyle = (colorKey: CubeColorKey) => ({
+        backgroundColor: `var(${colorKey})`,
         width: `${faceSize}rem`,
         height: `${faceSize}rem`,
     });
@@ -42,10 +39,10 @@ const CubeConfigSide: React.FC<CubeConfigSideProps> = ({
             }}
         >
             {faces.flatMap((row, rowIndex) =>
-                row.map((color, columnIndex) => (
+                row.map((colorKey, columnIndex) => (
                     <div
                         key={`${rowIndex}-${columnIndex}`}
-                        style={createFaceStyle(color)}
+                        style={createFaceStyle(colorKey)}
                         className={faceClassName}
                     />
                 )),
@@ -53,11 +50,11 @@ const CubeConfigSide: React.FC<CubeConfigSideProps> = ({
         </div>
     ) : (
         <div className={cn('flex', className)} style={style}>
-            {faces[0].map((color, index) => (
+            {faces[0].map((colorKey, index) => (
                 <div
                     key={index}
                     className={faceClassName}
-                    style={createFaceStyle(color)}
+                    style={createFaceStyle(colorKey)}
                 />
             ))}
         </div>

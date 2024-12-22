@@ -3,7 +3,7 @@ import {
     RotationCommand,
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
-import { Color, ICubicle } from 'src/tsx/cube/cubeTypes';
+import { type CubeColorVariables, ICubicle } from 'src/tsx/cube/cubeTypes';
 
 const setCubeSize = createAction<number>('SET_CUBE_SIZE');
 
@@ -21,12 +21,15 @@ const applyRotationCommands = createAction<RotationCommand[]>(
 
 const resetCube = createAction('RESET_CUBE');
 
-const setColor = createAction('SET_COLOR', (key: Color, value: string) => ({
-    payload: {
-        key,
-        value,
-    },
-}));
+const setColor = createAction(
+    'SET_COLOR',
+    (key: keyof CubeColorVariables, value: string) => ({
+        payload: {
+            key,
+            value,
+        },
+    }),
+);
 
 const resetColors = createAction('RESET_COLORS');
 

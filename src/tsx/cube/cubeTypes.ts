@@ -1,21 +1,27 @@
+import type { CSSProperties } from 'react';
 import { Mat4 } from 'src/utils/matrix4';
 
 export type CubeAxis = [number, number, number];
 
-export enum Color {
-    BLUE = '#3D81F6',
-    GREEN = '#009D54',
-    RED = '#dC422F',
-    ORANGE = '#FF6C00',
-    WHITE = '#FFFFFF',
-    YELLOW = '#FDCC09',
-    DEFAULT = '#383838',
-    TRANSPARENT = 'transparent',
+export enum CubeColorKey {
+    FRONT = '--cube-face-front',
+    BACK = '--cube-face-back',
+    LEFT = '--cube-face-left',
+    RIGHT = '--cube-face-right',
+    UP = '--cube-face-up',
+    DOWN = '--cube-face-down',
+    INSIDE = '--cube-face-inside',
 }
 
-export type ColorMap = {
-    [key in Color]: string;
-};
+export interface CubeColorVariables {
+    [CubeColorKey.FRONT]: CSSProperties['color'];
+    [CubeColorKey.BACK]: CSSProperties['color'];
+    [CubeColorKey.LEFT]: CSSProperties['color'];
+    [CubeColorKey.RIGHT]: CSSProperties['color'];
+    [CubeColorKey.UP]: CSSProperties['color'];
+    [CubeColorKey.DOWN]: CSSProperties['color'];
+    [CubeColorKey.INSIDE]: CSSProperties['color'];
+}
 
 export enum Side {
     FRONT = 'FRONT',
@@ -40,7 +46,7 @@ export enum FaceArrowDirection {
 
 export interface IFace {
     id: Side;
-    color: Color;
+    colorKey: CubeColorKey;
     transform: Mat4;
 }
 

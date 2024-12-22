@@ -40,11 +40,11 @@ const Cubicle: React.FC<ICubicleProps> = ({
             className={`${cubicleClassname} absolute [transform-style:preserve-3d]`}
             style={style}
         >
-            {faces.map(({ id, transform, color }) => (
+            {faces.map(({ id, transform, colorKey }) => (
                 <Face
                     key={id}
                     transform={transform}
-                    color={color}
+                    colorKey={colorKey}
                     generateArrowCommand={generateArrowCommand(id)}
                 />
             ))}

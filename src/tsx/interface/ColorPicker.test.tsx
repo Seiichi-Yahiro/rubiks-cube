@@ -2,9 +2,9 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
-import { COLOR_MAP, defaultColorMap } from 'src/redux/localStorage';
+import { CUBE_COLORS, defaultColorMap } from 'src/redux/localStorage';
 import { setupStore } from 'src/redux/store';
-import { Color } from 'src/tsx/cube/cubeTypes';
+import { CubeColorKey } from 'src/tsx/cube/cubeTypes';
 import ColorPicker from 'src/tsx/interface/ColorPicker';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -42,21 +42,23 @@ describe('ColorPicker', () => {
 
         const stateBefore = store.getState();
 
-        const colorButton = screen.getByRole('button', { name: Color.BLUE });
+        const colorButton = screen.getByRole('button', {
+            name: defaultColorMap[CubeColorKey.FRONT],
+        });
 
         fireEvent.click(colorButton);
 
         const hexInput = await screen.findByDisplayValue(
-            Color.BLUE.toUpperCase(),
+            defaultColorMap[CubeColorKey.FRONT].toUpperCase(),
         );
 
         fireEvent.change(hexInput, { target: { value: '#000000' } });
 
         const stateAfter = store.getState();
 
-        expect(stateAfter.cube.colorMap).toEqual({
-            ...stateBefore.cube.colorMap,
-            [Color.BLUE]: '#000000',
+        expect(stateAfter.cube.colors).toEqual({
+            ...stateBefore.cube.colors,
+            [CubeColorKey.FRONT]: '#000000',
         });
 
         expect(colorButton).toHaveAttribute('aria-label', '#000000');
@@ -73,26 +75,31 @@ describe('ColorPicker', () => {
             </Provider>,
         );
 
-        const colorButton = screen.getByRole('button', { name: Color.BLUE });
+        const colorButton = screen.getByRole('button', {
+            name: defaultColorMap[CubeColorKey.FRONT],
+        });
 
         fireEvent.click(colorButton);
 
         const hexInput = await screen.findByDisplayValue(
-            Color.BLUE.toUpperCase(),
+            defaultColorMap[CubeColorKey.FRONT].toUpperCase(),
         );
 
         fireEvent.change(hexInput, { target: { value: '#000000' } });
 
         expect(setItemSpy).toHaveBeenCalledWith(
-            COLOR_MAP,
-            JSON.stringify({ ...defaultColorMap, [Color.BLUE]: '#000000' }),
+            CUBE_COLORS,
+            JSON.stringify({
+                ...defaultColorMap,
+                [CubeColorKey.FRONT]: '#000000',
+            }),
         );
     });
 
     it('should reset colors', () => {
         const store = setupStore();
 
-        store.dispatch(cubeActions.setColor(Color.BLUE, '#000000'));
+        store.dispatch(cubeActions.setColor(CubeColorKey.FRONT, '#000000'));
 
         render(
             <Provider store={store}>
@@ -107,16 +114,21 @@ describe('ColorPicker', () => {
 
         const state = store.getState();
 
-        expect(state.cube.colorMap).toEqual(defaultColorMap);
-        expect(colorButton).toHaveAttribute('aria-label', Color.BLUE);
-        expect(colorButton).toHaveStyle({ backgroundColor: Color.BLUE });
+        expect(state.cube.colors).toEqual(defaultColorMap);
+        expect(colorButton).toHaveAttribute(
+            'aria-label',
+            defaultColorMap[CubeColorKey.FRONT],
+        );
+        expect(colorButton).toHaveStyle({
+            backgroundColor: defaultColorMap[CubeColorKey.FRONT],
+        });
     });
 
     it('should save colors in local storage when colors are reset', () => {
         const store = setupStore();
         const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
 
-        store.dispatch(cubeActions.setColor(Color.BLUE, '#000000'));
+        store.dispatch(cubeActions.setColor(CubeColorKey.FRONT, '#000000'));
 
         render(
             <Provider store={store}>
@@ -129,7 +141,7 @@ describe('ColorPicker', () => {
         fireEvent.click(resetButton);
 
         expect(setItemSpy).toHaveBeenCalledWith(
-            COLOR_MAP,
+            CUBE_COLORS,
             JSON.stringify(defaultColorMap),
         );
     });

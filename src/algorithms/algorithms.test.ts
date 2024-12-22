@@ -10,7 +10,7 @@ import {
     pllEdgesZero,
     pllOneCorner,
 } from 'src/algorithms/x3x3x3/cfop/pll';
-import parity from 'src/algorithms/x4x4x4/parity';
+import { parity } from 'src/algorithms/x4x4x4/parity';
 import { describe, expect, it } from 'vitest';
 
 describe('Parse all algorithms', () => {

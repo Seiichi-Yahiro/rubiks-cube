@@ -27,6 +27,7 @@ export default {
             colors: {
                 white: '#ffffff',
                 disabled: '#7A7A7A',
+                error: 'rgb(var(--error) / <alpha-value>)',
                 'arrow-gray': '#383838',
                 'cube-gray': '#333333',
                 'cube-blue': '#3D81F6',
@@ -34,7 +35,6 @@ export default {
                 'cube-red': '#DC422F',
                 'cube-orange': '#FF6C00',
                 'cube-yellow': '#FDCC09',
-                error: '#F44336',
             },
             screens: {
                 'pointer-fine': { raw: '(pointer: fine)' },

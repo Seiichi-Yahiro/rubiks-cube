@@ -6,8 +6,8 @@ import {
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
 import {
-    Color,
     CubeAxis,
+    CubeColorKey,
     FaceArrowDirection,
     ICubicle,
     IFace,
@@ -24,12 +24,12 @@ import {
 import { Vec4 } from 'src/utils/vector4';
 
 const sideToColor = {
-    [Side.FRONT]: Color.BLUE,
-    [Side.BACK]: Color.GREEN,
-    [Side.LEFT]: Color.ORANGE,
-    [Side.RIGHT]: Color.RED,
-    [Side.UP]: Color.YELLOW,
-    [Side.DOWN]: Color.WHITE,
+    [Side.FRONT]: CubeColorKey.FRONT,
+    [Side.BACK]: CubeColorKey.BACK,
+    [Side.LEFT]: CubeColorKey.LEFT,
+    [Side.RIGHT]: CubeColorKey.RIGHT,
+    [Side.UP]: CubeColorKey.UP,
+    [Side.DOWN]: CubeColorKey.DOWN,
 };
 
 export const sideToTransform = (side: Side, cubicleSize: number): Mat4 => {
@@ -109,9 +109,9 @@ const generateFace = (
     cubeDimension: number,
 ): IFace => ({
     id: side,
-    color: isOuterFace(side, axis, cubeDimension)
+    colorKey: isOuterFace(side, axis, cubeDimension)
         ? sideToColor[side]
-        : Color.DEFAULT,
+        : CubeColorKey.INSIDE,
     transform: sideToTransform(side, cubicleSize),
 });
 

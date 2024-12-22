@@ -12,7 +12,7 @@ import {
     pllEdgesZero,
     pllOneCorner,
 } from 'src/algorithms/x3x3x3/cfop/pll';
-import parity from 'src/algorithms/x4x4x4/parity';
+import { parity } from 'src/algorithms/x4x4x4/parity';
 import AlgorithmGroup from 'src/tsx/algorithms/AlgorithmGroup';
 import { ViewMode } from 'src/tsx/algorithms/CubeConfig';
 import { ScrollArea } from 'src/tsx/components/ScrollArea';

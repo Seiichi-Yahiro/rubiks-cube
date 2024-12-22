@@ -1,9 +1,9 @@
 import type { AlgorithmGroup } from 'src/algorithms/algorithmTypes';
-import { Color } from 'src/tsx/cube/cubeTypes';
+import { CubeColorKey } from 'src/tsx/cube/cubeTypes';
 
-const { YELLOW, WHITE, ORANGE, RED, GREEN, BLUE } = Color;
+const { FRONT, BACK, LEFT, RIGHT, UP, DOWN } = CubeColorKey;
 
-const parity: AlgorithmGroup = {
+export const parity: AlgorithmGroup = {
     name: 'algorithm.4x4x4.parity.title',
     algorithms: [
         {
@@ -12,40 +12,40 @@ const parity: AlgorithmGroup = {
                 "(2R2 B2 U2) (2L U2) (2R' U2) (2R U2) (F2 2R F2) (2L' B2 2R2)",
             startConfiguration: {
                 front: [
-                    [BLUE, YELLOW, YELLOW, BLUE],
-                    [BLUE, BLUE, BLUE, BLUE],
-                    [BLUE, BLUE, BLUE, BLUE],
-                    [BLUE, BLUE, BLUE, BLUE],
+                    [FRONT, UP, UP, FRONT],
+                    [FRONT, FRONT, FRONT, FRONT],
+                    [FRONT, FRONT, FRONT, FRONT],
+                    [FRONT, FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [GREEN, GREEN, GREEN, GREEN],
-                    [GREEN, GREEN, GREEN, GREEN],
-                    [GREEN, GREEN, GREEN, GREEN],
-                    [GREEN, GREEN, GREEN, GREEN],
+                    [BACK, BACK, BACK, BACK],
+                    [BACK, BACK, BACK, BACK],
+                    [BACK, BACK, BACK, BACK],
+                    [BACK, BACK, BACK, BACK],
                 ],
                 left: [
-                    [ORANGE, ORANGE, ORANGE, ORANGE],
-                    [ORANGE, ORANGE, ORANGE, ORANGE],
-                    [ORANGE, ORANGE, ORANGE, ORANGE],
-                    [ORANGE, ORANGE, ORANGE, ORANGE],
+                    [LEFT, LEFT, LEFT, LEFT],
+                    [LEFT, LEFT, LEFT, LEFT],
+                    [LEFT, LEFT, LEFT, LEFT],
+                    [LEFT, LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [RED, RED, RED, RED],
-                    [RED, RED, RED, RED],
-                    [RED, RED, RED, RED],
-                    [RED, RED, RED, RED],
+                    [RIGHT, RIGHT, RIGHT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT, RIGHT],
                 ],
-                top: [
-                    [YELLOW, YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW, YELLOW],
-                    [YELLOW, BLUE, BLUE, YELLOW],
+                up: [
+                    [UP, UP, UP, UP],
+                    [UP, UP, UP, UP],
+                    [UP, UP, UP, UP],
+                    [UP, FRONT, FRONT, UP],
                 ],
-                bottom: [
-                    [WHITE, WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE, WHITE],
+                down: [
+                    [DOWN, DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN, DOWN],
                 ],
             },
         },
@@ -54,44 +54,42 @@ const parity: AlgorithmGroup = {
             notation: '2R2 U2 2R2 u2 2R2 2U2',
             startConfiguration: {
                 front: [
-                    [BLUE, GREEN, GREEN, BLUE],
-                    [BLUE, BLUE, BLUE, BLUE],
-                    [BLUE, BLUE, BLUE, BLUE],
-                    [BLUE, BLUE, BLUE, BLUE],
+                    [FRONT, BACK, BACK, FRONT],
+                    [FRONT, FRONT, FRONT, FRONT],
+                    [FRONT, FRONT, FRONT, FRONT],
+                    [FRONT, FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [GREEN, BLUE, BLUE, GREEN],
-                    [GREEN, GREEN, GREEN, GREEN],
-                    [GREEN, GREEN, GREEN, GREEN],
-                    [GREEN, GREEN, GREEN, GREEN],
+                    [BACK, FRONT, FRONT, BACK],
+                    [BACK, BACK, BACK, BACK],
+                    [BACK, BACK, BACK, BACK],
+                    [BACK, BACK, BACK, BACK],
                 ],
                 left: [
-                    [ORANGE, ORANGE, ORANGE, ORANGE],
-                    [ORANGE, ORANGE, ORANGE, ORANGE],
-                    [ORANGE, ORANGE, ORANGE, ORANGE],
-                    [ORANGE, ORANGE, ORANGE, ORANGE],
+                    [LEFT, LEFT, LEFT, LEFT],
+                    [LEFT, LEFT, LEFT, LEFT],
+                    [LEFT, LEFT, LEFT, LEFT],
+                    [LEFT, LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [RED, RED, RED, RED],
-                    [RED, RED, RED, RED],
-                    [RED, RED, RED, RED],
-                    [RED, RED, RED, RED],
+                    [RIGHT, RIGHT, RIGHT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT, RIGHT],
                 ],
-                top: [
-                    [YELLOW, YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW, YELLOW],
+                up: [
+                    [UP, UP, UP, UP],
+                    [UP, UP, UP, UP],
+                    [UP, UP, UP, UP],
+                    [UP, UP, UP, UP],
                 ],
-                bottom: [
-                    [WHITE, WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE, WHITE],
+                down: [
+                    [DOWN, DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN, DOWN],
                 ],
             },
         },
     ],
 };
-
-export default parity;

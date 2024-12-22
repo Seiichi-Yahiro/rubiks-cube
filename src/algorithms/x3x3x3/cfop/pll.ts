@@ -1,7 +1,7 @@
 import type { AlgorithmGroup } from 'src/algorithms/algorithmTypes';
-import { Color } from 'src/tsx/cube/cubeTypes';
+import { CubeColorKey } from 'src/tsx/cube/cubeTypes';
 
-const { YELLOW, WHITE, ORANGE, RED, GREEN, BLUE, DEFAULT } = Color;
+const { FRONT, BACK, LEFT, RIGHT, UP, DOWN, INSIDE } = CubeColorKey;
 
 export const pllOneCorner: AlgorithmGroup = {
     name: 'algorithm.3x3x3.pll.corners.two.title',
@@ -11,34 +11,34 @@ export const pllOneCorner: AlgorithmGroup = {
             notation: "(F R U' R' U' R U R' F') (R U R' U' R' F R F')",
             startConfiguration: {
                 front: [
-                    [BLUE, DEFAULT, GREEN],
-                    [BLUE, BLUE, BLUE],
-                    [BLUE, BLUE, BLUE],
+                    [FRONT, INSIDE, BACK],
+                    [FRONT, FRONT, FRONT],
+                    [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [GREEN, DEFAULT, BLUE],
-                    [GREEN, GREEN, GREEN],
-                    [GREEN, GREEN, GREEN],
+                    [BACK, INSIDE, FRONT],
+                    [BACK, BACK, BACK],
+                    [BACK, BACK, BACK],
                 ],
                 left: [
-                    [RED, DEFAULT, ORANGE],
-                    [ORANGE, ORANGE, ORANGE],
-                    [ORANGE, ORANGE, ORANGE],
+                    [RIGHT, INSIDE, LEFT],
+                    [LEFT, LEFT, LEFT],
+                    [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [ORANGE, DEFAULT, RED],
-                    [RED, RED, RED],
-                    [RED, RED, RED],
+                    [LEFT, INSIDE, RIGHT],
+                    [RIGHT, RIGHT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT],
                 ],
-                top: [
-                    [YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW],
+                up: [
+                    [UP, UP, UP],
+                    [UP, UP, UP],
+                    [UP, UP, UP],
                 ],
-                bottom: [
-                    [WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE],
+                down: [
+                    [DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN],
                 ],
             },
         },
@@ -47,34 +47,34 @@ export const pllOneCorner: AlgorithmGroup = {
             notation: "(R U R' U' R' F) R2 (U' R' U' R U R' F')",
             startConfiguration: {
                 front: [
-                    [BLUE, DEFAULT, RED],
-                    [BLUE, BLUE, BLUE],
-                    [BLUE, BLUE, BLUE],
+                    [FRONT, INSIDE, RIGHT],
+                    [FRONT, FRONT, FRONT],
+                    [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [RED, DEFAULT, GREEN],
-                    [GREEN, GREEN, GREEN],
-                    [GREEN, GREEN, GREEN],
+                    [RIGHT, INSIDE, BACK],
+                    [BACK, BACK, BACK],
+                    [BACK, BACK, BACK],
                 ],
                 left: [
-                    [ORANGE, DEFAULT, ORANGE],
-                    [ORANGE, ORANGE, ORANGE],
-                    [ORANGE, ORANGE, ORANGE],
+                    [LEFT, INSIDE, LEFT],
+                    [LEFT, LEFT, LEFT],
+                    [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [GREEN, DEFAULT, BLUE],
-                    [RED, RED, RED],
-                    [RED, RED, RED],
+                    [BACK, INSIDE, FRONT],
+                    [RIGHT, RIGHT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT],
                 ],
-                top: [
-                    [YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW],
+                up: [
+                    [UP, UP, UP],
+                    [UP, UP, UP],
+                    [UP, UP, UP],
                 ],
-                bottom: [
-                    [WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE],
+                down: [
+                    [DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN],
                 ],
             },
         },
@@ -89,34 +89,34 @@ export const pllEdgesZero: AlgorithmGroup = {
             notation: "M2 U' M2 U2 M2 U' M2",
             startConfiguration: {
                 front: [
-                    [BLUE, GREEN, BLUE],
-                    [BLUE, BLUE, BLUE],
-                    [BLUE, BLUE, BLUE],
+                    [FRONT, BACK, FRONT],
+                    [FRONT, FRONT, FRONT],
+                    [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [GREEN, BLUE, GREEN],
-                    [GREEN, GREEN, GREEN],
-                    [GREEN, GREEN, GREEN],
+                    [BACK, FRONT, BACK],
+                    [BACK, BACK, BACK],
+                    [BACK, BACK, BACK],
                 ],
                 left: [
-                    [ORANGE, RED, ORANGE],
-                    [ORANGE, ORANGE, ORANGE],
-                    [ORANGE, ORANGE, ORANGE],
+                    [LEFT, RIGHT, LEFT],
+                    [LEFT, LEFT, LEFT],
+                    [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [RED, ORANGE, RED],
-                    [RED, RED, RED],
-                    [RED, RED, RED],
+                    [RIGHT, LEFT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT],
                 ],
-                top: [
-                    [YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW],
+                up: [
+                    [UP, UP, UP],
+                    [UP, UP, UP],
+                    [UP, UP, UP],
                 ],
-                bottom: [
-                    [WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE],
+                down: [
+                    [DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN],
                 ],
             },
         },
@@ -125,34 +125,34 @@ export const pllEdgesZero: AlgorithmGroup = {
             notation: "M' U' M2 U' M2 U' M' U2 M2",
             startConfiguration: {
                 front: [
-                    [BLUE, RED, BLUE],
-                    [BLUE, BLUE, BLUE],
-                    [BLUE, BLUE, BLUE],
+                    [FRONT, RIGHT, FRONT],
+                    [FRONT, FRONT, FRONT],
+                    [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [GREEN, ORANGE, GREEN],
-                    [GREEN, GREEN, GREEN],
-                    [GREEN, GREEN, GREEN],
+                    [BACK, LEFT, BACK],
+                    [BACK, BACK, BACK],
+                    [BACK, BACK, BACK],
                 ],
                 left: [
-                    [ORANGE, GREEN, ORANGE],
-                    [ORANGE, ORANGE, ORANGE],
-                    [ORANGE, ORANGE, ORANGE],
+                    [LEFT, BACK, LEFT],
+                    [LEFT, LEFT, LEFT],
+                    [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [RED, BLUE, RED],
-                    [RED, RED, RED],
-                    [RED, RED, RED],
+                    [RIGHT, FRONT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT],
                 ],
-                top: [
-                    [YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW],
+                up: [
+                    [UP, UP, UP],
+                    [UP, UP, UP],
+                    [UP, UP, UP],
                 ],
-                bottom: [
-                    [WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE],
+                down: [
+                    [DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN],
                 ],
             },
         },
@@ -167,34 +167,34 @@ export const pllEdgesOne: AlgorithmGroup = {
             notation: "R U' R U R U R U' R' U' R2",
             startConfiguration: {
                 front: [
-                    [BLUE, RED, BLUE],
-                    [BLUE, BLUE, BLUE],
-                    [BLUE, BLUE, BLUE],
+                    [FRONT, RIGHT, FRONT],
+                    [FRONT, FRONT, FRONT],
+                    [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [GREEN, GREEN, GREEN],
-                    [GREEN, GREEN, GREEN],
-                    [GREEN, GREEN, GREEN],
+                    [BACK, BACK, BACK],
+                    [BACK, BACK, BACK],
+                    [BACK, BACK, BACK],
                 ],
                 left: [
-                    [ORANGE, BLUE, ORANGE],
-                    [ORANGE, ORANGE, ORANGE],
-                    [ORANGE, ORANGE, ORANGE],
+                    [LEFT, FRONT, LEFT],
+                    [LEFT, LEFT, LEFT],
+                    [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [RED, ORANGE, RED],
-                    [RED, RED, RED],
-                    [RED, RED, RED],
+                    [RIGHT, LEFT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT],
                 ],
-                top: [
-                    [YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW],
+                up: [
+                    [UP, UP, UP],
+                    [UP, UP, UP],
+                    [UP, UP, UP],
                 ],
-                bottom: [
-                    [WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE],
+                down: [
+                    [DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN],
                 ],
             },
         },
@@ -203,34 +203,34 @@ export const pllEdgesOne: AlgorithmGroup = {
             notation: "R2 U R U R' U' R' U' R' U R'",
             startConfiguration: {
                 front: [
-                    [BLUE, ORANGE, BLUE],
-                    [BLUE, BLUE, BLUE],
-                    [BLUE, BLUE, BLUE],
+                    [FRONT, LEFT, FRONT],
+                    [FRONT, FRONT, FRONT],
+                    [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [GREEN, GREEN, GREEN],
-                    [GREEN, GREEN, GREEN],
-                    [GREEN, GREEN, GREEN],
+                    [BACK, BACK, BACK],
+                    [BACK, BACK, BACK],
+                    [BACK, BACK, BACK],
                 ],
                 left: [
-                    [ORANGE, RED, ORANGE],
-                    [ORANGE, ORANGE, ORANGE],
-                    [ORANGE, ORANGE, ORANGE],
+                    [LEFT, RIGHT, LEFT],
+                    [LEFT, LEFT, LEFT],
+                    [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [RED, BLUE, RED],
-                    [RED, RED, RED],
-                    [RED, RED, RED],
+                    [RIGHT, FRONT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT],
+                    [RIGHT, RIGHT, RIGHT],
                 ],
-                top: [
-                    [YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW],
-                    [YELLOW, YELLOW, YELLOW],
+                up: [
+                    [UP, UP, UP],
+                    [UP, UP, UP],
+                    [UP, UP, UP],
                 ],
-                bottom: [
-                    [WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE],
-                    [WHITE, WHITE, WHITE],
+                down: [
+                    [DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN],
+                    [DOWN, DOWN, DOWN],
                 ],
             },
         },

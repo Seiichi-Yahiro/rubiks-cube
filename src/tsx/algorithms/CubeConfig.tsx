@@ -22,8 +22,8 @@ const CubeConfig: React.FC<CubeConfigProps> = ({
     back,
     left,
     right,
-    top,
-    bottom,
+    up,
+    down,
     viewMode,
 }) => {
     return (
@@ -85,7 +85,7 @@ const CubeConfig: React.FC<CubeConfigProps> = ({
                     />
                     <CubeConfigSide
                         key="top"
-                        faces={top}
+                        faces={up}
                         faceSize={faceSize}
                         viewMode={SideViewMode.Full}
                         className="absolute"
@@ -95,7 +95,7 @@ const CubeConfig: React.FC<CubeConfigProps> = ({
                     />
                     <CubeConfigSide
                         key="bottom"
-                        faces={bottom}
+                        faces={down}
                         faceSize={faceSize}
                         viewMode={SideViewMode.Full}
                         className="absolute"
@@ -108,7 +108,7 @@ const CubeConfig: React.FC<CubeConfigProps> = ({
                 <div
                     className="grid [transform-style:preserve-3d]"
                     style={{
-                        gridTemplateColumns: `${faceSize}rem ${top[0].length * faceSize}rem ${faceSize}rem`,
+                        gridTemplateColumns: `${faceSize}rem ${up[0].length * faceSize}rem ${faceSize}rem`,
                         width: `${(front[0].length + 2) * faceSize}rem`,
                         height: `${(front.length + 2) * faceSize}rem`,
                     }}
@@ -131,7 +131,7 @@ const CubeConfig: React.FC<CubeConfigProps> = ({
                     />
                     <CubeConfigSide
                         key="top"
-                        faces={top}
+                        faces={up}
                         faceSize={faceSize}
                         viewMode={SideViewMode.Full}
                         className="col-start-2"
