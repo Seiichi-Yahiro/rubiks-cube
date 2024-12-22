@@ -35,7 +35,7 @@ const Algorithms: React.FC = () => {
 
     const tabStepArrow = (
         <div className="flex items-center">
-            <ArrowRight className="size-4 stroke-cube-gray" />
+            <ArrowRight className="size-4 stroke-app-text" />
         </div>
     );
 

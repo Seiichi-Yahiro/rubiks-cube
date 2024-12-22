@@ -49,15 +49,15 @@ const TextEditor = React.forwardRef<HTMLTextAreaElement, TextEditorProps>(
 
                     'before:absolute before:bottom-0 before:w-full before:border-b before:border-app-text focus-within:before:border-b-2 hover:before:border-b-2 hover:before:border-app-text',
 
-                    'after:absolute after:bottom-0 after:w-full after:scale-x-0 after:border-b-2 after:border-app-border-highlighted after:transition-transform after:duration-200 after:ease-out focus-within:after:scale-x-100',
+                    'after:absolute after:bottom-0 after:w-full after:scale-x-0 after:border-b-2 after:border-app-text-highlighted after:transition-transform after:duration-200 after:ease-out focus-within:after:scale-x-100',
 
                     {
-                        'text-app-text-disabled before:border-b before:border-dotted before:border-app-border-disabled hover:before:border-b':
+                        'text-app-text-disabled before:border-b before:border-dotted before:border-app-text-disabled hover:before:border-b':
                             disabled,
                     },
 
                     {
-                        'before:border-app-border-error after:border-app-border-error hover:before:border-b hover:before:border-app-border-error':
+                        'before:border-app-text-error after:border-app-text-error hover:before:border-b hover:before:border-app-text-error':
                             error,
                     },
                 )}
@@ -73,7 +73,7 @@ const TextEditor = React.forwardRef<HTMLTextAreaElement, TextEditorProps>(
                     autoCapitalize="off"
                     autoComplete="off"
                     autoCorrect="off"
-                    className="peer absolute top-0 size-full resize-none overflow-hidden whitespace-pre-wrap bg-transparent text-base text-transparent caret-cube-gray outline-none"
+                    className="peer absolute top-0 size-full resize-none overflow-hidden whitespace-pre-wrap bg-transparent text-base text-transparent caret-app-text outline-none"
                 />
                 <label
                     htmlFor={id}

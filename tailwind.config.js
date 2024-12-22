@@ -25,15 +25,6 @@ export default {
                 rotate3d: 'rotate3d 5s linear infinite',
             },
             colors: {
-                disabled: '#7A7A7A',
-                'arrow-gray': '#383838',
-                'cube-gray': '#333333',
-                'cube-blue': '#3D81F6',
-                'cube-green': '#009D54',
-                'cube-red': '#DC422F',
-                'cube-orange': '#FF6C00',
-                'cube-yellow': '#FDCC09',
-
                 'app-text': 'var(--color-app-text)',
                 'app-text-inverted': 'var(--color-app-text-inverted)',
                 'app-text-highlighted': 'var(--color-app-text-highlighted)',
@@ -54,8 +45,6 @@ export default {
 
                 'app-border': 'var(--color-app-border)',
                 'app-border-highlighted': 'var(--color-app-border-highlighted)',
-                'app-border-error': 'var(--color-app-border-error)',
-                'app-border-disabled': 'var(--color-app-border-disabled)',
             },
             screens: {
                 'pointer-fine': { raw: '(pointer: fine)' },

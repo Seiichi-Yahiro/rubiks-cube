@@ -45,7 +45,7 @@ const IconButton: React.FC<IconButtonProps> = React.forwardRef<
         const classNames = useMemo(
             () =>
                 cn(
-                    'relative inline-flex size-8 cursor-pointer items-center justify-center p-1 *:stroke-cube-gray *:stroke-[1.5] focus-visible:outline-none',
+                    'relative inline-flex size-8 cursor-pointer items-center justify-center p-1 *:stroke-app-text *:stroke-[1.5] focus-visible:outline-none',
 
                     'before:absolute before:size-full before:rounded-full hover:before:bg-app-bg-hover focus-visible:before:bg-app-bg-hover active:before:bg-app-bg-active focus-visible:motion-safe:before:animate-breath',
 
@@ -54,7 +54,7 @@ const IconButton: React.FC<IconButtonProps> = React.forwardRef<
                     'active:after:scale-0 active:after:bg-app-bg-ripple active:after:transition-none',
 
                     {
-                        'cursor-default *:stroke-disabled hover:before:bg-transparent active:before:bg-transparent':
+                        'cursor-default *:stroke-app-text-disabled hover:before:bg-transparent active:before:bg-transparent':
                             disabled,
                     },
 

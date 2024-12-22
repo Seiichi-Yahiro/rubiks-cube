@@ -15,7 +15,7 @@ const ToolTipArrow = React.forwardRef<
     <TooltipPrimitive.Arrow
         ref={ref}
         className={cn(
-            'fill-disabled stroke-cube-gray/20 opacity-90',
+            'fill-app-bg-disabled stroke-app-border opacity-90',
             className,
         )}
         {...props}

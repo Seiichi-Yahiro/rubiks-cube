@@ -25,7 +25,7 @@ const TabsTrigger = React.forwardRef<
         className={cn(
             'relative flex items-center justify-center whitespace-nowrap rounded-t-md border border-b-0 border-app-border bg-app-bg px-2 py-1 text-sm font-medium outline-none transition-all disabled:pointer-events-none disabled:opacity-50',
 
-            'data-[state=active]:text-app-text-highlighted data-[state=active]:before:border-b-2 data-[state=active]:before:border-b-app-border-highlighted',
+            'data-[state=active]:text-app-text-highlighted data-[state=active]:before:border-b-2 data-[state=active]:before:border-b-app-text-highlighted',
 
             'before:absolute before:size-full before:rounded-t-md before:px-2 hover:before:bg-app-bg-hover focus-visible:before:bg-app-bg-hover active:before:bg-app-bg-active',
 
@@ -57,10 +57,13 @@ const TabsContent = React.forwardRef<
         <TabsPrimitive.Content
             ref={ref}
             className={cn(
-                'rounded-md border border-app-border bg-app-bg p-2 text-app-text outline-none focus-visible:border-app-border-highlighted',
+                'relative rounded-md border border-app-border bg-app-bg p-2 text-app-text outline-none',
+
+                'focus-visible:ring-2 focus-visible:ring-app-border-highlighted',
+
                 {
                     'p-0 pt-1': hasSubTabs,
-                    'relative rounded-none border-0 border-t bg-transparent focus-visible:before:absolute focus-visible:before:left-0 focus-visible:before:top-0 focus-visible:before:size-full focus-visible:before:border focus-visible:before:border-t-0 focus-visible:before:border-app-border-highlighted':
+                    'relative rounded-none border-0 border-t bg-transparent ring-inset focus-visible:before:absolute focus-visible:before:left-0 focus-visible:before:top-0 focus-visible:before:size-full focus-visible:before:border focus-visible:before:border-t-0 focus-visible:before:border-app-border-highlighted':
                         isSubTabsContent,
                 },
                 className,
