@@ -161,7 +161,6 @@
         },
         "settings": {
             "title": "Einstellungen",
-            "animation-duration": "Animationsdauer",
             "reset-colors": "Farben\nzurücksetzen"
         }
     }
