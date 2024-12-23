@@ -10,6 +10,7 @@ export const defaultColorMap = {
     [CubeColorKey.UP]: '#fdcc09',
     [CubeColorKey.DOWN]: '#ffffff',
     [CubeColorKey.INSIDE]: '#333333',
+    [CubeColorKey.UNKNOWN]: '#7a7a7a',
 } satisfies CubeColorVariables;
 
 export const loadColorMap = (): CubeColorVariables => {

@@ -11,6 +11,7 @@ export enum CubeColorKey {
     UP = '--cube-face-up',
     DOWN = '--cube-face-down',
     INSIDE = '--cube-face-inside',
+    UNKNOWN = '--cube-face-unknown',
 }
 
 export interface CubeColorVariables {
@@ -21,6 +22,7 @@ export interface CubeColorVariables {
     [CubeColorKey.UP]: CSSProperties['color'];
     [CubeColorKey.DOWN]: CSSProperties['color'];
     [CubeColorKey.INSIDE]: CSSProperties['color'];
+    [CubeColorKey.UNKNOWN]: CSSProperties['color'];
 }
 
 export enum Side {

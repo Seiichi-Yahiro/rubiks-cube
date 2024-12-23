@@ -1,7 +1,7 @@
 import type { AlgorithmGroup } from 'src/algorithms/algorithmTypes';
 import { CubeColorKey } from 'src/tsx/cube/cubeTypes';
 
-const { FRONT, BACK, LEFT, RIGHT, UP, DOWN, INSIDE } = CubeColorKey;
+const { FRONT, BACK, LEFT, RIGHT, UP, DOWN, UNKNOWN } = CubeColorKey;
 
 export const ollEdges: AlgorithmGroup = {
     name: 'algorithm.3x3x3.oll.edges.title',
@@ -11,29 +11,29 @@ export const ollEdges: AlgorithmGroup = {
             notation: "F (R U R' U') F' f (R U R' U') f'",
             startConfiguration: {
                 front: [
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                     [FRONT, FRONT, FRONT],
                     [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                     [BACK, BACK, BACK],
                     [BACK, BACK, BACK],
                 ],
                 left: [
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                     [LEFT, LEFT, LEFT],
                     [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                     [RIGHT, RIGHT, RIGHT],
                     [RIGHT, RIGHT, RIGHT],
                 ],
                 up: [
-                    [INSIDE, INSIDE, INSIDE],
-                    [INSIDE, UP, INSIDE],
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
+                    [UNKNOWN, UP, UNKNOWN],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                 ],
                 down: [
                     [DOWN, DOWN, DOWN],
@@ -47,29 +47,29 @@ export const ollEdges: AlgorithmGroup = {
             notation: "f (R U R' U') f'",
             startConfiguration: {
                 front: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [FRONT, FRONT, FRONT],
                     [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                     [BACK, BACK, BACK],
                     [BACK, BACK, BACK],
                 ],
                 left: [
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                     [LEFT, LEFT, LEFT],
                     [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [RIGHT, RIGHT, RIGHT],
                     [RIGHT, RIGHT, RIGHT],
                 ],
                 up: [
-                    [INSIDE, INSIDE, INSIDE],
-                    [INSIDE, UP, UP],
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
+                    [UNKNOWN, UP, UP],
+                    [UNKNOWN, UP, UNKNOWN],
                 ],
                 down: [
                     [DOWN, DOWN, DOWN],
@@ -83,29 +83,29 @@ export const ollEdges: AlgorithmGroup = {
             notation: "F (R U R' U') F'",
             startConfiguration: {
                 front: [
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                     [FRONT, FRONT, FRONT],
                     [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                     [BACK, BACK, BACK],
                     [BACK, BACK, BACK],
                 ],
                 left: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [LEFT, LEFT, LEFT],
                     [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [RIGHT, RIGHT, RIGHT],
                     [RIGHT, RIGHT, RIGHT],
                 ],
                 up: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [UP, UP, UP],
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                 ],
                 down: [
                     [DOWN, DOWN, DOWN],
@@ -125,29 +125,29 @@ export const ollCornersZero: AlgorithmGroup = {
             notation: "F (R U R' U')3 F'",
             startConfiguration: {
                 front: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [FRONT, FRONT, FRONT],
                     [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [BACK, BACK, BACK],
                     [BACK, BACK, BACK],
                 ],
                 left: [
-                    [UP, INSIDE, UP],
+                    [UP, UNKNOWN, UP],
                     [LEFT, LEFT, LEFT],
                     [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [UP, INSIDE, UP],
+                    [UP, UNKNOWN, UP],
                     [RIGHT, RIGHT, RIGHT],
                     [RIGHT, RIGHT, RIGHT],
                 ],
                 up: [
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                     [UP, UP, UP],
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                 ],
                 down: [
                     [DOWN, DOWN, DOWN],
@@ -161,29 +161,29 @@ export const ollCornersZero: AlgorithmGroup = {
             notation: "R U2 (R2 U' R2 U' R2) U2 R",
             startConfiguration: {
                 front: [
-                    [INSIDE, INSIDE, UP],
+                    [UNKNOWN, UNKNOWN, UP],
                     [FRONT, FRONT, FRONT],
                     [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [UP, INSIDE, INSIDE],
+                    [UP, UNKNOWN, UNKNOWN],
                     [BACK, BACK, BACK],
                     [BACK, BACK, BACK],
                 ],
                 left: [
-                    [UP, INSIDE, UP],
+                    [UP, UNKNOWN, UP],
                     [LEFT, LEFT, LEFT],
                     [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [RIGHT, RIGHT, RIGHT],
                     [RIGHT, RIGHT, RIGHT],
                 ],
                 up: [
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                     [UP, UP, UP],
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                 ],
                 down: [
                     [DOWN, DOWN, DOWN],
@@ -203,29 +203,29 @@ export const ollCornersOne: AlgorithmGroup = {
             notation: "R U R' U R U2 R'",
             startConfiguration: {
                 front: [
-                    [INSIDE, INSIDE, UP],
+                    [UNKNOWN, UNKNOWN, UP],
                     [FRONT, FRONT, FRONT],
                     [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [INSIDE, INSIDE, UP],
+                    [UNKNOWN, UNKNOWN, UP],
                     [BACK, BACK, BACK],
                     [BACK, BACK, BACK],
                 ],
                 left: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [LEFT, LEFT, LEFT],
                     [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [INSIDE, INSIDE, UP],
+                    [UNKNOWN, UNKNOWN, UP],
                     [RIGHT, RIGHT, RIGHT],
                     [RIGHT, RIGHT, RIGHT],
                 ],
                 up: [
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                     [UP, UP, UP],
-                    [UP, UP, INSIDE],
+                    [UP, UP, UNKNOWN],
                 ],
                 down: [
                     [DOWN, DOWN, DOWN],
@@ -239,29 +239,29 @@ export const ollCornersOne: AlgorithmGroup = {
             notation: "L' U' L U' L' U2 L",
             startConfiguration: {
                 front: [
-                    [UP, INSIDE, INSIDE],
+                    [UP, UNKNOWN, UNKNOWN],
                     [FRONT, FRONT, FRONT],
                     [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [UP, INSIDE, INSIDE],
+                    [UP, UNKNOWN, UNKNOWN],
                     [BACK, BACK, BACK],
                     [BACK, BACK, BACK],
                 ],
                 left: [
-                    [UP, INSIDE, INSIDE],
+                    [UP, UNKNOWN, UNKNOWN],
                     [LEFT, LEFT, LEFT],
                     [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [RIGHT, RIGHT, RIGHT],
                     [RIGHT, RIGHT, RIGHT],
                 ],
                 up: [
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                     [UP, UP, UP],
-                    [INSIDE, UP, UP],
+                    [UNKNOWN, UP, UP],
                 ],
                 down: [
                     [DOWN, DOWN, DOWN],
@@ -281,29 +281,29 @@ export const ollCornersTwo: AlgorithmGroup = {
             notation: "x (R' U R D') (R' U' R D) x'",
             startConfiguration: {
                 front: [
-                    [UP, INSIDE, INSIDE],
+                    [UP, UNKNOWN, UNKNOWN],
                     [FRONT, FRONT, FRONT],
                     [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [BACK, BACK, BACK],
                     [BACK, BACK, BACK],
                 ],
                 left: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [LEFT, LEFT, LEFT],
                     [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [INSIDE, INSIDE, UP],
+                    [UNKNOWN, UNKNOWN, UP],
                     [RIGHT, RIGHT, RIGHT],
                     [RIGHT, RIGHT, RIGHT],
                 ],
                 up: [
-                    [UP, UP, INSIDE],
+                    [UP, UP, UNKNOWN],
                     [UP, UP, UP],
-                    [INSIDE, UP, UP],
+                    [UNKNOWN, UP, UP],
                 ],
                 down: [
                     [DOWN, DOWN, DOWN],
@@ -317,29 +317,29 @@ export const ollCornersTwo: AlgorithmGroup = {
             notation: "x (L U R' U') (L' U R U') x'",
             startConfiguration: {
                 front: [
-                    [UP, INSIDE, INSIDE],
+                    [UP, UNKNOWN, UNKNOWN],
                     [FRONT, FRONT, FRONT],
                     [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [INSIDE, INSIDE, UP],
+                    [UNKNOWN, UNKNOWN, UP],
                     [BACK, BACK, BACK],
                     [BACK, BACK, BACK],
                 ],
                 left: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [LEFT, LEFT, LEFT],
                     [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [RIGHT, RIGHT, RIGHT],
                     [RIGHT, RIGHT, RIGHT],
                 ],
                 up: [
-                    [INSIDE, UP, UP],
+                    [UNKNOWN, UP, UP],
                     [UP, UP, UP],
-                    [INSIDE, UP, UP],
+                    [UNKNOWN, UP, UP],
                 ],
                 down: [
                     [DOWN, DOWN, DOWN],
@@ -353,29 +353,29 @@ export const ollCornersTwo: AlgorithmGroup = {
             notation: "R2 D R' U2 R D' R' U2 R'",
             startConfiguration: {
                 front: [
-                    [UP, INSIDE, UP],
+                    [UP, UNKNOWN, UP],
                     [FRONT, FRONT, FRONT],
                     [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [BACK, BACK, BACK],
                     [BACK, BACK, BACK],
                 ],
                 left: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [LEFT, LEFT, LEFT],
                     [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [INSIDE, INSIDE, INSIDE],
+                    [UNKNOWN, UNKNOWN, UNKNOWN],
                     [RIGHT, RIGHT, RIGHT],
                     [RIGHT, RIGHT, RIGHT],
                 ],
                 up: [
                     [UP, UP, UP],
                     [UP, UP, UP],
-                    [INSIDE, UP, INSIDE],
+                    [UNKNOWN, UP, UNKNOWN],
                 ],
                 down: [
                     [DOWN, DOWN, DOWN],

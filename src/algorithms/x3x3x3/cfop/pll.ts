@@ -1,7 +1,7 @@
 import type { AlgorithmGroup } from 'src/algorithms/algorithmTypes';
 import { CubeColorKey } from 'src/tsx/cube/cubeTypes';
 
-const { FRONT, BACK, LEFT, RIGHT, UP, DOWN, INSIDE } = CubeColorKey;
+const { FRONT, BACK, LEFT, RIGHT, UP, DOWN, UNKNOWN } = CubeColorKey;
 
 export const pllOneCorner: AlgorithmGroup = {
     name: 'algorithm.3x3x3.pll.corners.two.title',
@@ -11,22 +11,22 @@ export const pllOneCorner: AlgorithmGroup = {
             notation: "(F R U' R' U' R U R' F') (R U R' U' R' F R F')",
             startConfiguration: {
                 front: [
-                    [FRONT, INSIDE, BACK],
+                    [FRONT, UNKNOWN, BACK],
                     [FRONT, FRONT, FRONT],
                     [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [BACK, INSIDE, FRONT],
+                    [BACK, UNKNOWN, FRONT],
                     [BACK, BACK, BACK],
                     [BACK, BACK, BACK],
                 ],
                 left: [
-                    [RIGHT, INSIDE, LEFT],
+                    [RIGHT, UNKNOWN, LEFT],
                     [LEFT, LEFT, LEFT],
                     [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [LEFT, INSIDE, RIGHT],
+                    [LEFT, UNKNOWN, RIGHT],
                     [RIGHT, RIGHT, RIGHT],
                     [RIGHT, RIGHT, RIGHT],
                 ],
@@ -47,22 +47,22 @@ export const pllOneCorner: AlgorithmGroup = {
             notation: "(R U R' U' R' F) R2 (U' R' U' R U R' F')",
             startConfiguration: {
                 front: [
-                    [FRONT, INSIDE, RIGHT],
+                    [FRONT, UNKNOWN, RIGHT],
                     [FRONT, FRONT, FRONT],
                     [FRONT, FRONT, FRONT],
                 ],
                 back: [
-                    [RIGHT, INSIDE, BACK],
+                    [RIGHT, UNKNOWN, BACK],
                     [BACK, BACK, BACK],
                     [BACK, BACK, BACK],
                 ],
                 left: [
-                    [LEFT, INSIDE, LEFT],
+                    [LEFT, UNKNOWN, LEFT],
                     [LEFT, LEFT, LEFT],
                     [LEFT, LEFT, LEFT],
                 ],
                 right: [
-                    [BACK, INSIDE, FRONT],
+                    [BACK, UNKNOWN, FRONT],
                     [RIGHT, RIGHT, RIGHT],
                     [RIGHT, RIGHT, RIGHT],
                 ],

@@ -40,9 +40,11 @@ const Face: React.FC<IFaceProps> = ({
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
-            {isHovered && colorKey !== CubeColorKey.INSIDE && (
-                <FaceArrows rotate={rotate} />
-            )}
+            {isHovered &&
+                colorKey !== CubeColorKey.INSIDE &&
+                colorKey !== CubeColorKey.UNKNOWN && (
+                    <FaceArrows rotate={rotate} />
+                )}
         </div>
     );
 };

@@ -40,7 +40,10 @@ const ColorPicker: React.FC = () => {
     const colors = (
         Object.entries(cubeColors) as [CubeColorKey, CSSProperties['color']][]
     )
-        .filter(([key, _]) => key !== CubeColorKey.INSIDE)
+        .filter(
+            ([key, _]) =>
+                key !== CubeColorKey.INSIDE && key !== CubeColorKey.UNKNOWN,
+        )
         .map(([key, value]) => (
             <button
                 key={key}
