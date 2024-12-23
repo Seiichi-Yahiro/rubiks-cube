@@ -48,4 +48,5 @@ html,
 body,
 #root {
     @apply size-full min-w-80;
+    background-color: var(--color-app-bg);
 }
