@@ -37,7 +37,7 @@ const FaceArrow: React.FC<IArrowProps> = ({ direction, rotate }) => (
             style={{
                 transform: 'translateX(-50%) scale(0.4) translateY(-50%)',
             }}
-            className="h-full w-full origin-center [fill:transparent] [stroke:transparent]"
+            className="h-full w-full origin-center fill-transparent stroke-transparent"
         />
         <Arrow
             style={{
