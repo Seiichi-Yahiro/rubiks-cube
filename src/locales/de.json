@@ -161,7 +161,6 @@
         },
         "settings": {
             "title": "Einstellungen",
-            "language": "Sprache",
             "cube-dimension": "Würfel-Dimension",
             "animation-duration": "Animationsdauer",
             "reset-colors": "Farben\nzurücksetzen"

@@ -5,8 +5,6 @@ import Typography from '@mui/material/Typography';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
-import FlagDe from 'src/locales/flags/FlagDe';
-import FlagGb from 'src/locales/flags/FlagGb';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import ColorPicker from 'src/tsx/interface/ColorPicker';
@@ -19,23 +17,10 @@ const Settings: React.FC = () => {
     );
     const playerStatus = useRedux((state) => state.player.status);
 
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <List disablePadding={true} dense={true} className="w-full">
-            <ListItem className="flex flex-col">
-                <Typography>{t('interface.settings.language')}</Typography>
-                <div className="flex flex-row gap-1">
-                    <FlagGb
-                        className="w-6 cursor-pointer"
-                        onClick={() => i18n.changeLanguage('en')}
-                    />
-                    <FlagDe
-                        className="w-6 cursor-pointer"
-                        onClick={() => i18n.changeLanguage('de')}
-                    />
-                </div>
-            </ListItem>
             <ListItem className="flex flex-col">
                 <Typography id="cube-dimension-slider">
                     {t('interface.settings.cube-dimension')}

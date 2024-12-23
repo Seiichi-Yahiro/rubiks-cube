@@ -4,6 +4,7 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Algorithms from 'src/tsx/algorithms/Algorithms';
 import Settings from 'src/tsx/interface/Settings';
+import LanguageSelector from 'src/tsx/locales/LanguageSelector';
 import Player from 'src/tsx/player/Player';
 import Category from './Category';
 
@@ -23,6 +24,7 @@ const Interface: React.FC = () => {
         <div className="flex w-full max-w-96 flex-row-reverse self-center p-2 md:w-96 md:flex-col md:self-start">
             <Player />
             <Algorithms />
+            <LanguageSelector />
             <List className="flex flex-row-reverse md:block">
                 <Category
                     isOpen={openedMenu === Menu.SETTINGS}
