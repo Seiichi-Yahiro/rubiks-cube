@@ -161,7 +161,6 @@
         },
         "settings": {
             "title": "Settings",
-            "cube-dimension": "Cube dimension",
             "animation-duration": "Animation duration",
             "reset-colors": "Reset\nColors"
         }

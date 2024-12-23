@@ -3,6 +3,7 @@ import { SettingsIcon } from 'lucide-react';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Algorithms from 'src/tsx/algorithms/Algorithms';
+import CubeSelector from 'src/tsx/cube/settings/CubeSelector';
 import Settings from 'src/tsx/interface/Settings';
 import LanguageSelector from 'src/tsx/locales/LanguageSelector';
 import Player from 'src/tsx/player/Player';
@@ -25,6 +26,7 @@ const Interface: React.FC = () => {
             <Player />
             <Algorithms />
             <LanguageSelector />
+            <CubeSelector />
             <List className="flex flex-row-reverse md:block">
                 <Category
                     isOpen={openedMenu === Menu.SETTINGS}
