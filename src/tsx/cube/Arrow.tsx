@@ -10,7 +10,7 @@ const Arrow: React.FC<IArrowProps> = ({ style, className = '' }) => (
     <g
         style={style}
         className={cn(
-            'stroke-app-text-disabled stroke-[4px] transition-opacity duration-300 [stroke-linecap:round]',
+            'stroke-app-text stroke-[4px] transition-opacity duration-300 [stroke-linecap:round]',
             className,
         )}
     >
