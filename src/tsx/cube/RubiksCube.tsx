@@ -8,7 +8,11 @@ import Cubicles from 'src/tsx/cube/Cubicles';
 import cn from 'src/utils/cn';
 import { fromTranslation, toCss } from 'src/utils/matrix4';
 
-const RubiksCube: React.FC = () => {
+interface RubiksCubeProps {
+    className?: string;
+}
+
+const RubiksCube: React.FC<RubiksCubeProps> = ({ className }) => {
     const dispatch = useAppDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
     const cubeSize = useRedux((state) => state.cube.size);
@@ -29,7 +33,8 @@ const RubiksCube: React.FC = () => {
                 const width = container.current!.offsetWidth;
                 const height = container.current!.offsetHeight;
                 const containerSize = Math.min(width, height);
-                dispatch(cubeActions.setCubeSize(containerSize / 2));
+                const cubeSize = Math.min(containerSize / 2, 250);
+                dispatch(cubeActions.setCubeSize(cubeSize));
             }),
         );
 
@@ -58,7 +63,10 @@ const RubiksCube: React.FC = () => {
     return (
         <div
             ref={container}
-            className="flex max-h-[30rem] flex-1 items-center justify-center p-2 [perspective:1000px] md:mt-10"
+            className={cn(
+                'flex items-center justify-center p-2 [perspective:1000px]',
+                className,
+            )}
         >
             <div
                 className={cn('relative [transform-style:preserve-3d]', {

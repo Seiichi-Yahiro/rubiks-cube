@@ -2,16 +2,23 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { BookA } from 'lucide-react';
 import React, { type CSSProperties, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { useRedux } from 'src/hooks/redux';
 import 'src/i18n';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { type AppStore, setupStore } from 'src/redux/store';
+import Algorithms from 'src/tsx/algorithms/Algorithms';
 import 'src/tsx/App.css';
+import IconButton from 'src/tsx/components/IconButton';
 import { TooltipProvider } from 'src/tsx/components/Tooltip';
 import RubiksCube from 'src/tsx/cube/RubiksCube';
-import Interface from 'src/tsx/interface/Interface';
+import CubeSettings from 'src/tsx/cube/settings/CubeSettings';
+import LanguageSelector from 'src/tsx/locales/LanguageSelector';
+import Player from 'src/tsx/player/Player';
+import cn from 'src/utils/cn';
 
 const App: React.FC = () => {
     const storeRef = useRef<AppStore>();
@@ -24,28 +31,79 @@ const App: React.FC = () => {
     return (
         <Provider store={storeRef.current}>
             <TooltipProvider delayDuration={500}>
-                <AppWrapper>
-                    <Interface />
-                    <RubiksCube />
-                </AppWrapper>
+                <div className="flex size-full flex-col">
+                    <div className="w-full border-b border-app-border p-2">
+                        <AppHeader className="container mx-auto" />
+                    </div>
+                    <AppContent className="container mx-auto grow p-2" />
+                </div>
             </TooltipProvider>
         </Provider>
     );
 };
 
-interface AppWrapperProps {
-    children: React.ReactNode;
+interface AppHeaderProps {
+    className?: string;
 }
 
-const AppWrapper: React.FC<AppWrapperProps> = ({ children }) => {
-    const colors = useRedux((state) => state.cube.colors);
+const AppHeader: React.FC<AppHeaderProps> = ({ className }) => {
+    const { t } = useTranslation();
 
     return (
         <div
-            className="container mx-auto flex h-full flex-col md:flex-row"
+            className={cn(
+                'flex w-full flex-row items-center justify-between',
+                className,
+            )}
+        >
+            <div className="flex flex-row items-center gap-1">
+                <img
+                    src="favicon.png"
+                    alt="Rubik's Cube logo"
+                    className="size-12"
+                />
+                <span className="text-2xl font-medium text-app-text">
+                    {t('title')}
+                </span>
+            </div>
+            <LanguageSelector />
+        </div>
+    );
+};
+
+interface AppContentProps {
+    className?: string;
+}
+
+const AppContent: React.FC<AppContentProps> = ({ className }) => {
+    const colors = useRedux((state) => state.cube.colors);
+
+    const { t } = useTranslation();
+
+    return (
+        <div
+            className={cn(
+                'grid grid-cols-1 grid-rows-[min-content_auto] gap-2 md:grid-cols-2 md:grid-rows-1 lg:grid-cols-[minmax(24rem,1fr)_2fr]',
+                className,
+            )}
             style={colors as CSSProperties}
         >
-            {children}
+            <div className="flex flex-col gap-2 md:gap-4">
+                <Player />
+                <Algorithms className="hidden md:block md:grow" />
+            </div>
+            <div className="flex flex-col gap-2">
+                <div className="flex flex-row justify-between">
+                    <IconButton
+                        tooltip={t('algorithm.title')}
+                        className="md:invisible"
+                    >
+                        <BookA />
+                    </IconButton>
+                    <CubeSettings />
+                </div>
+                <RubiksCube className="grow" />
+            </div>
         </div>
     );
 };

@@ -1,4 +1,5 @@
 {
+    "title": "Zauberwürfel",
     "player": {
         "input": {
             "algorithm": "Algorithmus",
@@ -90,6 +91,7 @@
         }
     },
     "algorithm": {
+        "title": "Algorithmen",
         "3d-switch": "3D",
         "3x3x3": {
             "title": "3x3x3",
@@ -154,14 +156,7 @@
             }
         }
     },
-    "interface": {
-        "algorithms": {
-            "title": "Algorithmen",
-            "search": "Suche"
-        },
-        "settings": {
-            "title": "Einstellungen",
-            "reset-colors": "Farben\nzurücksetzen"
-        }
+    "settings": {
+        "title": "Würfel Einstellungen"
     }
 }

@@ -19,8 +19,13 @@ import { Direction, playerActions } from 'src/redux/player/playerActions';
 import { PlayerStatus } from 'src/redux/player/playerReducer';
 import IconButton from 'src/tsx/components/IconButton';
 import NotationInput from 'src/tsx/player/notation/NotationInput';
+import cn from 'src/utils/cn';
 
-const Player: React.FC = () => {
+interface PlayerProps {
+    className?: string;
+}
+
+const Player: React.FC<PlayerProps> = ({ className }) => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
@@ -83,7 +88,12 @@ const Player: React.FC = () => {
     const onRefresh = () => dispatch(cubeActions.resetCube());
 
     return (
-        <div className="relative flex flex-1 flex-col md:w-full md:flex-none">
+        <div
+            className={cn(
+                'relative flex flex-col rounded-md border border-app-border bg-app-bg p-2 md:w-full md:flex-none',
+                className,
+            )}
+        >
             <NotationInput
                 playerNotation={playerNotation}
                 updateNotation={updateNotation}

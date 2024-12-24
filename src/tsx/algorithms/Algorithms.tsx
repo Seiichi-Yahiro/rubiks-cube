@@ -24,7 +24,11 @@ import {
     TabsTrigger,
 } from 'src/tsx/components/Tabs';
 
-const Algorithms: React.FC = () => {
+interface AlgorithmProps {
+    className?: string;
+}
+
+const Algorithms: React.FC<AlgorithmProps> = ({ className }) => {
     const [viewMode, setViewMode] = useState(ViewMode.Top);
 
     const onToggleViewMode = useCallback((checked: boolean) => {
@@ -40,7 +44,7 @@ const Algorithms: React.FC = () => {
     );
 
     return (
-        <Tabs defaultValue="3x3x3">
+        <Tabs defaultValue="3x3x3" className={className}>
             <TabsList className="justify-between">
                 <div className="flex flex-row gap-0.5">
                     <TabsTrigger value="3x3x3">

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { playerActions } from 'src/redux/player/playerActions';
 import { setupStore } from 'src/redux/store';
-import Settings from 'src/tsx/interface/Settings';
+import Settings from 'src/tsx/cube/settings/CubeSettings';
 import { afterEach, describe, expect, it } from 'vitest';
 
 describe('Settings', () => {

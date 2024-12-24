@@ -5,7 +5,7 @@ import { cubeActions } from 'src/redux/cube/cubeActions';
 import { CUBE_COLORS, defaultColorMap } from 'src/redux/localStorage';
 import { setupStore } from 'src/redux/store';
 import { CubeColorKey } from 'src/tsx/cube/cubeTypes';
-import ColorPicker from 'src/tsx/interface/ColorPicker';
+import ColorPicker from 'src/tsx/cube/settings/ColorPicker';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 describe('ColorPicker', () => {
