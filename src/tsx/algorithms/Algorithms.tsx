@@ -139,4 +139,4 @@ const Algorithms: React.FC<AlgorithmProps> = ({ className }) => {
     );
 };
 
-export default Algorithms;
+export default React.memo(Algorithms);
