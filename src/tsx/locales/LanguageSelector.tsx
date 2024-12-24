@@ -14,7 +14,10 @@ const LanguageSelector: React.FC = () => {
     const { i18n } = useTranslation();
 
     return (
-        <Select value={i18n.language} onValueChange={i18n.changeLanguage}>
+        <Select
+            value={i18n.resolvedLanguage}
+            onValueChange={i18n.changeLanguage}
+        >
             <SelectTrigger className="w-24">
                 <SelectValue />
             </SelectTrigger>
