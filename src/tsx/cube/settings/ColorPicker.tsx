@@ -47,12 +47,18 @@ const ColorPicker: React.FC = () => {
                             key={colorKey}
                             onClick={() => setActiveColorKey(colorKey)}
                             className={cn(
-                                'size-7 rounded-full border border-app-border transition-[border-radius]',
+                                'size-7 rotate-45 rounded-full border border-app-border transition-[border-radius,transform] focus-visible:outline-none',
+
+                                'focus-visible:-translate-y-1',
+
                                 {
-                                    'rounded-b-md': colorKey === activeColorKey,
+                                    'rounded-br-none':
+                                        colorKey === activeColorKey,
                                 },
                             )}
-                            style={{ backgroundColor: colorValue }}
+                            style={{
+                                backgroundColor: colorValue,
+                            }}
                         />
                     ))}
                 <IconButton onClick={resetColors}>
