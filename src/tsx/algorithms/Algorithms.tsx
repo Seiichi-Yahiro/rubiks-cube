@@ -38,7 +38,7 @@ const Algorithms: React.FC<AlgorithmProps> = ({ className }) => {
     const { t } = useTranslation();
 
     const tabStepArrow = (
-        <div className="flex items-center">
+        <div className="hidden md:flex md:items-center">
             <ArrowRight className="size-4 stroke-app-text" />
         </div>
     );

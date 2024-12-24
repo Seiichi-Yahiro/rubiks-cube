@@ -1,4 +1,3 @@
-import { BookA } from 'lucide-react';
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Provider } from 'react-redux';
@@ -7,8 +6,8 @@ import { cubeActions } from 'src/redux/cube/cubeActions';
 import { loadColorMap } from 'src/redux/localStorage';
 import { type AppStore, setupStore } from 'src/redux/store';
 import Algorithms from 'src/tsx/algorithms/Algorithms';
+import AlgorithmsButton from 'src/tsx/algorithms/AlgorithmsButton';
 import 'src/tsx/App.css';
-import IconButton from 'src/tsx/components/IconButton';
 import { TooltipProvider } from 'src/tsx/components/Tooltip';
 import RubiksCube from 'src/tsx/cube/RubiksCube';
 import CubeSettings from 'src/tsx/cube/settings/CubeSettings';
@@ -73,8 +72,6 @@ interface AppContentProps {
 }
 
 const AppContent: React.FC<AppContentProps> = ({ className }) => {
-    const { t } = useTranslation();
-
     return (
         <div
             className={cn(
@@ -88,12 +85,7 @@ const AppContent: React.FC<AppContentProps> = ({ className }) => {
             </div>
             <div className="flex flex-col gap-2">
                 <div className="flex flex-row justify-between">
-                    <IconButton
-                        tooltip={t('algorithm.title')}
-                        className="md:invisible"
-                    >
-                        <BookA />
-                    </IconButton>
+                    <AlgorithmsButton className="md:invisible" />
                     <CubeSettings />
                 </div>
                 <RubiksCube className="grow" />
