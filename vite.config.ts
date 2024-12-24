@@ -31,6 +31,39 @@ export default defineConfig(({ command }): UserConfig => {
             ...commonConfig,
             build: {
                 outDir: './build',
+                rollupOptions: {
+                    output: {
+                        manualChunks: {
+                            react: ['react', 'react-dom'],
+                            redux: [
+                                'react-redux',
+                                'redux',
+                                'redux-logger',
+                                '@reduxjs/toolkit',
+                            ],
+                            i18n: [
+                                'react-i18next',
+                                'i18next',
+                                'i18next-browser-languagedetector',
+                            ],
+                            lodash: ['lodash'],
+                            parsimmon: ['parsimmon'],
+                            components: [
+                                '@radix-ui/react-dialog',
+                                '@radix-ui/react-popover',
+                                '@radix-ui/react-scroll-area',
+                                '@radix-ui/react-select',
+                                '@radix-ui/react-slider',
+                                '@radix-ui/react-switch',
+                                '@radix-ui/react-tabs',
+                                '@radix-ui/react-tooltip',
+                                'lucide-react',
+                                '@uiw/color-convert',
+                                '@uiw/react-color-chrome',
+                            ],
+                        },
+                    },
+                },
             },
         };
     }
