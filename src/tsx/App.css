@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-    body {
-        font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-    }
-}
-
 :root {
     --color-app-red: #dc422f;
     --color-app-white: #ffffff;
@@ -47,6 +41,6 @@
 html,
 body,
 #root {
-    @apply size-full min-w-80;
+    @apply size-full min-w-80 font-sans text-base;
     background-color: var(--color-app-bg);
 }
