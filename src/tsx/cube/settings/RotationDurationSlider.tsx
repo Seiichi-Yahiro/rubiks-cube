@@ -3,7 +3,7 @@ import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import Slider from 'src/tsx/components/Slider';
 
-const AnimationDurationSlider: React.FC = () => {
+const RotationDurationSlider: React.FC = () => {
     const dispatch = useAppDispatch();
     const rotationAnimationSpeed = useRedux(
         (state) => state.cube.rotationDuration,
@@ -27,4 +27,4 @@ const AnimationDurationSlider: React.FC = () => {
     );
 };
 
-export default React.memo(AnimationDurationSlider);
+export default React.memo(RotationDurationSlider);

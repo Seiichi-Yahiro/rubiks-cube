@@ -157,6 +157,10 @@
         }
     },
     "settings": {
-        "title": "Würfel Einstellungen"
+        "title": "Würfel Einstellungen",
+        "cube-type": "Würfeltyp",
+        "rotation-duration": "Rotationsdauer",
+        "rotation-duration-unit": "ms",
+        "cube-colors": "Würfelfarben"
     }
 }

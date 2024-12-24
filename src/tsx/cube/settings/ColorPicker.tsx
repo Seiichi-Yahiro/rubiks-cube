@@ -8,8 +8,8 @@ import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import useComplexState from 'src/hooks/useComplexState';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { CubeColorKey } from 'src/tsx/cube/cubeTypes';
-import 'src/tsx/interface/ColorPicker.css';
 import cn from 'src/utils/cn';
+import './ColorPicker.css';
 
 interface State {
     selectedColor?: CubeColorKey;

@@ -157,6 +157,10 @@
         }
     },
     "settings": {
-        "title": "Cube settings"
+        "title": "Cube Settings",
+        "cube-type": "Cube type",
+        "rotation-duration": "Rotation duration",
+        "rotation-duration-unit": "ms",
+        "cube-colors": "Cube colors"
     }
 }
