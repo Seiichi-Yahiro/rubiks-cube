@@ -21,6 +21,8 @@ const applyRotationCommands = createAction<RotationCommand[]>(
 
 const resetCube = createAction('RESET_CUBE');
 
+const setColorMap = createAction<CubeColorVariables>('SET_COLOR_MAP');
+
 const setColor = createAction(
     'SET_COLOR',
     (key: keyof CubeColorVariables, value: string) => ({
@@ -45,6 +47,7 @@ const actions = {
     updateCubicles,
     applyRotationCommands,
     resetCube,
+    setColorMap,
     setColor,
     resetColors,
     animateSingleRotationCommand,

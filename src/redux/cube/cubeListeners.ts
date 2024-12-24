@@ -2,6 +2,7 @@ import { isAnyOf } from '@reduxjs/toolkit';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import type { AppStartListening } from 'src/redux/listener';
 import { CUBE_COLORS } from 'src/redux/localStorage';
+import { CubeColorKey } from 'src/tsx/cube/cubeTypes';
 import { generateCubicles } from 'src/tsx/cube/cubeUtils';
 
 export const createCubiclesListener = (startListening: AppStartListening) =>
@@ -38,9 +39,36 @@ export const animationFinishedListener = (startListening: AppStartListening) =>
         },
     });
 
+export const setColorMapCssVariablesListener = (
+    startListening: AppStartListening,
+) =>
+    startListening({
+        matcher: isAnyOf(
+            cubeActions.setColorMap,
+            cubeActions.setColor,
+            cubeActions.resetColors,
+        ),
+        effect: (_action, listenerApi) => {
+            const state = listenerApi.getState();
+            const colors = state.cube.colors;
+
+            const root = document.documentElement;
+
+            (Object.entries(colors) as [CubeColorKey, string][]).forEach(
+                ([key, value]) => {
+                    root.style.setProperty(key, value);
+                },
+            );
+        },
+    });
+
 export const saveColorMapListener = (startListening: AppStartListening) =>
     startListening({
-        matcher: isAnyOf(cubeActions.setColor, cubeActions.resetColors),
+        matcher: isAnyOf(
+            cubeActions.setColorMap,
+            cubeActions.setColor,
+            cubeActions.resetColors,
+        ),
         effect: (_action, listenerApi) => {
             const state = listenerApi.getState();
             const colors = state.cube.colors;

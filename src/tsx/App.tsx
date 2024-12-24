@@ -1,10 +1,10 @@
 import { BookA } from 'lucide-react';
-import React, { type CSSProperties, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Provider } from 'react-redux';
-import { useRedux } from 'src/hooks/redux';
 import 'src/i18n';
 import { cubeActions } from 'src/redux/cube/cubeActions';
+import { loadColorMap } from 'src/redux/localStorage';
 import { type AppStore, setupStore } from 'src/redux/store';
 import Algorithms from 'src/tsx/algorithms/Algorithms';
 import 'src/tsx/App.css';
@@ -21,6 +21,7 @@ const App: React.FC = () => {
 
     if (!storeRef.current) {
         storeRef.current = setupStore();
+        storeRef.current.dispatch(cubeActions.setColorMap(loadColorMap()));
         storeRef.current.dispatch(cubeActions.resetCube());
     }
 
@@ -72,8 +73,6 @@ interface AppContentProps {
 }
 
 const AppContent: React.FC<AppContentProps> = ({ className }) => {
-    const colors = useRedux((state) => state.cube.colors);
-
     const { t } = useTranslation();
 
     return (
@@ -82,7 +81,6 @@ const AppContent: React.FC<AppContentProps> = ({ className }) => {
                 'grid grid-cols-1 grid-rows-[min-content_auto] gap-2 md:grid-cols-2 md:grid-rows-1 lg:grid-cols-[minmax(24rem,1fr)_2fr]',
                 className,
             )}
-            style={colors as CSSProperties}
         >
             <div className="flex flex-col gap-2 md:gap-4">
                 <Player />

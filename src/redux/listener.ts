@@ -7,6 +7,7 @@ import {
     animationFinishedListener,
     createCubiclesListener,
     saveColorMapListener,
+    setColorMapCssVariablesListener,
 } from 'src/redux/cube/cubeListeners';
 import {
     iteratorListener,
@@ -28,6 +29,8 @@ const setupListenerMiddleware = () => {
 
     createCubiclesListener(middleware.startListening);
     animationFinishedListener(middleware.startListening);
+
+    setColorMapCssVariablesListener(middleware.startListening);
     saveColorMapListener(middleware.startListening);
 
     parseListener(middleware.startListening);
