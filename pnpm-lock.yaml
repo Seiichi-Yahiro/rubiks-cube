@@ -24,7 +24,7 @@ importers:
         specifier: 6.1.6
         version: 6.1.6(@emotion/react@11.13.3(@types/react@18.3.12)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react@18.3.1))(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-dialog':
-        specifier: ^1.1.4
+        specifier: 1.1.4
         version: 1.1.4(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-popover':
         specifier: 1.1.2
@@ -50,6 +50,9 @@ importers:
       '@reduxjs/toolkit':
         specifier: 2.3.0
         version: 2.3.0(react-redux@9.1.2(@types/react@18.3.12)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
+      '@uiw/color-convert':
+        specifier: ^2.3.4
+        version: 2.3.4(@babel/runtime@7.26.0)
       '@uiw/react-color-chrome':
         specifier: 2.3.2
         version: 2.3.2(@babel/runtime@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1753,6 +1756,11 @@ packages:
 
   '@uiw/color-convert@2.3.2':
     resolution: {integrity: sha512-Txs0oAcOGhvM15yi7NqDJSws6htpuGx75EblFlZmh4h4AyUYXaeN2HNcOAUt835M3SN1j7rqMC+XERIE4r776Q==}
+    peerDependencies:
+      '@babel/runtime': '>=7.19.0'
+
+  '@uiw/color-convert@2.3.4':
+    resolution: {integrity: sha512-av3PvCeP8o4H2a81n+vJwEEv8qGnQNonfCTiH9kO/CMQR1BvhGYijduM7RJzgHaAaVpE01opjNICQRyEx5qKVg==}
     peerDependencies:
       '@babel/runtime': '>=7.19.0'
 
@@ -5737,6 +5745,10 @@ snapshots:
       eslint-visitor-keys: 4.2.0
 
   '@uiw/color-convert@2.3.2(@babel/runtime@7.26.0)':
+    dependencies:
+      '@babel/runtime': 7.26.0
+
+  '@uiw/color-convert@2.3.4(@babel/runtime@7.26.0)':
     dependencies:
       '@babel/runtime': 7.26.0
 

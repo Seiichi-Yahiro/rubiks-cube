@@ -6,10 +6,6 @@ export default {
     theme: {
         extend: {
             keyframes: {
-                wiggle: {
-                    '0%, 100%': { transform: 'rotate(-3deg)' },
-                    '50%': { transform: 'rotate(3deg)' },
-                },
                 breath: {
                     '0%, 100%': { transform: 'scale(1)' },
                     '50%': { transform: 'scale(0.95)' },
@@ -20,7 +16,6 @@ export default {
                 },
             },
             animation: {
-                wiggle: 'wiggle 1s ease-in-out infinite',
                 breath: 'breath 1.5s ease-in-out infinite',
                 rotate3d: 'rotate3d 5s linear infinite',
             },

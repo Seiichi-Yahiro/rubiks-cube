@@ -1,110 +1,71 @@
-import Button from '@mui/material/Button';
-import type { PopoverOrigin } from '@mui/material/Popover';
-import Popover from '@mui/material/Popover';
+import type { ColorResult } from '@uiw/color-convert';
 import Chrome, { ChromeInputType } from '@uiw/react-color-chrome';
-import React, { type CSSProperties, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { RotateCcw } from 'lucide-react';
+import React, { type CSSProperties, useCallback, useState } from 'react';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
-import useComplexState from 'src/hooks/useComplexState';
 import { cubeActions } from 'src/redux/cube/cubeActions';
+import IconButton from 'src/tsx/components/IconButton';
 import { CubeColorKey } from 'src/tsx/cube/cubeTypes';
 import cn from 'src/utils/cn';
 import './ColorPicker.css';
 
-interface State {
-    selectedColor?: CubeColorKey;
-    pickerColor: string;
-}
-
-const anchorOrigin: PopoverOrigin = {
-    vertical: 'bottom',
-    horizontal: 'left',
-};
-
 const ColorPicker: React.FC = () => {
-    const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const cubeColors = useRedux((state) => state.cube.colors);
 
-    const [{ selectedColor, pickerColor }, setState] = useComplexState<State>(
-        () => ({
-            selectedColor: undefined,
-            pickerColor: '',
-        }),
+    const [activeColorKey, setActiveColorKey] = useState<CubeColorKey>(
+        CubeColorKey.FRONT,
     );
 
-    const resetColors = () => {
+    const resetColors = useCallback(() => {
         dispatch(cubeActions.resetColors());
-    };
+    }, [dispatch]);
 
-    const colors = (
-        Object.entries(cubeColors) as [CubeColorKey, CSSProperties['color']][]
-    )
-        .filter(
-            ([key, _]) =>
-                key !== CubeColorKey.INSIDE && key !== CubeColorKey.UNKNOWN,
-        )
-        .map(([key, value]) => (
-            <button
-                key={key}
-                className={cn(
-                    'h-5 w-5 cursor-pointer border border-app-border',
-                    {
-                        'animate-wiggle': selectedColor === key,
-                    },
-                )}
-                aria-label={value}
-                style={{
-                    backgroundColor: value,
-                }}
-                onClick={() =>
-                    setState({ selectedColor: key, pickerColor: value })
-                }
-            />
-        ));
-
-    const colorsRef = useRef<HTMLDivElement>(null);
+    const updateColor = useCallback(
+        (color: ColorResult) => {
+            dispatch(cubeActions.setColor(activeColorKey, color.hex));
+        },
+        [dispatch, activeColorKey],
+    );
 
     return (
-        <div className="flex min-w-56 flex-1 flex-row items-center justify-evenly">
-            <div>
-                <div
-                    ref={colorsRef}
-                    className="grid grid-cols-3 gap-1 sm:grid-cols-6"
-                >
-                    {colors}
-                </div>
-                <Popover
-                    className="mt-1"
-                    open={selectedColor !== undefined}
-                    anchorEl={colorsRef.current}
-                    anchorOrigin={anchorOrigin}
-                    onClose={() => setState({ selectedColor: undefined })}
-                >
-                    <Chrome
-                        className="hide-arrow" // special class to hide the placement arrow, as there doesn't seem to be a way to remove it programmatically
-                        showAlpha={false}
-                        inputType={ChromeInputType.HEXA}
-                        color={pickerColor}
-                        onChange={(color) => {
-                            setState({ pickerColor: color.hex });
-                            dispatch(
-                                cubeActions.setColor(
-                                    selectedColor!, // popover is only visible when selectedColor is defined
-                                    color.hex,
-                                ),
-                            );
-                        }}
-                    />
-                </Popover>
+        <div className="flex flex-col items-center gap-1">
+            <div className="flex flex-row items-center gap-1">
+                {(
+                    Object.entries(cubeColors) as [
+                        CubeColorKey,
+                        CSSProperties['color'],
+                    ][]
+                )
+                    .filter(
+                        ([key, _]) =>
+                            key !== CubeColorKey.INSIDE &&
+                            key !== CubeColorKey.UNKNOWN,
+                    )
+                    .map(([colorKey, colorValue]) => (
+                        <button
+                            key={colorKey}
+                            onClick={() => setActiveColorKey(colorKey)}
+                            className={cn(
+                                'size-7 rounded-full border border-app-border transition-[border-radius]',
+                                {
+                                    'rounded-b-md': colorKey === activeColorKey,
+                                },
+                            )}
+                            style={{ backgroundColor: colorValue }}
+                        />
+                    ))}
+                <IconButton onClick={resetColors}>
+                    <RotateCcw />
+                </IconButton>
             </div>
-            <Button
-                size={'small'}
-                onClick={resetColors}
-                className="whitespace-pre sm:whitespace-normal"
-            >
-                {t('interface.settings.reset-colors')}
-            </Button>
+            <Chrome
+                className="hide-arrow !border-app-border !shadow-none" // special class to hide the placement arrow, as there doesn't seem to be a way to remove it programmatically
+                showAlpha={false}
+                inputType={ChromeInputType.HEXA}
+                color={cubeColors[activeColorKey]}
+                onChange={updateColor}
+            />
         </div>
     );
 };
