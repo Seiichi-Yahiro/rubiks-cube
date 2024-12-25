@@ -49,7 +49,7 @@ const CubeSettings: React.FC = () => {
                         </div>
                         <div className="flex flex-col gap-1">
                             <div className="font-medium">
-                                {t('settings.cube-colors')}:
+                                {t('settings.cube-colors.title')}:
                             </div>
                             <ColorPicker />
                         </div>

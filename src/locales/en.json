@@ -161,6 +161,15 @@
         "cube-type": "Cube type",
         "rotation-duration": "Rotation duration",
         "rotation-duration-unit": "ms",
-        "cube-colors": "Cube colors"
+        "cube-colors": {
+            "title": "Cube colors",
+            "reset": "Reset",
+            "--cube-face-front": "Front",
+            "--cube-face-back": "Back",
+            "--cube-face-left": "Left",
+            "--cube-face-right": "Right",
+            "--cube-face-up": "Top",
+            "--cube-face-down": "Bottom"
+        }
     }
 }

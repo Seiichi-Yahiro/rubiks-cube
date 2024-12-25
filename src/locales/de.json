@@ -161,6 +161,15 @@
         "cube-type": "Würfeltyp",
         "rotation-duration": "Rotationsdauer",
         "rotation-duration-unit": "ms",
-        "cube-colors": "Würfelfarben"
+        "cube-colors": {
+            "title": "Würfelfarben",
+            "reset": "Zurücksetzen",
+            "--cube-face-front": "Vorne",
+            "--cube-face-back": "Hinten",
+            "--cube-face-left": "Links",
+            "--cube-face-right": "Rechts",
+            "--cube-face-up": "Oben",
+            "--cube-face-down": "Unten"
+        }
     }
 }
