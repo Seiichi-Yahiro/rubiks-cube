@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import {
     Tooltip,
-    ToolTipArrow,
+    TooltipArrow,
     TooltipContent,
     TooltipTrigger,
 } from 'src/tsx/components/Tooltip';
@@ -80,7 +80,7 @@ const IconButton: React.FC<IconButtonProps> = React.forwardRef<
             <Tooltip>
                 <TooltipTrigger asChild={true}>{button}</TooltipTrigger>
                 <TooltipContent side={tooltipSide}>
-                    <ToolTipArrow />
+                    <TooltipArrow />
                     <span>{tooltip}</span>
                 </TooltipContent>
             </Tooltip>
