@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { CUBE_COLORS, defaultColorMap } from 'src/redux/localStorage';
 import { setupStore } from 'src/redux/store';
+import { TooltipProvider } from 'src/tsx/components/Tooltip';
 import { CubeColorKey } from 'src/tsx/cube/cubeTypes';
 import ColorPicker from 'src/tsx/cube/settings/ColorPicker';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -20,12 +21,14 @@ describe('ColorPicker', () => {
 
         render(
             <Provider store={store}>
-                <ColorPicker />
+                <TooltipProvider>
+                    <ColorPicker />
+                </TooltipProvider>
             </Provider>,
         );
 
         const colorButtons = screen.queryAllByRole('button', {
-            name: /^#[A-F0-9]{6}$/i,
+            name: /--cube-face-[a-z]+$/i,
         });
 
         expect(colorButtons).toHaveLength(6);
@@ -36,14 +39,16 @@ describe('ColorPicker', () => {
 
         render(
             <Provider store={store}>
-                <ColorPicker />
+                <TooltipProvider>
+                    <ColorPicker />
+                </TooltipProvider>
             </Provider>,
         );
 
         const stateBefore = store.getState();
 
         const colorButton = screen.getByRole('button', {
-            name: defaultColorMap[CubeColorKey.FRONT],
+            name: new RegExp(`${CubeColorKey.FRONT}$`),
         });
 
         fireEvent.click(colorButton);
@@ -61,7 +66,6 @@ describe('ColorPicker', () => {
             [CubeColorKey.FRONT]: '#000000',
         });
 
-        expect(colorButton).toHaveAttribute('aria-label', '#000000');
         expect(colorButton).toHaveStyle({ backgroundColor: '#000000' });
     });
 
@@ -71,12 +75,14 @@ describe('ColorPicker', () => {
 
         render(
             <Provider store={store}>
-                <ColorPicker />
+                <TooltipProvider>
+                    <ColorPicker />
+                </TooltipProvider>
             </Provider>,
         );
 
         const colorButton = screen.getByRole('button', {
-            name: defaultColorMap[CubeColorKey.FRONT],
+            name: new RegExp(`${CubeColorKey.FRONT}$`),
         });
 
         fireEvent.click(colorButton);
@@ -103,22 +109,28 @@ describe('ColorPicker', () => {
 
         render(
             <Provider store={store}>
-                <ColorPicker />
+                <TooltipProvider>
+                    <ColorPicker />
+                </TooltipProvider>
             </Provider>,
         );
 
-        const colorButton = screen.getByRole('button', { name: '#000000' });
-        const resetButton = screen.getByText('interface.settings.reset-colors');
+        const colorButton = screen.getByRole('button', {
+            name: new RegExp(`${CubeColorKey.FRONT}$`),
+        });
+        expect(colorButton).toHaveStyle({
+            backgroundColor: '#000000',
+        });
+
+        const resetButton = screen.getByRole('button', {
+            name: 'settings.cube-colors.reset',
+        });
 
         fireEvent.click(resetButton);
 
         const state = store.getState();
 
         expect(state.cube.colors).toEqual(defaultColorMap);
-        expect(colorButton).toHaveAttribute(
-            'aria-label',
-            defaultColorMap[CubeColorKey.FRONT],
-        );
         expect(colorButton).toHaveStyle({
             backgroundColor: defaultColorMap[CubeColorKey.FRONT],
         });
@@ -132,11 +144,15 @@ describe('ColorPicker', () => {
 
         render(
             <Provider store={store}>
-                <ColorPicker />
+                <TooltipProvider>
+                    <ColorPicker />
+                </TooltipProvider>
             </Provider>,
         );
 
-        const resetButton = screen.getByText('interface.settings.reset-colors');
+        const resetButton = screen.getByRole('button', {
+            name: 'settings.cube-colors.reset',
+        });
 
         fireEvent.click(resetButton);
 
