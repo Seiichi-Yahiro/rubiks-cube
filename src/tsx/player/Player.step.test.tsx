@@ -58,6 +58,68 @@ describe('Player step', () => {
         applyRotationCommandsSpy.mockRestore();
     });
 
+    it('should not allow step forward when all commands are applied', async () => {
+        store.dispatch(playerActions.updateNotation('F U'));
+
+        render(
+            <Provider store={store}>
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
+            </Provider>,
+        );
+
+        const nextStep = screen.getByRole('button', {
+            name: 'player.input.stepNext',
+        });
+
+        fireEvent.click(nextStep);
+        await delay(75);
+
+        fireEvent.click(nextStep);
+        await delay(75);
+
+        expect(nextStep).toHaveAttribute('aria-disabled', 'true');
+
+        fireEvent.click(nextStep);
+        await delay(75);
+
+        expect(nextStepSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it('should not allow step backward when no commands are applied', async () => {
+        store.dispatch(playerActions.updateNotation('F U'));
+
+        render(
+            <Provider store={store}>
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
+            </Provider>,
+        );
+
+        const nextStep = screen.getByRole('button', {
+            name: 'player.input.stepNext',
+        });
+
+        const nextStepBack = screen.getByRole('button', {
+            name: 'player.input.stepPrevious',
+        });
+
+        fireEvent.click(nextStep);
+        await delay(75);
+
+        fireEvent.click(nextStepBack);
+        await delay(75);
+
+        expect(nextStepBack).toHaveAttribute('aria-disabled', 'true');
+
+        fireEvent.click(nextStepBack);
+        await delay(75);
+
+        expect(nextStepSpy).toHaveBeenCalledTimes(2);
+    });
+
     it('should not allow step forward when step forward is being animated', async () => {
         store.dispatch(playerActions.updateNotation('F U R'));
 

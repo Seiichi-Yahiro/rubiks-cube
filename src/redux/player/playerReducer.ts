@@ -4,7 +4,7 @@ import {
     countRotationCommands,
     RotationCommand,
 } from 'src/algorithms/rotationCommand';
-import { playerActions } from 'src/redux/player/playerActions';
+import { Direction, playerActions } from 'src/redux/player/playerActions';
 
 export enum PlayerStatus {
     STOPPED = 'STOPPED',
@@ -16,6 +16,7 @@ export interface IPlayerState {
     notation: string;
     rotationCommands: Result<RotationCommand[]>;
     totalRotationCommands: number;
+    executedRotationCommands: number;
     status: PlayerStatus;
     animationLoopDelay: number;
 }
@@ -24,6 +25,7 @@ const createInitialPlayerState = (): IPlayerState => ({
     notation: '',
     rotationCommands: { status: true, value: [] },
     totalRotationCommands: 0,
+    executedRotationCommands: 0,
     status: PlayerStatus.STOPPED,
     animationLoopDelay: 50,
 });
@@ -48,6 +50,8 @@ export const createPlayerReducer = (
                 } else {
                     state.totalRotationCommands = 0;
                 }
+
+                state.executedRotationCommands = 0;
             })
             .addCase(playerActions.play, (state, _action) => {
                 state.status = PlayerStatus.PLAYING;
@@ -60,7 +64,20 @@ export const createPlayerReducer = (
             })
             .addCase(playerActions.stop, (state, _action) => {
                 state.status = PlayerStatus.STOPPED;
+                state.executedRotationCommands = 0;
             })
+            .addCase(
+                playerActions.generatedRotationCommands,
+                (state, action) => {
+                    if (action.payload.direction === Direction.Forwards) {
+                        state.executedRotationCommands +=
+                            action.payload.commands.length;
+                    } else {
+                        state.executedRotationCommands -=
+                            action.payload.commands.length;
+                    }
+                },
+            )
             .addCase(playerActions.setAnimationLoopDelay, (state, action) => {
                 state.animationLoopDelay = action.payload;
             });

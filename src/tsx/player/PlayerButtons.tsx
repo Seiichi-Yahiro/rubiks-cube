@@ -28,6 +28,15 @@ const PlayerButtons: React.FC = () => {
     const isNotationInvalid =
         isError(rotationCommands) || rotationCommands.value.length === 0;
 
+    const noCommandsExecuted = useRedux(
+        (state) => state.player.executedRotationCommands === 0,
+    );
+    const allCommandsExecuted = useRedux(
+        (state) =>
+            state.player.executedRotationCommands ===
+            state.player.totalRotationCommands,
+    );
+
     const isAnimatingRotationCommand = useRedux(
         (state) => state.cube.animation !== undefined,
     );
@@ -133,7 +142,9 @@ const PlayerButtons: React.FC = () => {
                     onClick={onSkipToStart}
                     disabled={
                         isPlaying ||
-                        (isPaused && isAnimatingRotationCommand) ||
+                        (isPaused &&
+                            (isAnimatingRotationCommand ||
+                                noCommandsExecuted)) ||
                         (isStopped && isNotationInvalid)
                     }
                 >
@@ -144,7 +155,9 @@ const PlayerButtons: React.FC = () => {
                     onClick={onNextStepBack}
                     disabled={
                         isPlaying ||
-                        (isPaused && isAnimatingRotationCommand) ||
+                        (isPaused &&
+                            (isAnimatingRotationCommand ||
+                                noCommandsExecuted)) ||
                         isStopped
                     }
                 >
@@ -155,7 +168,9 @@ const PlayerButtons: React.FC = () => {
                     onClick={onNextStep}
                     disabled={
                         isPlaying ||
-                        (isPaused && isAnimatingRotationCommand) ||
+                        (isPaused &&
+                            (isAnimatingRotationCommand ||
+                                allCommandsExecuted)) ||
                         (isStopped && isNotationInvalid)
                     }
                 >
@@ -170,7 +185,9 @@ const PlayerButtons: React.FC = () => {
                     onClick={onSkipToEnd}
                     disabled={
                         isPlaying ||
-                        (isPaused && isAnimatingRotationCommand) ||
+                        (isPaused &&
+                            (isAnimatingRotationCommand ||
+                                allCommandsExecuted)) ||
                         (isStopped && isNotationInvalid)
                     }
                 >

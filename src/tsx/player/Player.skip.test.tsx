@@ -119,6 +119,35 @@ describe('Player skip', () => {
         await expectNotAllowSkip();
     });
 
+    it('should not allow skip remaining steps forwards when all commands are applied', async () => {
+        store.dispatch(playerActions.updateNotation('F U R'));
+        store.dispatch(playerActions.nextStep(Direction.Forwards));
+
+        await delay(75);
+
+        render(
+            <Provider store={store}>
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
+            </Provider>,
+        );
+
+        const skip = await screen.findByRole('button', {
+            name: 'player.input.skipRemainingToEnd',
+        });
+
+        fireEvent.click(skip);
+        await delay(75);
+
+        expect(skip).toHaveAttribute('aria-disabled', 'true');
+
+        fireEvent.click(skip);
+        await delay(25);
+
+        expect(skipRemainingSpy).toHaveBeenCalledTimes(1);
+    });
+
     it('should not allow skip remaining steps forwards when step forward is being animated', async () => {
         store.dispatch(playerActions.updateNotation('F U R'));
 
@@ -243,8 +272,6 @@ describe('Player skip', () => {
             );
         });
 
-        //expect(skip).toHaveAttribute('aria-disabled', 'true'); // TODO enable again when properly implemented
-
         const stateAfter = store.getState();
 
         expect(stateAfter.player.status).toBe(PlayerStatus.PAUSED);
@@ -267,6 +294,35 @@ describe('Player skip', () => {
         );
 
         expect(animateSingleRotationCommandSpy).toHaveBeenCalledTimes(0);
+    });
+
+    it('should not allow skip remaining steps backwards when no commands are applied', async () => {
+        store.dispatch(playerActions.updateNotation('F U R'));
+
+        store.dispatch(playerActions.nextStep(Direction.Forwards));
+        await delay(75);
+
+        store.dispatch(playerActions.nextStep(Direction.Backwards));
+        await delay(75);
+
+        render(
+            <Provider store={store}>
+                <TooltipProvider>
+                    <Player />
+                </TooltipProvider>
+            </Provider>,
+        );
+
+        const skip = await screen.findByRole('button', {
+            name: 'player.input.skipRemainingToStart',
+        });
+
+        expect(skip).toHaveAttribute('aria-disabled', 'true');
+
+        fireEvent.click(skip);
+        await delay(25);
+
+        expect(skipRemainingSpy).toHaveBeenCalledTimes(0);
     });
 
     it('should not allow skip remaining steps backwards when step forward is being animated', async () => {
@@ -409,8 +465,6 @@ describe('Player skip', () => {
                 }),
             );
         });
-
-        //expect(skip).toHaveAttribute('aria-disabled', 'true'); // TODO enable again when properly implemented
 
         const stateAfter = store.getState();
 

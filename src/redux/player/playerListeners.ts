@@ -83,7 +83,11 @@ const createPlayLoopTask = async (
                 }),
             );
 
-            const [{ payload: generatedCommands }] = await forkApi.pause(
+            const [
+                {
+                    payload: { commands: generatedCommands },
+                },
+            ] = await forkApi.pause(
                 listenerApi.take(playerActions.generatedRotationCommands.match),
             );
 
@@ -181,7 +185,11 @@ const createStepLoopTask = async (
                 }),
             );
 
-            const [{ payload: generatedCommands }] = await forkApi.pause(
+            const [
+                {
+                    payload: { commands: generatedCommands },
+                },
+            ] = await forkApi.pause(
                 listenerApi.take(playerActions.generatedRotationCommands.match),
             );
 
@@ -262,7 +270,11 @@ export const skipRemainingListener = (startListening: AppStartListening) =>
                 }),
             );
 
-            const [{ payload: generatedCommands }] = await listenerApi.take(
+            const [
+                {
+                    payload: { commands: generatedCommands },
+                },
+            ] = await listenerApi.take(
                 playerActions.generatedRotationCommands.match,
             );
 
@@ -336,7 +348,10 @@ const createIteratorLoopTask = async (
             }
 
             listenerApi.dispatch(
-                playerActions.generatedRotationCommands(commands),
+                playerActions.generatedRotationCommands({
+                    commands,
+                    direction,
+                }),
             );
         }
     } catch (err) {

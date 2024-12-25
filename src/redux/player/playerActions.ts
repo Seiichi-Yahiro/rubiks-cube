@@ -29,9 +29,10 @@ const generateRotationCommands = createAction<{
     amount: number | 'Remaining';
 }>('PLAYER/GENERATE_ROTATION_COMMANDS');
 
-const generatedRotationCommands = createAction<SingleRotationCommand[]>(
-    'PLAYER/GENERATED_ROTATION_COMMANDS',
-);
+const generatedRotationCommands = createAction<{
+    direction: Direction;
+    commands: SingleRotationCommand[];
+}>('PLAYER/GENERATED_ROTATION_COMMANDS');
 
 const updateNotation = createAction<string>('PLAYER/UPDATE_NOTATION');
 
