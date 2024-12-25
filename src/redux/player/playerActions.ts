@@ -5,40 +5,43 @@ import type {
     SingleRotationCommand,
 } from 'src/algorithms/rotationCommand';
 
-const play = createAction<RotationCommand[]>('PLAY');
-const stop = createAction('STOP');
-const pause = createAction('PAUSE');
-const resume = createAction('RESUME');
+const play = createAction<RotationCommand[]>('PLAYER/PLAY');
+const stop = createAction('PLAYER/STOP');
+const pause = createAction('PLAYER/PAUSE');
+const resume = createAction('PLAYER/RESUME');
 
 export enum Direction {
     Forwards = 'Forwards',
     Backwards = 'Backwards',
 }
 
-const skip = createAction<Direction>('SKIP');
-const skipRemaining = createAction<Direction>('SKIP_REMAINING');
+const skip = createAction<Direction>('PLAYER/SKIP');
+const skipRemaining = createAction<Direction>('PLAYER/SKIP_REMAINING');
 
-const nextStep = createAction<Direction>('NEXT_STEP');
+const nextStep = createAction<Direction>('PLAYER/NEXT_STEP');
 
 const createRotationCommandIterator = createAction<RotationCommand[]>(
-    'CREATE_ROTATION_COMMAND_ITERATOR',
+    'PLAYER/CREATE_ROTATION_COMMAND_ITERATOR',
 );
 
 const generateRotationCommands = createAction<{
     direction: Direction;
     amount: number | 'Remaining';
-}>('GENERATE_ROTATION_COMMANDS');
+}>('PLAYER/GENERATE_ROTATION_COMMANDS');
 
 const generatedRotationCommands = createAction<SingleRotationCommand[]>(
-    'GENERATED_ROTATION_COMMANDS',
+    'PLAYER/GENERATED_ROTATION_COMMANDS',
 );
 
-const updateNotation = createAction<string>('UPDATE_NOTATION');
+const updateNotation = createAction<string>('PLAYER/UPDATE_NOTATION');
 
-const parsedNotation =
-    createAction<Result<RotationCommand[]>>('PARSED_NOTATION');
+const parsedNotation = createAction<Result<RotationCommand[]>>(
+    'PLAYER/PARSED_NOTATION',
+);
 
-const setAnimationLoopDelay = createAction<number>('SET_ANIMATION_LOOP_DELAY');
+const setAnimationLoopDelay = createAction<number>(
+    'PLAYER/SET_ANIMATION_LOOP_DELAY',
+);
 
 const actions = {
     play,

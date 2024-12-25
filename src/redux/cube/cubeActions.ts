@@ -5,26 +5,26 @@ import {
 } from 'src/algorithms/rotationCommand';
 import { type CubeColorVariables, ICubicle } from 'src/tsx/cube/cubeTypes';
 
-const setCubeSize = createAction<number>('SET_CUBE_SIZE');
+const setCubeSize = createAction<number>('CUBE/SET_CUBE_SIZE');
 
-const setCubeDimension = createAction<number>('SET_CUBE_DIMENSION');
+const setCubeDimension = createAction<number>('CUBE/SET_CUBE_DIMENSION');
 
 const setRotationAnimationSpeed = createAction<number>(
-    'SET_ROTATION_ANIMATION_SPEED',
+    'CUBE/SET_ROTATION_ANIMATION_SPEED',
 );
 
-const updateCubicles = createAction<ICubicle[]>('UPDATE_CUBICLES');
+const updateCubicles = createAction<ICubicle[]>('CUBE/UPDATE_CUBICLES');
 
 const applyRotationCommands = createAction<RotationCommand[]>(
-    'APPLY_ROTATION_COMMANDS',
+    'CUBE/APPLY_ROTATION_COMMANDS',
 );
 
-const resetCube = createAction('RESET_CUBE');
+const resetCube = createAction('CUBE/RESET_CUBE');
 
-const setColorMap = createAction<CubeColorVariables>('SET_COLOR_MAP');
+const setColorMap = createAction<CubeColorVariables>('CUBE/SET_COLOR_MAP');
 
 const setColor = createAction(
-    'SET_COLOR',
+    'CUBE/SET_COLOR',
     (key: keyof CubeColorVariables, value: string) => ({
         payload: {
             key,
@@ -33,12 +33,13 @@ const setColor = createAction(
     }),
 );
 
-const resetColors = createAction('RESET_COLORS');
+const resetColors = createAction('CUBE/RESET_COLORS');
 
-const animateSingleRotationCommand =
-    createAction<SingleRotationCommand>('PLAY_ANIMATION');
+const animateSingleRotationCommand = createAction<SingleRotationCommand>(
+    'CUBE/PLAY_ANIMATION',
+);
 
-const animationFinished = createAction('ANIMATION_FINISHED');
+const animationFinished = createAction('CUBE/ANIMATION_FINISHED');
 
 const actions = {
     setCubeSize,
