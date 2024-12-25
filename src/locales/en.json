@@ -14,7 +14,8 @@
             "stepNext": "Next step",
             "shuffle": "Random algorithm",
             "reset": "Reset cube",
-            "help": "Notation definitions"
+            "help": "Notation definitions",
+            "steps": "Steps"
         },
         "help": {
             "commands": {

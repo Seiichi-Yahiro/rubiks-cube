@@ -14,7 +14,8 @@
             "stepNext": "Nächster Schritt",
             "shuffle": "Zufälliger Algorithmus",
             "reset": "Würfel Zurücksetzen",
-            "help": "Erklärung der Notation"
+            "help": "Erklärung der Notation",
+            "steps": "Schritte"
         },
         "help": {
             "commands": {

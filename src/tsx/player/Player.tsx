@@ -90,7 +90,7 @@ const Player: React.FC<PlayerProps> = ({ className }) => {
     return (
         <div
             className={cn(
-                'relative flex flex-col rounded-md border border-app-border bg-app-bg p-2 md:w-full md:flex-none',
+                'flex flex-col gap-1 rounded-md border border-app-border bg-app-bg p-2 md:w-full md:flex-none',
                 className,
             )}
         >

@@ -1,4 +1,6 @@
+import { makeNotationParser } from 'src/algorithms/parser';
 import {
+    countRotationCommands,
     createRotationCommandIterator,
     LoopedRotationCommands,
     RotationAxis,
@@ -148,5 +150,16 @@ describe('rotationCommand', () => {
 
             expect(resultCommands).toEqual(expectedCommands);
         });
+    });
+
+    it('should count rotation commands', () => {
+        const rotationCommands =
+            makeNotationParser(3).rotationCommands.tryParse(
+                'F (F (F F)2 F)3 F',
+            );
+
+        const result = countRotationCommands(rotationCommands);
+
+        expect(result).toBe(20);
     });
 });

@@ -26,6 +26,21 @@ export const isLoopedRotationCommands = (
 ): rotationCommand is LoopedRotationCommands =>
     (rotationCommand as LoopedRotationCommands).iterations !== undefined;
 
+export const countRotationCommands = (
+    rotationCommands: RotationCommand[],
+): number =>
+    rotationCommands
+        .map((command) => {
+            if (isLoopedRotationCommands(command)) {
+                return (
+                    countRotationCommands(command.commands) * command.iterations
+                );
+            } else {
+                return 1;
+            }
+        })
+        .reduce((acc, count) => acc + count, 0);
+
 export const createRotationCommandIterator = (
     rotationCommands: RotationCommand[],
 ): SteppableIterator<SingleRotationCommand> => {

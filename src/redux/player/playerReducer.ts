@@ -1,6 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Result } from 'parsimmon';
-import { RotationCommand } from 'src/algorithms/rotationCommand';
+import {
+    countRotationCommands,
+    RotationCommand,
+} from 'src/algorithms/rotationCommand';
 import { playerActions } from 'src/redux/player/playerActions';
 
 export enum PlayerStatus {
@@ -12,6 +15,7 @@ export enum PlayerStatus {
 export interface IPlayerState {
     notation: string;
     rotationCommands: Result<RotationCommand[]>;
+    totalRotationCommands: number;
     status: PlayerStatus;
     animationLoopDelay: number;
 }
@@ -19,6 +23,7 @@ export interface IPlayerState {
 const createInitialPlayerState = (): IPlayerState => ({
     notation: '',
     rotationCommands: { status: true, value: [] },
+    totalRotationCommands: 0,
     status: PlayerStatus.STOPPED,
     animationLoopDelay: 50,
 });
@@ -35,6 +40,14 @@ export const createPlayerReducer = (
             })
             .addCase(playerActions.parsedNotation, (state, action) => {
                 state.rotationCommands = action.payload;
+
+                if (state.rotationCommands.status) {
+                    state.totalRotationCommands = countRotationCommands(
+                        state.rotationCommands.value,
+                    );
+                } else {
+                    state.totalRotationCommands = 0;
+                }
             })
             .addCase(playerActions.play, (state, _action) => {
                 state.status = PlayerStatus.PLAYING;

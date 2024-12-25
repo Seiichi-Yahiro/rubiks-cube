@@ -3,6 +3,7 @@ import { Result } from 'parsimmon';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isError, RotationCommand } from 'src/algorithms/rotationCommand';
+import { useRedux } from 'src/hooks/redux';
 import IconButton from 'src/tsx/components/IconButton';
 import {
     Popover,
@@ -30,6 +31,9 @@ const NotationInput: React.FC<NotationInputProps> = ({
     rotationCommands,
 }) => {
     const { t } = useTranslation();
+    const totalRotationCommands = useRedux(
+        (state) => state.player.totalRotationCommands,
+    );
 
     const editorRef = useRef<HTMLTextAreaElement>(null);
 
@@ -75,7 +79,7 @@ const NotationInput: React.FC<NotationInputProps> = ({
     }, []);
 
     return (
-        <div className="flex flex-col flex-nowrap">
+        <div className="flex flex-col flex-nowrap gap-1">
             <div
                 ref={measureWidth}
                 className="flex flex-row flex-nowrap items-center"
@@ -106,8 +110,16 @@ const NotationInput: React.FC<NotationInputProps> = ({
                     </PopoverContent>
                 </Popover>
             </div>
-            {isError(rotationCommands) && (
+
+            {isError(rotationCommands) ? (
                 <NotationError error={rotationCommands} />
+            ) : (
+                totalRotationCommands > 0 && (
+                    <div className="text-sm">
+                        <span>{t('player.input.steps')}: </span>
+                        <span>{totalRotationCommands}</span>
+                    </div>
+                )
             )}
         </div>
     );
