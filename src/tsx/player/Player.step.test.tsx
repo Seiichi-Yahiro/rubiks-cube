@@ -79,7 +79,7 @@ describe('Player step', () => {
         expect(nextStep).toHaveAttribute('aria-disabled', 'true');
 
         fireEvent.click(nextStep);
-        await delay(25);
+        await delay(50);
 
         expect(nextStepSpy).toHaveBeenCalledTimes(1);
         expect(nextStepSpy).toHaveBeenCalledWith(Direction.Forwards);
@@ -115,7 +115,7 @@ describe('Player step', () => {
         expect(nextStepBack).toHaveAttribute('aria-disabled', 'true');
 
         fireEvent.click(nextStepBack);
-        await delay(25);
+        await delay(50);
 
         expect(nextStepSpy).toHaveBeenCalledTimes(1);
         expect(nextStepSpy).toHaveBeenCalledWith(Direction.Forwards);
