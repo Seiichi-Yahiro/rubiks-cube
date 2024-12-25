@@ -1,41 +1,21 @@
-import { CircleHelp } from 'lucide-react';
-import { Result } from 'parsimmon';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isError, RotationCommand } from 'src/algorithms/rotationCommand';
-import { useRedux } from 'src/hooks/redux';
-import IconButton from 'src/tsx/components/IconButton';
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from 'src/tsx/components/Popover';
-import { ScrollArea } from 'src/tsx/components/ScrollArea';
+import { isError } from 'src/algorithms/rotationCommand';
+import { useAppDispatch, useRedux } from 'src/hooks/redux';
+import { playerActions } from 'src/redux/player/playerActions';
+import { PlayerStatus } from 'src/redux/player/playerReducer';
 import TextEditor, { type StyledValue } from 'src/tsx/components/TextEditor';
 import NotationError from 'src/tsx/player/notation/NotationError';
-import NotationHelp from 'src/tsx/player/notation/NotationHelp';
+import NotationHelpButton from 'src/tsx/player/notation/NotationHelpButton';
+import NotationStepCounter from 'src/tsx/player/notation/NotationStepCounter';
 
-interface NotationInputProps {
-    playerNotation: string;
-    updateNotation: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    isStopped: boolean;
-    hasParseError: boolean;
-    rotationCommands: Result<RotationCommand[]>;
-}
-
-const NotationInput: React.FC<NotationInputProps> = ({
-    playerNotation,
-    updateNotation,
-    isStopped,
-    hasParseError,
-    rotationCommands,
-}) => {
+const NotationInput: React.FC = () => {
     const { t } = useTranslation();
-    const totalRotationCommands = useRedux(
-        (state) => state.player.totalRotationCommands,
-    );
+    const dispatch = useAppDispatch();
 
-    const editorRef = useRef<HTMLTextAreaElement>(null);
+    const playerStatus = useRedux((state) => state.player.status);
+    const playerNotation = useRedux((state) => state.player.notation);
+    const rotationCommands = useRedux((state) => state.player.rotationCommands);
 
     const editorValue: string | StyledValue[] = useMemo(() => {
         if (isError(rotationCommands)) {
@@ -64,7 +44,15 @@ const NotationInput: React.FC<NotationInputProps> = ({
         }
     }, [playerNotation, rotationCommands]);
 
-    const [popoverWidth, setPopoverWidth] = useState(0);
+    const updateNotation = useCallback(
+        (event: React.ChangeEvent<HTMLTextAreaElement>) =>
+            dispatch(playerActions.updateNotation(event.target.value)),
+        [dispatch],
+    );
+
+    const hasParseError = isError(rotationCommands);
+
+    const [playerWidth, setPlayerWidth] = useState(100);
 
     const measureWidth = useCallback((element: HTMLDivElement | null) => {
         if (!element) {
@@ -72,54 +60,32 @@ const NotationInput: React.FC<NotationInputProps> = ({
         }
 
         const resizeObserver = new ResizeObserver(() => {
-            setPopoverWidth(element.offsetWidth);
+            setPlayerWidth(element.offsetWidth);
         });
 
         resizeObserver.observe(element);
     }, []);
 
     return (
-        <div className="flex flex-col flex-nowrap gap-1">
-            <div
-                ref={measureWidth}
-                className="flex flex-row flex-nowrap items-center"
-            >
-                <TextEditor
-                    ref={editorRef}
-                    label={t('player.input.algorithm')}
-                    value={editorValue}
-                    onChange={updateNotation}
-                    disabled={!isStopped}
-                    error={hasParseError}
-                />
-                <Popover>
-                    <PopoverTrigger asChild={true}>
-                        <IconButton tooltip={t('player.input.help')}>
-                            <CircleHelp />
-                        </IconButton>
-                    </PopoverTrigger>
-                    <PopoverContent
-                        avoidCollisions={false}
-                        side="bottom"
-                        align="end"
-                        style={{ width: popoverWidth }}
-                    >
-                        <ScrollArea className="h-96">
-                            <NotationHelp />
-                        </ScrollArea>
-                    </PopoverContent>
-                </Popover>
-            </div>
-
-            {isError(rotationCommands) ? (
+        <div
+            ref={measureWidth}
+            className="relative flex flex-col flex-nowrap gap-1"
+        >
+            <NotationHelpButton
+                className="absolute -right-1 -top-1 size-6"
+                width={playerWidth}
+            />
+            <TextEditor
+                label={t('player.input.algorithm')}
+                value={editorValue}
+                onChange={updateNotation}
+                disabled={playerStatus !== PlayerStatus.STOPPED}
+                error={hasParseError}
+            />
+            {hasParseError ? (
                 <NotationError error={rotationCommands} />
             ) : (
-                totalRotationCommands > 0 && (
-                    <div className="text-sm">
-                        <span>{t('player.input.steps')}: </span>
-                        <span>{totalRotationCommands}</span>
-                    </div>
-                )
+                rotationCommands.value.length > 0 && <NotationStepCounter />
             )}
         </div>
     );
