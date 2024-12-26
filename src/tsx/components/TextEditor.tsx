@@ -43,7 +43,6 @@ const TextEditor = React.forwardRef<HTMLTextAreaElement, TextEditorProps>(
         return (
             <div
                 ref={divRef}
-                aria-hidden={true}
                 className={cn(
                     'relative mb-1 mt-4 min-h-6 w-full select-none whitespace-pre-wrap text-base text-app-text',
 
@@ -94,7 +93,7 @@ const TextEditor = React.forwardRef<HTMLTextAreaElement, TextEditorProps>(
                 >
                     {label}
                 </label>
-                {styledValue}
+                <span aria-hidden={true}>{styledValue}</span>
                 <br />
             </div>
         );
