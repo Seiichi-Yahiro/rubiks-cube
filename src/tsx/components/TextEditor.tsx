@@ -79,7 +79,7 @@ const TextEditor = React.forwardRef<HTMLTextAreaElement, TextEditorProps>(
                     className={cn(
                         'absolute -top-4 text-xs text-app-text transition-all duration-200 ease-out',
 
-                        'underline peer-empty:top-0 peer-empty:text-base peer-empty:no-underline peer-focus:-top-4 peer-focus:text-xs peer-focus:text-app-text-highlighted peer-focus:underline',
+                        'underline peer-empty:top-0 peer-empty:cursor-text peer-empty:text-base peer-empty:no-underline peer-focus:-top-4 peer-focus:cursor-default peer-focus:text-xs peer-focus:text-app-text-highlighted peer-focus:underline',
 
                         {
                             'text-app-text-disabled': disabled,
