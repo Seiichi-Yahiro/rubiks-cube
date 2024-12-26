@@ -12,6 +12,8 @@ interface RubiksCubeProps {
     className?: string;
 }
 
+const maxCubeSize = 250;
+
 const RubiksCube: React.FC<RubiksCubeProps> = ({ className }) => {
     const dispatch = useAppDispatch();
     const cubeDimension = useRedux((state) => state.cube.dimension);
@@ -33,7 +35,7 @@ const RubiksCube: React.FC<RubiksCubeProps> = ({ className }) => {
                 const width = container.current!.offsetWidth;
                 const height = container.current!.offsetHeight;
                 const containerSize = Math.min(width, height);
-                const cubeSize = Math.min(containerSize / 2, 250);
+                const cubeSize = Math.min(containerSize / 2, maxCubeSize);
                 dispatch(cubeActions.setCubeSize(cubeSize));
             }),
         );
@@ -67,6 +69,10 @@ const RubiksCube: React.FC<RubiksCubeProps> = ({ className }) => {
                 'flex items-center justify-center p-2 [perspective:1000px]',
                 className,
             )}
+            style={{
+                minHeight: maxCubeSize / 1.5,
+                maxHeight: maxCubeSize * 2,
+            }}
         >
             <div
                 className={cn('relative [transform-style:preserve-3d]', {
