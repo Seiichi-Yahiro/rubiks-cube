@@ -9,6 +9,7 @@ export interface Algorithm {
     name: string;
     notation: string;
     startConfiguration?: StartConfiguration;
+    helpArrows?: HelpArrow[];
 }
 
 export interface StartConfiguration {
@@ -18,4 +19,10 @@ export interface StartConfiguration {
     right: CubeColorKey[][];
     up: CubeColorKey[][];
     down: CubeColorKey[][];
+}
+
+export interface HelpArrow {
+    from: [number, number];
+    to: [number, number];
+    doubleEnded?: boolean;
 }

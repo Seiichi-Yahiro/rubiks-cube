@@ -1,4 +1,6 @@
 import React, { type CSSProperties } from 'react';
+import type { HelpArrow } from 'src/algorithms/algorithmTypes';
+import HelpArrows from 'src/tsx/algorithms/HelpArrows';
 import type { CubeColorKey } from 'src/tsx/cube/cubeTypes';
 import cn from 'src/utils/cn';
 
@@ -9,6 +11,7 @@ export enum ViewMode {
 
 interface CubeConfigSideProps {
     faces: CubeColorKey[][];
+    helpArrows?: HelpArrow[];
     faceSize: number;
     viewMode: ViewMode;
     style?: CSSProperties;
@@ -17,6 +20,7 @@ interface CubeConfigSideProps {
 
 const CubeConfigSide: React.FC<CubeConfigSideProps> = ({
     faces,
+    helpArrows,
     faceSize,
     viewMode,
     className,
@@ -32,7 +36,10 @@ const CubeConfigSide: React.FC<CubeConfigSideProps> = ({
 
     return viewMode === ViewMode.Full ? (
         <div
-            className={cn('grid [backface-visibility:hidden]', className)}
+            className={cn(
+                'relative grid [backface-visibility:hidden]',
+                className,
+            )}
             style={{
                 gridTemplateColumns: `repeat(${faces[0].length}, ${faceSize}rem)`,
                 ...style,
@@ -46,6 +53,9 @@ const CubeConfigSide: React.FC<CubeConfigSideProps> = ({
                         className={faceClassName}
                     />
                 )),
+            )}
+            {helpArrows && (
+                <HelpArrows arrows={helpArrows} faceSize={faceSize} />
             )}
         </div>
     ) : (

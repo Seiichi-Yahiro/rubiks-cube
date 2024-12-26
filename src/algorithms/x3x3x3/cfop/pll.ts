@@ -41,6 +41,7 @@ export const pllOneCorner: AlgorithmGroup = {
                     [DOWN, DOWN, DOWN],
                 ],
             },
+            helpArrows: [{ from: [0, 0], to: [2, 2], doubleEnded: true }],
         },
         {
             name: 'algorithm.3x3x3.pll.corners.two.adjacent',
@@ -77,6 +78,7 @@ export const pllOneCorner: AlgorithmGroup = {
                     [DOWN, DOWN, DOWN],
                 ],
             },
+            helpArrows: [{ from: [2, 0], to: [2, 2], doubleEnded: true }],
         },
     ],
 };
@@ -119,6 +121,10 @@ export const pllEdgesZero: AlgorithmGroup = {
                     [DOWN, DOWN, DOWN],
                 ],
             },
+            helpArrows: [
+                { from: [1, 0], to: [1, 2], doubleEnded: true },
+                { from: [0, 1], to: [2, 1], doubleEnded: true },
+            ],
         },
         {
             name: 'algorithm.3x3x3.pll.edges.zero.diagonal',
@@ -155,6 +161,10 @@ export const pllEdgesZero: AlgorithmGroup = {
                     [DOWN, DOWN, DOWN],
                 ],
             },
+            helpArrows: [
+                { from: [0, 1], to: [1, 0], doubleEnded: true },
+                { from: [1, 2], to: [2, 1], doubleEnded: true },
+            ],
         },
     ],
 };
@@ -197,6 +207,11 @@ export const pllEdgesOne: AlgorithmGroup = {
                     [DOWN, DOWN, DOWN],
                 ],
             },
+            helpArrows: [
+                { from: [0, 1], to: [1, 2] },
+                { from: [1, 2], to: [2, 1] },
+                { from: [2, 1], to: [0, 1] },
+            ],
         },
         {
             name: 'algorithm.3x3x3.pll.edges.one.clockwise',
@@ -233,6 +248,11 @@ export const pllEdgesOne: AlgorithmGroup = {
                     [DOWN, DOWN, DOWN],
                 ],
             },
+            helpArrows: [
+                { from: [1, 2], to: [0, 1] },
+                { from: [2, 1], to: [1, 2] },
+                { from: [0, 1], to: [2, 1] },
+            ],
         },
     ],
 };

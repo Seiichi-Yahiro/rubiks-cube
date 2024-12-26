@@ -1,5 +1,8 @@
 import React from 'react';
-import type { StartConfiguration } from 'src/algorithms/algorithmTypes';
+import type {
+    HelpArrow,
+    StartConfiguration,
+} from 'src/algorithms/algorithmTypes';
 import CubeConfigSide, {
     ViewMode as SideViewMode,
 } from 'src/tsx/algorithms/CubeConfigSide';
@@ -11,6 +14,7 @@ export enum ViewMode {
 
 interface CubeConfigProps extends StartConfiguration {
     viewMode: ViewMode;
+    helpArrows?: HelpArrow[];
 }
 
 const sqrt3 = Math.sqrt(3);
@@ -24,6 +28,7 @@ const CubeConfig: React.FC<CubeConfigProps> = ({
     right,
     up,
     down,
+    helpArrows,
     viewMode,
 }) => {
     return (
@@ -86,6 +91,7 @@ const CubeConfig: React.FC<CubeConfigProps> = ({
                     <CubeConfigSide
                         key="top"
                         faces={up}
+                        helpArrows={helpArrows}
                         faceSize={faceSize}
                         viewMode={SideViewMode.Full}
                         className="absolute"
@@ -132,6 +138,7 @@ const CubeConfig: React.FC<CubeConfigProps> = ({
                     <CubeConfigSide
                         key="top"
                         faces={up}
+                        helpArrows={helpArrows}
                         faceSize={faceSize}
                         viewMode={SideViewMode.Full}
                         className="col-start-2"
