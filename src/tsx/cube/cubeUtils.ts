@@ -1,6 +1,7 @@
 import { curry, range, zip } from 'lodash';
 import {
     isLoopedRotationCommands,
+    type LoopedRotationCommands,
     RotationCommand,
     rotationCommandToMat4,
     SingleRotationCommand,
@@ -146,34 +147,61 @@ export const canApplyRotationCommand = (
     { slices, axis }: SingleRotationCommand,
 ): boolean => slices.includes(cubeAxis[axis]);
 
+const applySingleRotationCommand = (
+    cubicles: ICubicle[],
+    command: SingleRotationCommand,
+    cubeDimension: number,
+): ICubicle[] =>
+    cubicles.map((cubicle) => {
+        if (canApplyRotationCommand(cubicle.axis, command)) {
+            const rotationMat = rotationCommandToMat4(command);
+            return {
+                ...cubicle,
+                axis: rotateAxis(cubicle.axis, rotationMat, cubeDimension),
+                transform: multiply(rotationMat, cubicle.transform),
+            };
+        } else {
+            return cubicle;
+        }
+    });
+
+const applyLoopedRotationCommands = (
+    cubicles: ICubicle[],
+    loopedCommands: LoopedRotationCommands,
+    cubeDimension: number,
+): ICubicle[] => {
+    let newCubicles = cubicles;
+
+    for (let i = 0; i < loopedCommands.iterations; i++) {
+        for (const command of loopedCommands.commands) {
+            newCubicles = applyRotationCommand(
+                newCubicles,
+                command,
+                cubeDimension,
+            );
+        }
+    }
+
+    return newCubicles;
+};
+
 export const applyRotationCommand = (
     cubicles: ICubicle[],
     rotationCommand: RotationCommand,
     cubeDimension: number,
 ): ICubicle[] => {
     if (isLoopedRotationCommands(rotationCommand)) {
-        return range(0, rotationCommand.iterations).reduce(
-            (cubicles2, _) =>
-                rotationCommand.commands.reduce(
-                    (cubicles3, command) =>
-                        applyRotationCommand(cubicles3, command, cubeDimension),
-                    cubicles2,
-                ),
+        return applyLoopedRotationCommands(
             cubicles,
+            rotationCommand,
+            cubeDimension,
         );
     } else {
-        return cubicles.map((cubicle) => {
-            if (canApplyRotationCommand(cubicle.axis, rotationCommand)) {
-                const rotationMat = rotationCommandToMat4(rotationCommand);
-                return {
-                    ...cubicle,
-                    axis: rotateAxis(cubicle.axis, rotationMat, cubeDimension),
-                    transform: multiply(rotationMat, cubicle.transform),
-                };
-            } else {
-                return cubicle;
-            }
-        });
+        return applySingleRotationCommand(
+            cubicles,
+            rotationCommand,
+            cubeDimension,
+        );
     }
 };
 
