@@ -14,6 +14,9 @@ export enum CubeColorKey {
     UNKNOWN = '--cube-face-unknown',
 }
 
+export const cubeColorKeyToClassName = (cubeColorKey: CubeColorKey) =>
+    cubeColorKey.substring(2);
+
 export interface CubeColorVariables {
     [CubeColorKey.FRONT]: CSSProperties['color'];
     [CubeColorKey.BACK]: CSSProperties['color'];

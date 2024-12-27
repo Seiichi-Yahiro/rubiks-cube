@@ -1,7 +1,10 @@
 import React, { type CSSProperties } from 'react';
 import type { HelpArrow } from 'src/algorithms/algorithmTypes';
 import HelpArrows from 'src/tsx/algorithms/HelpArrows';
-import type { CubeColorKey } from 'src/tsx/cube/cubeTypes';
+import {
+    type CubeColorKey,
+    cubeColorKeyToClassName,
+} from 'src/tsx/cube/cubeTypes';
 import cn from 'src/utils/cn';
 
 export enum ViewMode {
@@ -26,13 +29,10 @@ const CubeConfigSide: React.FC<CubeConfigSideProps> = ({
     className,
     style,
 }) => {
-    const faceClassName = 'border border-[--cube-face-inside]';
-
-    const createFaceStyle = (colorKey: CubeColorKey) => ({
-        backgroundColor: `var(${colorKey})`,
+    const faceStyle = {
         width: `${faceSize}rem`,
         height: `${faceSize}rem`,
-    });
+    };
 
     return viewMode === ViewMode.Full ? (
         <div
@@ -49,8 +49,11 @@ const CubeConfigSide: React.FC<CubeConfigSideProps> = ({
                 row.map((colorKey, columnIndex) => (
                     <div
                         key={`${rowIndex}-${columnIndex}`}
-                        style={createFaceStyle(colorKey)}
-                        className={faceClassName}
+                        className={cn(
+                            'cube-face-border border',
+                            cubeColorKeyToClassName(colorKey),
+                        )}
+                        style={faceStyle}
                     />
                 )),
             )}
@@ -63,8 +66,11 @@ const CubeConfigSide: React.FC<CubeConfigSideProps> = ({
             {faces[0].map((colorKey, index) => (
                 <div
                     key={index}
-                    className={faceClassName}
-                    style={createFaceStyle(colorKey)}
+                    className={cn(
+                        'cube-face-border border',
+                        cubeColorKeyToClassName(colorKey),
+                    )}
+                    style={faceStyle}
                 />
             ))}
         </div>

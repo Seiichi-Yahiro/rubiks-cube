@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 import { SingleRotationCommand } from 'src/algorithms/rotationCommand';
 import { useAppDispatch } from 'src/hooks/redux';
 import { playerActions } from 'src/redux/player/playerActions';
-import { CubeColorKey, FaceArrowDirection } from 'src/tsx/cube/cubeTypes';
+import {
+    CubeColorKey,
+    cubeColorKeyToClassName,
+    FaceArrowDirection,
+} from 'src/tsx/cube/cubeTypes';
 import FaceArrows from 'src/tsx/cube/FaceArrows';
+import cn from 'src/utils/cn';
 import { Mat4, toCss } from 'src/utils/matrix4';
+import './Face.css';
 
 interface IFaceProps {
     transform: Mat4;
@@ -29,13 +35,15 @@ const Face: React.FC<IFaceProps> = ({
     const onMouseLeave = () => setHovered(false);
 
     const style: React.CSSProperties = {
-        backgroundColor: `var(${colorKey})`,
         transform: toCss(transform),
     };
 
     return (
         <div
-            className="absolute size-[inherit] border-2 border-[--cube-face-inside] [backface-visibility:hidden]"
+            className={cn(
+                'cube-face-border absolute size-[inherit] border-2 [backface-visibility:hidden]',
+                cubeColorKeyToClassName(colorKey),
+            )}
             style={style}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}

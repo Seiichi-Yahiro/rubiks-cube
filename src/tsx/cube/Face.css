@@ -1,0 +1,35 @@
+.cube-face-front {
+    background-color: var(--cube-face-front);
+}
+
+.cube-face-back {
+    background-color: var(--cube-face-back);
+}
+
+.cube-face-left {
+    background-color: var(--cube-face-left);
+}
+
+.cube-face-right {
+    background-color: var(--cube-face-right);
+}
+
+.cube-face-up {
+    background-color: var(--cube-face-up);
+}
+
+.cube-face-down {
+    background-color: var(--cube-face-down);
+}
+
+.cube-face-inside {
+    background-color: var(--cube-face-inside);
+}
+
+.cube-face-unknown {
+    background-color: var(--cube-face-unknown);
+}
+
+.cube-face-border {
+    border-color: var(--cube-face-inside);
+}
