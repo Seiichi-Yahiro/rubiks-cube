@@ -37,6 +37,10 @@ const PlayerButtons: React.FC = () => {
             state.player.totalRotationCommands,
     );
 
+    const tooManyRotationCommands = useRedux(
+        (state) => state.player.totalRotationCommands > 1000,
+    );
+
     const isAnimatingRotationCommand = useRedux(
         (state) => state.cube.animation !== undefined,
     );
@@ -145,7 +149,8 @@ const PlayerButtons: React.FC = () => {
                         (isPaused &&
                             (isAnimatingRotationCommand ||
                                 noCommandsExecuted)) ||
-                        (isStopped && isNotationInvalid)
+                        (isStopped && isNotationInvalid) ||
+                        tooManyRotationCommands
                     }
                 >
                     <SkipBack />
@@ -188,7 +193,8 @@ const PlayerButtons: React.FC = () => {
                         (isPaused &&
                             (isAnimatingRotationCommand ||
                                 allCommandsExecuted)) ||
-                        (isStopped && isNotationInvalid)
+                        (isStopped && isNotationInvalid) ||
+                        tooManyRotationCommands
                     }
                 >
                     <SkipForward />
