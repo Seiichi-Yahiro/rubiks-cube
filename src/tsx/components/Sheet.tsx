@@ -41,7 +41,7 @@ const SheetContent = React.forwardRef<
         <SheetPrimitive.Content
             ref={ref}
             className={cn(
-                'fixed z-50 gap-4 border-app-border bg-app-bg p-6 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out',
+                'fixed z-50 border-app-border bg-app-bg p-4 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out',
                 {
                     'inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top':
                         side === 'top',
@@ -58,7 +58,7 @@ const SheetContent = React.forwardRef<
         >
             {children}
             <SheetPrimitive.Close asChild={true}>
-                <IconButton className="absolute right-4 top-4 mr-1 mt-1 size-6">
+                <IconButton className="absolute right-4 top-4 size-6">
                     <X />
                 </IconButton>
             </SheetPrimitive.Close>
