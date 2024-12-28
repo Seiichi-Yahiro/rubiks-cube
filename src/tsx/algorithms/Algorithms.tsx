@@ -54,13 +54,13 @@ const Algorithms: React.FC<AlgorithmProps> = ({ className }) => {
                         {t('algorithm.4x4x4.title')}
                     </TabsTrigger>
                 </div>
-                <div className="flex scale-90 items-center justify-center rounded-md border border-app-border bg-app-bg px-2 py-1">
-                    <div className="text-sm">{t('algorithm.3d-switch')}</div>
+                <div className="flex items-center">
                     <Switch
                         defaultChecked={false}
                         onCheckedChange={onToggleViewMode}
-                        className="scale-75"
-                    />
+                    >
+                        {t('algorithm.3d-switch')}
+                    </Switch>
                 </div>
             </TabsList>
             <TabsContent value="3x3x3" hasSubTabs={true}>
