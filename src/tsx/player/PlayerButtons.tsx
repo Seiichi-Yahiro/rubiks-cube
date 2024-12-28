@@ -1,7 +1,6 @@
 import {
-    CirclePause,
-    CirclePlay,
-    CircleStop,
+    Pause,
+    Play,
     RefreshCcw,
     Shuffle,
     SkipBack,
@@ -117,7 +116,7 @@ const PlayerButtons: React.FC = () => {
                         tooltip={t('player.input.pause')}
                         onClick={onPause}
                     >
-                        <CirclePause />
+                        <Pause />
                     </IconButton>
                 ) : (
                     <IconButton
@@ -125,7 +124,7 @@ const PlayerButtons: React.FC = () => {
                         disabled={isNotationInvalid}
                         onClick={onPlay}
                     >
-                        <CirclePlay />
+                        <Play />
                     </IconButton>
                 )}
                 <IconButton
@@ -133,7 +132,16 @@ const PlayerButtons: React.FC = () => {
                     onClick={onStop}
                     disabled={isStopped}
                 >
-                    <CircleStop />
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        className="lucide lucide-square"
+                    >
+                        <rect width="16" height="16" x="4" y="4" rx="2" />
+                    </svg>
                 </IconButton>
             </div>
             <div className="flex flex-row flex-nowrap">
