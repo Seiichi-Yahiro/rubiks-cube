@@ -37,12 +37,6 @@ const Algorithms: React.FC<AlgorithmProps> = ({ className }) => {
 
     const { t } = useTranslation();
 
-    const tabStepArrow = (
-        <div className="hidden md:flex md:items-center">
-            <ArrowRight className="size-4 stroke-app-text" />
-        </div>
-    );
-
     return (
         <Tabs defaultValue="3x3x3" className={className}>
             <TabsList className="justify-between">
@@ -65,34 +59,24 @@ const Algorithms: React.FC<AlgorithmProps> = ({ className }) => {
             </TabsList>
             <TabsContent value="3x3x3" hasSubTabs={true}>
                 <ScrollArea className="h-96">
-                    <Tabs defaultValue="oll-step-1">
+                    <Tabs defaultValue="oll">
                         <TabsList>
-                            <TabsTrigger value="oll-step-1">
-                                {t('algorithm.3x3x3.oll.step-1')}
+                            <TabsTrigger value="oll">
+                                {t('algorithm.3x3x3.oll.title')}
                             </TabsTrigger>
-                            {tabStepArrow}
-                            <TabsTrigger value="oll-step-2">
-                                {t('algorithm.3x3x3.oll.step-2')}
-                            </TabsTrigger>
-                            {tabStepArrow}
-                            <TabsTrigger value="pll-step-1">
-                                {t('algorithm.3x3x3.pll.step-1')}
-                            </TabsTrigger>
-                            {tabStepArrow}
-                            <TabsTrigger value="pll-step-2">
-                                {t('algorithm.3x3x3.pll.step-2')}
+                            <div className="hidden md:flex md:items-center">
+                                <ArrowRight className="size-4 stroke-app-text" />
+                            </div>
+                            <TabsTrigger value="pll">
+                                {t('algorithm.3x3x3.pll.title')}
                             </TabsTrigger>
                         </TabsList>
-                        <TabsContent value="oll-step-1" isSubTabsContent={true}>
+                        <TabsContent value="oll" isSubTabsContent={true}>
                             <div className="flex flex-col gap-2">
                                 <AlgorithmGroup
                                     group={ollEdges}
                                     viewMode={viewMode}
                                 />
-                            </div>
-                        </TabsContent>
-                        <TabsContent value="oll-step-2" isSubTabsContent={true}>
-                            <div className="flex flex-col gap-2">
                                 <AlgorithmGroup
                                     group={ollCornersZero}
                                     viewMode={viewMode}
@@ -107,16 +91,12 @@ const Algorithms: React.FC<AlgorithmProps> = ({ className }) => {
                                 />
                             </div>
                         </TabsContent>
-                        <TabsContent value="pll-step-1" isSubTabsContent={true}>
+                        <TabsContent value="pll" isSubTabsContent={true}>
                             <div className="flex flex-col gap-2">
                                 <AlgorithmGroup
                                     group={pllOneCorner}
                                     viewMode={viewMode}
                                 />
-                            </div>
-                        </TabsContent>
-                        <TabsContent value="pll-step-2" isSubTabsContent={true}>
-                            <div className="flex flex-col gap-2">
                                 <AlgorithmGroup
                                     group={pllEdgesZero}
                                     viewMode={viewMode}

@@ -97,27 +97,26 @@
         "3x3x3": {
             "title": "3x3x3",
             "oll": {
-                "step-1": "OLL: 1",
-                "step-2": "OLL: 2",
+                "title": "OLL",
                 "edges": {
-                    "title": "No edges solved",
+                    "title": "1. No edges solved",
                     "dot": "Dot",
                     "l": "L",
                     "line": "Line"
                 },
                 "corners": {
                     "zero": {
-                        "title": "Zero corners solved",
+                        "title": "2. No corners solved",
                         "h": "H",
                         "pi": "Pi"
                     },
                     "one": {
-                        "title": "One corner solved",
+                        "title": "2. One corner solved",
                         "sune": "Sune",
                         "anti-sune": "Anti-Sune"
                     },
                     "two": {
-                        "title": "Two corners solved",
+                        "title": "2. Two corners solved",
                         "l": "L",
                         "t": "T",
                         "u": "U"
@@ -125,23 +124,22 @@
                 }
             },
             "pll": {
-                "step-1": "PLL: 1",
-                "step-2": "PLL: 2",
+                "title": "PLL",
                 "corners": {
                     "two": {
-                        "title": "Two corners solved",
+                        "title": "1. Two corners solved",
                         "diagonal": "Diagonal",
                         "adjacent": "Adjacent"
                     }
                 },
                 "edges": {
                     "zero": {
-                        "title": "No edge solved",
+                        "title": "2. No edges solved",
                         "cross": "Cross",
                         "diagonal": "Diagonal"
                     },
                     "one": {
-                        "title": "One edge solved",
+                        "title": "2. One edge solved",
                         "counterclockwise": "Counterclockwise",
                         "clockwise": "Clockwise"
                     }

@@ -97,27 +97,26 @@
         "3x3x3": {
             "title": "3x3x3",
             "oll": {
-                "step-1": "OLL: 1",
-                "step-2": "OLL: 2",
+                "title": "OLL",
                 "edges": {
-                    "title": "Keine Kante gelöst",
+                    "title": "1. Keine Kante gelöst",
                     "dot": "Punkt",
                     "l": "L",
                     "line": "Linie"
                 },
                 "corners": {
                     "zero": {
-                        "title": "Keine Ecke gelöst",
+                        "title": "2. Keine Ecke gelöst",
                         "h": "H",
                         "pi": "Pi"
                     },
                     "one": {
-                        "title": "Eine Ecke gelöst",
+                        "title": "2. Eine Ecke gelöst",
                         "sune": "Sune",
                         "anti-sune": "Anti-Sune"
                     },
                     "two": {
-                        "title": "Zwei Ecken gelöst",
+                        "title": "2. Zwei Ecken gelöst",
                         "l": "L",
                         "t": "T",
                         "u": "U"
@@ -125,23 +124,22 @@
                 }
             },
             "pll": {
-                "step-1": "PLL: 1",
-                "step-2": "PLL: 2",
+                "title": "PLL",
                 "corners": {
                     "two": {
-                        "title": "Zwei Ecken gelöst",
+                        "title": "1. Zwei Ecken gelöst",
                         "diagonal": "Diagonal",
                         "adjacent": "Adjazent"
                     }
                 },
                 "edges": {
                     "zero": {
-                        "title": "Keine Kante gelöst",
+                        "title": "2. Keine Kante gelöst",
                         "cross": "Überkreuz",
                         "diagonal": "Diagonal"
                     },
                     "one": {
-                        "title": "Eine Kante gelöst",
+                        "title": "2. Eine Kante gelöst",
                         "counterclockwise": "Gegen den Uhrzeigersinn",
                         "clockwise": "Im Uhrzeigersinn"
                     }
