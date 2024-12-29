@@ -5,6 +5,10 @@ export default {
     content: ['./src/tsx/**/*.tsx'],
     theme: {
         extend: {
+            fontFamily: {
+                sans: ['Roboto', 'sans-serif'],
+                mono: ['Roboto Mono', 'monospace'],
+            },
             keyframes: {
                 breath: {
                     '0%, 100%': { transform: 'scale(1)' },
