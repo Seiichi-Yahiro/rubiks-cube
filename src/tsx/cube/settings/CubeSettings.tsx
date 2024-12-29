@@ -30,7 +30,7 @@ const CubeSettings: React.FC = () => {
                 <SheetContent side="right">
                     <SheetTitle>{t('settings.title')}</SheetTitle>
                     <SheetDescription></SheetDescription>
-                    <div className="mt-4 flex flex-col gap-4 text-app-text">
+                    <div className="mt-4 flex flex-col gap-4">
                         <div className="flex flex-col gap-1">
                             <div className="font-medium">
                                 {t('settings.cube-type')}:

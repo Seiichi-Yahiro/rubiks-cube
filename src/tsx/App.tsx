@@ -58,9 +58,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ className }) => {
                     alt="Rubik's Cube logo"
                     className="size-12"
                 />
-                <span className="text-2xl font-bold text-app-text">
-                    {t('title')}
-                </span>
+                <span className="text-2xl font-bold">{t('title')}</span>
             </div>
             <LanguageSelector />
         </div>

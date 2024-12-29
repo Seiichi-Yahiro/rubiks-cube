@@ -44,7 +44,7 @@ const TextEditor = React.forwardRef<HTMLTextAreaElement, TextEditorProps>(
             <div
                 ref={divRef}
                 className={cn(
-                    'relative mb-1 mt-4 min-h-6 w-full select-none whitespace-pre-wrap text-base text-app-text',
+                    'relative mb-1 mt-4 min-h-6 w-full select-none whitespace-pre-wrap text-base',
 
                     'before:absolute before:bottom-0 before:w-full before:border-b before:border-app-text focus-within:before:border-b-2 hover:before:border-b-2 hover:before:border-app-text',
 
@@ -77,7 +77,7 @@ const TextEditor = React.forwardRef<HTMLTextAreaElement, TextEditorProps>(
                 <label
                     htmlFor={id}
                     className={cn(
-                        'absolute -top-4 text-xs text-app-text transition-all duration-200 ease-out',
+                        'absolute -top-4 text-xs transition-all duration-200 ease-out',
 
                         'underline peer-empty:top-0 peer-empty:cursor-text peer-empty:text-base peer-empty:no-underline peer-focus:-top-4 peer-focus:cursor-default peer-focus:text-xs peer-focus:text-app-text-highlighted peer-focus:underline',
 
