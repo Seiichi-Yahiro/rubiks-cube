@@ -51,6 +51,7 @@ export enum FaceArrowDirection {
 
 export interface IFace {
     id: Side;
+    cubeSide: Side;
     colorKey: CubeColorKey;
     transform: Mat4;
 }

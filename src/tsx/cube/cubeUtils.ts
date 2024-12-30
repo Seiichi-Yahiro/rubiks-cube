@@ -90,6 +90,38 @@ export const rotateAxis = (
         .map(Math.round) as CubeAxis;
 };
 
+const cubeSideToCoordinate = {
+    [Side.FRONT]: [0, 0, 1, 1] as Vec4,
+    [Side.BACK]: [0, 0, -1, 1] as Vec4,
+    [Side.LEFT]: [-1, 0, 0, 1] as Vec4,
+    [Side.RIGHT]: [1, 0, 0, 1] as Vec4,
+    [Side.UP]: [0, -1, 0, 1] as Vec4, // TODO UP AND DOWN ARE SWAPPED?
+    [Side.DOWN]: [0, 1, 0, 1] as Vec4,
+};
+
+const coordinateToCubeSide: Record<string, Side> = {
+    '0,0,1': Side.FRONT,
+    '0,0,-1': Side.BACK,
+    '-1,0,0': Side.LEFT,
+    '1,0,0': Side.RIGHT,
+    '0,-1,0': Side.UP,
+    '0,1,0': Side.DOWN,
+};
+
+const rotateFaceCubeSides = (faces: IFace[], rotation: Mat4): IFace[] =>
+    faces.map((face) => {
+        const coordinate = cubeSideToCoordinate[face.cubeSide];
+        const rotatedCoordinate = apply(coordinate, rotation).map(
+            Math.round,
+        ) as Vec4;
+        const rotatedCubeSide =
+            coordinateToCubeSide[rotatedCoordinate.slice(0, 3).join(',')];
+        return {
+            ...face,
+            cubeSide: rotatedCubeSide,
+        };
+    });
+
 const isCubicleVisible = (axis: CubeAxis, cubeDimension: number) =>
     axis.some((it) => it === 1 || it === cubeDimension);
 
@@ -110,6 +142,7 @@ const generateFace = (
     cubeDimension: number,
 ): IFace => ({
     id: side,
+    cubeSide: side,
     colorKey: isOuterFace(side, axis, cubeDimension)
         ? sideToColor[side]
         : CubeColorKey.INSIDE,
@@ -159,6 +192,7 @@ const applySingleRotationCommand = (
                 ...cubicle,
                 axis: rotateAxis(cubicle.axis, rotationMat, cubeDimension),
                 transform: multiply(rotationMat, cubicle.transform),
+                faces: rotateFaceCubeSides(cubicle.faces, rotationMat),
             };
         } else {
             return cubicle;

@@ -11,6 +11,7 @@ import 'src/tsx/App.css';
 import { TooltipProvider } from 'src/tsx/components/Tooltip';
 import RubiksCube from 'src/tsx/cube/RubiksCube';
 import CubeSettings from 'src/tsx/cube/settings/CubeSettings';
+import UnfoldedView from 'src/tsx/cube/UnfoldedView';
 import LanguageSelector from 'src/tsx/locales/LanguageSelector';
 import Player from 'src/tsx/player/Player';
 import cn from 'src/utils/cn';
@@ -81,11 +82,15 @@ const AppContent: React.FC<AppContentProps> = ({ className }) => {
                 <Player />
                 <Algorithms className="hidden md:block md:grow" />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="relative flex flex-col gap-2">
                 <div className="flex flex-row justify-between">
                     <AlgorithmsButton className="md:invisible" />
                     <CubeSettings />
                 </div>
+                <UnfoldedView
+                    faceSize={0.75}
+                    className="absolute left-0 top-0"
+                />
                 <RubiksCube className="grow" />
             </div>
         </div>

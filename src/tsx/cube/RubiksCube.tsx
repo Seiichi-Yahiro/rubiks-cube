@@ -95,4 +95,4 @@ const RubiksCube: React.FC<RubiksCubeProps> = ({ className }) => {
     );
 };
 
-export default RubiksCube;
+export default React.memo(RubiksCube);
