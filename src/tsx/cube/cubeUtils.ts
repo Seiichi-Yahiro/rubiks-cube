@@ -109,19 +109,21 @@ const coordinateToCubeSide: Record<string, Side> = {
     '0,1,0': Side.DOWN,
 };
 
-const rotateFaceCubeSides = (faces: IFace[], rotation: Mat4): IFace[] =>
-    faces.map((face) => {
-        const coordinate = cubeSideToCoordinate[face.cubeSide];
-        const rotatedCoordinate = apply(coordinate, rotation).map(
-            Math.round,
-        ) as Vec4;
-        const rotatedCubeSide =
-            coordinateToCubeSide[rotatedCoordinate.slice(0, 3).join(',')];
-        return {
-            ...face,
-            cubeSide: rotatedCubeSide,
-        };
-    });
+export const rotateFaceCubeSides = (face: IFace, rotation: Mat4): IFace => {
+    const coordinate = cubeSideToCoordinate[face.cubeSide];
+
+    const rotatedCoordinate = apply(coordinate, rotation).map(
+        Math.round,
+    ) as Vec4;
+
+    const rotatedCubeSide =
+        coordinateToCubeSide[rotatedCoordinate.slice(0, 3).join(',')];
+
+    return {
+        ...face,
+        cubeSide: rotatedCubeSide,
+    };
+};
 
 const isCubicleVisible = (axis: CubeAxis, cubeDimension: number) =>
     axis.some((it) => it === 1 || it === cubeDimension);
@@ -195,7 +197,9 @@ const applySingleRotationCommand = (
                 ...cubicle,
                 axis: rotateAxis(cubicle.axis, rotationMat, cubeDimension),
                 transform: multiply(rotationMat, cubicle.transform),
-                faces: rotateFaceCubeSides(cubicle.faces, rotationMat),
+                faces: cubicle.faces.map((face) =>
+                    rotateFaceCubeSides(face, rotationMat),
+                ),
             };
         } else {
             return cubicle;
