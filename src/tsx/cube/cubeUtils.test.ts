@@ -1,6 +1,12 @@
 import { makeNotationParser } from 'src/algorithms/parser';
 import { SingleRotationCommand } from 'src/algorithms/rotationCommand';
-import { applyRotationCommand, generateCubicles } from 'src/tsx/cube/cubeUtils';
+import { Side, type SideMap } from 'src/tsx/cube/cubeTypes';
+import {
+    applyRotationCommand,
+    generateCubicles,
+    rotateFaceCubeSides,
+} from 'src/tsx/cube/cubeUtils';
+import { fromAngleX, fromAngleY, fromAngleZ } from 'src/utils/matrix4';
 import { describe, expect, it } from 'vitest';
 
 /**
@@ -277,6 +283,74 @@ describe('CubeUtils', () => {
             ];
 
             testAxis('[1,2]L', cube2x2x2);
+        });
+    });
+
+    describe('rotateFaceCubeSides', () => {
+        it('should rotate around x axis', () => {
+            const cubicle = generateCubicles(100, 0, 1)[0];
+
+            const result = cubicle.faces
+                .map((face) => rotateFaceCubeSides(face, fromAngleX(90)))
+                .reduce((acc, face) => {
+                    acc[face.id] = face.cubeSide;
+                    return acc;
+                }, {} as SideMap<Side>);
+
+            const expected: SideMap<Side> = {
+                [Side.FRONT]: Side.UP,
+                [Side.BACK]: Side.DOWN,
+                [Side.LEFT]: Side.LEFT,
+                [Side.RIGHT]: Side.RIGHT,
+                [Side.UP]: Side.BACK,
+                [Side.DOWN]: Side.FRONT,
+            };
+
+            expect(result).toStrictEqual(expected);
+        });
+
+        it('should rotate around y axis', () => {
+            const cubicle = generateCubicles(100, 0, 1)[0];
+
+            const result = cubicle.faces
+                .map((face) => rotateFaceCubeSides(face, fromAngleY(90)))
+                .reduce((acc, face) => {
+                    acc[face.id] = face.cubeSide;
+                    return acc;
+                }, {} as SideMap<Side>);
+
+            const expected: SideMap<Side> = {
+                [Side.FRONT]: Side.RIGHT,
+                [Side.BACK]: Side.LEFT,
+                [Side.LEFT]: Side.FRONT,
+                [Side.RIGHT]: Side.BACK,
+                [Side.UP]: Side.UP,
+                [Side.DOWN]: Side.DOWN,
+            };
+
+            expect(result).toStrictEqual(expected);
+        });
+
+        it('should rotate around z axis', () => {
+            const cubicle = generateCubicles(100, 0, 1)[0];
+
+            const result = cubicle.faces
+                .map((face) => rotateFaceCubeSides(face, fromAngleZ(90)))
+                .reduce((acc, face) => {
+                    acc[face.id] = face.cubeSide;
+                    return acc;
+                }, {} as SideMap<Side>);
+
+            const expected: SideMap<Side> = {
+                [Side.FRONT]: Side.FRONT,
+                [Side.BACK]: Side.BACK,
+                [Side.LEFT]: Side.UP,
+                [Side.RIGHT]: Side.DOWN,
+                [Side.UP]: Side.RIGHT,
+                [Side.DOWN]: Side.LEFT,
+            };
+
+            expect(result).toStrictEqual(expected);
         });
     });
 });
