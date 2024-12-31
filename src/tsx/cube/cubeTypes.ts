@@ -28,6 +28,15 @@ export interface CubeColorVariables {
     [CubeColorKey.UNKNOWN]: CSSProperties['color'];
 }
 
+export type SideMap<T> = {
+    [Side.FRONT]: T;
+    [Side.BACK]: T;
+    [Side.LEFT]: T;
+    [Side.RIGHT]: T;
+    [Side.UP]: T;
+    [Side.DOWN]: T;
+};
+
 export enum Side {
     FRONT = 'FRONT',
     BACK = 'BACK',

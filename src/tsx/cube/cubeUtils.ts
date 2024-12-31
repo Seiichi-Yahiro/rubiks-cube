@@ -13,6 +13,7 @@ import {
     ICubicle,
     IFace,
     Side,
+    type SideMap,
 } from 'src/tsx/cube/cubeTypes';
 import {
     apply,
@@ -24,7 +25,7 @@ import {
 } from 'src/utils/matrix4';
 import { Vec4 } from 'src/utils/vector4';
 
-const sideToColor = {
+const sideToColor: SideMap<CubeColorKey> = {
     [Side.FRONT]: CubeColorKey.FRONT,
     [Side.BACK]: CubeColorKey.BACK,
     [Side.LEFT]: CubeColorKey.LEFT,
@@ -90,13 +91,13 @@ export const rotateAxis = (
         .map(Math.round) as CubeAxis;
 };
 
-const cubeSideToCoordinate = {
-    [Side.FRONT]: [0, 0, 1, 1] as Vec4,
-    [Side.BACK]: [0, 0, -1, 1] as Vec4,
-    [Side.LEFT]: [-1, 0, 0, 1] as Vec4,
-    [Side.RIGHT]: [1, 0, 0, 1] as Vec4,
-    [Side.UP]: [0, -1, 0, 1] as Vec4, // TODO UP AND DOWN ARE SWAPPED?
-    [Side.DOWN]: [0, 1, 0, 1] as Vec4,
+const cubeSideToCoordinate: SideMap<Vec4> = {
+    [Side.FRONT]: [0, 0, 1, 1],
+    [Side.BACK]: [0, 0, -1, 1],
+    [Side.LEFT]: [-1, 0, 0, 1],
+    [Side.RIGHT]: [1, 0, 0, 1],
+    [Side.UP]: [0, -1, 0, 1],
+    [Side.DOWN]: [0, 1, 0, 1],
 };
 
 const coordinateToCubeSide: Record<string, Side> = {
@@ -126,14 +127,16 @@ const isCubicleVisible = (axis: CubeAxis, cubeDimension: number) =>
     axis.some((it) => it === 1 || it === cubeDimension);
 
 const isOuterFace = (side: Side, [x, y, z]: CubeAxis, cubeDimension: number) =>
-    ({
-        [Side.FRONT]: z === 1,
-        [Side.BACK]: z === cubeDimension,
-        [Side.LEFT]: x === 1,
-        [Side.RIGHT]: x === cubeDimension,
-        [Side.UP]: y === 1,
-        [Side.DOWN]: y === cubeDimension,
-    })[side];
+    (
+        ({
+            [Side.FRONT]: z === 1,
+            [Side.BACK]: z === cubeDimension,
+            [Side.LEFT]: x === 1,
+            [Side.RIGHT]: x === cubeDimension,
+            [Side.UP]: y === 1,
+            [Side.DOWN]: y === cubeDimension,
+        }) satisfies SideMap<boolean>
+    )[side];
 
 const generateFace = (
     side: Side,

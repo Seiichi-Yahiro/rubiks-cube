@@ -5,6 +5,7 @@ import {
     CubeColorKey,
     cubeColorKeyToClassName,
     Side,
+    type SideMap,
 } from 'src/tsx/cube/cubeTypes';
 import cn from 'src/utils/cn';
 
@@ -19,14 +20,14 @@ interface Face {
     axis: CubeAxis;
 }
 
-const axisSortIndices = {
+const axisSortIndices: SideMap<[number, number]> = {
     [Side.FRONT]: [1, 0],
     [Side.BACK]: [1, 0],
     [Side.LEFT]: [1, 2],
     [Side.RIGHT]: [1, 2],
     [Side.UP]: [2, 0],
     [Side.DOWN]: [2, 0],
-} as const;
+};
 
 const UnfoldedView: React.FC<OverviewProps> = ({ faceSize, className }) => {
     const dimension = useRedux((state) => state.cube.dimension);
@@ -53,13 +54,13 @@ const UnfoldedView: React.FC<OverviewProps> = ({ faceSize, className }) => {
                     return acc;
                 },
                 {
-                    [Side.FRONT]: [] as Face[],
-                    [Side.BACK]: [] as Face[],
-                    [Side.LEFT]: [] as Face[],
-                    [Side.RIGHT]: [] as Face[],
-                    [Side.UP]: [] as Face[],
-                    [Side.DOWN]: [] as Face[],
-                },
+                    [Side.FRONT]: [],
+                    [Side.BACK]: [],
+                    [Side.LEFT]: [],
+                    [Side.RIGHT]: [],
+                    [Side.UP]: [],
+                    [Side.DOWN]: [],
+                } as SideMap<Face[]>,
             );
 
         for (const side of Object.values(Side)) {
