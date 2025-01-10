@@ -16,7 +16,7 @@ import Player from 'src/tsx/player/Player';
 import cn from 'src/utils/cn';
 
 const App: React.FC = () => {
-    const storeRef = useRef<AppStore>();
+    const storeRef = useRef<AppStore>(null);
 
     if (!storeRef.current) {
         storeRef.current = setupStore();
