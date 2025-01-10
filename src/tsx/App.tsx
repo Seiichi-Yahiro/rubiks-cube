@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Provider } from 'react-redux';
 import 'src/i18n';
 import { cubeActions } from 'src/redux/cube/cubeActions';
 import { loadColorMap } from 'src/redux/localStorage';
-import { type AppStore, setupStore } from 'src/redux/store';
+import { setupStore } from 'src/redux/store';
 import Algorithms from 'src/tsx/algorithms/Algorithms';
 import AlgorithmsButton from 'src/tsx/algorithms/AlgorithmsButton';
 import 'src/tsx/App.css';
@@ -16,16 +16,15 @@ import Player from 'src/tsx/player/Player';
 import cn from 'src/utils/cn';
 
 const App: React.FC = () => {
-    const storeRef = useRef<AppStore>(null);
+    const [store] = useState(setupStore);
 
-    if (!storeRef.current) {
-        storeRef.current = setupStore();
-        storeRef.current.dispatch(cubeActions.setColorMap(loadColorMap()));
-        storeRef.current.dispatch(cubeActions.resetCube());
-    }
+    useEffect(() => {
+        store.dispatch(cubeActions.setColorMap(loadColorMap()));
+        store.dispatch(cubeActions.resetCube());
+    }, [store]);
 
     return (
-        <Provider store={storeRef.current}>
+        <Provider store={store}>
             <TooltipProvider delayDuration={500}>
                 <div className="flex size-full flex-col">
                     <div className="w-full border-b border-app-border p-2">

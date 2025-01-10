@@ -7,7 +7,11 @@ export default defineConfig(({ command }): UserConfig => {
     const commonConfig: UserConfig = {
         plugins: [
             tsconfigPaths(),
-            react(),
+            react({
+                babel: {
+                    plugins: ['babel-plugin-react-compiler'],
+                },
+            }),
             checker({
                 typescript: true,
                 eslint: {

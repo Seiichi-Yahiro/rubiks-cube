@@ -1,6 +1,7 @@
 import pluginJs from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import pluginReact from 'eslint-plugin-react';
+import reactCompiler from 'eslint-plugin-react-compiler';
 import pluginReactHooks from 'eslint-plugin-react-hooks'; // TODO update when proper eslint 9 config is available
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -39,6 +40,14 @@ export default [
             'react/react-in-jsx-scope': 'off',
             'react/prop-types': 'off',
             ...pluginReactHooks.configs.recommended.rules,
+        },
+    },
+    {
+        plugins: {
+            'react-compiler': reactCompiler,
+        },
+        rules: {
+            'react-compiler/react-compiler': 'error',
         },
     },
     eslintConfigPrettier,
