@@ -1,3 +1,4 @@
+import favicon from 'favicon.png';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Provider } from 'react-redux';
@@ -53,7 +54,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ className }) => {
         >
             <div className="flex flex-row items-center gap-1">
                 <img
-                    src="favicon.png"
+                    src={favicon}
                     alt="Rubik's Cube logo"
                     className="size-12"
                 />
