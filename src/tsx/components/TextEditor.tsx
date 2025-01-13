@@ -1,5 +1,5 @@
 import { uniqueId } from 'lodash';
-import React, { type CSSProperties, useMemo, useRef } from 'react';
+import React, { type CSSProperties, useMemo } from 'react';
 import cn from 'src/utils/cn';
 
 export interface StyledValue {
@@ -17,7 +17,6 @@ interface TextEditorProps {
 
 const TextEditor = React.forwardRef<HTMLTextAreaElement, TextEditorProps>(
     ({ label, value, onChange, disabled = false, error = false }, ref) => {
-        const divRef = useRef<HTMLDivElement>(null);
         const id = useMemo(() => uniqueId(`${label}-textarea-`), [label]);
 
         const textValue: string = useMemo(() => {
@@ -42,7 +41,6 @@ const TextEditor = React.forwardRef<HTMLTextAreaElement, TextEditorProps>(
 
         return (
             <div
-                ref={divRef}
                 className={cn(
                     'relative mb-1 mt-4 min-h-6 w-full select-none whitespace-pre-wrap text-base',
 
