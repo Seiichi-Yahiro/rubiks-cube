@@ -9,6 +9,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 describe('CubeSelector', () => {
     afterEach(() => {
         cleanup();
+        vi.resetAllMocks();
         vi.restoreAllMocks();
     });
 

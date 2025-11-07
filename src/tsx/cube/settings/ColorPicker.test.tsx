@@ -12,6 +12,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 describe('ColorPicker', () => {
     afterEach(() => {
         cleanup();
+        vi.resetAllMocks();
         vi.restoreAllMocks();
         localStorage.clear();
     });
