@@ -17,5 +17,6 @@ const config = {
         '@stryker-mutator/vitest-runner',
         '@stryker-mutator/typescript-checker',
     ],
+    concurrency: 4,
 };
 export default config;
