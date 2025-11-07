@@ -1,17 +1,23 @@
 import pluginJs from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import pluginReact from 'eslint-plugin-react';
-import reactCompiler from 'eslint-plugin-react-compiler';
-import pluginReactHooks from 'eslint-plugin-react-hooks'; // TODO update when proper eslint 9 config is available
+import pluginReactHooks from 'eslint-plugin-react-hooks';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 /** @type {import('eslint').Linter.Config[]} */
-export default [
-    { files: ['src/**/*.{ts,tsx}'] },
-    { languageOptions: { globals: globals.browser } },
-    pluginJs.configs.recommended,
-    ...tseslint.configs.recommended,
+export default defineConfig([
+    {
+        ignores: ['node_modules', 'build', 'reports'],
+    },
+    {
+        files: ['src/**/*.{ts,tsx}'],
+        plugins: { js: pluginJs },
+        extends: ['js/recommended'],
+        languageOptions: { globals: globals.browser },
+    },
+    tseslint.configs.recommended,
     {
         rules: {
             '@typescript-eslint/no-unused-vars': [
@@ -31,24 +37,6 @@ export default [
         },
     },
     pluginReact.configs.flat.recommended,
-    {
-        files: ['src/**/*.{ts,tsx}'],
-        plugins: {
-            'react-hooks': pluginReactHooks,
-        },
-        rules: {
-            'react/react-in-jsx-scope': 'off',
-            'react/prop-types': 'off',
-            ...pluginReactHooks.configs.recommended.rules,
-        },
-    },
-    {
-        plugins: {
-            'react-compiler': reactCompiler,
-        },
-        rules: {
-            'react-compiler/react-compiler': 'error',
-        },
-    },
+    pluginReactHooks.configs.flat.recommended,
     eslintConfigPrettier,
-];
+]);
