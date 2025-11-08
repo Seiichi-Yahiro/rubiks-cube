@@ -1,6 +1,5 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import type { Success } from 'parsimmon';
-import React from 'react';
 import { Provider } from 'react-redux';
 import type { RotationCommand } from 'src/algorithms/rotationCommand';
 import { setupStore } from 'src/redux/store';

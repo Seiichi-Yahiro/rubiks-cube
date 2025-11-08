@@ -1,4 +1,3 @@
-import pluginJs from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import pluginReact from 'eslint-plugin-react';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
@@ -13,13 +12,24 @@ export default defineConfig([
     },
     {
         files: ['src/**/*.{ts,tsx}'],
-        plugins: { js: pluginJs },
-        extends: ['js/recommended'],
-        languageOptions: { globals: globals.browser },
-    },
-    tseslint.configs.recommended,
-    {
+        languageOptions: {
+            ecmaVersion: 2020,
+            globals: globals.browser,
+        },
+        settings: {
+            react: {
+                version: 'detect',
+            },
+        },
+        extends: [
+            ...tseslint.configs.recommended,
+            pluginReact.configs.flat.recommended,
+            pluginReact.configs.flat['jsx-runtime'],
+            pluginReactHooks.configs.flat.recommended,
+            eslintConfigPrettier,
+        ],
         rules: {
+            'react/prop-types': 'off',
             '@typescript-eslint/no-unused-vars': [
                 'warn',
                 {
@@ -36,7 +46,4 @@ export default defineConfig([
             eqeqeq: ['error', 'always'],
         },
     },
-    pluginReact.configs.flat.recommended,
-    pluginReactHooks.configs.flat.recommended,
-    eslintConfigPrettier,
 ]);

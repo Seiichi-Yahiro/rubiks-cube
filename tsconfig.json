@@ -7,7 +7,7 @@
         "skipLibCheck": true,
         "sourceMap": true,
         "allowJs": true,
-        "jsx": "react",
+        "jsx": "react-jsx",
         "moduleResolution": "Bundler",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
