@@ -1,4 +1,4 @@
-import { partial, zip } from 'lodash';
+import { partial, zip } from 'es-toolkit';
 import { dot, Vec4 } from 'src/utils/vector4';
 
 export type Mat4 = [Vec4, Vec4, Vec4, Vec4];

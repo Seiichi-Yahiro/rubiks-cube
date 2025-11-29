@@ -1,4 +1,4 @@
-import { range } from 'lodash';
+import { range } from 'es-toolkit';
 import { Failure, Result, Success } from 'parsimmon';
 import {
     createArrayIterator,

@@ -33,8 +33,6 @@ const Cubicle: React.FC<ICubicleProps> = ({
                 : `transform ${rotationDuration}ms`,
     };
 
-    const generateArrowCommand = generateFaceArrowCommand(axis, transform);
-
     return (
         <div
             className={`${cubicleClassname} absolute [transform-style:preserve-3d]`}
@@ -45,7 +43,9 @@ const Cubicle: React.FC<ICubicleProps> = ({
                     key={id}
                     transform={transform}
                     colorKey={colorKey}
-                    generateArrowCommand={generateArrowCommand(id)}
+                    generateArrowCommand={(faceArrow) =>
+                        generateFaceArrowCommand(axis, transform, id, faceArrow)
+                    }
                 />
             ))}
         </div>

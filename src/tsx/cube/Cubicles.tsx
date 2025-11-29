@@ -1,4 +1,4 @@
-import { debounce } from 'lodash';
+import { debounce } from 'es-toolkit';
 import React, { TransitionEvent, useCallback, useMemo } from 'react';
 import { rotationCommandToCssRotation } from 'src/algorithms/rotationCommand';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';

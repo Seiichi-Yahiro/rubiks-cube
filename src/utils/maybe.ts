@@ -1,4 +1,4 @@
-import { isFunction, isNil } from 'lodash';
+import { isFunction, isNil } from 'es-toolkit';
 
 type TypeOrMaybeType<T> = T | Maybe<T>;
 type FunctionOrValue<T> = (() => TypeOrMaybeType<T>) | TypeOrMaybeType<T>;

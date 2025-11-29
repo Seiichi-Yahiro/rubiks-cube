@@ -1,4 +1,4 @@
-import { range, sample, sampleSize } from 'lodash';
+import { range, sample, sampleSize } from 'es-toolkit';
 import P from 'parsimmon';
 import {
     double,

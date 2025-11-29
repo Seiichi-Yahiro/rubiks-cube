@@ -1,4 +1,4 @@
-import { debounce } from 'lodash';
+import { debounce } from 'es-toolkit';
 import React, { useEffect, useRef } from 'react';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
@@ -37,7 +37,7 @@ const RubiksCube: React.FC<RubiksCubeProps> = ({ className }) => {
                 const containerSize = Math.min(width, height);
                 const cubeSize = Math.min(containerSize / 2, maxCubeSize);
                 dispatch(cubeActions.setCubeSize(cubeSize));
-            }),
+            }, 50),
         );
 
         resizeObserver.observe(container.current);

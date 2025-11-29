@@ -50,7 +50,7 @@ export default defineConfig(({ command }): UserConfig => {
                                 'i18next',
                                 'i18next-browser-languagedetector',
                             ],
-                            lodash: ['lodash'],
+                            estoolkit: ['es-toolkit'],
                             parsimmon: ['parsimmon'],
                             components: [
                                 '@radix-ui/react-dialog',

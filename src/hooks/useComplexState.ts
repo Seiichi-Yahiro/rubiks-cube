@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import { isFunction } from 'es-toolkit';
 import { useCallback, useState } from 'react';
 
 function useComplexState<S>(

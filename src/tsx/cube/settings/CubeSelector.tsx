@@ -1,4 +1,4 @@
-import { range } from 'lodash';
+import { range } from 'es-toolkit';
 import React, { useCallback } from 'react';
 import { useAppDispatch, useRedux } from 'src/hooks/redux';
 import { cubeActions } from 'src/redux/cube/cubeActions';
