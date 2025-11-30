@@ -15,7 +15,7 @@ export const createFlattenIterator = <Item>(
         if (innerIterator) {
             const innerResult = innerIterator.next();
 
-            if (innerResult) {
+            if (innerResult !== null) {
                 return innerResult;
             }
         }
@@ -34,7 +34,7 @@ export const createFlattenIterator = <Item>(
         if (innerIterator) {
             const innerResult = innerIterator.nextBack();
 
-            if (innerResult) {
+            if (innerResult !== null) {
                 return innerResult;
             }
         }

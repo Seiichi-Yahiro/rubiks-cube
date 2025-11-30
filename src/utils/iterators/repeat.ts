@@ -15,7 +15,7 @@ export const createRepeatIterator = <Item>(
     const next = (): Item | null => {
         const result = iterator.next();
 
-        if (result) {
+        if (result !== null) {
             return result;
         }
 
@@ -36,7 +36,7 @@ export const createRepeatIterator = <Item>(
 
         const result = iterator.nextBack();
 
-        if (result) {
+        if (result !== null) {
             return result;
         }
 

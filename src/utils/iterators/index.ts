@@ -13,7 +13,7 @@ export const collectArray = <Item>(
 
     let result = produceItem();
 
-    while (result) {
+    while (result !== null) {
         values.push(result);
         result = produceItem();
     }
