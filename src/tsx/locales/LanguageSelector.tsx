@@ -16,7 +16,7 @@ const LanguageSelector: React.FC = () => {
     return (
         <Select
             value={i18n.resolvedLanguage}
-            onValueChange={i18n.changeLanguage}
+            onValueChange={(value) => void i18n.changeLanguage(value)}
         >
             <SelectTrigger className="w-24">
                 <SelectValue />

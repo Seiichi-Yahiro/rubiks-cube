@@ -54,7 +54,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ className }) => {
         >
             <div className="flex flex-row items-center gap-1">
                 <img
-                    src={favicon}
+                    src={favicon as string}
                     alt="Rubik's Cube logo"
                     className="size-12"
                 />

@@ -74,6 +74,7 @@
         "serve": "vite",
         "build": "vite build",
         "pretty-quick": "pretty-quick",
+        "lint": "eslint --config eslint.config.js",
         "test": "vitest",
         "test:coverage": "rimraf reports/coverage && vitest run --coverage",
         "test:mutation": "rimraf reports/mutation && npx stryker run",

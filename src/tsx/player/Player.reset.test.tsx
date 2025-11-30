@@ -57,7 +57,7 @@ describe('Player reset', () => {
         expect(stateAfter.cube.cubicles).toBe(stateBefore.cube.cubicles);
     };
 
-    it('should not allow reset when playing', async () => {
+    it('should not allow reset when playing', () => {
         store.dispatch(playerActions.updateNotation('F U R'));
         store.dispatch(
             playerActions.play(
@@ -72,7 +72,7 @@ describe('Player reset', () => {
         expectNotAllowReset();
     });
 
-    it('should not allow reset when paused', async () => {
+    it('should not allow reset when paused', () => {
         store.dispatch(playerActions.updateNotation('F U R'));
         store.dispatch(
             playerActions.play(

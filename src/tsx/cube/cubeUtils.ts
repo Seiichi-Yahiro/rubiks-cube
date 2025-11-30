@@ -251,7 +251,7 @@ export const generateFaceArrowCommand = (
         .map(Math.round);
 
     const newCubeAxis = zip(cubeAxis, rotatedPoint).map(
-        ([it, sign]) => it! * sign!,
+        ([it, sign]) => it * sign,
     );
 
     const axis = newCubeAxis.findIndex((it) => it !== 0);

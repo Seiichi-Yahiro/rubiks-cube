@@ -40,7 +40,7 @@ export const setupPlayAnimationLoopListener = (
 ) =>
     startListening({
         actionCreator: playerActions.play,
-        effect: async (action, listenerApi) => {
+        effect: (action, listenerApi) => {
             listenerApi.dispatch(
                 playerActions.createRotationCommandIterator(action.payload),
             );

@@ -168,8 +168,8 @@ export const createRandomNotation = (cubeDimension: number): string => {
 
         do {
             const slice = sample(slices) ?? '';
-            letter = slice + sample(letters)!;
-            isPrime = sample([true, false])!;
+            letter = slice + sample(letters);
+            isPrime = sample([true, false]);
         } while (prevLetter === letter && prevIsPrime !== isPrime);
 
         prevLetter = letter;

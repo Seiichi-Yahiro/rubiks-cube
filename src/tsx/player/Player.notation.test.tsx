@@ -27,7 +27,7 @@ describe('NotationInput', () => {
 
         expect(textField).toBeInTheDocument();
 
-        fireEvent.change(textField!, { target: { value: 'F U R' } });
+        fireEvent.change(textField, { target: { value: 'F U R' } });
 
         const state = store.getState();
 
