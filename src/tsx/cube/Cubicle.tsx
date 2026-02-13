@@ -19,12 +19,12 @@ const Cubicle: React.FC<ICubicleProps> = ({
     axis,
     faces,
     animatedTransform,
-    transform,
+    transform: cubicleTransform,
     size,
     rotationDuration,
 }) => {
     const style: React.CSSProperties = {
-        transform: animatedTransform + toCss(transform),
+        transform: animatedTransform + toCss(cubicleTransform),
         width: size,
         height: size,
         transition:
@@ -38,13 +38,18 @@ const Cubicle: React.FC<ICubicleProps> = ({
             className={`${cubicleClassname} absolute [transform-style:preserve-3d]`}
             style={style}
         >
-            {faces.map(({ id, transform, colorKey }) => (
+            {faces.map(({ id, transform: faceTransform, colorKey }) => (
                 <Face
                     key={id}
-                    transform={transform}
+                    transform={faceTransform}
                     colorKey={colorKey}
                     generateArrowCommand={(faceArrow) =>
-                        generateFaceArrowCommand(axis, transform, id, faceArrow)
+                        generateFaceArrowCommand(
+                            axis,
+                            cubicleTransform,
+                            id,
+                            faceArrow,
+                        )
                     }
                 />
             ))}
